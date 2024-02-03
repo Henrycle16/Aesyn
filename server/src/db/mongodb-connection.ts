@@ -1,6 +1,6 @@
 import { connect, disconnect } from 'mongoose';
 
-// Connect - mongo db
+// Connect to MongoDB
 async function connectToDatabase(){
     try{
         await connect(process.env.MONGODB_URL)
@@ -10,7 +10,7 @@ async function connectToDatabase(){
     }
 }
 
-// Disconnect - mongo db
+// Disconnect from MongoDB
 async function disconnectFromDatabase(){
     try{
         await disconnect();

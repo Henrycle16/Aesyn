@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
-      "module": "commonjs",
+      "module": "CommonJS",
       "esModuleInterop": true,
-      "target": "es6",
+      "target": "es2017",
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "dist",
+      "outDir": "./dist",
     },
-    "lib": ["es2015"]
+    "lib": ["es2015", "esnext"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/**/*.ts"],
+    "exclude": ["node_modules"]
   }
