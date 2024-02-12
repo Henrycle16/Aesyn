@@ -1,6 +1,4 @@
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { Pinecone } from "@pinecone-database/pinecone";
-import Users from '../models/userModel';
 
 // Initalize Pinecone client
 const getPineconeClient = () => {
@@ -9,11 +7,11 @@ const getPineconeClient = () => {
   });
 };
 
-async function pineconeTest() {
+async function connectToPinecone() {
   const pineconeClient = await getPineconeClient();
 
   // Setting client to use h2jc index
   const pineconeIndex = await pineconeClient.index("h2jc");
 }
 
-export { pineconeTest, getPineconeClient };
+export { connectToPinecone, getPineconeClient };
