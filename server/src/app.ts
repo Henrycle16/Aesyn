@@ -11,4 +11,6 @@ app.use(express.json());
 
 app.use('/users', userRoute);
 
+console.log("App is running");
+
 export default app;
