@@ -1,4 +1,4 @@
-import Users from '../models/userModel';
+import Users from '../models/User';
 import { getPineconeClient } from "../db/pineconedb-connection";
 import { OpenAIEmbeddings } from "@langchain/openai";
 
@@ -14,7 +14,7 @@ async function pineconeWatch() {
     // If a new document is inserted into the collection, replicate its vector in Pinecone
     if (data.operationType === 'insert') {
         let document = data.fullDocument;
-        let docId = document._id;
+        const docId = document._id;
 
         if (!Array.isArray(document)) {
             document = [document];
