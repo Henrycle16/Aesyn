@@ -3,26 +3,26 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: true,
+        //required: true,
     },
     lastName: {
         type: String,
-        required: true,
+        //required: true,
     },
     username: {
         type: String,
-        required: true,
-        unique: true,
+        //required: true,
+        //unique: true,
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        //required: true,
+        //unique: true,
     },
     password: {
         type: String,
-        required: true,
-        min: [8, "Must be at least 8 characters"]
+        //required: true,
+        //min: [8, "Must be at least 8 characters"]
     },
     avatar: {
         type: String,
@@ -33,8 +33,12 @@ const UserSchema = new mongoose.Schema({
     },
     userType: {
         type: String,
-        required: true,
-    }
+        //required: true,
+    },
+    description: {
+        type: String,
+        //required: true,
+    },
 });
 
 
