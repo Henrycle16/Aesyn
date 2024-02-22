@@ -1,6 +1,7 @@
 import Users from '../models/User';
 import { getPineconeClient } from "../db/pineconedb-connection";
 import { OpenAIEmbeddings } from "@langchain/openai";
+import { PineconeRecord, RecordMetadata, RecordValues } from '@pinecone-database/pinecone';
 
 async function pineconeWatch() {
   Users.watch().on('change', async (data) => {
@@ -14,20 +15,20 @@ async function pineconeWatch() {
     // If a new document is inserted into the collection, replicate its vector in Pinecone
     if (data.operationType === 'insert') {
         let document = data.fullDocument;
+        let description = document.description;
+        
         const docId = document._id;
 
         if (!Array.isArray(document)) {
             document = [document];
         }
 
-        document = document.map(t => String(t));
+        const embeddings = await embeddingsModel.embedQuery(description);
 
-        const embeddings = await embeddingsModel.embedDocuments(document);
-
-        const records = embeddings.map((embedding) => ({
-            id: `${docId}`,
-            values: embedding,
-        }));
+        const records = [{
+          id: `${docId}`,
+          values: embeddings,
+        }];
         
         await pineconeIndex.upsert(records);
 
