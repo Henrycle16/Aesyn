@@ -15,10 +15,6 @@ async function pineconeWatch() {
         
         const docId = document._id;
 
-        if (!Array.isArray(document)) {
-            document = [document];
-        }
-
         const queryEmbeddings = await getEmbeddings(description);
 
         const records = [{
