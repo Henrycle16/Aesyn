@@ -7,14 +7,12 @@ const router = express.Router();
 router.post('/', async (req: Request, res: Response) => {  
     try {
       const context = await getContext(req.body.query);
-      const newArr = [];
+      const ids = context.map(item => item.id);
+      const users = await User.find({
+        _id: { $in: ids }
+      });
 
-      for(let i = 0; i < context.length; i++) {
-        const user = await User.findById(context[i].id);
-        newArr.push(user);
-      }
-
-      res.status(201).json(newArr);
+      res.status(201).json(users);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -1,13 +1,9 @@
 import Users from '../models/User';
 import { getPineconeClient } from "../db/pineconedb-connection";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { PineconeRecord, RecordMetadata, RecordValues } from '@pinecone-database/pinecone';
+import { getEmbeddings } from '../lib/embeddings';
 
 async function pineconeWatch() {
   Users.watch().on('change', async (data) => {
-    // Initalize OpenAIEmbeddings model
-    const embeddingsModel = new OpenAIEmbeddings();
-
     // Setting Pinecone client to use h2jc index
     const pineconeClient = await getPineconeClient();
     const pineconeIndex = await pineconeClient.index("h2jc");
@@ -23,11 +19,11 @@ async function pineconeWatch() {
             document = [document];
         }
 
-        const embeddings = await embeddingsModel.embedQuery(description);
+        const queryEmbeddings = await getEmbeddings(description);
 
         const records = [{
           id: `${docId}`,
-          values: embeddings,
+          values: queryEmbeddings,
         }];
         
         await pineconeIndex.upsert(records);
