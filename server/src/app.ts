@@ -2,6 +2,7 @@ import express from "express";
 import { config } from 'dotenv';
 import userRoute from './routes/userRoute';
 import queriesRoute from './routes/queriesRoute';
+import authRoute from './routes/authRoute';
 
 config();
 
@@ -10,8 +11,10 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/users', userRoute);
-app.use('/query', queriesRoute);
+// Define routes
+app.use('/api/auth', authRoute);
+app.use('/api/users', userRoute);
+app.use('/api/query', queriesRoute);
 
 console.log("App is running");
 
