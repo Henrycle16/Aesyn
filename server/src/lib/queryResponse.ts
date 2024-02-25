@@ -8,7 +8,7 @@ export async function getMatchesFromEmbeddings(embeddings: number[]) {
     const pineconeIndex = await pineconeClient.index("h2jc");
 
     const queryResult = await pineconeIndex.query({
-      topK: 2,
+      topK: 4,
       vector: embeddings,
       includeValues: true,
       //includeMetadata: true,
@@ -26,9 +26,9 @@ export async function getContext(query) {
   const queryEmbeddings = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbeddings);
 
-  // Returning matches that are atleast 40% similar
+  // Returning matches that are atleast 70% similar
   const qualifyingData = matches.filter(
-    (match) => match.score && match.score > 0.4
+    (match) => match.score && match.score > 0.7
   );
 
   return qualifyingData;
