@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const CreatorSchema = new mongoose.Schema({
-    userID: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
@@ -19,6 +19,13 @@ const CreatorSchema = new mongoose.Schema({
             type: String
         }
     },
+    bio: {
+        type: String,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+    }
 });
 
 const Creator = mongoose.model('Creator', CreatorSchema);
