@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { getContext } from "../lib/queryResponse";
 import User from '../models/User';
+import { getResponse } from '../lib/chatModel';
 
 const router = express.Router();
 
@@ -11,6 +12,8 @@ router.post('/', async (req: Request, res: Response) => {
       const users = await User.find({
         _id: { $in: ids }
       });
+
+      const suggestedUsers = getResponse(req.body.query, users);
 
       res.status(201).json(users);
     } catch (error) {
