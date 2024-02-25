@@ -106,7 +106,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// UNTESTED!
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
@@ -129,7 +128,6 @@ router.get('/user/:user_id', async (req, res) => {
     }
 });
 
-// UNTESTED!
 // @route   DELETE api/profile
 // @desc    Delete profile, user, & posts
 // @access  Private
