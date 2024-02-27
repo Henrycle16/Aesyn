@@ -10,21 +10,43 @@ async function pineconeWatch() {
 
     // If a new document is inserted into the collection, replicate its vector in Pinecone
     if (data.operationType === 'insert') {
-        let document = data.fullDocument;
-        let description = document.description;
+        let documentId = data.documentKey._id;
+        let description = data.fullDocument.description;
         
-        const docId = document._id;
-
         const queryEmbeddings = await getEmbeddings(description);
 
         const records = [{
-          id: `${docId}`,
+          id: `${documentId}`,
           values: queryEmbeddings,
         }];
         
         await pineconeIndex.upsert(records);
 
         console.log("Pinecone updated with new vector.");
+    } 
+    // Check if the update is in the description field, if so, update the corresponding vector in Pinecone
+    else if (data.operationType === 'update' && data.updateDescription.updatedFields.description) {
+      const documentId = data.documentKey._id;
+
+      const queryEmbeddings = await getEmbeddings(data.updateDescription.updatedFields.description);
+
+      const records = [{
+        id: `${documentId}`,
+        values: queryEmbeddings,
+      }];
+
+      await pineconeIndex.upsert(records);
+
+      console.log("Existing Pinecone vector updated.");
+      
+    } 
+    // Delete the corresponding vector from Pinecone
+    else if (data.operationType === 'delete') {
+      const documentId = data.documentKey._id;
+
+      await pineconeIndex.deleteOne(`${documentId}`);
+
+      console.log("Pinecone vector deleted.");
     }
   });
 }
