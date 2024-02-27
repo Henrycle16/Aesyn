@@ -139,12 +139,13 @@ router.put('/', auth, async (req: Request, res: Response) => {
   }
 });
 
-// @route   DELETE api/profile
+// @route   DELETE api/users
 // @desc    Delete user from database.
 // @access  Private
-router.delete('/:id', auth, async (req: Request, res: Response) => {
+router.delete('/', auth, async (req, res) => {
   try {
-    await User.findOneAndDelete(req.params.id);
+    await User.findOneAndDelete({ _id: req.user.id });
+
     res.status(200).json('Account has been deleted');
   } catch (error) {
     res.status(500).json(error);
