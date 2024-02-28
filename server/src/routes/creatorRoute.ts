@@ -14,7 +14,12 @@ router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Creator.findOne({
             user: req.user.id,
-        }).populate('userID', ['name']);
+        }).populate('user', [
+            'username',
+            'firstName', 
+            'lastName',
+            'avatar',
+        ]);
 
         if (!profile) {
             return res
@@ -113,7 +118,12 @@ router.get('/user/:user_id', async (req, res) => {
     try {
         const profile = await Creator.findOne({
             user: req.params.user_id,
-        }).populate('user', ['name', 'avatar']);
+        }).populate('user', [
+            'username',
+            'firstName', 
+            'lastName',
+            'avatar',
+        ]);
 
         if (!profile) {
             return res.status(400).json({ msg: 'Profile not found' });
