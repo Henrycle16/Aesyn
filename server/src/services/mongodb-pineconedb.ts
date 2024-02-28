@@ -1,37 +1,52 @@
-import Users from '../models/userModel';
+import Users from '../models/User';
 import { getPineconeClient } from "../db/pineconedb-connection";
-import { OpenAIEmbeddings } from "@langchain/openai";
+import { getEmbeddings } from '../lib/embeddings';
 
 async function pineconeWatch() {
   Users.watch().on('change', async (data) => {
-    // Initalize OpenAIEmbeddings model
-    const embeddingsModel = new OpenAIEmbeddings();
-
     // Setting Pinecone client to use h2jc index
     const pineconeClient = await getPineconeClient();
     const pineconeIndex = await pineconeClient.index("h2jc");
 
     // If a new document is inserted into the collection, replicate its vector in Pinecone
     if (data.operationType === 'insert') {
-        let document = data.fullDocument;
-        let docId = document._id;
+        let documentId = data.documentKey._id;
+        let description = data.fullDocument.description;
+        
+        const queryEmbeddings = await getEmbeddings(description);
 
-        if (!Array.isArray(document)) {
-            document = [document];
-        }
-
-        document = document.map(t => String(t));
-
-        const embeddings = await embeddingsModel.embedDocuments(document);
-
-        const records = embeddings.map((embedding) => ({
-            id: `${docId}`,
-            values: embedding,
-        }));
+        const records = [{
+          id: `${documentId}`,
+          values: queryEmbeddings,
+        }];
         
         await pineconeIndex.upsert(records);
 
         console.log("Pinecone updated with new vector.");
+    } 
+    // Check if the update is in the description field, if so, update the corresponding vector in Pinecone
+    else if (data.operationType === 'update' && data.updateDescription.updatedFields.description) {
+      const documentId = data.documentKey._id;
+
+      const queryEmbeddings = await getEmbeddings(data.updateDescription.updatedFields.description);
+
+      const records = [{
+        id: `${documentId}`,
+        values: queryEmbeddings,
+      }];
+
+      await pineconeIndex.upsert(records);
+
+      console.log("Existing Pinecone vector updated.");
+      
+    } 
+    // Delete the corresponding vector from Pinecone
+    else if (data.operationType === 'delete') {
+      const documentId = data.documentKey._id;
+
+      await pineconeIndex.deleteOne(`${documentId}`);
+
+      console.log("Pinecone vector deleted.");
     }
   });
 }
