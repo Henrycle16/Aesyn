@@ -1,9 +1,24 @@
-import React from 'react';
+'use client'
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 
 
 const HeroSection = () => {
+  const [brandSignup, setBrandSignup] = useState(false);
+
+  const handleBrandSignup = () => {
+    setBrandSignup(true);
+  };
+
+  const handleCreatorSignup = () => {
+   setBrandSignup(false);
+  };
+  useEffect(() => {
+    console.log(brandSignup);
+  }, [brandSignup]);
+
     return (
         <section className="text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -13,8 +28,9 @@ const HeroSection = () => {
             <p className="mb-8 leading-relaxed"> Description of our product.... lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim lectus, facilisis in facilisis eget, pharetra at justo. Praesent malesuada tristique urna, at elementum lectus bibendum id. Integer interdum sapien nec sapien luctus, non elementum elit facilisis. </p>
             <div className="flex justify-center">
               <Link href="/signup">
-              <button className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Join as Brand!</button> 
-              <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Join as Creator!</button> </Link>
+              <button onClick={handleBrandSignup} className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Join as Brand!</button>  </Link>
+              <Link href="/signup">
+              <button onClick={handleCreatorSignup} className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Join as Creator!</button>  </Link>
             </div>
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
