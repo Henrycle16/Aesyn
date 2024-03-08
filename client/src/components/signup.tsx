@@ -118,7 +118,7 @@ const SignUpComponent = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
+              <FormControlLabel sx={{paddingBottom: '10px'}}
                 control={<Checkbox value="allowExtraEmails" color="primary"/>}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
