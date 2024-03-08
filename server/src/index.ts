@@ -1,7 +1,7 @@
 import app from "./app";
 import { connectToDatabase } from "./db/mongodb-connection";
 import { connectToPinecone } from "./db/pineconedb-connection";
-import { pineconeWatch } from "./services/mongodb-pineconedb";
+// import { pineconeWatch } from "./services/mongodb-pineconedb";
 
 const PORT = process.env.PORT || 5000;
 
@@ -17,6 +17,6 @@ connectToPinecone().then(() => {
 }).catch(error => console.log(error));
 
 // Initalizing watch function for PineconeDB
-pineconeWatch().then(() => {
-    console.log("Pinecone watching for changes.");
-}).catch(error => console.log(error));
+// pineconeWatch().then(() => {
+//     console.log("Pinecone watching for changes.");
+// }).catch(error => console.log(error));
