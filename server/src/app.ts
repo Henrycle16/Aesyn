@@ -4,6 +4,7 @@ import userRoute from './routes/userRoute';
 import queriesRoute from './routes/queriesRoute';
 import authRoute from './routes/authRoute';
 import creatorRoute from './routes/creatorRoute';
+import cors from 'cors';
 
 config();
 
@@ -11,6 +12,7 @@ config();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 // Define routes
 app.use('/api/auth', authRoute);
