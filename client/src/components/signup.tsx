@@ -16,7 +16,7 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 
 
-const SignUpComponent = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -51,7 +51,6 @@ const SignUpComponent = () => {
   };
 
   return (
- 
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
@@ -153,4 +152,4 @@ const SignUpComponent = () => {
   );
 };
 
-export default SignUpComponent;
+export default SignUp;

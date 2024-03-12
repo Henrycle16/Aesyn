@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const HeaderComponent = () => {
+const Header = () => {
     return (
         <header className="text-gray-600 body-font">
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -24,4 +24,4 @@ const HeaderComponent = () => {
     )
 }
 
-export default HeaderComponent;
+export default Header;
