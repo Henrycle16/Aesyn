@@ -14,9 +14,14 @@ import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 
 const SignUp = () => {
+  const searchParams = useSearchParams();
+  const state = searchParams.get("state");
+  console.log(state);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
