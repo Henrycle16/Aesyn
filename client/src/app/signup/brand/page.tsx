@@ -1,7 +1,8 @@
-import React from 'react'
+import TaskStepper from "@/components/TaskStepper"
+
 
 export default function BrandQuestions() {
   return (
-    <main>FILL OUT THE FORM FOR BRAND</main>
-  )
+    <TaskStepper/>
+    )
 }
