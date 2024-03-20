@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,9 +19,9 @@ import { useSearchParams } from "next/navigation";
 
 
 const SignUp = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const state = searchParams.get("state");
-  console.log(state);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -50,6 +51,13 @@ const SignUp = () => {
         },
       });
       console.log("User succesfully signed up");
+
+      if (state === "true") {
+        router.push("/signup/brand");
+      } else {
+        router.push("/signup/creator");
+      }
+
     } catch (err) {
       console.log(err);
     }

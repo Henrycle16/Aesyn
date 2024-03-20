@@ -1,8 +1,11 @@
-import TaskStepper from "@/components/TaskStepper"
-
+import BrandQuestionsComponent from "@/components/BrandQuestions";
 
 export default function BrandQuestions() {
   return (
-    <TaskStepper/>
-    )
+    <div className="grid place-center items-center h-auto">
+      <div>
+        <BrandQuestionsComponent />
+      </div>
+    </div>
+  );
 }
