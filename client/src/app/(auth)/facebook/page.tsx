@@ -26,6 +26,10 @@ const FacebookLogin = () => {
 
           console.log("Access token: " + response.authResponse.accessToken);
 
+          // TODO: Convert short-lived access token to long-lived and insert into database
+          // TODO: Remove logic from here and put it into utils folder to periodically refresh token and user data
+          // TODO: Add logic to check if user is already in database before adding
+
           // Get page id
           const pageId = await getPageId(response.authResponse.accessToken);
 
