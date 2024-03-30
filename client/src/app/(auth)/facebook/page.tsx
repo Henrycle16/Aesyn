@@ -2,6 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Script from "next/script";
+import { getPageId, getBusinessId, getBasicUserInfo } from '../../../services/instagramGraphAPI';
+import axios from 'axios';
+
+interface BasicUserInfo {
+  name: string;
+  userName: string;
+  profilePicURL: string;
+}
 
 const FacebookLogin = () => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
@@ -11,11 +19,39 @@ const FacebookLogin = () => {
     // Check if FB object is defined before using it
     if (typeof window.FB !== 'undefined') {
       // Use FB object here
-      window.FB.getLoginStatus((response: any) => {
+      window.FB.getLoginStatus(async (response: any) => {
         if (response.status === "connected") {
           // console.log(response);
           setFacebookUserAccessToken((prev) => response.authResponse.accessToken);
+
           console.log("Access token: " + response.authResponse.accessToken);
+
+          // Get page id
+          const pageId = await getPageId(response.authResponse.accessToken);
+
+          // Get business id
+          const businessId = await getBusinessId(pageId, response.authResponse.accessToken);
+
+          // Get basic user info
+          const basicUserInfo = await getBasicUserInfo(businessId, response.authResponse.accessToken) as BasicUserInfo;;
+          const { name, userName, profilePicURL } = basicUserInfo;
+
+          const testCreatorID = '65de95dc2c98cba944efb3ab';
+
+          const userPayload = {
+            creatorID: testCreatorID,
+            pageID: pageId,
+            businessID: businessId,
+            name: name,
+            userName: userName,
+            profilePicURL: profilePicURL
+          };
+          
+          // Add the basic user info to the database
+          const instagramUser = await axios.post('http://localhost:5000/api/instagram', userPayload);
+
+          console.log(instagramUser);
+
           return;
         }
 
