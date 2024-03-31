@@ -1,11 +1,9 @@
-import BrandQuestionsComponent from "@/components/BrandQuestions";
+import SignUpBox from "@/components/BrandSignup/SignupBox";
 
 export default function BrandQuestions() {
   return (
-    <div className="grid place-center items-center h-auto">
       <div>
-        <BrandQuestionsComponent />
+        <SignUpBox />
       </div>
-    </div>
   );
 }
