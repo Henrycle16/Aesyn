@@ -1,8 +1,4 @@
 import express from 'express';
-import { auth } from '../middleware/auth';
-import { check, validationResult } from 'express-validator';
-
-import Creator from '../models/Creator';
 import InstagramData from '../models/InstagramData';
 
 const router = express.Router();
@@ -13,6 +9,7 @@ router.post('/', async (req, res) => {
                 creatorID,
                 pageID,
                 businessID,
+                longLivedAccessToken,
                 name,
                 userName,
                 profilePicURL
@@ -22,6 +19,7 @@ router.post('/', async (req, res) => {
                 creatorID,
                 pageID,
                 businessID,
+                longLivedAccessToken,
                 name,
                 userName,
                 profilePicURL

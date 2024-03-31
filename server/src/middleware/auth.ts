@@ -18,6 +18,6 @@ async function auth(req, res, next) {
     } catch (err) {
         res.status(401).json({ msg: 'Token is not valid' });
     }
-};
+}
 
 export { auth };
