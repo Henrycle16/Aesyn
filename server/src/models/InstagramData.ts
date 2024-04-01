@@ -27,6 +27,6 @@ const InstagramDataSchema = new mongoose.Schema({
     //To be continued...
 });
 
-const SocialMedia = mongoose.model('instagram_datas', InstagramDataSchema);
+const SocialMedia = mongoose.model('instagram_data', InstagramDataSchema);
 
 export default SocialMedia;
