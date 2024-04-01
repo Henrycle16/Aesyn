@@ -32,6 +32,9 @@ const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, h
           back
         </Button>
       </div>
+
+
+      {/* Box to seperate each social media preference */}
       <Box className="col-start-3 col-span-5 row-start-3 row-span-6 justify-center items-center">
         <div className="label">
           <span className="label-text font-bold text-lg">
@@ -105,7 +108,10 @@ const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, h
           />{" "}
         </Box>
       </Box>
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end">
+
+      
+      {/* Next Button */}
+      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
           type="submit"
           onClick={handleNextStep}

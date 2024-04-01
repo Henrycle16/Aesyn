@@ -6,6 +6,7 @@ import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "./SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
+import ToDashboard from "../ToDashboard";
 
 /* 
   This is the parent component
@@ -16,7 +17,7 @@ import ConfirmForm from "./ConfirmForm";
 // Step 2: Contact Form Info
 // Step 3: Social Media Selector Info
 // Step 4: Confirm Form Data
-// Step 5: Redirect to dashboard?
+// Step 5: Redirect to dashboard
 interface BrandForm {
   userID: string;
   companyName: string;
@@ -49,11 +50,14 @@ const SignUpBox = () => {
     if (step === '1') setStep('2');
     else if (step === '2') setStep('3');
     else if (step === '3') setStep('4');
+    else if (step === '4') setStep('5');
+    else if (step === '5') setStep('6');
   }
   
   // Method to go to PREVIOUS step
   const handlePrevStep = () => {
-    if (step === '4') setStep('3');
+    if (step === '5') setStep('4');
+    else if (step === '4') setStep('3');
     else if (step === '3') setStep('2');
     else if (step === '2') setStep('1');
   }
@@ -121,7 +125,14 @@ const SignUpBox = () => {
         {
           step === '4' && <ConfirmForm 
             formData={formData}
+            handleFormChange={handleFormChange}
             handlePrevStep={handlePrevStep}
+            handleNextStep={handleNextStep}
+          />
+        }
+         {
+          step === '5' && <ToDashboard 
+            handleNextStep={handleNextStep}
           />
         }
       </Box>

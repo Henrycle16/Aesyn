@@ -26,6 +26,9 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
           back
         </Button>
       </div>
+
+
+      {/* Handles POC Contact Information */}
       <div className="col-start-3 col-span-5 row-start-2 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-6">
           <div className="label">
@@ -76,7 +79,10 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
           />
         </label>
       </div>
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end">
+
+
+      {/* Next Button */}
+      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
           onClick={handleNextStep}
           type="submit"
