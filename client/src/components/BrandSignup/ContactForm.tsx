@@ -1,32 +1,23 @@
 "use client";
 
-import React, { useState }  from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 interface ContactFormProps {
-  onBack: () => void;
-  onNext: () => void;
-  onSave: (info: any) => void;
+  handleNextStep: () => void;
+  handlePrevStep: () => void;
+  handleFormChange: (event: any) => void;
+  formData: any;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ onBack, onNext, onSave }) => {
-
-  const [primaryName, setPrimaryName] = useState("");
-  const [primaryNumber, setPrimaryNumber] = useState("");
-  const [primaryEmail, setPrimaryEmail] = useState("");
-
-  const handleNext = () => {
-    onSave({ primaryName, primaryNumber, primaryEmail });
-    onNext();
-  };
-
+const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevStep } : ContactFormProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
       <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
         <Button
-          onClick={onBack}
+          onClick={handlePrevStep}
           variant="text"
           startIcon={<ArrowBackIcon />}
           className="col-span-1"
@@ -46,8 +37,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack, onNext, onSave }) => 
             type="text"
             placeholder="Type here"
             required
-            autoFocus
             className="input input-bordered w-full"
+            name="contactPersonName"
+            value={formData.contactPersonName}
+            onChange={(e) => handleFormChange(e)}
           />
         </label>
         <label className="form-control w-full mb-6">
@@ -60,8 +53,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack, onNext, onSave }) => 
             type="text"
             placeholder="Type here"
             required
-            autoFocus
             className="input input-bordered w-full"
+            name="contactPhoneNumber"
+            value={formData.contactPhoneNumber}
+            onChange={(e) => handleFormChange(e)}
           />
         </label>
         <label className="form-control w-full mb-6">
@@ -74,14 +69,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack, onNext, onSave }) => 
             type="text"
             placeholder="Type here"
             required
-            autoFocus
             className="input input-bordered w-full"
+            name="contactEmail"
+            value={formData.contactEmail}
+            onChange={(e) => handleFormChange(e)}
           />
         </label>
       </div>
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end">
         <Button
-          onClick={handleNext}
+          onClick={handleNextStep}
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

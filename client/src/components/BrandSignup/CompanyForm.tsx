@@ -1,26 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Select, selectClasses } from "@mui/joy";
-import Option from "@mui/joy/Option";
-import { KeyboardArrowDown } from "@mui/icons-material";
 
 interface CompanyFormProps {
-  onNext: () => void;
-  onSave: (info: any) => void;
-  companyInfo: any;
+  handleNextStep: () => void;
+  handleFormChange: (event: any) => void;
+  formData: any;
 }
 
-const CompanyForm: React.FC<CompanyFormProps> = ({ onNext, onSave, companyInfo }) => {
- const [info, setInfo] = useState(companyInfo);
-
-  useEffect(() => {
-    setInfo(companyInfo);
-  }, [companyInfo]);
-
-
+const CompanyForm = ({ formData, handleFormChange, handleNextStep } : CompanyFormProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
       <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
@@ -34,6 +24,9 @@ const CompanyForm: React.FC<CompanyFormProps> = ({ onNext, onSave, companyInfo }
             type="text"
             placeholder="Type here"
             className="input input-bordered w-full"
+            name="companyName"
+            value={formData.companyName}
+            onChange={(e) => handleFormChange(e)}
           />
         </label>
         <label className="form-control w-full mb-4">
@@ -42,31 +35,24 @@ const CompanyForm: React.FC<CompanyFormProps> = ({ onNext, onSave, companyInfo }
               What industry best describes your brand?
             </span>
           </div>
-          <Select
+          <select
             className="input input-bordered w-full"
-            placeholder="Select one:"
-            indicator={<KeyboardArrowDown />}
-            sx={{
-              width: "100%",
-              [`& .${selectClasses.indicator}`]: {
-                transition: "0.2s",
-                [`&.${selectClasses.expanded}`]: {
-                  transform: "rotate(-180deg)",
-                },
-              },
-            }}
+            id="industry"
+            name="industry"
+            value={formData.industry}
+            onChange={(e) => handleFormChange(e)}
           >
-            <Option value="Agency">Agency</Option>
-            <Option value="E-commerce">E-commerce</Option>
-            <Option value="App">Website/App</Option>
-            <Option value="BNM">Brick & Mortar</Option>
-            <Option value="Other">Other</Option>
-          </Select>
+            <option value="Agency">Agency</option>
+            <option value="E-commerce">E-commerce</option>
+            <option value="App">Website/App</option>
+            <option value="BNM">Brick & Mortar</option>
+            <option value="Other">Other</option>
+          </select>
         </label>
       </div>
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end">
         <Button
-          onClick={onNext}
+          onClick={handleNextStep}
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

@@ -5,29 +5,88 @@ import Box from "@mui/material/Box";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "./SocialMediaSelect";
+import ConfirmForm from "./ConfirmForm";
+
+/* 
+  This is the parent component
+  This component will control and manage steps and data 
+*/
+
+// Step 1: Company Form Info
+// Step 2: Contact Form Info
+// Step 3: Social Media Selector Info
+// Step 4: Confirm Form Data
+// Step 5: Redirect to dashboard?
+interface BrandForm {
+  userID: string;
+  companyName: string;
+  industry: string;
+  contactPersonName: string;
+  contactEmail: string;
+  contactPhoneNumber: string;
+  location: string;
+  preferences: string[];
+}
+
+const brandFormData: BrandForm = {
+  //TODO: grab userID after initial user signup page
+  userID: "",
+  companyName: "",
+  industry: "",
+  contactPersonName: "",
+  contactEmail: "",
+  contactPhoneNumber: "",
+  location: "",
+  preferences: [],
+};
 
 const SignUpBox = () => {
-  const [currentForm, setCurrentForm] = useState("company");
-  const [brandInfo, setBrandInfo] = useState({});
+  const [step, setStep] = useState('1');
+  const [formData, setFormData] = useState(brandFormData);
+
+  // Method to go to NEXT step
+  const handleNextStep = () => {
+    if (step === '1') setStep('2');
+    else if (step === '2') setStep('3');
+    else if (step === '3') setStep('4');
+  }
   
+  // Method to go to PREVIOUS step
+  const handlePrevStep = () => {
+    if (step === '4') setStep('3');
+    else if (step === '3') setStep('2');
+    else if (step === '2') setStep('1');
+  }
 
-  const goToNextForm = () => {
-    if (currentForm === "company") {
-      setCurrentForm("contact");
-    }
-    if (currentForm === "contact") {
-      setCurrentForm("socialmedia");
-    }
+  // Method to update FormData
+  const handleFormChange = (event: any) => {
+    const fieldName = event?.target.name;
+
+    setFormData({
+      ...formData,
+      [fieldName]: event?.target.value,
+    });
   };
 
-  const goToPreviousForm = () => {
-    if (currentForm === "socialmedia") {
-      setCurrentForm("contact");
+  const handlePreferenceChange = (selected: string) => {
+    if (formData.preferences.includes(selected)) {
+      setFormData({
+        ...formData,
+        ['preferences']: [...formData.preferences.filter((preference) => preference !== selected)],
+      });
+      return;
     }
-    if (currentForm === "contact") {
-      setCurrentForm("company");
-    }
+    setFormData({
+      ...formData,
+      ['preferences']: [...formData.preferences, selected],
+    });
   };
+
+  //TODO: Method to submit form
+  const handleSubmitForm = () => {
+    return;
+  }
+
 
   return (
     <div className="flex justify-center items-center h-auto pt-52">
@@ -35,9 +94,36 @@ const SignUpBox = () => {
         className="p-5 bg-base-200 rounded-box"
         sx={{ width: "900px", height: "600px", border: "1px solid black" }}
       >
-        {currentForm === "company" && <CompanyForm onNext={goToNextForm} brandInfo={brandInfo}  />}
-        {currentForm === "contact" && <ContactForm onBack={goToPreviousForm} onNext={goToNextForm}  onSave={setContactInfo} contactInfo={contactInfo}/>}
-        {currentForm === "socialmedia" && <SocialMediaSelect onBack={goToPreviousForm} onSave={setSocialMediaInfo} socialMediaInfo={socialMediaInfo}/>}
+        {/* Render Form Parts Here */}
+        {
+          step === '1' && <CompanyForm 
+            formData={formData}
+            handleFormChange={handleFormChange}
+            handleNextStep={handleNextStep}
+          />
+        }
+        {
+          step === '2' && <ContactForm 
+            formData={formData}
+            handleFormChange={handleFormChange}
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+          />
+        }
+        {
+          step === '3' && <SocialMediaSelect 
+            formData={formData}
+            handlePreferenceChange={handlePreferenceChange}
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+          />
+        }
+        {
+          step === '4' && <ConfirmForm 
+            formData={formData}
+            handlePrevStep={handlePrevStep}
+          />
+        }
       </Box>
     </div>
   );

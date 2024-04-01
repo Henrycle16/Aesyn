@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Chip, Stack } from "@mui/material";
+import { Box, Button, Chip } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
@@ -10,31 +10,20 @@ import {
   FaTwitch,
   FaYoutube,
 } from "react-icons/fa6";
-import { useState } from "react";
 
 interface SocialMediaSelectProps {
-  onBack: () => void;
-  onSave: (info: any) => void;
+  handleNextStep: () => void;
+  handlePrevStep: () => void;
+  handlePreferenceChange: (selected: string) => void;
+  formData: any;
 }
 
-const SocialMediaSelect: React.FC<SocialMediaSelectProps> = ({ onBack }) => {
-  const [selectedChips, setSelectedChips] = useState<string[]>([]);
-
-  const handleClick = (label: string) => {
-    setSelectedChips((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        return prevSelected.filter((chip) => chip !== label);
-      } else {
-        return [...prevSelected, label];
-      }
-    });
-  };
-
+const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, handlePrevStep } : SocialMediaSelectProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
       <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
         <Button
-          onClick={onBack}
+          onClick={handlePrevStep}
           variant="text"
           startIcon={<ArrowBackIcon />}
           className="col-span-1"
@@ -51,65 +40,65 @@ const SocialMediaSelect: React.FC<SocialMediaSelectProps> = ({ onBack }) => {
         </div>
         <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-8">
           <Chip
-            onClick={() => handleClick("Instagram")}
+            onClick={() => handlePreferenceChange("Instagram")}
             variant={
-              selectedChips.includes("Instagram") ? "filled" : "outlined"
+              formData.preferences.includes("Instagram") ? "filled" : "outlined"
             }
             icon={<FaInstagram />}
             label="Instagram"
             sx={{ fontSize: "16px", paddingY: "20px" }}
             className={`${
-              selectedChips.includes("Instagram")
+              formData.preferences.includes("Instagram")
                 ? "bg-blue-500 text-white"
                 : "bg-white"
             }`}
           />
           <Chip
-            onClick={() => handleClick("TikTok")}
-            variant={selectedChips.includes("TikTok") ? "filled" : "outlined"}
+            onClick={() => handlePreferenceChange("TikTok")}
+            variant={formData.preferences.includes("TikTok") ? "filled" : "outlined"}
             icon={<FaTiktok />}
             label="TikTok"
             sx={{ fontSize: "16px", paddingY: "20px" }}
             className={`${
-              selectedChips.includes("TikTok")
+              formData.preferences.includes("TikTok")
                 ? "bg-blue-500 text-white"
                 : "bg-white"
             }`}
           />
           <Chip
-            onClick={() => handleClick("Youtube")}
-            variant={selectedChips.includes("Youtube") ? "filled" : "outlined"}
+            onClick={() => handlePreferenceChange("Youtube")}
+            variant={formData.preferences.includes("Youtube") ? "filled" : "outlined"}
             icon={<FaYoutube />}
             label="Youtube"
             sx={{ fontSize: "16px", paddingY: "20px" }}
             className={`${
-              selectedChips.includes("Youtube")
+              formData.preferences.includes("Youtube")
                 ? "bg-blue-500 text-white"
                 : "bg-white"
             }`}
           />
           <Chip
-            onClick={() => handleClick("Twitch")}
-            variant={selectedChips.includes("Twitch") ? "filled" : "outlined"}
+            onClick={() => handlePreferenceChange("Twitch")}
+            variant={formData.preferences.includes("Twitch") ? "filled" : "outlined"}
             icon={<FaTwitch />}
             label="Twitch"
             sx={{ fontSize: "16px", paddingY: "20px" }}
             className={`${
-              selectedChips.includes("Twitch")
+              formData.preferences.includes("Twitch")
                 ? "bg-blue-500 text-white"
                 : "bg-white"
             }`}
           />{" "}
           <Chip
-            onClick={() => handleClick("Twitter/X")}
+            onClick={() => handlePreferenceChange("Twitter/X")}
             variant={
-              selectedChips.includes("Twitter/X") ? "filled" : "outlined"
+              formData.preferences.includes("Twitter/X") ? "filled" : "outlined"
             }
             icon={<FaSquareXTwitter />}
             label="Twitter/X"
             sx={{ fontSize: "16px", paddingY: "20px" }}
             className={`${
-              selectedChips.includes("Twitter/X")
+              formData.preferences.includes("Twitter/X")
                 ? "bg-blue-500 text-white"
                 : "bg-white"
             }`}
@@ -119,6 +108,7 @@ const SocialMediaSelect: React.FC<SocialMediaSelectProps> = ({ onBack }) => {
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end">
         <Button
           type="submit"
+          onClick={handleNextStep}
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"
