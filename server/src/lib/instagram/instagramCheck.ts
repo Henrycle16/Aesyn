@@ -13,7 +13,7 @@ const instagramCheck = async (pageID: String, accessToken: String) => {
 
         const existingUser = await instagram_data.findOne({ pageID: pageID })
         
-        // Check if MongoDB has PageID
+        // Check if user exists with pageID
         if(!existingUser){
             // Get business id
             const businessId = await getBusinessId(pageID, accessToken);

@@ -3,6 +3,8 @@ import { getLongLivedAccessToken } from '../../services/instagramGraphAPI';
 import axios from 'axios';
 
 //TODO: Create a way to obtain all objectID and loop through them to refresh the token every x days
+//TODO: When refreshing token, we should also refresh the user's basic info / insights info for changed data
+
 const tokenRefresh = async (objectID: Object) => {
     try {
         const user = await instagram_data.findById(objectID);
