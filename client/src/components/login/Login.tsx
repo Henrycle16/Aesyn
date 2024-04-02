@@ -39,7 +39,6 @@ const LoginComponent = () => {
       password: password,
       redirect: false,
     });
-    console.log("hi: ", loginResponse);
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");

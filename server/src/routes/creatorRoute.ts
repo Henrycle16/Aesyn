@@ -1,5 +1,4 @@
 import express from 'express';
-import { auth } from '../middleware/auth';
 import { check, validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
@@ -10,7 +9,7 @@ const router = express.Router();
 // @route   GET api/creatorProfile/me
 // @desc    Get current users profile
 // @access  Private
-router.get('/me', auth, async (req, res) => {
+router.get('/me', async (req, res) => {
     try {
         const profile = await Creator.findOne({
             user: req.user.id,
@@ -40,7 +39,7 @@ router.get('/me', auth, async (req, res) => {
 router.post(
     '/',
     [
-        auth
+
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -141,7 +140,7 @@ router.get('/user/:user_id', async (req, res) => {
 // @route   DELETE api/profile
 // @desc    Delete profile, user, & posts
 // @access  Private
-router.delete('/', auth, async (req, res) => {
+router.delete('/', async (req, res) => {
     try {
         // Remove user posts
         //await Post.deleteMany({ user: req.user.id });
