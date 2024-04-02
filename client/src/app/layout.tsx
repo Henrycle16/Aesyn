@@ -1,14 +1,14 @@
 import "../styles/globals.css";
 import { Inter } from "next/font/google";
-import HeaderComponent from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer";
 import React from "react";
+import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: 'Welcome to "Startup....."',
-  description: 'Landing page',
+  description: 'App',
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (  
       <html lang="en">
         <body className={inter.className}>
-        <HeaderComponent />
+        <Header />
           {children}
           <Footer />
         </body>

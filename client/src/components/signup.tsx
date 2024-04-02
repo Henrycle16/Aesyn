@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,12 +14,14 @@ import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
 import { signIn } from "next-auth/react";
-import { register } from '../actions/auth'
+import { useSearchParams } from "next/navigation";
 
+const SignUp = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const state = searchParams.get("state");
 
-const SignUpComponent = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -43,7 +46,8 @@ const SignUpComponent = () => {
       throw new Error("Passwords do not match");
     } else {
 
-      const signUpResponse = await signIn("sign-up", {
+      try {
+        const signUpResponse = await signIn("sign-up", {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -53,7 +57,15 @@ const SignUpComponent = () => {
 
       if (signUpResponse && !signUpResponse.error) {
         console.log("REGISTERED!");
+      }
+
+      if (state === "true") {
+        router.push("/signup/brand");
       } else {
+        router.push("/signup/creator");
+      }
+
+      } catch {
         console.log("Error!")
       }
     }
@@ -62,7 +74,6 @@ const SignUpComponent = () => {
   };
 
   return (
-
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
@@ -177,4 +188,4 @@ const SignUpComponent = () => {
   );
 };
 
-export default SignUpComponent;
+export default SignUp;
