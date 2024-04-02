@@ -1,8 +1,6 @@
 import express, { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { auth } from '../middleware/auth';
 import User from '../models/User';
 
 const router = express.Router();
@@ -22,7 +20,7 @@ router.get('/', async (req: Request, res: Response) => {
 // @route   Get api/users/:id
 // @desc    Get user by ID
 // @access  Public -> Private
-router.get('/:id', /*auth,*/ async (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -79,24 +77,8 @@ router.post(
       newUser.password = await bcrypt.hash(password, salt);
 
       const savedUser = await newUser.save();
-
-      // Return jsonwebtoken
-      const payload = {
-        user: {
-          id: newUser.id,
-        },
-      };
-
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-          res.status(201).json({savedUser, token });
-        }
-      );
-
+      
+      res.status(201).json({savedUser});
     } catch (error) {
       res.status(500).json(error);
     }
@@ -120,7 +102,7 @@ router.post(
 // @route   PUT api/users
 // @desc    Update self user
 // @access  Private
-router.put('/', auth, async (req: Request, res: Response) => {
+router.put('/', async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -142,7 +124,7 @@ router.put('/', auth, async (req: Request, res: Response) => {
 // @route   DELETE api/users
 // @desc    Delete user from database.
 // @access  Private
-router.delete('/', auth, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     await User.findOneAndDelete({ _id: req.user.id });
 

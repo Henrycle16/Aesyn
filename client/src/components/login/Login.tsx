@@ -10,24 +10,19 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
+import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import { register } from '../actions/auth'
 
-
-const SignUpComponent = () => {
+const LoginComponent = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    password2: "",
   });
 
-  const { firstName, lastName, email, password, password2 } = formData;
+  const { email, password } = formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -38,31 +33,22 @@ const SignUpComponent = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (password !== password2) {
-      throw new Error("Passwords do not match");
+
+    const loginResponse = await signIn("login", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+    console.log("hi: ", loginResponse);
+
+    if (loginResponse && !loginResponse.error) {
+      console.log("LOGIN!");
     } else {
-
-      const signUpResponse = await signIn("sign-up", {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        redirect: false,
-      })
-
-      if (signUpResponse && !signUpResponse.error) {
-        console.log("REGISTERED!");
-      } else {
-        console.log("Error!")
-      }
+      console.log("Error!");
     }
-    
-
   };
 
   return (
-
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
@@ -70,7 +56,7 @@ const SignUpComponent = () => {
           <PersonPinOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Login
         </Typography>
         <Box
           className="mt-3"
@@ -78,38 +64,15 @@ const SignUpComponent = () => {
           onSubmit={(e) => handleSubmit(e)}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                value={firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
                 id="email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -124,27 +87,10 @@ const SignUpComponent = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password2"
-                label="Confirm Password"
-                type="password"
-                id="password2"
-                value={password2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel sx={{ paddingBottom: '10px' }}
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
@@ -154,7 +100,7 @@ const SignUpComponent = () => {
             variant="contained"
             className="mt-3 mb-2"
           >
-            Sign Up
+            Login
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -165,7 +111,12 @@ const SignUpComponent = () => {
           </Grid>
         </Box>
       </Box>
-      <Typography variant="body2" color="text.secondary" align="center" sx={{ paddingTop: '20px' }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        sx={{ paddingTop: "20px" }}
+      >
         {"Copyright © "}
         <Link color="inherit" href="http://github.com/H2JC/H2JC">
           H2JC
@@ -177,4 +128,4 @@ const SignUpComponent = () => {
   );
 };
 
-export default SignUpComponent;
+export default LoginComponent;
