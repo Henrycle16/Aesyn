@@ -41,36 +41,33 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (password !== password2) {
       throw new Error("Passwords do not match");
     } else {
-
       try {
         const signUpResponse = await signIn("sign-up", {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        redirect: false,
-      })
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          redirect: false,
+        });
 
-      if (signUpResponse && !signUpResponse.error) {
-        console.log("REGISTERED!");
-      }
+        if (signUpResponse && !signUpResponse.error) {
+          console.log("REGISTERED!");
 
-      if (state === "true") {
-        router.push("/signup/brand");
-      } else {
-        router.push("/signup/creator");
-      }
-
+          if (state == "true"){
+            router.push("/signup/brand");
+          } else {
+            router.push("/signup/creator");
+          }
+        }
+        
       } catch {
-        console.log("Error!")
+        console.log("Error!");
       }
     }
-    
-
   };
 
   return (
