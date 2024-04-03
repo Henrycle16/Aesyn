@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Stack } from "@mui/material";
 
 interface ConfirmFormProps {
   handleNextStep: () => void;
@@ -63,7 +62,7 @@ const ConfirmForm = ({
           <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Location</div>
               <div className="pt-2">
-              PlaceHolder for location
+              {formData.location}
              </div>
           </div>
 
