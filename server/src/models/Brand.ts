@@ -16,7 +16,14 @@ const BrandScheme = new mongoose.Schema({
     contactEmail: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
+    },
+    contactPhoneNumber: {
+        type: String,
+        required: true,
+    },
+    location: {
+        type: String
     },
     avatar: {
         type: String,
