@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Script from "next/script";
-import { getPageId } from '../../../services/instagramGraphAPI';
 import axios from 'axios';
 
 interface BasicUserInfo {
@@ -15,6 +14,15 @@ const FacebookLogin = () => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
 
+  const sendAccessTokenToBackend = async (accessToken: String) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/instagram/check', { accessToken });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     // Check if FB object is defined before using it
     if (typeof window.FB !== 'undefined') {
@@ -26,10 +34,8 @@ const FacebookLogin = () => {
 
           console.log("Access token: " + response.authResponse.accessToken);
 
-          // Get page id
-          const pageId = await getPageId(response.authResponse.accessToken);
-
-          // TODO: Send pageID and accessToken to server
+          // Send accessToken to backend
+          sendAccessTokenToBackend(response.authResponse.accessToken);
 
           return;
         }

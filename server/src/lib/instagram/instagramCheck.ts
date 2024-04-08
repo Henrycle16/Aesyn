@@ -1,4 +1,4 @@
-import { getBusinessId, getBasicUserInfo, getLongLivedAccessToken } from '../../services/instagramGraphAPI';
+import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken } from '../../services/instagramGraphAPI';
 import instagram_data from '../../models/InstagramData';
 import axios from 'axios';
 
@@ -8,12 +8,15 @@ interface BasicUserInfo {
     profilePicURL: string;
 }
 
-const instagramCheck = async (pageID: String, accessToken: String) => {
+const instagramCheck = async (accessToken: String) => {
     try {
 
+        // Get pageID of user
+        const pageID = await getPageId(accessToken);
+
+        // Check if user exists with pageID
         const existingUser = await instagram_data.findOne({ pageID: pageID })
         
-        // Check if user exists with pageID
         if(!existingUser){
             // Get business id
             const businessId = await getBusinessId(pageID, accessToken);
@@ -35,14 +38,9 @@ const instagramCheck = async (pageID: String, accessToken: String) => {
                 userName: userName,
                 profilePicURL: profilePicURL
             };
-            console.log("Payload: " + userPayload)
+            console.log("Payload: " + JSON.stringify(userPayload))
 
-            // Create object in MongoDB
-            const instagramUser = await axios.post('http://localhost:5000/api/instagram', userPayload);
-
-            console.log(instagramUser);
-
-            return;
+            return userPayload;
         }
 
     } catch (error) {
