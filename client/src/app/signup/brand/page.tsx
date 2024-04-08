@@ -1,4 +1,4 @@
-import SignUpBox from "@/components/SignupBox";
+import SignUpBox from "@/components/InitialSignupQuestions/BrandSignup/SignupBox";
 
 export default function BrandQuestions() {
   return (

@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import CompanyForm from "./BrandSignup/CompanyForm";
-import MapBox from "./MapBox";
-import ContactForm from "./BrandSignup/ContactForm";
-import SocialMediaSelect from "./BrandSignup/SocialMediaSelect";
-import ConfirmForm from "./BrandSignup/ConfirmForm";
-import ToDashboard from "./ToDashboard";
+import CompanyForm from "./CompanyForm";
+import ContactForm from "./ContactForm";
+import SocialMediaSelect from "../SocialMediaSelect";
+import ConfirmForm from "./ConfirmForm";
+import ToDashboard from "../ToDashboard";
+import LocationBox from "../LocationBox";
 
 /* 
   This is the parent component
@@ -88,8 +88,8 @@ const SignUpBox = () => {
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
     />,
-    <MapBox
-      key="MapBox"
+    <LocationBox
+      key="LocationBox"
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}

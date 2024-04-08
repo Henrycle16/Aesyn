@@ -5,7 +5,7 @@ import React from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface MapBoxProps {
+interface LocationBoxProps {
   handleNextStep: () => void;
   handlePrevStep: () => void;
   handleFormChange: (event: any) => void;
@@ -17,7 +17,7 @@ const MapBox = ({
   handleFormChange,
   handleNextStep,
   handlePrevStep,
-}: MapBoxProps) => {
+}: LocationBoxProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
 
