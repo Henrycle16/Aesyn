@@ -58,6 +58,7 @@ const instagramUserCheck = async (accessToken: String) => {
 
 const instagramInsights = async (businessID: String, accessToken: String) => {
     try {
+
         const monthylyImpressions = await getMonthlyUserImpressions(businessID, accessToken)
         const followersGender = await getFollowerDemographics_Gender(businessID, accessToken)
         const followersAge = await getFollowerDemographics_Age(businessID, accessToken)
@@ -82,6 +83,16 @@ const getInsights = async (businessID: String) => {
     // Get the accessToken from the user
     const { longLivedAccessToken: accessToken } = user;
 
+    // Update basic user info
+    const basicUserInfo = await getBasicUserInfo(businessID, accessToken) as BasicUserInfo;
+    const { name, userName, profilePicURL, followers_count } = basicUserInfo;
+
+    // Update the user with the basicUserInfo
+    user.name = name;
+    user.userName = userName;
+    user.profilePicURL = profilePicURL;
+    user.followers_count = followers_count;
+
     const userInsights = await instagramInsights(businessID, accessToken);
 
     if (userInsights) {
@@ -89,7 +100,7 @@ const getInsights = async (businessID: String) => {
         user.insights = userInsights;
         const updatedUser = await user.save();
 
-        console.log('User updated with insights');
+        console.log('User updated with insights and basic user info');
 
         return updatedUser;
     } else {
