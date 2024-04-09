@@ -11,6 +11,10 @@ const InstagramDataSchema = new mongoose.Schema({
     businessID: {
         type: String,
     },
+    tokenCreationDate:{
+        type: Date,
+        default: Date.now
+    },
     longLivedAccessToken: {
         type: String,
     },
