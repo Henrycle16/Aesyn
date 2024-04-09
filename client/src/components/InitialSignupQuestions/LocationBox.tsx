@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MapboxMap from "./MapBox";
 
 interface LocationBoxProps {
   handleNextStep: () => void;
@@ -12,7 +13,7 @@ interface LocationBoxProps {
   formData: any;
 }
 
-const MapBox = ({
+const LocationBox = ({
   formData,
   handleFormChange,
   handleNextStep,
@@ -36,21 +37,17 @@ const MapBox = ({
       </div>
 
       {/* Location Box */}
-      <div className="col-start-3 col-span-5 row-start-2 row-span-3 justify-center items-center">
-        <label className="form-control w-full mb-6">
+      <div className="col-start-3 col-span-5 row-start-2 row-span-1 justify-center items-center">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text font-bold text-lg"> Where are you located? </span>
           </div>
-          <input
-            type="text"
-            placeholder="Type here"
-            required
-            className="input input-bordered w-full"
-            name="location"
-            value={formData.location}
-            onChange={(e) => handleFormChange(e)}
-          />
         </label>
+      </div>
+
+      {/* Map */}
+      <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12">
+      <MapboxMap/>
       </div>
 
       {/* Next Button */}
@@ -70,4 +67,4 @@ const MapBox = ({
   );
 };
 
-export default MapBox;
+export default LocationBox;
