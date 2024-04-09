@@ -30,13 +30,14 @@ const getBusinessId = async (PAGE_ID: String, ACCESS_TOKEN: String) => {
 
 const getBasicUserInfo = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=name,username,profile_picture_url&access_token=${ACCESS_TOKEN}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=name,username,profile_picture_url,followers_count&access_token=${ACCESS_TOKEN}`);
 
         const name = response.data.name;
         const userName = response.data.username;
         const profilePicURL = response.data.profile_picture_url;
+        const followers_count = response.data.followers_count;
 
-        return { name, userName, profilePicURL };
+        return { name, userName, profilePicURL, followers_count };
     } catch (error) {
         console.log(error);
         return error;
@@ -55,4 +56,64 @@ const getLongLivedAccessToken = async (ACCESS_TOKEN: String) => {
     }
 }
 
-export { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken };
+const getMonthlyUserImpressions = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
+    try {
+        // Get monhtly impressions & reach
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=impressions,reach&period=days_28&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`);
+        
+        const impressions = response.data.data[0].values;
+        const reach = response.data.data[1].values;
+
+        return { impressions, reach };
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+const getFollowerDemographics_Gender = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
+    try {
+        // Get last 90 days follower demographics - gender
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=follower_demographics&period=lifetime&timeframe=last_90_days&breakdown=gender&metric_type=total_value&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`);
+
+        const gender = response.data.data[0].total_value.breakdowns[0].results;
+
+        return gender;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+const getFollowerDemographics_Age = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
+    try {
+        // Get last 90 days follower demographics - age
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=follower_demographics&period=lifetime&timeframe=last_90_days&breakdown=age&metric_type=total_value&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`);
+
+        const age = response.data.data[0].total_value.breakdowns[0].results;
+
+        return age;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+const getFollowerDemographics_TopCities = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
+    try {
+        // Get last 90 days follower demographics - city
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=follower_demographics&period=lifetime&timeframe=last_90_days&breakdown=city&metric_type=total_value&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`);
+
+        let cities = response.data.data[0].total_value.breakdowns[0].results;
+
+        // Sort cities by value in descending order and get top 5
+        cities = cities.sort((a, b) => b.value - a.value).slice(0, 5);
+
+        return cities;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken, getMonthlyUserImpressions, getFollowerDemographics_Gender, getFollowerDemographics_Age, getFollowerDemographics_TopCities };

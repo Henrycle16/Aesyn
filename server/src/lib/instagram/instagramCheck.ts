@@ -1,4 +1,4 @@
-import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken } from '../../services/instagramGraphAPI';
+import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken, getMonthlyUserImpressions, getFollowerDemographics_Gender, getFollowerDemographics_Age, getFollowerDemographics_TopCities } from '../../services/instagramGraphAPI';
 import instagram_data from '../../models/InstagramData';
 import axios from 'axios';
 
@@ -6,9 +6,10 @@ interface BasicUserInfo {
     name: string;
     userName: string;
     profilePicURL: string;
+    followers_count: string;
 }
 
-const instagramCheck = async (accessToken: String) => {
+const instagramUserCheck = async (accessToken: String) => {
     try {
 
         // Get pageID of user
@@ -23,7 +24,7 @@ const instagramCheck = async (accessToken: String) => {
 
             // Get basic user info
             const basicUserInfo = await getBasicUserInfo(businessId, accessToken) as BasicUserInfo;
-            const { name, userName, profilePicURL } = basicUserInfo;
+            const { name, userName, profilePicURL, followers_count } = basicUserInfo;
 
             const testCreatorID = '65de95dc2c98cba944efb3ab';
 
@@ -36,7 +37,8 @@ const instagramCheck = async (accessToken: String) => {
                 longLivedAccessToken: longtoken,
                 name: name,
                 userName: userName,
-                profilePicURL: profilePicURL
+                profilePicURL: profilePicURL,
+                followers_count: followers_count
             };
             console.log("Payload: " + JSON.stringify(userPayload))
 
@@ -50,5 +52,20 @@ const instagramCheck = async (accessToken: String) => {
     
 }
 
+const instagramInsights = async (businessID: String, accessToken: String) => {
+    try {
+        const monthylyImpressions = await getMonthlyUserImpressions(businessID, accessToken)
+        const followersGender = await getFollowerDemographics_Gender(businessID, accessToken)
+        const followersAge = await getFollowerDemographics_Age(businessID, accessToken)
+        const followersTopCities = await getFollowerDemographics_TopCities(businessID, accessToken)
+        
+        return {monthylyImpressions, followersGender, followersAge, followersTopCities};
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+    
+}
 
-export { instagramCheck };
+
+export { instagramUserCheck, instagramInsights };

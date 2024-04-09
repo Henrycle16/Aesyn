@@ -23,6 +23,12 @@ const InstagramDataSchema = new mongoose.Schema({
     profilePicURL: {
         type: String
     },
+    followers_count:{
+        type: String
+    },
+    insights: {
+        type: Object
+    },
 
     //To be continued...
 });
