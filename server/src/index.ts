@@ -1,6 +1,7 @@
 import app from "./app";
 import { connectToDatabase } from "./db/mongodb-connection";
 import { connectToPinecone } from "./db/pineconedb-connection";
+import { tokenRefresh } from "./lib/instagram/tokenRefresh";
 // import { pineconeWatch } from "./services/mongodb-pineconedb";
 
 const PORT = process.env.PORT || 5000;
@@ -20,3 +21,8 @@ connectToPinecone().then(() => {
 // pineconeWatch().then(() => {
 //     console.log("Pinecone watching for changes.");
 // }).catch(error => console.log(error));
+
+// Refreshing tokens
+tokenRefresh().then(() => {
+    console.log("Tokens refreshed successfully.");
+}).catch(error => console.log(error));
