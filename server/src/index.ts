@@ -23,6 +23,6 @@ connectToPinecone().then(() => {
 // }).catch(error => console.log(error));
 
 // Refreshing tokens
-tokenRefresh().then(() => {
-    console.log("Tokens refreshed successfully.");
-}).catch(error => console.log(error));
+// tokenRefresh().then(() => {
+//     console.log("Tokens refreshed successfully.");
+// }).catch(error => console.log(error));
