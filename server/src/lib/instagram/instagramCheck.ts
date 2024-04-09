@@ -1,6 +1,6 @@
 import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken, getMonthlyUserImpressions, getFollowerDemographics_Gender, getFollowerDemographics_Age, getFollowerDemographics_TopCities } from '../../services/instagramGraphAPI';
-import instagram_data from '../../models/InstagramData';
-import axios from 'axios';
+//import instagram_data from '../../models/InstagramData';
+import InstagramData from '../../models/InstagramData';
 
 interface BasicUserInfo {
     name: string;
@@ -15,15 +15,16 @@ const instagramUserCheck = async (accessToken: String) => {
         // Get pageID of user
         const pageID = await getPageId(accessToken);
 
-        // Check if user exists with pageID
-        const existingUser = await instagram_data.findOne({ pageID: pageID })
+        // Get business id
+        const businessID = await getBusinessId(pageID, accessToken);
+
+        // Check if user exists with businessID
+        const existingUser = await InstagramData.findOne({ businessID: businessID })
         
         if(!existingUser){
-            // Get business id
-            const businessId = await getBusinessId(pageID, accessToken);
 
             // Get basic user info
-            const basicUserInfo = await getBasicUserInfo(businessId, accessToken) as BasicUserInfo;
+            const basicUserInfo = await getBasicUserInfo(businessID, accessToken) as BasicUserInfo;
             const { name, userName, profilePicURL, followers_count } = basicUserInfo;
 
             const testCreatorID = '65de95dc2c98cba944efb3ab';
@@ -33,16 +34,19 @@ const instagramUserCheck = async (accessToken: String) => {
             const userPayload = {
                 creatorID: testCreatorID,
                 pageID: pageID,
-                businessID: businessId,
+                businessID: businessID,
                 longLivedAccessToken: longtoken,
                 name: name,
                 userName: userName,
                 profilePicURL: profilePicURL,
                 followers_count: followers_count
             };
-            console.log("Payload: " + JSON.stringify(userPayload))
+
+            console.log('User created successfully')
 
             return userPayload;
+        }else{
+            await getInsights(businessID);
         }
 
     } catch (error) {
@@ -67,5 +71,31 @@ const instagramInsights = async (businessID: String, accessToken: String) => {
     
 }
 
+const getInsights = async (businessID: String) => {
+    // Find the user with the given businessId
+    const user = await InstagramData.findOne({ businessID: businessID });
 
-export { instagramUserCheck, instagramInsights };
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    // Get the accessToken from the user
+    const { longLivedAccessToken: accessToken } = user;
+
+    const userInsights = await instagramInsights(businessID, accessToken);
+
+    if (userInsights) {
+        // Update the user with the insights
+        user.insights = userInsights;
+        const updatedUser = await user.save();
+
+        console.log('User updated with insights');
+
+        return updatedUser;
+    } else {
+        throw new Error('No insights available');
+    }
+}
+
+
+export { instagramUserCheck, getInsights };
