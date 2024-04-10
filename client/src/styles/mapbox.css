@@ -102,3 +102,11 @@ body,
     margin-top: 15px;
     margin-right: 3px;
 }
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact {
+    visibility: hidden !important;
+}
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+    visibility: hidden !important;
+}
