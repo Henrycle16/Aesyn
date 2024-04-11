@@ -15,10 +15,11 @@ import LocationBox from "../LocationBox";
 */
 
 // Step 1: Company Form Info
-// Step 2: Contact Form Info
-// Step 3: Social Media Selector Info
-// Step 4: Confirm Form Data
-// Step 5: Redirect to dashboard
+// Step 2: Location Info
+// Step 3: Contact Form Info
+// Step 4: Social Media Selector Info
+// Step 5: Confirm Form Data
+// Step 6: Redirect to dashboard
 interface BrandForm {
   userID: string;
   companyName: string;
@@ -65,6 +66,14 @@ const SignUpBox = () => {
     }));
   };
 
+  // Method to handle the location change event
+  const handleLocationChange = (location: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      location: location,
+    }));
+  };
+
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
     setFormData((prevData) => {
@@ -91,6 +100,7 @@ const SignUpBox = () => {
     <LocationBox
       key="LocationBox"
       formData={formData}
+      handleLocationChange={handleLocationChange}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
       handlePrevStep={handlePrevStep}

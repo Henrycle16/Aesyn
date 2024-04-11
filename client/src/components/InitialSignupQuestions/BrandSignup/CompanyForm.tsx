@@ -6,7 +6,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface CompanyFormProps {
   handleNextStep: () => void;
-  handleFormChange: (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
+  handleFormChange: (
+    event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => void;
   formData: any;
 }
 
@@ -23,8 +25,6 @@ const CompanyForm = ({
 
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-
-
       {/* Handles Brand Name and Industry Selection */}
       <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-8">
@@ -89,10 +89,10 @@ const CompanyForm = ({
         </label>
       </div>
 
-
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
+          disabled={!formData.companyName || !formData.industry}
           onClick={handleNextStep}
           type="submit"
           variant="contained"
