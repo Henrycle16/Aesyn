@@ -13,7 +13,6 @@ import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
 import { signIn } from "next-auth/react";
 
 const LoginComponent = () => {
