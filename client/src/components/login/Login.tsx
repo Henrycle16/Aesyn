@@ -42,6 +42,7 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
+      console.log(loginResponse);
     } else {
       console.log("Error!");
     }
@@ -104,7 +105,7 @@ const LoginComponent = () => {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
-                Already have an account? Sign in
+                Don't have an account? Sign up
               </Link>
             </Grid>
           </Grid>
