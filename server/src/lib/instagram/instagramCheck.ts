@@ -1,4 +1,4 @@
-import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken, getMonthlyUserImpressions, getFollowerDemographics_Gender, getFollowerDemographics_Age, getFollowerDemographics_TopCities } from '../../services/instagramGraphAPI';
+import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken, getMonthlyUserImpressionsAndReach, getFollowerDemographics_Gender, getFollowerDemographics_Age, getFollowerDemographics_TopCities } from '../../services/instagramGraphAPI';
 //import instagram_data from '../../models/InstagramData';
 import InstagramData from '../../models/InstagramData';
 
@@ -59,12 +59,12 @@ const instagramUserCheck = async (accessToken: String) => {
 const instagramInsights = async (businessID: String, accessToken: String) => {
     try {
 
-        const monthylyImpressions = await getMonthlyUserImpressions(businessID, accessToken)
+        const monthylyImpressionsAndReach = await getMonthlyUserImpressionsAndReach(businessID, accessToken)
         const followersGender = await getFollowerDemographics_Gender(businessID, accessToken)
         const followersAge = await getFollowerDemographics_Age(businessID, accessToken)
         const followersTopCities = await getFollowerDemographics_TopCities(businessID, accessToken)
         
-        return {monthylyImpressions, followersGender, followersAge, followersTopCities};
+        return {monthylyImpressionsAndReach, followersGender, followersAge, followersTopCities};
     } catch (error) {
         console.log(error);
         return error;
