@@ -2,13 +2,14 @@ import express, { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
 // @route   GET api/users/
 // @desc    Get all users
 // @access  Public -> Private
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', auth, async (req: Request, res: Response) => {
   try {
     const allUsers = await User.find({});
     res.status(200).json(allUsers);
@@ -20,7 +21,7 @@ router.get('/', async (req: Request, res: Response) => {
 // @route   Get api/users/:id
 // @desc    Get user by ID
 // @access  Public -> Private
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', auth, async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -102,7 +103,7 @@ router.post(
 // @route   PUT api/users
 // @desc    Update self user
 // @access  Private
-router.put('/', async (req: Request, res: Response) => {
+router.put('/', auth, async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -124,7 +125,7 @@ router.put('/', async (req: Request, res: Response) => {
 // @route   DELETE api/users
 // @desc    Delete user from database.
 // @access  Private
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
   try {
     await User.findOneAndDelete({ _id: req.user.id });
 

@@ -2,13 +2,14 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import { check, validationResult } from 'express-validator';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
 // @route   GET api/auth
 // @desc    Test route
 // @access  Private
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);

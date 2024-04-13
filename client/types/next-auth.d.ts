@@ -12,5 +12,4 @@ declare module 'next-auth' {
     lastName: string
     _id: string;
   }
-
 }

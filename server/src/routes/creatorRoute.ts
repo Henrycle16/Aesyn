@@ -2,13 +2,14 @@ import express from 'express';
 import { check, validationResult } from 'express-validator';
 import Creator from '../models/Creator';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
 // @route   GET api/creatorProfile/me
 // @desc    Get current users profile
 // @access  Private
-router.get('/me', async (req, res) => {
+router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Creator.findOne({
             user: req.user.id,
@@ -40,6 +41,7 @@ router.post(
     [
 
     ],
+    auth, 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -68,15 +70,11 @@ router.post(
         try {
             let creatorProfile = await Creator.findOne({ user: req.user.id });
 
-            //Update if found
+            // If found error
             if (creatorProfile) {
-                creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.user.id },
-                    { $set: creatorProfileFields},
-                    { new: true }
-                );
-
-                return res.json(creatorProfile);
+                return res.status(400).json({
+                    errors: [{ msg: 'Creator already exists' }],
+                  });
             }
 
             //Create if not found
@@ -98,7 +96,8 @@ router.put(
     '/',
     [
 
-    ],
+    ], 
+    auth,
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -136,6 +135,10 @@ router.put(
                 );
 
                 return res.json(creatorProfile);
+            } else {
+                return res.status(400).json({
+                    errors: [{ msg: 'No Creator profile found' }],
+                  });
             }
 
             await creatorProfile.save();
@@ -195,7 +198,7 @@ router.get('/user/:user_id', async (req, res) => {
 // @route   DELETE api/profile
 // @desc    Delete profile, user, & posts
 // @access  Private
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         // Remove user posts
         //await Post.deleteMany({ user: req.user.id });
