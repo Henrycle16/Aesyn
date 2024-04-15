@@ -19,6 +19,14 @@ const CompanyForm = ({
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const options = [
+    { value: "Agency", label: "Agency" },
+    { value: "E-commerce", label: "E-commerce" },
+    { value: "Website/App", label: "Website/App" },
+    { value: "Brick & Mortar", label: "Brick & Mortar" },
+    { value: "Other", label: "Other" },
+  ];
+
   const toggleSelect = () => {
     setIsOpen(!isOpen);
   };
@@ -58,15 +66,16 @@ const CompanyForm = ({
               value={formData.industry}
               onChange={(e) => handleFormChange(e)}
               onClick={toggleSelect}
+              onBlur={toggleSelect}
             >
               <option value="" disabled hidden>
                 Please select an industry
               </option>
-              <option value="Agency">Agency</option>
-              <option value="E-commerce">E-commerce</option>
-              <option value="Website/App">Website/App</option>
-              <option value="Brick & Mortar">Brick & Mortar</option>
-              <option value="Other">Other</option>
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <svg
