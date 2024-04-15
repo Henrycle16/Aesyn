@@ -84,14 +84,16 @@ export const config = {
         token.id = user._id
       }
 
-      console.log(token);
+      console.log("TOKEN: ",token);
       return token;
     },
     async session({ session, token }) {
       // I skipped the line below coz it gave me a TypeError
       // session.accessToken = token.accessToken;
       session.user.id = token.id;
+      session.user.token = token.jti;
 
+      console.log("SESSION: ", session);
       return session;
     },
   },

@@ -110,11 +110,11 @@ router.put('/', auth, async (req: Request, res: Response) => {
   }
 
   try {
-    await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(req.body.user.id, {
       $set: req.body,
     });
 
-    const userUpdated = await User.findById(req.user.id);
+    const userUpdated = await User.findById(req.body.user.id);
 
     res.status(201).json(userUpdated);
   } catch (error) {
@@ -127,7 +127,7 @@ router.put('/', auth, async (req: Request, res: Response) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
-    await User.findOneAndDelete({ _id: req.user.id });
+    await User.findOneAndDelete({ _id: req.body.user.id });
 
     res.status(200).json('Account has been deleted');
   } catch (error) {

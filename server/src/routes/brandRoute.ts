@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/me", auth, async (req, res) => {
   try {
     const profile = await Brand.findOne({
-      user: req.user.id,
+      user: req.body.user.id,
     }).populate("user", ["username", "firstName", "lastName", "avatar"]);
 
     if (!profile) {
@@ -53,7 +53,7 @@ router.post(
 
     //Build profile object
     const brandFields = {
-      user: req.user.id,
+      user: req.body.user.id,
       companyName: companyName,
       contactPersonName: contactPersonName,
       contactEmail: contactEmail,
@@ -62,8 +62,10 @@ router.post(
       preferences: preferences,
     };
 
+    console.log("INSIDE BRAND ROUTE!");
+
     try {
-      let brandProfile = await Brand.findOne({ user: req.user.id });
+      let brandProfile = await Brand.findOne({ user: req.body.user.id });
 
       //If found error
       if (brandProfile) {
@@ -104,7 +106,7 @@ router.put("/", [], auth, async (req, res) => {
 
   //Build profile object
   const brandFields = {
-    user: req.user.id,
+    user: req.body.user.id,
     companyName: companyName,
     contactPersonName: contactPersonName,
     contactEmail: contactEmail,
@@ -114,12 +116,12 @@ router.put("/", [], auth, async (req, res) => {
   };
 
   try {
-    let brandProfile = await Brand.findOne({ user: req.user.id });
+    let brandProfile = await Brand.findOne({ user: req.body.user.id });
 
     //Update if found
     if (brandProfile) {
       brandProfile = await Brand.findOneAndUpdate(
-        { user: req.user.id },
+        { user: req.body.user.id },
         { $set: brandFields },
         { new: true }
       );
@@ -185,9 +187,9 @@ router.delete("/", auth, async (req, res) => {
     // Remove user posts
     //await Post.deleteMany({ user: req.user.id });
     // Remove profile
-    await Brand.findOneAndDelete({ user: req.user.id });
+    await Brand.findOneAndDelete({ user: req.body.user.id });
     // Remove user
-    await User.findOneAndDelete({ _id: req.user.id });
+    await User.findOneAndDelete({ _id: req.body.user.id });
 
     res.json({ msg: "User deleted" });
   } catch (err) {
