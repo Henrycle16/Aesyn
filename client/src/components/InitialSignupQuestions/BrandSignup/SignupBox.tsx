@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import CompanyForm from "./BrandSignup/CompanyForm";
-import MapBox from "./MapBox";
-import ContactForm from "./BrandSignup/ContactForm";
-import SocialMediaSelect from "./BrandSignup/SocialMediaSelect";
-import ConfirmForm from "./BrandSignup/ConfirmForm";
-import ToDashboard from "./ToDashboard";
+import CompanyForm from "./CompanyForm";
+import ContactForm from "./ContactForm";
+import SocialMediaSelect from "../SocialMediaSelect";
+import ConfirmForm from "./ConfirmForm";
+import ToDashboard from "../ToDashboard";
+import LocationBox from "../LocationBox";
 
 /* 
   This is the parent component
@@ -15,10 +15,11 @@ import ToDashboard from "./ToDashboard";
 */
 
 // Step 1: Company Form Info
-// Step 2: Contact Form Info
-// Step 3: Social Media Selector Info
-// Step 4: Confirm Form Data
-// Step 5: Redirect to dashboard
+// Step 2: Location Info
+// Step 3: Contact Form Info
+// Step 4: Social Media Selector Info
+// Step 5: Confirm Form Data
+// Step 6: Redirect to dashboard
 interface BrandForm {
   userID: string;
   companyName: string;
@@ -65,6 +66,14 @@ const SignUpBox = () => {
     }));
   };
 
+  // Method to handle the location change event
+  const handleLocationChange = (location: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      location: location,
+    }));
+  };
+
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
     setFormData((prevData) => {
@@ -88,9 +97,10 @@ const SignUpBox = () => {
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
     />,
-    <MapBox
-      key="MapBox"
+    <LocationBox
+      key="LocationBox"
       formData={formData}
+      handleLocationChange={handleLocationChange}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
       handlePrevStep={handlePrevStep}

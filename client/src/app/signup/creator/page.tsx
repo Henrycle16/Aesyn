@@ -1,9 +1,9 @@
-import ProgressBar from "@/components/ProgressBar";
+import SignUpBox from "@/components/InitialSignupQuestions/CreatorSignup/SignupBox";
 
 export default function CreatorQuestions() {
   return (
     <div>
-      <ProgressBar />
+      <SignUpBox />
     </div>
   );
 }

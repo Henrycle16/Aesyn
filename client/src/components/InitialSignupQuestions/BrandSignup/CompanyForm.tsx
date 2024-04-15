@@ -6,7 +6,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface CompanyFormProps {
   handleNextStep: () => void;
-  handleFormChange: (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
+  handleFormChange: (
+    event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => void;
   formData: any;
 }
 
@@ -17,14 +19,20 @@ const CompanyForm = ({
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const options = [
+    { value: "Agency", label: "Agency" },
+    { value: "E-commerce", label: "E-commerce" },
+    { value: "Website/App", label: "Website/App" },
+    { value: "Brick & Mortar", label: "Brick & Mortar" },
+    { value: "Other", label: "Other" },
+  ];
+
   const toggleSelect = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-
-
       {/* Handles Brand Name and Industry Selection */}
       <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-8">
@@ -58,15 +66,16 @@ const CompanyForm = ({
               value={formData.industry}
               onChange={(e) => handleFormChange(e)}
               onClick={toggleSelect}
+              onBlur={toggleSelect}
             >
               <option value="" disabled hidden>
                 Please select an industry
               </option>
-              <option value="Agency">Agency</option>
-              <option value="E-commerce">E-commerce</option>
-              <option value="Website/App">Website/App</option>
-              <option value="Brick & Mortar">Brick & Mortar</option>
-              <option value="Other">Other</option>
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <svg
@@ -89,10 +98,10 @@ const CompanyForm = ({
         </label>
       </div>
 
-
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
+          disabled={!formData.companyName || !formData.industry}
           onClick={handleNextStep}
           type="submit"
           variant="contained"
