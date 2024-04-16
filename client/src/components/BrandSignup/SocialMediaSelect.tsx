@@ -113,7 +113,7 @@ const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, h
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
-          type="submit"
+          type="button"
           onClick={handleNextStep}
           variant="contained"
           endIcon={<ArrowForwardIcon />}

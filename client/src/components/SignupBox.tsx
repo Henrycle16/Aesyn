@@ -8,6 +8,9 @@ import ContactForm from "./BrandSignup/ContactForm";
 import SocialMediaSelect from "./BrandSignup/SocialMediaSelect";
 import ConfirmForm from "./BrandSignup/ConfirmForm";
 import ToDashboard from "./ToDashboard";
+import { brandSignUp } from "./../actions/brand"
+
+import { useSession } from "next-auth/react";
 
 /* 
   This is the parent component
@@ -20,7 +23,7 @@ import ToDashboard from "./ToDashboard";
 // Step 4: Confirm Form Data
 // Step 5: Redirect to dashboard
 interface BrandForm {
-  userID: string;
+  user: string;
   companyName: string;
   industry: string;
   contactPersonName: string;
@@ -32,7 +35,7 @@ interface BrandForm {
 
 const brandFormData: BrandForm = {
   //TODO: grab userID after initial user signup page
-  userID: "",
+  user: "",
   companyName: "",
   industry: "",
   contactPersonName: "",
@@ -42,9 +45,11 @@ const brandFormData: BrandForm = {
   preferences: [],
 };
 
-const SignUpBox = () => {
+const SignUpBox = async () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
+
+  const session = useSession();
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -76,7 +81,27 @@ const SignUpBox = () => {
   };
 
   //TODO: Method to submit form
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setFormData((prevData) => ({
+      ...prevData,
+      user: session.data?.user
+    }))
+    // const { userID, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, location, preferences } = formData;
+
+    console.log("HELLO", formData);
+
+    try {
+      const brandSignUpResponse = await brandSignUp(formData);
+
+      if (brandSignUpResponse && !brandSignUpResponse.error) {
+        console.log("REGISTERED BRAND!");
+      }
+    } catch {
+      console.log("Error!");
+    }
+
     return;
   };
 
@@ -121,13 +146,15 @@ const SignUpBox = () => {
 
   return (
     <div className="flex justify-center items-center h-auto pt-52">
-      <Box
-        className="p-5 bg-base-200 rounded-box"
-        sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-      >
-        {/* Render Form Parts Here */}
-        {steps[step]}
-      </Box>
+        <Box
+          component="form"
+          className="p-5 bg-base-200 rounded-box"
+          sx={{ width: "900px", height: "600px", border: "1px solid black" }}
+          onSubmit={(e) => handleSubmitForm(e)}
+        >
+          {/* Render Form Parts Here */}
+          {steps[step]}
+        </Box>
     </div>
   );
 };
