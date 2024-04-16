@@ -84,6 +84,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
+         disabled={!formData.contactPersonName || !formData.contactPhoneNumber || !formData.contactEmail}
           onClick={handleNextStep}
           type="button"
           variant="contained"

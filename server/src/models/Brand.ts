@@ -23,7 +23,15 @@ const BrandScheme = new mongoose.Schema({
         required: true,
     },
     location: {
-        type: String
+        city: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        country: {
+            type: String
+        }
     },
     avatar: {
         type: String,
