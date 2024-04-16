@@ -2,9 +2,6 @@ import axios from "axios";
 
 //Get User by ID
 export const brandSignUp = async (formData: object) => {
- //const body = JSON.stringify({ formData });
-
- console.log("STRINGIFY: ", formData);
 
  try {
    const res = await axios.post("http://localhost:5000/api/brands", formData, {

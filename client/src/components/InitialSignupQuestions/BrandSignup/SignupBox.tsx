@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
@@ -25,7 +25,7 @@ import { useSession } from "next-auth/react";
 // Step 5: Confirm Form Data
 // Step 6: Redirect to dashboard
 interface BrandForm {
-  user: string;
+  user: object;
   companyName: string;
   industry: string;
   contactPersonName: string;
@@ -36,8 +36,7 @@ interface BrandForm {
 }
 
 const brandFormData: BrandForm = {
-  //TODO: grab userID after initial user signup page
-  user: "",
+  user: {},
   companyName: "",
   industry: "",
   contactPersonName: "",
@@ -50,8 +49,14 @@ const brandFormData: BrandForm = {
 const SignUpBox = async () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
-
   const session = useSession();
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      user: session.data?.user,
+    }));
+  }, []);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -90,17 +95,9 @@ const SignUpBox = async () => {
     });
   };
 
-  //TODO: Method to submit form
+  // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    setFormData((prevData) => ({
-      ...prevData,
-      user: session.data?.user
-    }))
-    // const { userID, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, location, preferences } = formData;
-
-    console.log("HELLO", formData);
 
     try {
       const brandSignUpResponse = await brandSignUp(formData);
