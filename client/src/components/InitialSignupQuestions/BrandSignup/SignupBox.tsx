@@ -11,6 +11,7 @@ import LocationBox from "../LocationBox";
 import { brandSignUp } from "./../../../actions/brand"
 
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
 /* 
@@ -31,7 +32,7 @@ interface BrandForm {
   contactPersonName: string;
   contactEmail: string;
   contactPhoneNumber: string;
-  location: string;
+  location: object;
   preferences: string[];
 }
 
@@ -42,7 +43,7 @@ const brandFormData: BrandForm = {
   contactPersonName: "",
   contactEmail: "",
   contactPhoneNumber: "",
-  location: "",
+  location: {},
   preferences: [],
 };
 
@@ -52,10 +53,14 @@ const SignUpBox = async () => {
   const session = useSession();
 
   useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      user: session.data?.user,
-    }));
+    if (session.data && session.data.user.token) {
+      setFormData((prevData) => ({
+        ...prevData,
+        user: session.data.user,
+      }));
+    } else {
+      redirect("/login")
+    }
   }, []);
 
   // Method to handle the next step
@@ -78,10 +83,20 @@ const SignUpBox = async () => {
   };
 
   // Method to handle the location change event
-  const handleLocationChange = (location: string) => {
+  const handleLocationChange = (locationString: string) => {
+
+    const split = locationString.split(',');
+
+    // **This only works for the USA
+    const locationObj: object = {
+      city: split[0],
+      state: split[1],
+      country: split[2]
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      location: location,
+      location: locationObj,
     }));
   };
 

@@ -48,6 +48,7 @@ router.post(
       contactEmail,
       contactPhoneNumber,
       industry,
+      location,
       preferences,
     } = req.body;
 
@@ -59,6 +60,7 @@ router.post(
       contactEmail: contactEmail,
       contactPhoneNumber: contactPhoneNumber,
       industry: industry,
+      location: location,
       preferences: preferences,
     };
 
