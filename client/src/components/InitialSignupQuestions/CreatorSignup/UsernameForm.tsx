@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, ClickAwayListener, IconButton, Tooltip } from "@mui/material";
+import { Button} from "@mui/material";
 import React, { useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 interface UsernameFormProps {
   handleNextStep: () => void;
@@ -18,11 +17,11 @@ const UsernameForm = ({
 }: UsernameFormProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      {/* Handles Username and gender selection*/}
+      {/* Handles Username*/}
       <div className="col-start-3 col-span-5 row-start-4 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-8">
           <div className="label">
-            <span className="label-text font-bold text-lg">Username</span>
+            <span className="label-text font-bold text-xl mb-5">Username</span>
           </div>
           <input
             type="text"
