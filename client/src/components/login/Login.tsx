@@ -13,7 +13,8 @@ import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 const LoginComponent = () => {
   const [formData, setFormData] = useState({
@@ -100,6 +101,14 @@ const LoginComponent = () => {
             className="mt-3 mb-2"
           >
             Login
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            className="mt-3 mb-2"
+            onClick={() => signOut({redirect: false})}
+          >
+            Sign Out
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

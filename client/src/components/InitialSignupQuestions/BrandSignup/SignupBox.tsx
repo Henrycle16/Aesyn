@@ -47,21 +47,21 @@ const brandFormData: BrandForm = {
   preferences: [],
 };
 
-const SignUpBox = async () => {
+const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
   const session = useSession();
 
   useEffect(() => {
-    if (session.data && session.data.user.token) {
+    if (session.data && session.status === "authenticated") {
       setFormData((prevData) => ({
         ...prevData,
         user: session.data.user,
       }));
     } else {
-      redirect("/login")
+      redirect("/login");
     }
-  }, []);
+  }, [step]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -84,15 +84,14 @@ const SignUpBox = async () => {
 
   // Method to handle the location change event
   const handleLocationChange = (locationString: string) => {
-
-    const split = locationString.split(',');
+    const split = locationString.split(",");
 
     // **This only works for the USA
     const locationObj: object = {
       city: split[0],
       state: split[1],
-      country: split[2]
-    }
+      country: split[2],
+    };
 
     setFormData((prevData) => ({
       ...prevData,
@@ -113,12 +112,13 @@ const SignUpBox = async () => {
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    
     try {
       const brandSignUpResponse = await brandSignUp(formData);
 
       if (brandSignUpResponse && !brandSignUpResponse.error) {
         console.log("REGISTERED BRAND!");
+        handleNextStep();
       }
     } catch {
       console.log("Error!");
@@ -162,22 +162,21 @@ const SignUpBox = async () => {
       formData={formData}
       handleFormChange={handleFormChange}
       handlePrevStep={handlePrevStep}
-      handleNextStep={handleNextStep}
     />,
-    <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
+    <ToDashboard key="ToDashboard" />,
   ];
 
   return (
     <div className="flex justify-center items-center h-auto pt-52">
+      <form onSubmit={(e) => handleSubmitForm(e)}>
         <Box
-          component="form"
           className="p-5 bg-base-200 rounded-box"
           sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-          onSubmit={(e) => handleSubmitForm(e)}
         >
           {/* Render Form Parts Here */}
           {steps[step]}
         </Box>
+      </form>
     </div>
   );
 };
