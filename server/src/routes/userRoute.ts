@@ -18,6 +18,19 @@ router.get('/', auth, async (req: Request, res: Response) => {
   }
 });
 
+// @route   Get api/username
+// @desc    check if username exist
+// @access  Public -> Private
+router.get('/username/:username', async (req: Request, res: Response) => {
+  try {
+    const username = await User.findOne({ username: req.params.username });
+    console.log(username);
+    res.status(200).json(username);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // @route   Get api/users/:id
 // @desc    Get user by ID
 // @access  Public -> Private

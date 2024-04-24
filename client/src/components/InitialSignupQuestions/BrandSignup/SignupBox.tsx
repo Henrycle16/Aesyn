@@ -139,7 +139,6 @@ const SignUpBox = () => {
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
-      handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
       handlePrevStep={handlePrevStep}
     />,

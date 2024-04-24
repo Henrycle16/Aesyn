@@ -14,10 +14,11 @@ import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { signIn } from "next-auth/react";
+import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
-const SignUp = () => {
+
+const SignUpComponent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const state = searchParams.get("state");
@@ -27,10 +28,9 @@ const SignUp = () => {
     lastName: "",
     email: "",
     password: "",
-    password2: "",
   });
 
-  const { firstName, lastName, email, password, password2 } = formData;
+  const { firstName, lastName, email, password } = formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -42,31 +42,24 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password !== password2) {
-      throw new Error("Passwords do not match");
-    } else {
-      try {
-        const signUpResponse = await signIn("sign-up", {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          redirect: false,
-        });
+    const body = JSON.stringify({ firstName, lastName, email, password });
 
-        if (signUpResponse && !signUpResponse.error) {
-          console.log("REGISTERED!");
+    try {
+      await axios.post("http://localhost:5000/api/users", body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("User succesfully signed up");
 
-          if (state == "true"){
-            router.push("/signup/brand");
-          } else {
-            router.push("/signup/creator");
-          }
-        }
-        
-      } catch {
-        console.log("Error!");
+      if (state === "true") {
+        router.push("/signup/brand");
+      } else {
+        router.push("/signup/creator");
       }
+
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -137,21 +130,8 @@ const SignUp = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password2"
-                label="Confirm Password"
-                type="password"
-                id="password2"
-                value={password2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel sx={{ paddingBottom: '10px' }}
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+              <FormControlLabel sx={{paddingBottom: '10px'}}
+                control={<Checkbox value="allowExtraEmails" color="primary"/>}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
@@ -173,7 +153,7 @@ const SignUp = () => {
           </Grid>
         </Box>
       </Box>
-      <Typography variant="body2" color="text.secondary" align="center" sx={{ paddingTop: '20px' }}>
+      <Typography variant="body2" color="text.secondary" align="center" sx={{paddingTop: '20px'}}>
         {"Copyright © "}
         <Link color="inherit" href="http://github.com/H2JC/H2JC">
           H2JC
@@ -185,4 +165,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpComponent;

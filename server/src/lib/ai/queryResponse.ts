@@ -1,4 +1,4 @@
-import { getPineconeClient } from "../db/pineconedb-connection";
+import { getPineconeClient } from "../../db/pineconedb-connection";
 import { getEmbeddings } from "./embeddings";
 
 // Obtaining the most similar vector embeddings from user query
