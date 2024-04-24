@@ -11,6 +11,10 @@ const InstagramDataSchema = new mongoose.Schema({
     businessID: {
         type: String,
     },
+    tokenCreationDate:{
+        type: Date,
+        default: Date.now
+    },
     longLivedAccessToken: {
         type: String,
     },
@@ -23,10 +27,16 @@ const InstagramDataSchema = new mongoose.Schema({
     profilePicURL: {
         type: String
     },
+    followers_count:{
+        type: String
+    },
+    insights: {
+        type: Object
+    },
 
     //To be continued...
 });
 
-const SocialMedia = mongoose.model('instagram_datas', InstagramDataSchema);
+const SocialMedia = mongoose.model('instagram_data', InstagramDataSchema);
 
 export default SocialMedia;

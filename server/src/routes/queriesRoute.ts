@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getContext } from "../lib/queryResponse";
+import { getContext } from "../lib/ai/queryResponse";
 import User from '../models/User';
 // import { getResponse } from '../lib/chatModel';
 

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Script from "next/script";
-import { getPageId, getBusinessId, getBasicUserInfo, getLongLivedAccessToken } from '../../../services/instagramGraphAPI';
 import axios from 'axios';
 
 interface BasicUserInfo {
@@ -15,6 +14,15 @@ const FacebookLogin = () => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
 
+  const sendAccessTokenToBackend = async (accessToken: String) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/instagram/check', { accessToken });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     // Check if FB object is defined before using it
     if (typeof window.FB !== 'undefined') {
@@ -26,39 +34,8 @@ const FacebookLogin = () => {
 
           console.log("Access token: " + response.authResponse.accessToken);
 
-          const longtoken = await getLongLivedAccessToken(response.authResponse.accessToken);
-          console.log(typeof longtoken);
-          // TODO: Convert short-lived access token to long-lived and insert into database
-          // TODO: Remove logic from here and put it into utils folder to periodically refresh token and user data
-          // TODO: Add logic to check if user is already in database before adding
-
-          // Get page id
-          const pageId = await getPageId(response.authResponse.accessToken);
-
-          // Get business id
-          const businessId = await getBusinessId(pageId, response.authResponse.accessToken);
-
-          // Get basic user info
-          const basicUserInfo = await getBasicUserInfo(businessId, response.authResponse.accessToken) as BasicUserInfo;;
-          const { name, userName, profilePicURL } = basicUserInfo;
-
-          const testCreatorID = '65de95dc2c98cba944efb3ab';
-
-          const userPayload = {
-            creatorID: testCreatorID,
-            pageID: pageId,
-            businessID: businessId,
-            longLivedAccessToken: longtoken,
-            name: name,
-            userName: userName,
-            profilePicURL: profilePicURL
-          };
-          console.log("Payload: " + userPayload)
-          
-          // Add the basic user info to the database
-          const instagramUser = await axios.post('http://localhost:5000/api/instagram', userPayload);
-
-          console.log(instagramUser);
+          // Send accessToken to backend
+          sendAccessTokenToBackend(response.authResponse.accessToken);
 
           return;
         }
