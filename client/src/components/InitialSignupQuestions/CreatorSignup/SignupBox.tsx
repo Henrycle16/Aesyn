@@ -8,6 +8,7 @@ import LocationBox from "../LocationBox";
 import SocialMediaSelect from "../SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
+import ConfirmForm from "./ConfirmForm";
 
 interface CreatorForm {
   userID: string;
@@ -51,6 +52,11 @@ const SignUpBox = () => {
     }));
   };
 
+  // Method to handle the Gender change event
+  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, gender: event.target.value });
+  };
+
   // Method to handle the location change event
   const handleLocationChange = (location: string) => {
     setFormData((prevData) => ({
@@ -59,15 +65,15 @@ const SignUpBox = () => {
     }));
   };
 
-    // Method to handle the preference change event
-    const handlePreferenceChange = (selected: string) => {
-      setFormData((prevData) => {
-        const preferences = prevData.preferences.includes(selected)
-          ? prevData.preferences.filter((preference) => preference !== selected)
-          : [...prevData.preferences, selected];
-        return { ...prevData, preferences };
-      });
-    };
+  // Method to handle the preference change event
+  const handlePreferenceChange = (selected: string) => {
+    setFormData((prevData) => {
+      const preferences = prevData.preferences.includes(selected)
+        ? prevData.preferences.filter((preference) => preference !== selected)
+        : [...prevData.preferences, selected];
+      return { ...prevData, preferences };
+    });
+  };
 
   const steps = [
     <UsernameForm
@@ -79,14 +85,14 @@ const SignUpBox = () => {
     <GenderForm
       key="GenderForm"
       formData={formData}
-      handleFormChange={handleFormChange}
+      handleGenderChange={handleGenderChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}/>,
+      handlePrevStep={handlePrevStep}
+    />,
     <LocationBox
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
-      handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
       handlePrevStep={handlePrevStep}
     />,
@@ -98,10 +104,18 @@ const SignUpBox = () => {
       handlePrevStep={handlePrevStep}
     />,
     <NicheSelect
-    key="NicheSelect"
-    formData={formData}
-    handleNextStep={handleNextStep}
-    handlePrevStep={handlePrevStep}/>,
+      key="NicheSelect"
+      formData={formData}
+      handleNextStep={handleNextStep}
+      handlePrevStep={handlePrevStep}
+    />,
+    <ConfirmForm
+      key="ConfirmForm"
+      formData={formData}
+      handleFormChange={handleFormChange}
+      handlePrevStep={handlePrevStep}
+      handleNextStep={handleNextStep}
+    />,
     <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
   ];
 

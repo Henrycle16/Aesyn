@@ -10,14 +10,12 @@ interface LocationBoxProps {
   handleLocationChange: (location: string) => void;
   handleNextStep: () => void;
   handlePrevStep: () => void;
-  handleFormChange: (event: any) => void;
   formData: any;
 }
 
 const LocationBox = ({
   formData,
   handleLocationChange,
-  handleFormChange,
   handleNextStep,
   handlePrevStep,
 }: LocationBoxProps) => {

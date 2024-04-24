@@ -2,56 +2,31 @@
 
 import {
   Button,
-  ClickAwayListener,
   FormControl,
   FormControlLabel,
-  FormLabel,
   IconButton,
   Radio,
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
-interface UsernameFormProps {
+interface GenderFormProps {
   handleNextStep: () => void;
   handlePrevStep: () => void;
-  handleFormChange: (
-    event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => void;
+  handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   formData: any;
 }
 
-const UsernameForm = ({
+const GenderForm = ({
   formData,
-  handleFormChange,
+  handleGenderChange,
   handleNextStep,
   handlePrevStep,
-}: UsernameFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [open, setOpen] = React.useState(false);
-
-  const options = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Other", label: "Other" },
-  ];
-
-  const toggleSelect = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
-
+}: GenderFormProps) => {
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
       {/* Back Button */}
@@ -69,8 +44,8 @@ const UsernameForm = ({
 
       {/* Handles Gender selection*/}
       <div className="col-start-3 col-span-5 row-start-3 row-span-5 justify-center items-center">
-        <label className="form-control w-full mb-4">
-          <div className="label">
+        <div className="form-control w-full mb-4">
+          <div className="label mb-5">
             <span className="label-text font-bold text-xl">
               Gender{" "}
               <Tooltip
@@ -84,22 +59,55 @@ const UsernameForm = ({
               </Tooltip>
             </span>
           </div>
-        </label>
-        <FormControl>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
-            />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
-          </RadioGroup>
-        </FormControl>
+          <FormControl component="fieldset">
+            <RadioGroup
+              aria-label="gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleGenderChange}
+            >
+              <FormControlLabel
+                value="Female"
+                control={<Radio />}
+                label="Female"
+                className="rounded border p-2 mb-4 w-full"
+                style={{
+                  marginLeft: 0,
+                  marginRight: 0,
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  borderColor: "grey",
+                }}
+              />
+              <FormControlLabel
+                value="Male"
+                control={<Radio />}
+                label="Male"
+                className="rounded border p-2 mb-4 w-full"
+                style={{
+                  marginLeft: 0,
+                  marginRight: 0,
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  borderColor: "grey",
+                }}
+              />
+              <FormControlLabel
+                value="Other"
+                control={<Radio />}
+                label="Other"
+                className="rounded border p-2 mb-4 w-full"
+                style={{
+                  marginLeft: 0,
+                  marginRight: 0,
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  borderColor: "grey",
+                }}
+              />
+            </RadioGroup>
+          </FormControl>
+        </div>
       </div>
 
       {/* Next Button */}
@@ -120,4 +128,4 @@ const UsernameForm = ({
   );
 };
 
-export default UsernameForm;
+export default GenderForm;

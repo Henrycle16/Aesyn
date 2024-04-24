@@ -1,6 +1,6 @@
 import express from 'express';
 import { auth } from '../middleware/auth';
-import { check, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
@@ -55,6 +55,7 @@ router.post(
             bio
         } = req.body;
 
+        
         //Build profile object
         const creatorProfileFields = {
             user: req.user.id,
