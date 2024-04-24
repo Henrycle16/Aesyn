@@ -18,7 +18,7 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
 
-const SignUp = () => {
+const SignUpComponent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const state = searchParams.get("state");
@@ -165,4 +165,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpComponent;
