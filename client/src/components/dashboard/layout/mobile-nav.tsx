@@ -4,18 +4,13 @@ import * as React from 'react';
 import RouterLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
-import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
 
 import type { NavItemConfig } from '@/types/dashboard/nav';
-import { paths } from '@/utils/dashboard/paths';
 import { isNavItemActive } from '@/lib/dashboard/is-nav-item-active';
-import { Logo } from '@/components/dashboard/core/logo';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
