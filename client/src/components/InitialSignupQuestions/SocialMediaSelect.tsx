@@ -113,8 +113,8 @@ const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, h
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
-         disabled={formData.preferences.length === 0}
-          type="submit"
+          type="button"
+          disabled={formData.preferences.length === 0}
           onClick={handleNextStep}
           variant="contained"
           endIcon={<ArrowForwardIcon />}

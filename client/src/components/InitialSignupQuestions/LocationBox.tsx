@@ -56,7 +56,7 @@ const LocationBox = ({
         <Button
           disabled={!formData.location }
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"

@@ -1,14 +1,14 @@
 import express from 'express';
-import { auth } from '../middleware/auth';
-import { validationResult } from 'express-validator';
+import { check, validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
-// @route   GET api/creatorProfile/me
-// @desc    Get current users profile
+// @route   GET api/creators/me
+// @desc    Get current users Creator profile
 // @access  Private
 router.get('/me', auth, async (req, res) => {
     try {
@@ -34,14 +34,15 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
-// @route   POST api/creatorProfile
-// @desc    Create user profile
+// @route   POST api/creators
+// @desc    Create Creator profile
 // @access  Private
 router.post(
     '/',
     [
-        auth
+        // ** EXPRESS-VALIDATION CHECKS HERE
     ],
+    auth, 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -71,15 +72,11 @@ router.post(
         try {
             let creatorProfile = await Creator.findOne({ user: req.user.id });
 
-            //Update if found
+            // If found error
             if (creatorProfile) {
-                creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.user.id },
-                    { $set: creatorProfileFields},
-                    { new: true }
-                );
-
-                return res.json(creatorProfile);
+                return res.status(400).json({
+                    errors: [{ msg: 'Creator already exists' }],
+                  });
             }
 
             //Create if not found
@@ -94,14 +91,15 @@ router.post(
     }
 );
 
-// @route   PUT api/creatorProfile
-// @desc    Update user profile     **GOT TO FLESH OUT LATER**
+// @route   PUT api/creators
+// @desc    Update Creator profile     **GOT TO FLESH OUT LATER**
 // @access  Private
 router.put(
     '/',
     [
-        auth
-    ],
+
+    ], 
+    auth,
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -139,10 +137,12 @@ router.put(
                 );
 
                 return res.json(creatorProfile);
+            } else {
+                return res.status(400).json({
+                    errors: [{ msg: 'No Creator profile found' }],
+                  });
             }
 
-            await creatorProfile.save();
-            res.json(creatorProfile);
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server Error');
@@ -150,8 +150,8 @@ router.put(
     }
 );
 
-// @route   GET api/profile
-// @desc    Get all profiles
+// @route   GET api/creators
+// @desc    Get all Creator profiles
 // @access  Public
 router.get('/', async (req, res) => {
     try {
@@ -168,8 +168,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route   GET api/profile/user/:user_id
-// @desc    Get profile by user ID
+// @route   GET api/creators/user/:user_id
+// @desc    Get Creator profile by user ID
 // @access  Public
 router.get('/user/:user_id', async (req, res) => {
     try {
@@ -195,8 +195,8 @@ router.get('/user/:user_id', async (req, res) => {
     }
 });
 
-// @route   DELETE api/profile
-// @desc    Delete profile, user, & posts
+// @route   DELETE api/creators
+// @desc    Delete Creators profile, user, & posts
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {

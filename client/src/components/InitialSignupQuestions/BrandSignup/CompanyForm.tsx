@@ -103,7 +103,7 @@ const CompanyForm = ({
         <Button
           disabled={!formData.companyName || !formData.industry}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"

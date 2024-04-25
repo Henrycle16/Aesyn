@@ -3,7 +3,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
-  handleNextStep: () => void;
   handlePrevStep: () => void;
   handleFormChange: (event: any) => void;
   formData: any;
@@ -12,7 +11,6 @@ interface ConfirmFormProps {
 const ConfirmForm = ({
   formData,
   handlePrevStep,
-  handleNextStep,
 }: ConfirmFormProps) => {
   return (
     <div className="grid grid-cols-10 grid-rows-10 gap-4 w-full h-full">
@@ -62,7 +60,9 @@ const ConfirmForm = ({
           <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Location</div>
               <div className="pt-2">
-              {formData.location}
+              {formData.location.city}
+              {formData.location.state}
+              {formData.location.country}
              </div>
           </div>
 
@@ -102,7 +102,6 @@ const ConfirmForm = ({
       {/* Button to submit the form */}
       <div className="col-start-8 col-span-1 row-start-9 row-span-1 justify-end pt-5 pl-10">
         <Button
-          onClick={handleNextStep}
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

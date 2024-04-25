@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const BrandScheme = new mongoose.Schema({
-    userID: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },

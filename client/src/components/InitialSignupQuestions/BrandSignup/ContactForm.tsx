@@ -86,7 +86,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
         <Button
          disabled={!formData.contactPersonName || !formData.contactPhoneNumber || !formData.contactEmail}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"
