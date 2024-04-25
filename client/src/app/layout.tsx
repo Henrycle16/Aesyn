@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import { Inter } from "next/font/google";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 import React from "react";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 // Next-Auth
 import { getServerSession } from 'next-auth'
