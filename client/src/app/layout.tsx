@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: 'Welcome to "Startup....."',
-  description: 'App',
+  description: "App",
 };
 
 export default function RootLayout({
@@ -16,13 +16,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (  
-      <html lang="en">
-        <body className={inter.className}>
-        <Header />
-          {children}
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <div className="container flex-1 mx-auto flex items-center">
+            {children}
+          </div>
           <Footer />
-        </body>
-      </html>
+        </div>
+      </body>
+    </html>
   );
 }
