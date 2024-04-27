@@ -21,9 +21,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <div className="container flex-1 mx-auto flex items-center">
+          <main className="container flex-1 mx-auto flex items-center max-lg:py-5">
             {children}
-          </div>
+          </main>
           <Footer />
         </div>
       </body>
