@@ -116,7 +116,7 @@ const SignUpBox = () => {
       handlePrevStep={handlePrevStep}
       handleNextStep={handleNextStep}
     />,
-    <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
+    <ToDashboard key="ToDashboard"/>,
   ];
 
   return (

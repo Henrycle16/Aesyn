@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-button[type="submit"] {
-    @apply bg-muiblue
- }
+.bg-muiblue-style {
+    @apply bg-muiblue;
+}

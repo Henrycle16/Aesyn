@@ -59,7 +59,7 @@ const LocationBox = ({
           type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
+          className="col-span-1 bg-muiblue-style"
           sx={{ padding: "12px 24px" }}
         >
           Next

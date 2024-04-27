@@ -118,7 +118,7 @@ const GenderForm = ({
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
+          className="col-span-1 bg-muiblue-style"
           style={{ padding: "12px 24px" }}
         >
           Next
