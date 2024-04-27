@@ -60,9 +60,7 @@ const ConfirmForm = ({
           <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Location</div>
               <div className="pt-2">
-              {formData.location.city}
-              {formData.location.state}
-              {formData.location.country}
+              {formData.location}
              </div>
           </div>
 
