@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function SignUp() {
   return (
-    <div className="container flex justify-between max-lg:flex-col max-lg:items-center">
+    <div className="flex justify-between max-lg:flex-col max-lg:items-center">
       <div>
         <SignUpComponent />
       </div>
