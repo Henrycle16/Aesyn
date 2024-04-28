@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box } from "@mui/material";
+import { Button } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import UsernameForm from "./UsernameForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
@@ -32,6 +35,7 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -52,10 +56,11 @@ const SignUpBox = () => {
     }));
   };
 
+  // ! DELETE do not need
   // Method to handle the Gender change event
-  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, gender: event.target.value });
-  };
+  // const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData({ ...formData, gender: event.target.value });
+  // };
 
   // Method to handle the location change event
   const handleLocationChange = (location: string) => {
@@ -80,21 +85,25 @@ const SignUpBox = () => {
       key="userName"
       formData={formData}
       handleFormChange={handleFormChange}
-      handleNextStep={handleNextStep}
+      // handleNextStep={handleNextStep}
+      setNextButtonDisabled={setNextButtonDisabled}
     />,
     <GenderForm
       key="GenderForm"
       formData={formData}
-      handleGenderChange={handleGenderChange}
-      handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      // handleGenderChange={handleGenderChange}
+      handleFormChange={handleFormChange}
+      setNextButtonDisabled={setNextButtonDisabled}
+      // handleNextStep={handleNextStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <LocationBox
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
-      handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      setNextButtonDisabled={setNextButtonDisabled}
+      // handleNextStep={handleNextStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
@@ -120,14 +129,58 @@ const SignUpBox = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center h-auto pt-52">
-      <Box
-        className="p-5 bg-base-200 rounded-box"
-        sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-      >
+    // <div className="flex justify-center items-center">
+    // <div className="mx-auto">
+    // <Box
+    //     className="mx-auto p-5 bg-base-200 rounded-box"
+    //     sx={{ width: 900, height: 600, border: "1px solid black" }}
+    //   >
+    // <Box
+    //   className="mx-auto bg-base-200 rounded-box"
+    //   height={600}
+    //   width={900}
+    //   sx={{border: "1px solid black" }}
+    // >
+    //   {/* Render Form Parts Here */}
+    //   {steps[step]}
+    // </Box>
+    // </div>
+    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
+      <form action="" className="min-h-[32rem] flex flex-col">
+        {/* Back Button */}
+        <div className="flex">
+          <Button
+            onClick={handlePrevStep}
+            variant="text"
+            startIcon={<ArrowBackIcon />}
+            className={step === 0 ? "hidden" : ""}
+            sx={{ padding: "12px 24px" }}
+          >
+            back
+          </Button>
+        </div>
+
         {/* Render Form Parts Here */}
-        {steps[step]}
-      </Box>
+        <div className="flex-1 flex justify-center items-center">
+          {steps[step]}
+        </div>
+
+        {/* Next Button */}
+        <div className="flex justify-end">
+          <Button
+            disabled={isNextButtonDisabled}
+            onClick={handleNextStep}
+            // type="button"
+            type={step !== 5 ? "button" : "submit"}
+            variant="contained"
+            className="bg-muiblue"
+            endIcon={<ArrowForwardIcon />}
+            style={{ padding: "12px 24px" }}
+          >
+            Next
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
