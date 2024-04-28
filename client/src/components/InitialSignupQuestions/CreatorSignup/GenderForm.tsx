@@ -9,42 +9,41 @@ import {
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-import React from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { use, useEffect } from "react";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 interface GenderFormProps {
-  handleNextStep: () => void;
-  handlePrevStep: () => void;
-  handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // handleNextStep: () => void;
+  // handlePrevStep: () => void;
+  // handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setNextButtonDisabled: (value: boolean) => void;
   formData: any;
 }
 
 const GenderForm = ({
   formData,
-  handleGenderChange,
-  handleNextStep,
-  handlePrevStep,
+  // handleGenderChange,
+  setNextButtonDisabled,
+  handleFormChange
+  // handleNextStep,
+  // handlePrevStep,
 }: GenderFormProps) => {
-  return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      {/* Back Button */}
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
+  useEffect(() => {
+    if (!formData.gender) {
+      setNextButtonDisabled(true);
+    }
 
+  })
+  
+
+  return (
+    <>
       {/* Handles Gender selection*/}
-      <div className="col-start-3 col-span-5 row-start-3 row-span-5 justify-center items-center">
-        <div className="form-control w-full mb-4">
+      <div className="w-4/6">
+        <div className="form-control">
           <div className="label mb-5">
             <span className="label-text font-bold text-xl">
               Gender{" "}
@@ -64,7 +63,10 @@ const GenderForm = ({
               aria-label="gender"
               name="gender"
               value={formData.gender}
-              onChange={handleGenderChange}
+              onChange={(e) => {
+                handleFormChange(e);
+                setNextButtonDisabled(false);
+              }}
             >
               <FormControlLabel
                 value="Female"
@@ -111,7 +113,7 @@ const GenderForm = ({
       </div>
 
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      {/* <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
           disabled={!formData.gender}
           onClick={handleNextStep}
@@ -123,8 +125,8 @@ const GenderForm = ({
         >
           Next
         </Button>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
 
