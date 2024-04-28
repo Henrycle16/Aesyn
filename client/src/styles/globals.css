@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-button[type="submit"] {
+/* ! Removing this bc it will make ALL type submit buttons blue -_- */
+/* button[type="submit"] {
     @apply bg-muiblue
- }
+ } */
