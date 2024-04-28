@@ -87,17 +87,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData 
   }, [handleLocationChange, isFormData, map]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="h-full flex flex-col gap-3">
       {/* Geocoder Container */}
       <div>
         <div
           ref={geocoderContainer}
-          className="input input-bordered w-full"
-          style={{ marginBottom: "20px" }}
+          // className="input input-bordered w-full h-full"
+          className="input input-bordered"
+          // style={{ marginBottom: "20px" }}
         />
       </div>
 
       {/* Map Container */}
+      {/* <div ref={mapContainer} className="w-full h-full" /> */}
       <div ref={mapContainer} className="w-full h-full" />
     </div>
   );

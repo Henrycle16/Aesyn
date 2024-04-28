@@ -1,42 +1,39 @@
 "use client";
 
-import { Button } from "@mui/material";
-import React from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useEffect } from "react";
+// import { Button } from "@mui/material";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MapboxMap from "./MapBox";
 
 interface LocationBoxProps {
   handleLocationChange: (location: string) => void;
-  handleNextStep: () => void;
-  handlePrevStep: () => void;
+  setNextButtonDisabled: (value: boolean) => void;
+  // handleNextStep: () => void;
+  // handlePrevStep: () => void;
   formData: any;
 }
 
 const LocationBox = ({
   formData,
   handleLocationChange,
-  handleNextStep,
-  handlePrevStep,
+  setNextButtonDisabled
+  // handleNextStep,
+  // handlePrevStep,
 }: LocationBoxProps) => {
+  useEffect(() => {
+    if (!formData.location) {
+      setNextButtonDisabled(true);
+    }
+
+  },)
+
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      {/* Back Button */}
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
+    <div className="w-4/6 mt-[-1rem] mb-4">
 
       {/* Location Box */}
-      <div className="col-start-3 col-span-5 row-start-2 row-span-1 justify-center items-center">
-        <label className="form-control w-full">
+      <div className="">
+        <label className="form-control">
           <div className="label">
             <span className="label-text font-bold text-lg">
               {" "}
@@ -47,23 +44,13 @@ const LocationBox = ({
       </div>
 
       {/* Map */}
-      <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12">
-        <MapboxMap isFormData= {formData.location} handleLocationChange={handleLocationChange} />
-      </div>
-
-      {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
-        <Button
-          disabled={!formData.location }
-          onClick={handleNextStep}
-          type="submit"
-          variant="contained"
-          endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          Next
-        </Button>
+      {/* <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12"> */}
+      <div className="h-96">
+        <MapboxMap isFormData= {formData.location} handleLocationChange={(e) => {
+          handleLocationChange(e);
+          setNextButtonDisabled(false);
+        }} 
+        />
       </div>
     </div>
   );
