@@ -22,31 +22,30 @@ function noop(): void {
   // do nothing
 }
 
-export interface Customer {
+export interface Messages {
   id: string;
   avatar: string;
   name: string;
-  email: string;
-  address: { city: string; state: string; country: string; street: string };
-  phone: string;
+  brand: string;
+  subject: string;
   createdAt: Date;
 }
 
-interface CustomersTableProps {
+interface MessagesTableProps {
   count?: number;
   page?: number;
-  rows?: Customer[];
+  rows?: Messages[];
   rowsPerPage?: number;
 }
 
-export function CustomersTable({
+export function MessagesTable({
   count = 0,
   rows = [],
   page = 0,
   rowsPerPage = 0,
-}: CustomersTableProps): React.JSX.Element {
+}: MessagesTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
-    return rows.map((customer) => customer.id);
+    return rows.map((messages) => messages.id);
   }, [rows]);
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } = useSelection(rowIds);
@@ -74,10 +73,9 @@ export function CustomersTable({
                 />
               </TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Signed Up</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>Subject</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,11 +102,9 @@ export function CustomersTable({
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>
-                    {row.address.city}, {row.address.state}, {row.address.country}
-                  </TableCell>
-                  <TableCell>{row.phone}</TableCell>
+                  <TableCell>{row.brand}</TableCell>
+                  <TableCell>{row.subject}</TableCell>
+                  
                   <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
                 </TableRow>
               );
