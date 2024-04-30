@@ -37,7 +37,7 @@ const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, h
       {/* Box to seperate each social media preference */}
       <Box className="col-start-3 col-span-5 row-start-3 row-span-6 justify-center items-center">
         <div className="label">
-          <span className="label-text font-bold text-lg">
+          <span className="label-text font-bold text-xl">
             Social media preferences:
           </span>
         </div>

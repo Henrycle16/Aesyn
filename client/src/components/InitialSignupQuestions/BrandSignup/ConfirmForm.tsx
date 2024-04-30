@@ -38,13 +38,13 @@ const ConfirmForm = ({
 
       {/* Grid for the form data */}
       <div className="col-start-2 col-span-8 row-start-3 row-span-7 justify-center items-center">
-        <div className="grid grid-cols-3 grid-rows-4 w-full h-full">
+        <div className="grid grid-cols-3 grid-rows-4 gap-2 w-full h-full">
           
 
           {/* This block is for populating the Brand Name and Industry */}
           <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Brand Name</div>
-              <div className="pt-2">
+              <div className="pt-2 line-clamp-2 overflow-ellipsis overflow-hidden">
              {formData.companyName}
              </div>
           </div>

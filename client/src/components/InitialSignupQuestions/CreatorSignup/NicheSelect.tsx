@@ -34,7 +34,7 @@ const ContactForm = ({
       <div className="col-start-3 col-span-5 row-start-2 row-span-1 justify-center items-center">
         <label className="form-control w-full mb-6">
           <div className="label" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               Select the niche(s) that best fit your content
             </span>
             <p className="label-text font-light text-sm">Select up to 6 niches</p>

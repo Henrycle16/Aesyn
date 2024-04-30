@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -12,7 +12,72 @@ interface ContactFormProps {
   formData: any;
 }
 
-const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevStep } : ContactFormProps) => {
+const ContactForm = ({
+  formData,
+  handleFormChange,
+  handleNextStep,
+  handlePrevStep,
+}: ContactFormProps) => {
+  const [errors, setErrors] = useState({
+    contactPersonName: "",
+    contactPhoneNumber: "",
+    contactEmail: "",
+  });
+
+  const validateName = (name: string) => {
+    const regex = /^[A-Za-z\s]+$/;
+    return regex.test(name);
+  };
+
+  const validatePhone = (phone: string) => {
+    const regex = /^\d{10}$/;
+    return regex.test(phone);
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(email);
+  };
+
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+  
+    let newValue = value;
+    if (name === "contactPhoneNumber") {
+      newValue = newValue.replace(/\D/g, "");
+    } else if (name === "contactPersonName") {
+      newValue = newValue.replace(/\d/g, "");
+    }
+  
+    switch (name) {
+      case "contactPersonName":
+        if (newValue && !validateName(newValue)) {
+          setErrors(prev => ({ ...prev, contactPersonName: "Invalid name" }));
+        } else {
+          setErrors(prev => ({ ...prev, contactPersonName: "" }));
+        }
+        break;
+      case "contactPhoneNumber":
+        if (newValue && !validatePhone(newValue)) {
+          setErrors(prev => ({ ...prev, contactPhoneNumber: "Invalid phone number" }));
+        } else {
+          setErrors(prev => ({ ...prev, contactPhoneNumber: "" }));
+        }
+        break;
+      case "contactEmail":
+        if (newValue && !validateEmail(newValue)) {
+          setErrors(prev => ({ ...prev, contactEmail: "Invalid email" }));
+        } else {
+          setErrors(prev => ({ ...prev, contactEmail: "" }));
+        }
+        break;
+      default:
+        break;
+    }
+  
+    handleFormChange({ target: { name, value: newValue } });
+  };
+
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
       <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
@@ -27,64 +92,70 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
         </Button>
       </div>
 
-
       {/* Handles POC Contact Information */}
       <div className="col-start-3 col-span-5 row-start-2 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
-              Primary Contact Name
+            <span className="label-text font-bold text-xl">
+              Primary Contact Full Name
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Full Name"
             required
             className="input input-bordered w-full"
             name="contactPersonName"
             value={formData.contactPersonName}
-            onChange={(e) => handleFormChange(e)}
+            onChange={handleInputChange}
           />
+          <p className="mt-2 italic text-red-600 error-message">{errors.contactPersonName}</p>
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               Primary Contact Phone Number
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="(000) - 000 - 0000"
             required
             className="input input-bordered w-full"
             name="contactPhoneNumber"
             value={formData.contactPhoneNumber}
-            onChange={(e) => handleFormChange(e)}
+            onChange={handleInputChange}
+            maxLength={10}
           />
+          <p className="mt-2 italic text-red-600 error-message">{errors.contactPhoneNumber}</p>
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               Primary Contact Email
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Email"
             required
             className="input input-bordered w-full"
             name="contactEmail"
             value={formData.contactEmail}
-            onChange={(e) => handleFormChange(e)}
+            onChange={handleInputChange}
           />
+          <p className="mt-2 italic text-red-600 error-message">{errors.contactEmail}</p>
         </label>
       </div>
-
 
       {/* Next Button */}
       <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
         <Button
-         disabled={!formData.contactPersonName || !formData.contactPhoneNumber || !formData.contactEmail}
+          disabled={
+            !formData.contactPersonName ||
+            !formData.contactPhoneNumber ||
+            !formData.contactEmail
+          }
           onClick={handleNextStep}
           type="button"
           variant="contained"

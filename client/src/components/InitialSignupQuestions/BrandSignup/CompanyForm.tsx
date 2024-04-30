@@ -37,13 +37,13 @@ const CompanyForm = ({
       <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-8">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What is your brand name?
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Brand Name"
             className="input input-bordered w-full"
             name="companyName"
             value={formData.companyName}
@@ -52,7 +52,7 @@ const CompanyForm = ({
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What industry best describes your brand?
             </span>
           </div>

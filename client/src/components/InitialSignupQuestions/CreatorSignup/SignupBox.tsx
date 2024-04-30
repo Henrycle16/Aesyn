@@ -32,6 +32,9 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
+  const [username, setUsername] = useState("");
+  const [isUsernameValid, setUsernameValid] = useState(false);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(true);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -46,6 +49,7 @@ const SignUpBox = () => {
   // Method to handle the Form Change event
   const handleFormChange = (event: any) => {
     const { name, value } = event.target;
+    setUsername(event.target.value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -79,6 +83,11 @@ const SignUpBox = () => {
     <UsernameForm
       key="userName"
       formData={formData}
+      username={username}
+      isUsernameValid={isUsernameValid}
+      isNextButtonDisabled={isNextButtonDisabled}
+      setUsernameValid={setUsernameValid}
+      setNextButtonDisabled={setNextButtonDisabled}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
     />,
@@ -116,7 +125,7 @@ const SignUpBox = () => {
       handlePrevStep={handlePrevStep}
       handleNextStep={handleNextStep}
     />,
-    <ToDashboard key="ToDashboard"/>,
+    <ToDashboard key="ToDashboard" />,
   ];
 
   return (

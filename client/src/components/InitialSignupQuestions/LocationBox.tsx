@@ -38,7 +38,7 @@ const LocationBox = ({
       <div className="col-start-3 col-span-5 row-start-2 row-span-1 justify-center items-center">
         <label className="form-control w-full">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               {" "}
               Where are you located?{" "}
             </span>
