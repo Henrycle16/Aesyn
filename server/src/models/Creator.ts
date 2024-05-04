@@ -5,25 +5,20 @@ const CreatorSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    socialMedias: {
-        type: [mongoose.Schema.Types.ObjectId]
+    userName: {
+        type: String
     },
-    category: {
-        type: [String],
+    gender: {
+        type: String,
     },
     location: {
-        city: { 
-            type: String
-        },
-        state: {
-            type: String
-        },
-        country: {
-            type: String
-        }
+        type: String
     },
-    bio: {
-        type: String,
+    preferences: {
+        type: [String]
+    },
+    niche: {
+        type: [String]
     },
     date: {
         type: Date,

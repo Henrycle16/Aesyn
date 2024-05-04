@@ -88,7 +88,7 @@ const UsernameForm = ({
         <Button
           disabled={isNextButtonDisabled}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"

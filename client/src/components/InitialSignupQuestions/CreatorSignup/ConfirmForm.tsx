@@ -89,7 +89,6 @@ const ConfirmForm = ({
       {/* Button to submit the form */}
       <div className="col-start-8 col-span-1 row-start-9 row-span-1 justify-end pt-5 pl-10">
         <Button
-          onClick={handleNextStep}
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

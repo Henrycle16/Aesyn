@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import UsernameForm from "./UsernameForm";
 import ToDashboard from "../ToDashboard";
@@ -9,9 +9,12 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
+import { creatorSignUp } from "./../../../actions/creator"
 
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 interface CreatorForm {
-  userID: string;
+  user: object;
   userName: string;
   gender: string;
   location: string;
@@ -21,7 +24,7 @@ interface CreatorForm {
 
 const creatorFormData: CreatorForm = {
   //TODO: grab userID after initial user signup page
-  userID: "",
+  user: {},
   userName: "",
   gender: "",
   location: "",
@@ -32,6 +35,18 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data && session.status === "authenticated") {
+      setFormData((prevData) => ({
+        ...prevData,
+        user: session.data.user,
+      }));
+    } else {
+      redirect("/login");
+    }
+  }, [step]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -75,6 +90,24 @@ const SignUpBox = () => {
     });
   };
 
+  // Method to submit form
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    try {
+      const creatorSignUpResponse = await creatorSignUp(formData);
+
+      if (creatorSignUpResponse && !creatorSignUpResponse.error) {
+        console.log("REGISTERED CREATOR!");
+        handleNextStep();
+      }
+    } catch {
+      console.log("Error!");
+    }
+
+    return;
+  };
+
   const steps = [
     <UsernameForm
       key="userName"
@@ -116,18 +149,20 @@ const SignUpBox = () => {
       handlePrevStep={handlePrevStep}
       handleNextStep={handleNextStep}
     />,
-    <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
+    <ToDashboard key="ToDashboard" />,
   ];
 
   return (
     <div className="flex justify-center items-center h-auto pt-52">
-      <Box
-        className="p-5 bg-base-200 rounded-box"
-        sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-      >
-        {/* Render Form Parts Here */}
-        {steps[step]}
-      </Box>
+      <form onSubmit={(e) => handleSubmitForm(e)}>
+        <Box
+          className="p-5 bg-base-200 rounded-box"
+          sx={{ width: "900px", height: "600px", border: "1px solid black" }}
+        >
+          {/* Render Form Parts Here */}
+          {steps[step]}
+        </Box>
+      </form>
     </div>
   );
 };

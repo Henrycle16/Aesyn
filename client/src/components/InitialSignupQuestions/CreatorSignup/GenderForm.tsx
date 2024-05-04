@@ -115,7 +115,7 @@ const GenderForm = ({
         <Button
           disabled={!formData.gender}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
           className="col-span-1"
