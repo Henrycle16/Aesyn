@@ -8,40 +8,32 @@ import {
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-import { useEffect } from "react";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface GenderFormProps {
-  // handleNextStep: () => void;
+  formData: any;
+  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleNextStep: () => void;
   // handlePrevStep: () => void;
   // handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  setNextButtonDisabled: (value: boolean) => void;
-  formData: any;
+  // setNextButtonDisabled: (value: boolean) => void;
 }
 
 const GenderForm = ({
   formData,
+  handleFormChange,
+  handleNextStep,
   // handleGenderChange,
-  setNextButtonDisabled,
-  handleFormChange
-  // handleNextStep,
+  // setNextButtonDisabled,
   // handlePrevStep,
 }: GenderFormProps) => {
-  useEffect(() => {
-    if (!formData.gender) {
-      setNextButtonDisabled(true);
-    }
-
-  })
-  
-
   return (
-    <>
+    <div className="flex flex-col w-full">
       {/* Handles Gender selection*/}
-      <div className="w-4/6">
+      <div className="w-4/6 mx-auto my-auto">
         <div className="form-control">
           <div className="label mb-5">
             <span className="label-text font-bold text-xl">
@@ -64,7 +56,7 @@ const GenderForm = ({
               value={formData.gender}
               onChange={(e) => {
                 handleFormChange(e);
-                setNextButtonDisabled(false);
+                // setNextButtonDisabled(false);
               }}
             >
               <FormControlLabel
@@ -112,20 +104,19 @@ const GenderForm = ({
       </div>
 
       {/* Next Button */}
-      {/* <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      <div className="self-end">
         <Button
           disabled={!formData.gender}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
+          className="bg-muiblue py-3 px-6"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
-          style={{ padding: "12px 24px" }}
         >
           Next
         </Button>
-      </div> */}
-    </>
+      </div>
+    </div>
   );
 };
 
