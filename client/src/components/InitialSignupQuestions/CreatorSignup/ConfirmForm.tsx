@@ -1,19 +1,12 @@
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
   formData: any;
   handleNextStep: () => void;
-  // handlePrevStep: () => void;
-  // handleFormChange: (event: any) => void;
 }
 
-const ConfirmForm = ({
-  formData,
-  handleNextStep,
-}: // handlePrevStep,
-ConfirmFormProps) => {
+const ConfirmForm = ({ formData, handleNextStep }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-16">
       {/* Header */}

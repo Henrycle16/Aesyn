@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { Box, Chip } from "@mui/material";
 import {
   FaInstagram,
@@ -16,19 +15,15 @@ interface SocialMediaSelectProps {
   formData: any;
   handlePreferenceChange: (selected: string) => void;
   handleNextStep: () => void;
-  // setNextButtonDisabled: (value: boolean) => void;
-  // handlePrevStep: () => void;
 }
 
 const SocialMediaSelect = ({
   formData,
   handlePreferenceChange,
   handleNextStep,
-  // handlePrevStep,
-  // setNextButtonDisabled,
 }: SocialMediaSelectProps) => {
   return (
-    <div  className="flex flex-col w-full">
+    <div className="flex flex-col w-full">
       {/* Box to seperate each social media preference */}
       {/* !TODO: Refactor chips to render as an array */}
       <Box className="w-4/6 mx-auto my-auto">

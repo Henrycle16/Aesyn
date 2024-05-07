@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
 import { Button } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import UsernameForm from "./UsernameForm";
 import ToDashboard from "../ToDashboard";
@@ -35,17 +33,11 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
-  // const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   // Method to handle the next step
   const handleNextStep = () => {
     setStep((prevStep) => Math.min(prevStep + 1, steps.length - 1));
   };
-
-  // Method to handle Next Button Disable
-  // const handleButtonDisable = (condition: boolean) => {
-  //   setNextButtonDisabled(condition);
-  // };
 
   // Method to handle the prev step
   const handlePrevStep = () => {
@@ -60,12 +52,6 @@ const SignUpBox = () => {
       [name]: value,
     }));
   };
-
-  // ! DELETE do not need
-  // Method to handle the Gender change event
-  // const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormData({ ...formData, gender: event.target.value });
-  // };
 
   // Method to handle the location change event
   const handleLocationChange = (location: string) => {
@@ -103,51 +89,28 @@ const SignUpBox = () => {
       formData={formData}
       handleLocationChange={handleLocationChange}
       handleNextStep={handleNextStep}
-      // setNextButtonDisabled={setNextButtonDisabled}
-      // handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
-      // setNextButtonDisabled={setNextButtonDisabled}
-      // handlePrevStep={handlePrevStep}
     />,
     <NicheSelect
       key="NicheSelect"
       formData={formData}
       handleNextStep={handleNextStep}
       handleFormChange={handleFormChange}
-      // handlePrevStep={handlePrevStep}
     />,
     <ConfirmForm
       key="ConfirmForm"
       formData={formData}
       handleNextStep={handleNextStep}
-      // handleFormChange={handleFormChange}
-      // handlePrevStep={handlePrevStep}
     />,
     <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
   ];
 
   return (
-    // <div className="flex justify-center items-center">
-    // <div className="mx-auto">
-    // <Box
-    //     className="mx-auto p-5 bg-base-200 rounded-box"
-    //     sx={{ width: 900, height: 600, border: "1px solid black" }}
-    //   >
-    // <Box
-    //   className="mx-auto bg-base-200 rounded-box"
-    //   height={600}
-    //   width={900}
-    //   sx={{border: "1px solid black" }}
-    // >
-    //   {/* Render Form Parts Here */}
-    //   {steps[step]}
-    // </Box>
-    // </div>
     <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
       <form action="" className="min-h-[32rem] flex flex-col">
         {/* Back Button */}
@@ -164,25 +127,7 @@ const SignUpBox = () => {
         </div>
 
         {/* Render Form Parts Here */}
-        <div className="flex-1 flex justify-center">
-          {steps[step]}
-        </div>
-
-        {/* Next Button */}
-        {/* <div className="flex justify-end">
-          <Button
-            // disabled={isNextButtonDisabled}
-            onClick={handleNextStep}
-            type="button"
-            // type={step !== 5 ? "button" : "submit"}
-            variant="contained"
-            className="bg-muiblue"
-            endIcon={<ArrowForwardIcon />}
-            style={{ padding: "12px 24px" }}
-          >
-            Next
-          </Button>
-        </div> */}
+        <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
     </div>
   );

@@ -8,7 +8,6 @@ import {
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -17,18 +16,12 @@ interface GenderFormProps {
   formData: any;
   handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleNextStep: () => void;
-  // handlePrevStep: () => void;
-  // handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  // setNextButtonDisabled: (value: boolean) => void;
 }
 
 const GenderForm = ({
   formData,
   handleFormChange,
   handleNextStep,
-  // handleGenderChange,
-  // setNextButtonDisabled,
-  // handlePrevStep,
 }: GenderFormProps) => {
   return (
     <div className="flex flex-col w-full">
@@ -56,7 +49,6 @@ const GenderForm = ({
               value={formData.gender}
               onChange={(e) => {
                 handleFormChange(e);
-                // setNextButtonDisabled(false);
               }}
             >
               <FormControlLabel

@@ -1,9 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-// import { Button } from "@mui/material";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MapboxMap from "./MapBox";
@@ -12,8 +8,6 @@ interface LocationBoxProps {
   formData: any;
   handleLocationChange: (location: string) => void;
   handleNextStep: () => void;
-  // setNextButtonDisabled: (value: boolean) => void;
-  // handlePrevStep: () => void;
 }
 
 const LocationBox = ({
@@ -35,7 +29,6 @@ const LocationBox = ({
         </label>
 
         {/* Map */}
-        {/* <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12"> */}
         <div className="h-96">
           <MapboxMap
             isFormData={formData.location}
