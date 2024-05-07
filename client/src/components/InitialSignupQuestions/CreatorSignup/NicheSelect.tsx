@@ -50,7 +50,7 @@ const ContactForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.niche.length}
+          // disabled={!formData.niche.length}
           onClick={handleNextStep}
           type="button"
           variant="contained"

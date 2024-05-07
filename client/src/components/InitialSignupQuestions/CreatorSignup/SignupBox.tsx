@@ -124,9 +124,9 @@ const SignUpBox = () => {
     <ConfirmForm
       key="ConfirmForm"
       formData={formData}
-      handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      // handleFormChange={handleFormChange}
+      // handlePrevStep={handlePrevStep}
     />,
     <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
   ];
