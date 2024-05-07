@@ -35,12 +35,17 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
-  const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
+  // const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   // Method to handle the next step
   const handleNextStep = () => {
     setStep((prevStep) => Math.min(prevStep + 1, steps.length - 1));
   };
+
+  // Method to handle Next Button Disable
+  // const handleButtonDisable = (condition: boolean) => {
+  //   setNextButtonDisabled(condition);
+  // };
 
   // Method to handle the prev step
   const handlePrevStep = () => {
@@ -85,46 +90,43 @@ const SignUpBox = () => {
       key="userName"
       formData={formData}
       handleFormChange={handleFormChange}
-      // handleNextStep={handleNextStep}
-      setNextButtonDisabled={setNextButtonDisabled}
+      handleNextStep={handleNextStep}
     />,
     <GenderForm
       key="GenderForm"
       formData={formData}
-      // handleGenderChange={handleGenderChange}
       handleFormChange={handleFormChange}
-      setNextButtonDisabled={setNextButtonDisabled}
-      // handleNextStep={handleNextStep}
-      // handlePrevStep={handlePrevStep}
+      handleNextStep={handleNextStep}
     />,
     <LocationBox
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
-      setNextButtonDisabled={setNextButtonDisabled}
-      // handleNextStep={handleNextStep}
+      handleNextStep={handleNextStep}
+      // setNextButtonDisabled={setNextButtonDisabled}
       // handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
-      setNextButtonDisabled={setNextButtonDisabled}
-      // handleNextStep={handleNextStep}
+      handleNextStep={handleNextStep}
+      // setNextButtonDisabled={setNextButtonDisabled}
       // handlePrevStep={handlePrevStep}
     />,
     <NicheSelect
       key="NicheSelect"
       formData={formData}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      handleFormChange={handleFormChange}
+      // handlePrevStep={handlePrevStep}
     />,
     <ConfirmForm
       key="ConfirmForm"
       formData={formData}
       handleFormChange={handleFormChange}
-      handlePrevStep={handlePrevStep}
       handleNextStep={handleNextStep}
+      handlePrevStep={handlePrevStep}
     />,
     <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
   ];
@@ -162,17 +164,17 @@ const SignUpBox = () => {
         </div>
 
         {/* Render Form Parts Here */}
-        <div className="flex-1 flex justify-center items-center">
+        <div className="flex-1 flex justify-center">
           {steps[step]}
         </div>
 
         {/* Next Button */}
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <Button
             // disabled={isNextButtonDisabled}
             onClick={handleNextStep}
-            // type="button"
-            type={step !== 5 ? "button" : "submit"}
+            type="button"
+            // type={step !== 5 ? "button" : "submit"}
             variant="contained"
             className="bg-muiblue"
             endIcon={<ArrowForwardIcon />}
@@ -180,7 +182,7 @@ const SignUpBox = () => {
           >
             Next
           </Button>
-        </div>
+        </div> */}
       </form>
     </div>
   );
