@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { error } from "console";
 import Button from "@mui/material/Button";
@@ -35,7 +35,7 @@ const UsernameForm = ({
   handleNextStep,
 }: UsernameFormProps) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isNextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   const checkUsername = debounce((username) => {
     if (username.length > 3) {
@@ -61,6 +61,12 @@ const UsernameForm = ({
     }
   }, 500);
 
+  useEffect(() => {
+    if (formData.userName.length > 3) {
+      checkUsername(formData.userName);
+    }
+  }, [formData.userName, checkUsername]);
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-7/12 mx-auto my-auto">
@@ -77,17 +83,17 @@ const UsernameForm = ({
             value={formData.userName}
             onChange={(e) => {
               handleFormChange(e);
-              checkUsername(e.target.value);
+              // checkUsername(e.target.value);
             }}
           />
         </label>
         <div className="mt-2 italic text-red-600">{errorMessage}</div>
       </div>
-      
+
       {/* Next Button */}
       <div className="self-end">
         <Button
-          // disabled={isNextButtonDisabled}
+          disabled={isNextButtonDisabled}
           onClick={handleNextStep}
           type="button"
           variant="contained"
