@@ -17,43 +17,42 @@ const ContactForm = ({
   handlePrevStep,
 }: NicheSelectProps) => {
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
-
-      {/*Niche Selection Label*/}
-      <div className="col-start-3 col-span-5 row-start-2 row-span-1 justify-center items-center">
-        <label className="form-control w-full mb-6">
-          <div className="label" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <div className="">
+      
+      <div className="w-9/12 mx-auto mb-8">
+        {/*Niche Selection Label*/}
+        <label className="form-control mb-6">
+          <div className="label flex flex-col items-start">
             <span className="label-text font-bold text-lg">
               Select the niche(s) that best fit your content
             </span>
             <p className="label-text font-light text-sm">Select up to 6 niches</p>
           </div>
         </label>
+
+        {/* Niche Select Options */}
+        <div className="flex flex-wrap gap-x-8 gap-y-3 overflow-y-auto max-h-[16rem]">
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+          <div className="border rounded-3xl text-center place-content-center h-10 px-[6rem]">fuck</div>
+        </div>
+
       </div>
 
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
-        <Button
-          onClick={handleNextStep}
-          type="submit"
-          variant="contained"
-          endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          Next
-        </Button>
+      <div className="">
+        
       </div>
     </div>
   );
