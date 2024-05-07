@@ -4,35 +4,27 @@ import { useEffect } from "react";
 // import { Button } from "@mui/material";
 // import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MapboxMap from "./MapBox";
 
 interface LocationBoxProps {
-  handleLocationChange: (location: string) => void;
-  setNextButtonDisabled: (value: boolean) => void;
-  // handleNextStep: () => void;
-  // handlePrevStep: () => void;
   formData: any;
+  handleLocationChange: (location: string) => void;
+  handleNextStep: () => void;
+  // setNextButtonDisabled: (value: boolean) => void;
+  // handlePrevStep: () => void;
 }
 
 const LocationBox = ({
   formData,
   handleLocationChange,
-  setNextButtonDisabled
-  // handleNextStep,
-  // handlePrevStep,
+  handleNextStep,
 }: LocationBoxProps) => {
-  useEffect(() => {
-    if (!formData.location) {
-      setNextButtonDisabled(true);
-    }
-
-  },)
-
   return (
-    <div className="w-4/6 mt-[-1rem] mb-4">
-
-      {/* Location Box */}
-      <div className="">
+    <div className="flex flex-col w-full">
+      <div className="w-4/6 mt-[-1rem] mb-4 mx-auto my-auto">
+        {/* Location Box */}
         <label className="form-control">
           <div className="label">
             <span className="label-text font-bold text-lg">
@@ -41,16 +33,31 @@ const LocationBox = ({
             </span>
           </div>
         </label>
+
+        {/* Map */}
+        {/* <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12"> */}
+        <div className="h-96">
+          <MapboxMap
+            isFormData={formData.location}
+            handleLocationChange={(e) => {
+              handleLocationChange(e);
+            }}
+          />
+        </div>
       </div>
 
-      {/* Map */}
-      {/* <div className="col-start-3 col-span-5 row-start-2 row-span-5 pt-12"> */}
-      <div className="h-96">
-        <MapboxMap isFormData= {formData.location} handleLocationChange={(e) => {
-          handleLocationChange(e);
-          setNextButtonDisabled(false);
-        }} 
-        />
+      {/* Next Button */}
+      <div className="self-end">
+        <Button
+          disabled={!formData.location}
+          onClick={handleNextStep}
+          type="button"
+          variant="contained"
+          className="bg-muiblue py-3 px-6"
+          endIcon={<ArrowForwardIcon />}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
