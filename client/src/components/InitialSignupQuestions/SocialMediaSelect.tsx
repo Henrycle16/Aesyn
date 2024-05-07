@@ -9,34 +9,29 @@ import {
   FaTwitch,
   FaYoutube,
 } from "react-icons/fa6";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface SocialMediaSelectProps {
-  // handleNextStep: () => void;
-  // handlePrevStep: () => void;
-  setNextButtonDisabled: (value: boolean) => void;
-  handlePreferenceChange: (selected: string) => void;
   formData: any;
+  handlePreferenceChange: (selected: string) => void;
+  handleNextStep: () => void;
+  // setNextButtonDisabled: (value: boolean) => void;
+  // handlePrevStep: () => void;
 }
 
 const SocialMediaSelect = ({
   formData,
   handlePreferenceChange,
-  // handleNextStep,
+  handleNextStep,
   // handlePrevStep,
-  setNextButtonDisabled,
+  // setNextButtonDisabled,
 }: SocialMediaSelectProps) => {
-  useEffect(() => {
-    if (!formData.preferences) {
-      setNextButtonDisabled(true);
-    }
-
-  })
-
   return (
-    <>
+    <div  className="flex flex-col w-full">
       {/* Box to seperate each social media preference */}
       {/* !TODO: Refactor chips to render as an array */}
-      <Box>
+      <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
           <span className="label-text font-bold text-lg">
             Social media preferences:
@@ -115,7 +110,21 @@ const SocialMediaSelect = ({
           />{" "}
         </Box>
       </Box>
-    </>
+
+      {/* Next Button */}
+      <div className="self-end">
+        <Button
+          disabled={!formData.preferences.length}
+          onClick={handleNextStep}
+          type="button"
+          variant="contained"
+          className="bg-muiblue py-3 px-6"
+          endIcon={<ArrowForwardIcon />}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 
