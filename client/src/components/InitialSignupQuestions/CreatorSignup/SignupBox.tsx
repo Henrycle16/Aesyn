@@ -109,8 +109,9 @@ const SignUpBox = () => {
       key="SocialMediaSelect"
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
-      handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      setNextButtonDisabled={setNextButtonDisabled}
+      // handleNextStep={handleNextStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <NicheSelect
       key="NicheSelect"
@@ -168,7 +169,7 @@ const SignUpBox = () => {
         {/* Next Button */}
         <div className="flex justify-end">
           <Button
-            disabled={isNextButtonDisabled}
+            // disabled={isNextButtonDisabled}
             onClick={handleNextStep}
             // type="button"
             type={step !== 5 ? "button" : "submit"}
