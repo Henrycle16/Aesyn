@@ -40,6 +40,7 @@ const UsernameForm = ({
   const checkUsername = debounce((username) => {
     if (username.length > 3) {
       setNextButtonDisabled(false);
+      // ! Commented out code below for easier testing exp
       // axios
       //   .get(`http://localhost:5000/api/users/username/${username}`)
       //   .then((res) => {
@@ -83,7 +84,6 @@ const UsernameForm = ({
             value={formData.userName}
             onChange={(e) => {
               handleFormChange(e);
-              // checkUsername(e.target.value);
             }}
           />
         </label>
