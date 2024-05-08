@@ -45,7 +45,7 @@ const ConfirmForm = ({ formData, handleNextStep }: ConfirmFormProps) => {
         </div>
 
         {/* This block is for populating the Niche Selection  */}
-        <div className="col-start-1 col-span-1 row-start-3 row-span-1 justify-end">
+        <div className="col-start-1 col-span-3 row-start-3 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Niche</div>
           <div className="pt-1 font-light">{formData.niche.join(", ")}</div>
         </div>

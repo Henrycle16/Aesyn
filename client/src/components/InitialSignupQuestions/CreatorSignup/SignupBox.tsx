@@ -71,6 +71,16 @@ const SignUpBox = () => {
     });
   };
 
+  // Method to handle the niche change event
+  const handleNicheChange = (selected: string) => {
+    setFormData((prevData) => {
+      const niche = prevData.niche.includes(selected)
+        ? prevData.niche.filter((niche) => niche !== selected)
+        : [...prevData.niche, selected];
+      return { ...prevData, niche };
+    });
+  };
+
   const steps = [
     <UsernameForm
       key="userName"
@@ -100,7 +110,7 @@ const SignUpBox = () => {
       key="NicheSelect"
       formData={formData}
       handleNextStep={handleNextStep}
-      handleFormChange={handleFormChange}
+      handleNicheChange={handleNicheChange}
     />,
     <ConfirmForm
       key="ConfirmForm"
