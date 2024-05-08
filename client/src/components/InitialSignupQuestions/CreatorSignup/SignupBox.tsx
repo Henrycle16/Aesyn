@@ -125,15 +125,16 @@ const SignUpBox = () => {
       <form action="" className="min-h-[32rem] flex flex-col">
         {/* Back Button */}
         <div className="flex">
-          <Button
-            onClick={handlePrevStep}
-            variant="text"
-            startIcon={<ArrowBackIcon />}
-            className={step === 0 ? "hidden" : ""}
-            sx={{ padding: "12px 24px" }}
-          >
-            back
-          </Button>
+          {step !== 0 && (
+            <Button
+              onClick={handlePrevStep}
+              variant="text"
+              startIcon={<ArrowBackIcon />}
+              sx={{ padding: "12px 24px" }}
+            >
+              back
+            </Button>
+          )}
         </div>
 
         {/* Render Form Parts Here */}
