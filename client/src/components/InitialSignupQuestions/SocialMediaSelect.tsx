@@ -1,4 +1,5 @@
-import { Box, Chip } from "@mui/material";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import {
   FaInstagram,
   FaSquareXTwitter,
@@ -15,6 +16,15 @@ interface SocialMediaSelectProps {
   handleNextStep: () => void;
 }
 
+// social media Options List
+const socialMediasArray = [
+  { key: 0, label: "Instagram", icon: <FaInstagram /> },
+  { key: 1, label: "TikTok", icon: <FaTiktok /> },
+  { key: 2, label: "Youtube", icon: <FaYoutube /> },
+  { key: 3, label: "Twitch", icon: <FaTwitch /> },
+  { key: 4, label: "Twitter/X", icon: <FaSquareXTwitter /> },
+];
+
 const SocialMediaSelect = ({
   formData,
   handlePreferenceChange,
@@ -23,7 +33,6 @@ const SocialMediaSelect = ({
   return (
     <div className="flex flex-col w-full">
       {/* Box to seperate each social media preference */}
-      {/* !TODO: Refactor chips to render as an array */}
       <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
           <span className="label-text font-bold text-lg">
@@ -31,76 +40,27 @@ const SocialMediaSelect = ({
           </span>
         </div>
         <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-8">
-          <Chip
-            onClick={() => handlePreferenceChange("Instagram")}
-            variant={
-              formData.preferences.includes("Instagram") ? "filled" : "outlined"
-            }
-            icon={<FaInstagram />}
-            label="Instagram"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Instagram")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("TikTok")}
-            variant={
-              formData.preferences.includes("TikTok") ? "filled" : "outlined"
-            }
-            icon={<FaTiktok />}
-            label="TikTok"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("TikTok")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("Youtube")}
-            variant={
-              formData.preferences.includes("Youtube") ? "filled" : "outlined"
-            }
-            icon={<FaYoutube />}
-            label="Youtube"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Youtube")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("Twitch")}
-            variant={
-              formData.preferences.includes("Twitch") ? "filled" : "outlined"
-            }
-            icon={<FaTwitch />}
-            label="Twitch"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Twitch")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />{" "}
-          <Chip
-            onClick={() => handlePreferenceChange("Twitter/X")}
-            variant={
-              formData.preferences.includes("Twitter/X") ? "filled" : "outlined"
-            }
-            icon={<FaSquareXTwitter />}
-            label="Twitter/X"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Twitter/X")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />{" "}
+          {socialMediasArray.map((data) => (
+            <Chip
+              key={data.key}
+              onClick={() => handlePreferenceChange(data.label)}
+              variant={
+                formData.preferences.includes(data.label)
+                  ? "filled"
+                  : "outlined"
+              }
+              icon={data.icon}
+              label={data.label}
+              className={
+                "text-base h-10 " +
+                `${
+                  formData.preferences.includes(data.label)
+                    ? "bg-blue-500 text-white"
+                    : "bg-white"
+                }`
+              }
+            />
+          ))}
         </Box>
       </Box>
 
