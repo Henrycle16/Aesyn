@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import UsernameForm from "./UsernameForm";
 import ToDashboard from "../ToDashboard";
