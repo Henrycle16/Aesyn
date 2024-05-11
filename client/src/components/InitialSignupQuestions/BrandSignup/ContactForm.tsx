@@ -1,35 +1,20 @@
-"use client";
-
-import React from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 interface ContactFormProps {
   handleNextStep: () => void;
-  handlePrevStep: () => void;
+  // handlePrevStep: () => void;
   handleFormChange: (event: any) => void;
   formData: any;
 }
 
-const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevStep } : ContactFormProps) => {
+const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFormProps) => {
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
-
+    <div className="flex flex-col w-full">
 
       {/* Handles POC Contact Information */}
-      <div className="col-start-3 col-span-5 row-start-2 row-span-3 justify-center items-center">
+      <div className="w-4/6 mx-auto my-auto">
         <label className="form-control w-full mb-6">
           <div className="label">
             <span className="label-text font-bold text-lg">
@@ -82,15 +67,14 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep, handlePrevSte
 
 
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      <div className="self-end">
         <Button
          disabled={!formData.contactPersonName || !formData.contactPhoneNumber || !formData.contactEmail}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
+          className="bg-muiblue py-3 px-6"
         >
           Next
         </Button>

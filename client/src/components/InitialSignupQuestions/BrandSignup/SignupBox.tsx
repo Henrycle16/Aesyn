@@ -111,7 +111,7 @@ const SignUpBox = () => {
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
