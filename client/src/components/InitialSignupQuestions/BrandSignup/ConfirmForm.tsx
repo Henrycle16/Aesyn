@@ -1,17 +1,14 @@
 import Button from "@mui/material/Button";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
   handleNextStep: () => void;
-  // handlePrevStep: () => void;
   handleFormChange: (event: any) => void;
   formData: any;
 }
 
 const ConfirmForm = ({
   formData,
-  // handlePrevStep,
   handleNextStep,
 }: ConfirmFormProps) => {
   return (

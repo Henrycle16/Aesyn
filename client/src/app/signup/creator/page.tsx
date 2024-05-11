@@ -5,10 +5,5 @@ export default function CreatorQuestions() {
     <>
       <SignUpBox />
     </>
-    /* 
-      <div className="border border-black mx-auto max-w-4xl h-full">
-        <SignUpBox />
-      </div>
-    */
   );
 }
