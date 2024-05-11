@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "../SocialMediaSelect";
@@ -102,7 +104,7 @@ const SignUpBox = () => {
       formData={formData}
       handleLocationChange={handleLocationChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <ContactForm
       key="ContactForm"
@@ -116,7 +118,7 @@ const SignUpBox = () => {
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
+      // handlePrevStep={handlePrevStep}
     />,
     <ConfirmForm
       key="ConfirmForm"
@@ -129,14 +131,25 @@ const SignUpBox = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center h-auto pt-52">
-      <Box
-        className="p-5 bg-base-200 rounded-box"
-        sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-      >
+    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
+      <form action="" className="min-h-[32rem] flex flex-col">
+        {/* Back Button */}
+        <div className="flex">
+          {step !== 0 && (
+            <Button
+              onClick={handlePrevStep}
+              variant="text"
+              startIcon={<ArrowBackIcon />}
+              sx={{ padding: "12px 24px" }}
+            >
+              back
+            </Button>
+          )}
+        </div>
+
         {/* Render Form Parts Here */}
-        {steps[step]}
-      </Box>
+        <div className="flex-1 flex justify-center">{steps[step]}</div>
+      </form>
     </div>
   );
 };

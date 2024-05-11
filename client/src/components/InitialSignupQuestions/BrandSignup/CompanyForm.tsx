@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -32,9 +32,9 @@ const CompanyForm = ({
   };
 
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
+    <div className="flex flex-col w-full">
       {/* Handles Brand Name and Industry Selection */}
-      <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
+      <div className="w-7/12 mx-auto my-auto">
         <label className="form-control w-full mb-8">
           <div className="label">
             <span className="label-text font-bold text-lg">
@@ -99,15 +99,14 @@ const CompanyForm = ({
       </div>
 
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      <div className="self-end">
         <Button
           disabled={!formData.companyName || !formData.industry}
           onClick={handleNextStep}
-          type="submit"
+          type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
-          style={{ padding: "12px 24px" }}
+          className="bg-muiblue py-3 px-6"
         >
           Next
         </Button>
