@@ -1,5 +1,3 @@
-// MapBox.tsx
-
 import * as React from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -53,40 +51,46 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
         placeholder: "Search for city in United States",
         types: "place",
       });
-
+  
       geocoder.on("result", function (e) {
         const inputField = geocoderContainer.current?.querySelector(
           ".mapboxgl-ctrl-geocoder--input"
         ) as HTMLInputElement;
         if (inputField) {
           inputField.value = e.result.place_name;
-
+  
           handleLocationChange(inputField.value);
-
+  
           // Enable Next button
           setIsLocationSelected(true);
           setIsLocationModified(false); // Reset the modified state
           setSelectedOption(inputField.value); // Save the selected option
         }
+  
+        console.log("Location is selected");
+        console.log(inputField.value);
+        console.log(isFormData);
       });
-
+  
       geocoder.on("clear", function () {
         // If the input box is cleared, disable Next button
         setIsLocationSelected(false);
         setIsLocationModified(false); // Reset the modified state
         setSelectedOption(null); // Reset the selected option
       });
-
+  
       // Add geocoder to its container
       geocoderContainer.current.appendChild(geocoder.onAdd(map));
-
+  
       // Add event listener for input event
       const inputField = geocoderContainer.current.querySelector(
         ".mapboxgl-ctrl-geocoder--input"
       ) as HTMLInputElement;
+  
       if (isFormData.length > 0) {
         inputField.value = isFormData;
       }
+  
       if (inputField) {
         inputField.addEventListener("input", () => {
           // If the input value is manually changed, disable Next button
@@ -94,10 +98,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
           setIsLocationModified(true);
         });
       }
-
+  
       geocoderInitialized.current = true;
     }
+    
   }, [handleLocationChange, setIsLocationSelected, isFormData, map]);
+  
 
   return (
     <div className="relative w-full h-full">
