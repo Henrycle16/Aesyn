@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CompanyForm from "./CompanyForm";
@@ -124,7 +124,7 @@ const SignUpBox = () => {
       key="ConfirmForm"
       formData={formData}
       handleFormChange={handleFormChange}
-      handlePrevStep={handlePrevStep}
+      // handlePrevStep={handlePrevStep}
       handleNextStep={handleNextStep}
     />,
     <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
