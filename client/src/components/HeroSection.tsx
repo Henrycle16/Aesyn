@@ -1,17 +1,18 @@
-"use client";
-import { useRouter } from "next/navigation";
+// "use client";
+// import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleBrandSignup = () => {
-    router.push(`/signup?state=${true}`);
-  };
+  // const handleBrandSignup = () => {
+  //   router.push(`/signup?state=${true}`);
+  // };
 
-  const handleCreatorSignup = () => {
-    router.push(`/signup?state=${false}`);
-  };
+  // const handleCreatorSignup = () => {
+  //   router.push(`/signup?state=${false}`);
+  // };
 
   return (
     <section className="flex flex-col items-center text-gray-600 body-font md:flex-row">
@@ -28,7 +29,7 @@ const HeroSection = () => {
           elementum elit facilisis.{" "}
         </p>
         <div className="flex justify-center">
-          <button
+          {/* <button
             onClick={handleBrandSignup}
             className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
           >
@@ -39,7 +40,26 @@ const HeroSection = () => {
             className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
           >
             Join as Creator!
-          </button>
+          </button> */}
+
+          <Link
+            href={{
+              pathname: "/signup",
+              query: { state: true },
+            }}
+            className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+          >
+            Join as Brand!
+          </Link>
+          <Link
+            href={{
+              pathname: "/signup",
+              query: { state: false },
+            }}
+            className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
+          >
+            Join as Creator!
+          </Link>
         </div>
       </div>
       <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
