@@ -15,7 +15,7 @@ const LocationBox = ({
 }: LocationBoxProps) => {
   return (
     <div className="flex flex-col w-full">
-      <div className="w-4/6 mt-[-1rem] mb-4 mx-auto my-auto">
+      <div className="w-4/6 mx-auto my-auto">
         {/* Location Box */}
         <label className="form-control">
           <div className="label">
@@ -27,7 +27,7 @@ const LocationBox = ({
         </label>
 
         {/* Map */}
-        <div className="h-96">
+        <div className="h-80">
           <MapboxMap
             isFormData={formData.location}
             handleLocationChange={(e) => {
@@ -38,7 +38,7 @@ const LocationBox = ({
       </div>
 
       {/* Next Button */}
-      <div className="self-end">
+      <div className="self-end mt-auto">
         <Button
           disabled={!formData.location}
           onClick={handleNextStep}
