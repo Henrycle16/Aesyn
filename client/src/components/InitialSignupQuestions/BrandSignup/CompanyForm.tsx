@@ -27,8 +27,14 @@ const CompanyForm = ({
     { value: "Other", label: "Other" },
   ];
 
-  const toggleSelect = () => {
+  const toggleSelectClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleSelectBlur = () => {
+    if(isOpen){
+      setIsOpen(!isOpen);
+    }
   };
 
   return (
@@ -65,8 +71,8 @@ const CompanyForm = ({
               name="industry"
               value={formData.industry}
               onChange={(e) => handleFormChange(e)}
-              onClick={toggleSelect}
-              onBlur={toggleSelect}
+              onClick={toggleSelectClick}
+              onBlur={toggleSelectBlur}
             >
               <option value="" disabled hidden>
                 Please select an industry
