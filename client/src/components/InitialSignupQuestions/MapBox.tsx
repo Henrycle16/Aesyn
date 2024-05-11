@@ -15,8 +15,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const geocoderContainer = React.useRef<HTMLDivElement>(null);
   const [map, setMap] = React.useState<mapboxgl.Map>();
-  const [isLocationModified, setIsLocationModified] = React.useState(false);
-  const [selectedOption, setSelectedOption] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -44,6 +42,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
   const geocoderInitialized = React.useRef(false);
 
   React.useEffect(() => {
+
     if (map && geocoderContainer.current && !geocoderInitialized.current) {
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
@@ -63,20 +62,13 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
   
           // Enable Next button
           setIsLocationSelected(true);
-          setIsLocationModified(false); // Reset the modified state
-          setSelectedOption(inputField.value); // Save the selected option
         }
-  
-        console.log("Location is selected");
-        console.log(inputField.value);
-        console.log(isFormData);
+
       });
   
       geocoder.on("clear", function () {
         // If the input box is cleared, disable Next button
         setIsLocationSelected(false);
-        setIsLocationModified(false); // Reset the modified state
-        setSelectedOption(null); // Reset the selected option
       });
   
       // Add geocoder to its container
@@ -95,10 +87,13 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
         inputField.addEventListener("input", () => {
           // If the input value is manually changed, disable Next button
           setIsLocationSelected(false);
-          setIsLocationModified(true);
         });
       }
-  
+
+      if (inputField.value == isFormData) {
+        setIsLocationSelected(true);
+      }
+
       geocoderInitialized.current = true;
     }
     
