@@ -1,4 +1,4 @@
-"use client";
+// MapBox.tsx
 
 import * as React from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -9,13 +9,16 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
 type MapboxMapProps = {
   handleLocationChange: (location: string) => void;
+  setIsLocationSelected: (isSelected: boolean) => void;
   isFormData: string;
 };
 
-const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData }) => {
+const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocationSelected, isFormData }) => {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const geocoderContainer = React.useRef<HTMLDivElement>(null);
   const [map, setMap] = React.useState<mapboxgl.Map>();
+  const [isLocationModified, setIsLocationModified] = React.useState(false);
+  const [selectedOption, setSelectedOption] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -47,7 +50,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData 
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        placeholder: "Search for city in United States", // Placeholder text for the search bar
+        placeholder: "Search for city in United States",
         types: "place",
       });
 
@@ -58,11 +61,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData 
         if (inputField) {
           inputField.value = e.result.place_name;
 
-          console.log(inputField.value); // Log the value after user selection
-
-          // Update the location state in the parent component
           handleLocationChange(inputField.value);
+
+          // Enable Next button
+          setIsLocationSelected(true);
+          setIsLocationModified(false); // Reset the modified state
+          setSelectedOption(inputField.value); // Save the selected option
         }
+      });
+
+      geocoder.on("clear", function () {
+        // If the input box is cleared, disable Next button
+        setIsLocationSelected(false);
+        setIsLocationModified(false); // Reset the modified state
+        setSelectedOption(null); // Reset the selected option
       });
 
       // Add geocoder to its container
@@ -76,15 +88,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData 
         inputField.value = isFormData;
       }
       if (inputField) {
-        inputField.addEventListener("input", (event) => {
-          console.log((event.target as HTMLInputElement).value);
+        inputField.addEventListener("input", () => {
+          // If the input value is manually changed, disable Next button
+          setIsLocationSelected(false);
+          setIsLocationModified(true);
         });
       }
 
-      // Set geocoderInitialized to true to prevent re-initialization
       geocoderInitialized.current = true;
     }
-  }, [handleLocationChange, isFormData, map]);
+  }, [handleLocationChange, setIsLocationSelected, isFormData, map]);
 
   return (
     <div className="relative w-full h-full">
