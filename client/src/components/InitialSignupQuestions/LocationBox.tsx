@@ -1,5 +1,3 @@
-// LocationBox.tsx
-
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
