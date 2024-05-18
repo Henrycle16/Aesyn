@@ -140,7 +140,7 @@ const SignUpComponent = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className="mt-3 mb-2"
+            className="mt-3 mb-2 bg-muiblue-style"
           >
             Sign Up
           </Button>

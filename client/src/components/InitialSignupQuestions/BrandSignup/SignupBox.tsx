@@ -8,11 +8,10 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
-import { brandSignUp } from "./../../../actions/brand"
+import { brandSignUp } from "./../../../actions/brand";
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-
 
 /* 
   This is the parent component
@@ -32,7 +31,7 @@ interface BrandForm {
   contactPersonName: string;
   contactEmail: string;
   contactPhoneNumber: string;
-  location: object;
+  location: string;
   preferences: string[];
 }
 
@@ -43,7 +42,7 @@ const brandFormData: BrandForm = {
   contactPersonName: "",
   contactEmail: "",
   contactPhoneNumber: "",
-  location: {},
+  location: "",
   preferences: [],
 };
 
@@ -84,20 +83,11 @@ const SignUpBox = () => {
 
   // Method to handle the location change event
   const handleLocationChange = (locationString: string) => {
-    const split = locationString.split(",");
-
-    // **This only works for the USA
-    const locationObj: object = {
-      city: split[0],
-      state: split[1],
-      country: split[2],
-    };
-
-    setFormData((prevData) => ({
-      ...prevData,
-      location: locationObj,
-    }));
-  };
+  setFormData((prevData) => ({
+    ...prevData,
+    location: locationString,
+  }));
+};
 
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
@@ -112,9 +102,17 @@ const SignUpBox = () => {
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
+    // Split the location string and create the location object
+    const [city, state, country] = formData.location.split(",");
+    const location = { city, state, country };
+
+    // Create the location object and encapsulate it with the form data
+    const { user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences } = formData;
+    const body = JSON.stringify({user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences, location});
+
     try {
-      const brandSignUpResponse = await brandSignUp(formData);
+      const brandSignUpResponse = await brandSignUp(body);
 
       if (brandSignUpResponse && !brandSignUpResponse.error) {
         console.log("REGISTERED BRAND!");

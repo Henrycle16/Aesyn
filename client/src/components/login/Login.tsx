@@ -63,7 +63,7 @@ const LoginComponent = () => {
           component="form"
           onSubmit={(e) => handleSubmit(e)}
         >
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className="pb-6">
             <Grid item xs={12}>
               <TextField
                 required
@@ -98,14 +98,14 @@ const LoginComponent = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className="mt-3 mb-2"
+            className="mt-3 mb-2 bg-muiblue-style"
           >
             Login
           </Button>
           <Button
             fullWidth
             variant="contained"
-            className="mt-3 mb-2"
+            className="mt-3 mb-2 bg-muiblue-style"
             onClick={() => signOut({redirect: false})}
           >
             Sign Out
@@ -113,7 +113,7 @@ const LoginComponent = () => {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
-                Don't have an account? Sign up
+                Don&apos;t have an account? Sign up
               </Link>
             </Grid>
           </Grid>

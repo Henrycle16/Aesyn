@@ -38,13 +38,13 @@ const ConfirmForm = ({
 
       {/* Grid for the form data */}
       <div className="col-start-2 col-span-8 row-start-3 row-span-7 justify-center items-center">
-        <div className="grid grid-cols-3 grid-rows-4 w-full h-full">
+        <div className="grid grid-cols-3 grid-rows-4 gap-3 w-full h-full">
           
 
           {/* This block is for populating the Brand Name and Industry */}
           <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Brand Name</div>
-              <div className="pt-2">
+              <div className="pt-2 overflow-hidden overflow-ellipsis whitespace-nowrap w-full">
              {formData.companyName}
              </div>
           </div>
@@ -60,9 +60,7 @@ const ConfirmForm = ({
           <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Location</div>
               <div className="pt-2">
-              {formData.location.city}
-              {formData.location.state}
-              {formData.location.country}
+              {formData.location}
              </div>
           </div>
 
@@ -105,7 +103,7 @@ const ConfirmForm = ({
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
+          className="col-span-1 bg-muiblue-style"
           style={{
             padding: "12px 24px",
             textAlign: "right",
