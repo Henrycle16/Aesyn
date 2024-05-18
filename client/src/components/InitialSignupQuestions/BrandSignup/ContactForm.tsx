@@ -126,7 +126,7 @@ const ContactForm = ({
           </div>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email Address"
             required
             className="input input-bordered w-full"
             name="contactEmail"

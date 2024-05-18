@@ -54,6 +54,7 @@ const CompanyForm = ({
             name="companyName"
             value={formData.companyName}
             onChange={(e) => handleFormChange(e)}
+            maxLength={50}
           />
         </label>
         <label className="form-control w-full mb-4">
