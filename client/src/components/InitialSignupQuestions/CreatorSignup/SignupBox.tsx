@@ -33,6 +33,7 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
+  const [isUsernameValid, setUsernameValid] = useState<boolean>(false);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -87,6 +88,8 @@ const SignUpBox = () => {
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
+      isUsernameValid={isUsernameValid}
+      setUsernameValid={setUsernameValid}
     />,
     <GenderForm
       key="GenderForm"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { error } from "console";
+import _ from "lodash";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -10,63 +10,49 @@ interface UsernameFormProps {
   formData: any;
   handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleNextStep: () => void;
-}
-
-function debounce<F extends (...args: any[]) => any>(
-  func: F,
-  wait: number
-): (...args: Parameters<F>) => void {
-  let timeout: NodeJS.Timeout | null;
-  return function executedFunction(...args: Parameters<F>) {
-    const later = () => {
-      clearTimeout(timeout!);
-      func(...args);
-    };
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-    timeout = setTimeout(later, wait);
-  };
+  setUsernameValid: React.Dispatch<React.SetStateAction<boolean>>;
+  isUsernameValid: boolean;
 }
 
 const UsernameForm = ({
   formData,
   handleFormChange,
   handleNextStep,
+  isUsernameValid,
+  setUsernameValid,
 }: UsernameFormProps) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
-
-  const checkUsername = debounce((username) => {
-    if (username.length > 3) {
-      setNextButtonDisabled(false);
-      // ! Commented out code below for easier testing exp
-      // axios
-      //   .get(`http://localhost:5000/api/users/username/${username}`)
-      //   .then((res) => {
-      //     if (res.data) {
-      //       setErrorMessage("Username already exists");
-      //       setNextButtonDisabled(true);
-      //     } else {
-      //       setErrorMessage("");
-      //       setNextButtonDisabled(false);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     setErrorMessage("");
-      //     setNextButtonDisabled(true);
-      //   });
-    } else {
-      setErrorMessage("");
-      setNextButtonDisabled(true);
-    }
-  }, 500);
 
   useEffect(() => {
+    if (formData.userName.length <= 3) {
+      setUsernameValid(false);
+    };
+
+    const checkUsername = async (username: string) => {
+      try {
+        const result = await axios.get(
+          `http://localhost:5000/api/users/username/${username}`
+        );
+        if (result.data) {
+          setErrorMessage("Username already exists");
+          setUsernameValid(false);
+          return;
+        }
+        setErrorMessage("");
+        setUsernameValid(true);
+      } catch (error) {
+        console.error("Error fetching username: ", error);
+      }
+    };
+
+    const debouncedValidation = _.debounce((username) => {
+      checkUsername(username);
+    }, 500);
+
     if (formData.userName.length > 3) {
-      checkUsername(formData.userName);
+      debouncedValidation(formData.userName);
     }
-  }, [formData.userName, checkUsername]);
+  }, [formData.userName, isUsernameValid, setUsernameValid]);
 
   return (
     <div className="flex flex-col w-full">
@@ -93,7 +79,8 @@ const UsernameForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={isNextButtonDisabled}
+          disabled={!isUsernameValid}
+          // disabled={isNextButtonDisabled}
           onClick={handleNextStep}
           type="button"
           variant="contained"
