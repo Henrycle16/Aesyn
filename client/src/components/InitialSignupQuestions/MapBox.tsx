@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -9,10 +7,11 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
 type MapboxMapProps = {
   handleLocationChange: (location: string) => void;
+  setIsLocationSelected: (isSelected: boolean) => void;
   isFormData: string;
 };
 
-const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData }) => {
+const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocationSelected, isFormData }) => {
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const geocoderContainer = React.useRef<HTMLDivElement>(null);
   const [map, setMap] = React.useState<mapboxgl.Map>();
@@ -43,48 +42,63 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, isFormData 
   const geocoderInitialized = React.useRef(false);
 
   React.useEffect(() => {
+
     if (map && geocoderContainer.current && !geocoderInitialized.current) {
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        placeholder: "Search for city in United States", // Placeholder text for the search bar
+        placeholder: "Search for a city in the United States",
         types: "place",
       });
-
+  
       geocoder.on("result", function (e) {
         const inputField = geocoderContainer.current?.querySelector(
           ".mapboxgl-ctrl-geocoder--input"
         ) as HTMLInputElement;
         if (inputField) {
           inputField.value = e.result.place_name;
-
-          console.log(inputField.value); // Log the value after user selection
-
-          // Update the location state in the parent component
+  
           handleLocationChange(inputField.value);
+  
+          // Enable Next button
+          setIsLocationSelected(true);
         }
-      });
 
+      });
+  
+      geocoder.on("clear", function () {
+        // If the input box is cleared, disable Next button
+        setIsLocationSelected(false);
+      });
+  
       // Add geocoder to its container
       geocoderContainer.current.appendChild(geocoder.onAdd(map));
-
+  
       // Add event listener for input event
       const inputField = geocoderContainer.current.querySelector(
         ".mapboxgl-ctrl-geocoder--input"
       ) as HTMLInputElement;
+  
       if (isFormData.length > 0) {
         inputField.value = isFormData;
       }
+  
       if (inputField) {
-        inputField.addEventListener("input", (event) => {
-          console.log((event.target as HTMLInputElement).value);
+        inputField.addEventListener("input", () => {
+          // If the input value is manually changed, disable Next button
+          setIsLocationSelected(false);
         });
       }
 
-      // Set geocoderInitialized to true to prevent re-initialization
+      if (inputField.value == isFormData && isFormData.length > 0) {
+        setIsLocationSelected(true);
+      }
+
       geocoderInitialized.current = true;
     }
-  }, [handleLocationChange, isFormData, map]);
+    
+  }, [handleLocationChange, setIsLocationSelected, isFormData, map]);
+  
 
   return (
     <div className="relative w-full h-full">

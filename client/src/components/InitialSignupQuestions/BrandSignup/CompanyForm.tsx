@@ -27,8 +27,14 @@ const CompanyForm = ({
     { value: "Other", label: "Other" },
   ];
 
-  const toggleSelect = () => {
+  const toggleSelectClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleSelectBlur = () => {
+    if(isOpen){
+      setIsOpen(!isOpen);
+    }
   };
 
   return (
@@ -37,22 +43,23 @@ const CompanyForm = ({
       <div className="col-start-3 col-span-5 row-start-3 row-span-3 justify-center items-center">
         <label className="form-control w-full mb-8">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What is your brand name?
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Brand Name"
             className="input input-bordered w-full"
             name="companyName"
             value={formData.companyName}
             onChange={(e) => handleFormChange(e)}
+            maxLength={50}
           />
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What industry best describes your brand?
             </span>
           </div>
@@ -65,8 +72,8 @@ const CompanyForm = ({
               name="industry"
               value={formData.industry}
               onChange={(e) => handleFormChange(e)}
-              onClick={toggleSelect}
-              onBlur={toggleSelect}
+              onClick={toggleSelectClick}
+              onBlur={toggleSelectBlur}
             >
               <option value="" disabled hidden>
                 Please select an industry
@@ -106,7 +113,7 @@ const CompanyForm = ({
           type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
+          className="col-span-1 bg-muiblue-style"
           style={{ padding: "12px 24px" }}
         >
           Next

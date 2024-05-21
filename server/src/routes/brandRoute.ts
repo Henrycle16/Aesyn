@@ -1,6 +1,6 @@
 import express from "express";
 import auth from "../middleware/auth";
-import { check, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 
 import Brand from "../models/Brand";
 import User from "../models/User";
@@ -70,11 +70,11 @@ router.post(
       let brandProfile = await Brand.findOne({ user: req.body.user.id });
 
       //If found error
-      if (brandProfile) {
-        return res.status(400).json({
-          errors: [{ msg: "Brand already exists" }],
-        });
-      }
+      // if (brandProfile) {
+      //   return res.status(400).json({
+      //     errors: [{ msg: "Brand already exists" }],
+      //   });
+      // }
 
       //Create if not found
       brandProfile = new Brand(brandFields);

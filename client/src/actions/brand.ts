@@ -1,7 +1,8 @@
 import axios from "axios";
 
 //Get User by ID
-export const brandSignUp = async (formData: object) => {
+export const brandSignUp = async (formData: string) => {
+
 
  try {
    const res = await axios.post("http://localhost:5000/api/brands", formData, {

@@ -45,7 +45,7 @@ const GenderForm = ({
       {/* Handles Gender selection*/}
       <div className="col-start-3 col-span-5 row-start-3 row-span-5 justify-center items-center">
         <div className="form-control w-full mb-4">
-          <div className="label mb-5">
+          <div className="label">
             <span className="label-text font-bold text-xl">
               Gender{" "}
               <Tooltip
@@ -118,7 +118,7 @@ const GenderForm = ({
           type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1"
+          className="col-span-1 bg-muiblue-style"
           style={{ padding: "12px 24px" }}
         >
           Next
