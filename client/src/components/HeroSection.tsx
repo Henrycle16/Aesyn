@@ -44,6 +44,7 @@ const HeroSection = () => {
           className="object-cover object-center rounded"
           width={720}
           height={600}
+          priority={true}
         />
       </div>
     </section>
