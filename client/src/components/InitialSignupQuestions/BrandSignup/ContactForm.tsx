@@ -24,59 +24,48 @@ const ContactForm = ({
     contactEmail: "",
   });
 
-  const validateName = (name: string) => {
-    const regex = /^[A-Za-z\s]+$/;
-    return regex.test(name);
-  };
+  const validateName = (name: string) => /^[A-Za-z\s]+$/.test(name);
 
-  const validatePhone = (phone: string) => {
-    const regex = /^\d{10}$/;
-    return regex.test(phone);
-  };
+  const validatePhone = (phone: string) => /^\d{10}$/.test(phone);
+  
+  const validateEmail = (email: string) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 
-  const validateEmail = (email: string) => {
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return regex.test(email);
-  };
 
   const handleInputChange = (event: any) => {
-    const { name, value } = event.target;
+  const { name, value } = event.target;
   
-    let newValue = value;
-    if (name === "contactPhoneNumber") {
-      newValue = newValue.replace(/\D/g, "");
-    } else if (name === "contactPersonName") {
-      newValue = newValue.replace(/\d/g, "");
-    }
+  let newValue = value;
+  if (name === "contactPhoneNumber") {
+    newValue = newValue.replace(/\D/g, "");
+  } else if (name === "contactPersonName") {
+    newValue = newValue.replace(/\d/g, "");
+  }
   
-    switch (name) {
-      case "contactPersonName":
-        if (newValue && !validateName(newValue)) {
-          setErrors(prev => ({ ...prev, contactPersonName: "Invalid name" }));
-        } else {
-          setErrors(prev => ({ ...prev, contactPersonName: "" }));
-        }
-        break;
-      case "contactPhoneNumber":
-        if (newValue && !validatePhone(newValue)) {
-          setErrors(prev => ({ ...prev, contactPhoneNumber: "Invalid phone number" }));
-        } else {
-          setErrors(prev => ({ ...prev, contactPhoneNumber: "" }));
-        }
-        break;
-      case "contactEmail":
-        if (newValue && !validateEmail(newValue)) {
-          setErrors(prev => ({ ...prev, contactEmail: "Invalid email" }));
-        } else {
-          setErrors(prev => ({ ...prev, contactEmail: "" }));
-        }
-        break;
-      default:
-        break;
-    }
-  
-    handleFormChange({ target: { name, value: newValue } });
-  };
+  switch (name) {
+    case "contactPersonName":
+      setErrors(prev => ({
+        ...prev, 
+        contactPersonName: newValue && !validateName(newValue) ? "Invalid name" : ""
+      }));
+      break;
+    case "contactPhoneNumber":
+      setErrors(prev => ({
+        ...prev, 
+        contactPhoneNumber: newValue && !validatePhone(newValue) ? "Invalid phone number" : ""
+      }));
+      break;
+    case "contactEmail":
+      setErrors(prev => ({
+        ...prev, 
+        contactEmail: newValue && !validateEmail(newValue) ? "Invalid email" : ""
+      }));
+      break;
+    default:
+      break;
+  }
+
+  handleFormChange({ target: { name, value: newValue } });
+};
 
   return (
     <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
@@ -136,8 +125,8 @@ const ContactForm = ({
             </span>
           </div>
           <input
-            type="text"
-            placeholder="Email"
+            type="email"
+            placeholder="Email Address"
             required
             className="input input-bordered w-full"
             name="contactEmail"

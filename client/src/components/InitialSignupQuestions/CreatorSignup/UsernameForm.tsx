@@ -67,7 +67,7 @@ const UsernameForm = ({
           setNextButtonDisabled(true);
         });
     } else if (username.length < 3) {
-      setErrorMessage("Username must be at least 3 characters");
+      setErrorMessage("Username must be more than 3 characters");
       setUsernameValid(false);
       setNextButtonDisabled(true);
     } else if (isUsernameValid) {
