@@ -1,5 +1,5 @@
-import SignUpComponent from "@/components/SignUpComponent";
 import Image from "next/image";
+import SignUpComponent from "@/components/SignUpComponent";
 
 export default function SignUp() {
   return (
