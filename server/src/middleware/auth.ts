@@ -16,4 +16,4 @@ export default async function auth(req, res, next) {
   } else {
     return res.status(403).json({ msg: "No token, authorization denied" });
   }
-}
+};

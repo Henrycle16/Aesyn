@@ -38,6 +38,18 @@ const SignUpBox = () => {
   const [username, setUsername] = useState("");
   const [isUsernameValid, setUsernameValid] = useState(false);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data && session.status === "authenticated") {
+      setFormData((prevData) => ({
+        ...prevData,
+        user: session.data.user,
+      }));
+    } else {
+      redirect("/login");
+    }
+  }, [step]);
 
   // Method to handle the next step
   const handleNextStep = () => {
