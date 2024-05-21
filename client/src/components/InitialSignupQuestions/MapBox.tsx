@@ -47,7 +47,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        placeholder: "Search for city in United States",
+        placeholder: "Search for a city in the United States",
         types: "place",
       });
   
@@ -90,7 +90,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ handleLocationChange, setIsLocati
         });
       }
 
-      if (inputField.value == isFormData) {
+      if (inputField.value == isFormData && isFormData.length > 0) {
         setIsLocationSelected(true);
       }
 
