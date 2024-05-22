@@ -9,7 +9,7 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
-import { creatorSignUp } from "./../../../actions/creator"
+import { creatorSignUp } from "./../../../actions/creator";
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -77,10 +77,10 @@ const SignUpBox = () => {
   };
 
   // Method to handle the location change event
-  const handleLocationChange = (location: string) => {
+  const handleLocationChange = (locationString: string) => {
     setFormData((prevData) => ({
       ...prevData,
-      location: location,
+      location: locationString,
     }));
   };
 
@@ -97,9 +97,24 @@ const SignUpBox = () => {
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
+    // Split the location string and create the location object
+    const [city, state, country] = formData.location.split(",");
+    const location = { city, state, country };
+
+    // Create the location object and encapsulate it with the form data
+    const { user, userName, gender, niche, preferences } = formData;
+    const body = JSON.stringify({
+      user,
+      userName,
+      gender,
+      niche,
+      preferences,
+      location,
+    });
+
     try {
-      const creatorSignUpResponse = await creatorSignUp(formData);
+      const creatorSignUpResponse = await creatorSignUp(body);
 
       if (creatorSignUpResponse && !creatorSignUpResponse.error) {
         console.log("REGISTERED CREATOR!");
@@ -108,6 +123,7 @@ const SignUpBox = () => {
     } catch {
       console.log("Error!");
     }
+    console.log(formData)
 
     return;
   };
