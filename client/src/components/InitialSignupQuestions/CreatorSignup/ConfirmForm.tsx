@@ -43,7 +43,7 @@ const ConfirmForm = ({
         <div className="grid grid-cols-3 grid-rows-4 w-full h-full">
           
 
-          {/* This block is for populating the Brand Name and Industry */}
+          {/* This block is for populating the Creator Name and Gender */}
           <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Username</div>
               <div className="pt-2">
@@ -58,7 +58,7 @@ const ConfirmForm = ({
           </div>
 
 
-          {/* This block is for populating the Brand Location  */}
+          {/* This block is for populating the Creator Location  */}
           <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
               <div className="label-text font-semibold text-base ">Location</div>
               <div className="pt-2">
@@ -89,7 +89,6 @@ const ConfirmForm = ({
       {/* Button to submit the form */}
       <div className="col-start-8 col-span-1 row-start-9 row-span-1 justify-end pt-5 pl-10">
         <Button
-          onClick={handleNextStep}
           type="submit"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

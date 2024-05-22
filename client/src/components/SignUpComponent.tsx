@@ -28,9 +28,10 @@ const SignUpComponent = () => {
     lastName: "",
     email: "",
     password: "",
+    password2: "",
   });
 
-  const { firstName, lastName, email, password } = formData;
+  const { firstName, lastName, email, password, password2 } = formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -42,24 +43,28 @@ const SignUpComponent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const body = JSON.stringify({ firstName, lastName, email, password });
+    if (password != password2) {
+      console.log("Passwords do not match!");
+      return;
+    } else {
+      const body = JSON.stringify({ firstName, lastName, email, password });
 
-    try {
-      await axios.post("http://localhost:5000/api/users", body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("User succesfully signed up");
+      try {
+        await axios.post("http://localhost:5000/api/users", body, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("User succesfully signed up");
 
-      if (state === "true") {
-        router.push("/signup/brand");
-      } else {
-        router.push("/signup/creator");
+        if (state === "true") {
+          router.push("/signup/brand");
+        } else {
+          router.push("/signup/creator");
+        }
+      } catch (err) {
+        console.log(err);
       }
-
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -125,6 +130,19 @@ const SignUpComponent = () => {
                 type="password"
                 id="password"
                 value={password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password2"
+                label="Confirm Password"
+                type="password"
+                id="password2"
+                value={password2}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
                 autoComplete="new-password"
               />

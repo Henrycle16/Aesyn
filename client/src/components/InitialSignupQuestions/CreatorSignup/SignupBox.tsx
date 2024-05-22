@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import UsernameForm from "./UsernameForm";
 import ToDashboard from "../ToDashboard";
@@ -9,9 +9,12 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
+import { creatorSignUp } from "./../../../actions/creator";
 
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 interface CreatorForm {
-  userID: string;
+  user: object;
   userName: string;
   gender: string;
   location: string;
@@ -21,7 +24,7 @@ interface CreatorForm {
 
 const creatorFormData: CreatorForm = {
   //TODO: grab userID after initial user signup page
-  userID: "",
+  user: {},
   userName: "",
   gender: "",
   location: "",
@@ -35,6 +38,18 @@ const SignUpBox = () => {
   const [username, setUsername] = useState("");
   const [isUsernameValid, setUsernameValid] = useState(false);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data && session.status === "authenticated") {
+      setFormData((prevData) => ({
+        ...prevData,
+        user: session.data.user,
+      }));
+    } else {
+      redirect("/login");
+    }
+  }, [step]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -62,10 +77,10 @@ const SignUpBox = () => {
   };
 
   // Method to handle the location change event
-  const handleLocationChange = (location: string) => {
+  const handleLocationChange = (locationString: string) => {
     setFormData((prevData) => ({
       ...prevData,
-      location: location,
+      location: locationString,
     }));
   };
 
@@ -77,6 +92,40 @@ const SignUpBox = () => {
         : [...prevData.preferences, selected];
       return { ...prevData, preferences };
     });
+  };
+
+  // Method to submit form
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Split the location string and create the location object
+    const [city, state, country] = formData.location.split(",");
+    const location = { city, state, country };
+
+    // Create the location object and encapsulate it with the form data
+    const { user, userName, gender, niche, preferences } = formData;
+    const body = JSON.stringify({
+      user,
+      userName,
+      gender,
+      niche,
+      preferences,
+      location,
+    });
+
+    try {
+      const creatorSignUpResponse = await creatorSignUp(body);
+
+      if (creatorSignUpResponse && !creatorSignUpResponse.error) {
+        console.log("REGISTERED CREATOR!");
+        handleNextStep();
+      }
+    } catch {
+      console.log("Error!");
+    }
+    console.log(formData)
+
+    return;
   };
 
   const steps = [
@@ -130,13 +179,15 @@ const SignUpBox = () => {
 
   return (
     <div className="flex justify-center items-center h-auto pt-52">
-      <Box
-        className="p-5 bg-base-200 rounded-box"
-        sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-      >
-        {/* Render Form Parts Here */}
-        {steps[step]}
-      </Box>
+      <form onSubmit={(e) => handleSubmitForm(e)}>
+        <Box
+          className="p-5 bg-base-200 rounded-box"
+          sx={{ width: "900px", height: "600px", border: "1px solid black" }}
+        >
+          {/* Render Form Parts Here */}
+          {steps[step]}
+        </Box>
+      </form>
     </div>
   );
 };
