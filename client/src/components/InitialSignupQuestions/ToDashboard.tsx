@@ -4,30 +4,23 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const ToDashboard = () => {
   return (
-    <div className="grid grid-cols-5 grid-rows-5 gap-4 w-full h-full">
+    <div className="flex flex-col w-full">
       {/* Dashboard Header */}
-      <div className="col-start-2 col-span-3 row-start-3 row-span-1 flex justify-center items-center">
-        <header className="form-control w-full items-center">
-          <span className="label-text font-bold	text-2xl truncate">
+      <div className="flex flex-1 justify-center items-center">
+        <h1 className="font-bold text-2xl mb-5">
             Great! Now let&apos;s head to your dashboard!
-          </span>
-        </header>
+        </h1>
       </div>
 
       {/* Next Step Button */}
-      <div className="col-start-4 col-span-2 row-start-5 row-span-1 justify-end pt-5 pl-32 ">
+      <div className="self-end mt-auto">
         <Link href="/dashboard">
           <Button
             variant="contained"
             endIcon={<ArrowForwardIcon />}
-            className="col-span-1 bg-muiblue"
-            style={{
-              padding: "12px 24px",
-              textAlign: "right",
-              whiteSpace: "nowrap",
-            }}
+            className="bg-muiblue py-3 px-6"
           >
-            Dashboard!{" "}
+            Dashboard!
           </Button>
         </Link>
       </div>
