@@ -34,6 +34,19 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+// @route   Get api/creators
+// @desc    check if username exist
+// @access  Public -> Private
+router.get('/username/:username', async (req, res) => {
+    try {
+      const username = await Creator.findOne({ userName: req.params.username });
+      console.log(username);
+      res.status(200).json(username);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+});
+
 // @route   POST api/creators
 // @desc    Create Creator profile
 // @access  Private

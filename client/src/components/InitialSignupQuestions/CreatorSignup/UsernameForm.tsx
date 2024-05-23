@@ -31,7 +31,7 @@ const UsernameForm = ({
     const checkUsername = async (username: string) => {
       try {
         const result = await axios.get(
-          `http://localhost:5000/api/users/username/${username}`
+          `http://localhost:5000/api/creators/username/${username}`
         );
         if (result.data) {
           setErrorMessage("Username already exists");
