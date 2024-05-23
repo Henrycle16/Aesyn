@@ -163,7 +163,7 @@ const SignUpBox = () => {
       <form onSubmit={(e) => handleSubmitForm(e)} className="min-h-[32rem] flex flex-col">
         {/* Back Button */}
         <div className="flex">
-          {step !== 0 && (
+          {step !== 0 && step !== steps.length -1 && (
             <Button
               onClick={handlePrevStep}
               variant="text"

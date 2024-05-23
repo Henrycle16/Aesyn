@@ -177,7 +177,7 @@ const SignUpBox = () => {
       >
         {/* Back Button */}
         <div className="flex">
-          {step !== 0 && (
+          {step !== 0 && step !== steps.length -1 && (
             <Button
               onClick={handlePrevStep}
               variant="text"
