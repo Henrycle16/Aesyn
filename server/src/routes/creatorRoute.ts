@@ -1,19 +1,19 @@
 import express from 'express';
-import { auth } from '../middleware/auth';
-import { validationResult } from 'express-validator';
+import { check, validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
-// @route   GET api/creatorProfile/me
-// @desc    Get current users profile
+// @route   GET api/creators/me
+// @desc    Get current users Creator profile
 // @access  Private
 router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Creator.findOne({
-            user: req.user.id,
+            user: req.body.user.id,
         }).populate('user', [
             'username',
             'firstName', 
@@ -34,14 +34,15 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
-// @route   POST api/creatorProfile
-// @desc    Create user profile
+// @route   POST api/creators
+// @desc    Create Creator profile
 // @access  Private
 router.post(
     '/',
     [
-        auth
+        // ** EXPRESS-VALIDATION CHECKS HERE
     ],
+    auth, 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -49,37 +50,33 @@ router.post(
         }
 
         const {
-            socialMedias,
-            category,
+            userName,
+            gender,
             location,
-            bio
+            preferences,
+            niche
         } = req.body;
 
         
         //Build profile object
         const creatorProfileFields = {
-            user: req.user.id,
-            socialMedias: socialMedias,
-            category: category,
-            location: {
-                city: location.city,
-                country: location.country
-            },
-            bio: bio
+            user: req.body.user.id,
+            userName: userName,
+            gender: gender,
+            location: location,
+            preferences: preferences,
+            niche: niche
         };
 
         try {
-            let creatorProfile = await Creator.findOne({ user: req.user.id });
+            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
-            //Update if found
+            // If found error
+            // ** Comment out below to test without having to delete **
             if (creatorProfile) {
-                creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.user.id },
-                    { $set: creatorProfileFields},
-                    { new: true }
-                );
-
-                return res.json(creatorProfile);
+                return res.status(400).json({
+                    errors: [{ msg: 'Creator already exists' }],
+                  });
             }
 
             //Create if not found
@@ -94,14 +91,15 @@ router.post(
     }
 );
 
-// @route   PUT api/creatorProfile
-// @desc    Update user profile     **GOT TO FLESH OUT LATER**
+// @route   PUT api/creators
+// @desc    Update Creator profile     **GOT TO FLESH OUT LATER**
 // @access  Private
 router.put(
     '/',
     [
-        auth
-    ],
+
+    ], 
+    auth,
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -117,7 +115,7 @@ router.put(
 
         //Build profile object
         const creatorProfileFields = {
-            user: req.user.id,
+            user: req.body.user.id,
             socialMedias: socialMedias,
             category: category,
             location: {
@@ -128,21 +126,23 @@ router.put(
         };
 
         try {
-            let creatorProfile = await Creator.findOne({ user: req.user.id });
+            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
             //Update if found
             if (creatorProfile) {
                 creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.user.id },
+                    { user: req.body.user.id },
                     { $set: creatorProfileFields},
                     { new: true }
                 );
 
                 return res.json(creatorProfile);
+            } else {
+                return res.status(400).json({
+                    errors: [{ msg: 'No Creator profile found' }],
+                  });
             }
 
-            await creatorProfile.save();
-            res.json(creatorProfile);
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server Error');
@@ -150,8 +150,8 @@ router.put(
     }
 );
 
-// @route   GET api/profile
-// @desc    Get all profiles
+// @route   GET api/creators
+// @desc    Get all Creator profiles
 // @access  Public
 router.get('/', async (req, res) => {
     try {
@@ -168,8 +168,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route   GET api/profile/user/:user_id
-// @desc    Get profile by user ID
+// @route   GET api/creators/user/:user_id
+// @desc    Get Creator profile by user ID
 // @access  Public
 router.get('/user/:user_id', async (req, res) => {
     try {
@@ -195,17 +195,17 @@ router.get('/user/:user_id', async (req, res) => {
     }
 });
 
-// @route   DELETE api/profile
-// @desc    Delete profile, user, & posts
+// @route   DELETE api/creators
+// @desc    Delete Creators profile, user, & posts
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {
         // Remove user posts
-        //await Post.deleteMany({ user: req.user.id });
+        //await Post.deleteMany({ user: req.body.user.id });
         // Remove profile
-        await Creator.findOneAndDelete({ user: req.user.id });
+        await Creator.findOneAndDelete({ user: req.body.user.id });
         // Remove user
-        await User.findOneAndDelete({ _id: req.user.id });
+        await User.findOneAndDelete({ _id: req.body.user.id });
 
         res.json({ msg: 'User deleted' });
     } catch (err) {

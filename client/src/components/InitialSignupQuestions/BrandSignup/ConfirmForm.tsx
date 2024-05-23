@@ -2,15 +2,10 @@ import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
-  handleNextStep: () => void;
-  handleFormChange: (event: any) => void;
   formData: any;
 }
 
-const ConfirmForm = ({
-  formData,
-  handleNextStep,
-}: ConfirmFormProps) => {
+const ConfirmForm = ({ formData }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-16">
       {/* Header */}
@@ -61,15 +56,16 @@ const ConfirmForm = ({
           <div className="label-text font-semibold text-base ">
             Social Media Preference
           </div>
-          <div className="pt-1 font-light">{formData.preferences.join(", ")}</div>
+          <div className="pt-1 font-light">
+            {formData.preferences.join(", ")}
+          </div>
         </div>
       </div>
 
       {/* Button to submit the form */}
       <div className="self-end mt-auto">
         <Button
-          // onClick={handleNextStep}
-          type="button"
+          type="submit"
           variant="contained"
           className="bg-muiblue py-3 px-6 whitespace-nowrap"
           endIcon={<ArrowForwardIcon />}

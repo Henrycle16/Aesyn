@@ -35,7 +35,7 @@ const SocialMediaSelect = ({
       {/* Box to seperate each social media preference */}
       <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
-          <span className="label-text font-bold text-lg">
+          <span className="label-text font-bold text-xl">
             Social media preferences:
           </span>
         </div>

@@ -1,13 +1,8 @@
-import { Button } from "@mui/material";
-import React from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "next/link";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-interface ToDashboardProps {
-  handleNextStep: () => void;
-}
-
-const ToDashboard = ({ handleNextStep }: ToDashboardProps) => {
+const ToDashboard = () => {
   return (
     <div className="grid grid-cols-5 grid-rows-5 gap-4 w-full h-full">
       {/* Dashboard Header */}
@@ -23,11 +18,9 @@ const ToDashboard = ({ handleNextStep }: ToDashboardProps) => {
       <div className="col-start-4 col-span-2 row-start-5 row-span-1 justify-end pt-5 pl-32 ">
         <Link href="/dashboard">
           <Button
-            onClick={handleNextStep}
-            type="submit"
             variant="contained"
             endIcon={<ArrowForwardIcon />}
-            className="col-span-1"
+            className="col-span-1 bg-muiblue"
             style={{
               padding: "12px 24px",
               textAlign: "right",

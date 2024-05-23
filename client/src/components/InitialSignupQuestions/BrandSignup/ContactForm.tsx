@@ -15,13 +15,13 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
       <div className="w-4/6 mx-auto my-auto">
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
-              Primary Contact Name
+            <span className="label-text font-bold text-xl">
+              Primary Contact Full Name
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Full Name"
             required
             className="input input-bordered w-full"
             name="contactPersonName"
@@ -31,13 +31,13 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               Primary Contact Phone Number
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="(000) - 000 - 0000"
             required
             className="input input-bordered w-full"
             name="contactPhoneNumber"
@@ -47,13 +47,13 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               Primary Contact Email
             </span>
           </div>
           <input
-            type="text"
-            placeholder="Type here"
+            type="email"
+            placeholder="Email Address"
             required
             className="input input-bordered w-full"
             name="contactEmail"
@@ -63,11 +63,14 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
         </label>
       </div>
 
-
       {/* Next Button */}
       <div className="self-end">
         <Button
-         disabled={!formData.contactPersonName || !formData.contactPhoneNumber || !formData.contactEmail}
+          disabled={
+            !formData.contactPersonName ||
+            !formData.contactPhoneNumber ||
+            !formData.contactEmail
+          }
           onClick={handleNextStep}
           type="button"
           variant="contained"

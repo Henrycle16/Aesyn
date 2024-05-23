@@ -80,7 +80,6 @@ const UsernameForm = ({
       <div className="self-end">
         <Button
           disabled={!isUsernameValid}
-          // disabled={isNextButtonDisabled}
           onClick={handleNextStep}
           type="button"
           variant="contained"

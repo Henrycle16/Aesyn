@@ -1,6 +1,11 @@
 import "../styles/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
+import Header from "@/components/Header";
+
+// Next-Auth
+import { getServerSession } from 'next-auth'
+import SessionProvider from "@/components/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,17 +14,21 @@ export const metadata = {
   description: "App",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
-          {children}
-        </div>
+        <SessionProvider session={session}>
+          <div className="flex flex-col min-h-screen">
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );

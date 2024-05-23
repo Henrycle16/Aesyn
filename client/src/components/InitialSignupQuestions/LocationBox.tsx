@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MapboxMap from "./MapBox";
@@ -13,13 +14,15 @@ const LocationBox = ({
   handleLocationChange,
   handleNextStep,
 }: LocationBoxProps) => {
+  const [isLocationSelected, setIsLocationSelected] = useState(false);
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-4/6 mx-auto my-auto">
         {/* Location Box */}
         <label className="form-control">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               {" "}
               Where are you located?{" "}
             </span>
@@ -30,9 +33,8 @@ const LocationBox = ({
         <div className="h-80">
           <MapboxMap
             isFormData={formData.location}
-            handleLocationChange={(e) => {
-              handleLocationChange(e);
-            }}
+            handleLocationChange={handleLocationChange}
+            setIsLocationSelected={setIsLocationSelected}
           />
         </div>
       </div>
@@ -40,7 +42,7 @@ const LocationBox = ({
       {/* Next Button */}
       <div className="self-end mt-auto">
         <Button
-          disabled={!formData.location}
+          disabled={!isLocationSelected}
           onClick={handleNextStep}
           type="button"
           variant="contained"

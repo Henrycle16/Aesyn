@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CompanyForm from "./CompanyForm";
@@ -9,6 +11,7 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
+import { brandSignUp } from "./../../../actions/brand";
 
 /* 
   This is the parent component
@@ -22,7 +25,7 @@ import LocationBox from "../LocationBox";
 // Step 5: Confirm Form Data
 // Step 6: Redirect to dashboard
 interface BrandForm {
-  userID: string;
+  user: object;
   companyName: string;
   industry: string;
   contactPersonName: string;
@@ -33,8 +36,7 @@ interface BrandForm {
 }
 
 const brandFormData: BrandForm = {
-  //TODO: grab userID after initial user signup page
-  userID: "",
+  user: {},
   companyName: "",
   industry: "",
   contactPersonName: "",
@@ -47,6 +49,18 @@ const brandFormData: BrandForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data && session.status === "authenticated") {
+      setFormData((prevData) => ({
+        ...prevData,
+        user: session.data.user,
+      }));
+    } else {
+      redirect("/login");
+    }
+  }, [step, session.data, session.status]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -68,12 +82,12 @@ const SignUpBox = () => {
   };
 
   // Method to handle the location change event
-  const handleLocationChange = (location: string) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      location: location,
-    }));
-  };
+  const handleLocationChange = (locationString: string) => {
+  setFormData((prevData) => ({
+    ...prevData,
+    location: locationString,
+  }));
+};
 
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
@@ -85,8 +99,29 @@ const SignUpBox = () => {
     });
   };
 
-  //TODO: Method to submit form
-  const handleSubmitForm = () => {
+  // Method to submit form
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Split the location string and create the location object
+    const [city, state, country] = formData.location.split(",");
+    const location = { city, state, country };
+
+    // Create the location object and encapsulate it with the form data
+    const { user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences } = formData;
+    const body = JSON.stringify({user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences, location});
+
+    try {
+      const brandSignUpResponse = await brandSignUp(body);
+
+      if (brandSignUpResponse && !brandSignUpResponse.error) {
+        console.log("REGISTERED BRAND!");
+        handleNextStep();
+      }
+    } catch {
+      console.log("Error!");
+    }
+
     return;
   };
 
@@ -119,15 +154,13 @@ const SignUpBox = () => {
     <ConfirmForm
       key="ConfirmForm"
       formData={formData}
-      handleFormChange={handleFormChange}
-      handleNextStep={handleNextStep}
     />,
-    <ToDashboard key="ToDashboard" handleNextStep={handleNextStep} />,
+    <ToDashboard key="ToDashboard" />,
   ];
 
   return (
     <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
-      <form action="" className="min-h-[32rem] flex flex-col">
+      <form onSubmit={(e) => handleSubmitForm(e)} className="min-h-[32rem] flex flex-col">
         {/* Back Button */}
         <div className="flex">
           {step !== 0 && (

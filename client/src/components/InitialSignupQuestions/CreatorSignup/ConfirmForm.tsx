@@ -3,10 +3,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
   formData: any;
-  handleNextStep: () => void;
 }
 
-const ConfirmForm = ({ formData, handleNextStep }: ConfirmFormProps) => {
+const ConfirmForm = ({ formData }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-16">
       {/* Header */}
@@ -28,7 +27,7 @@ const ConfirmForm = ({ formData, handleNextStep }: ConfirmFormProps) => {
           <div className="pt-1 font-light">{formData.gender}</div>
         </div>
 
-        {/* This block is for populating the Brand Location  */}
+        {/* This block is for populating the Creator Location  */}
         <div className="col-start-1 col-span-1 row-start-2 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Location</div>
           <div className="pt-1 font-light">{formData.location}</div>
@@ -54,14 +53,12 @@ const ConfirmForm = ({ formData, handleNextStep }: ConfirmFormProps) => {
       {/* Next Button */}
       <div className="self-end mt-auto">
         <Button
-          // disabled={isNextButtonDisabled}
-          // onClick={handleNextStep}
-          type="button"
+          type="submit"
           variant="contained"
           className="bg-muiblue py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
-          Next
+          Looks Good!
         </Button>
       </div>
     </div>

@@ -1,16 +1,15 @@
 import express, { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { auth } from '../middleware/auth';
 import User from '../models/User';
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
 // @route   GET api/users/
 // @desc    Get all users
 // @access  Public -> Private
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', auth, async (req: Request, res: Response) => {
   try {
     const allUsers = await User.find({});
     res.status(200).json(allUsers);
@@ -35,7 +34,7 @@ router.get('/username/:username', async (req: Request, res: Response) => {
 // @route   Get api/users/:id
 // @desc    Get user by ID
 // @access  Public -> Private
-router.get('/:id', /*auth,*/ async (req: Request, res: Response) => {
+router.get('/:id', auth, async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -92,24 +91,8 @@ router.post(
       newUser.password = await bcrypt.hash(password, salt);
 
       const savedUser = await newUser.save();
-
-      // Return jsonwebtoken
-      const payload = {
-        user: {
-          id: newUser.id,
-        },
-      };
-
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-          res.status(201).json({savedUser, token });
-        }
-      );
-
+      
+      res.status(201).json(savedUser);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -140,11 +123,11 @@ router.put('/', auth, async (req: Request, res: Response) => {
   }
 
   try {
-    await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(req.body.user.id, {
       $set: req.body,
     });
 
-    const userUpdated = await User.findById(req.user.id);
+    const userUpdated = await User.findById(req.body.user.id);
 
     res.status(201).json(userUpdated);
   } catch (error) {
@@ -157,7 +140,7 @@ router.put('/', auth, async (req: Request, res: Response) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
-    await User.findOneAndDelete({ _id: req.user.id });
+    await User.findOneAndDelete({ _id: req.body.user.id });
 
     res.status(200).json('Account has been deleted');
   } catch (error) {

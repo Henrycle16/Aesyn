@@ -27,8 +27,14 @@ const CompanyForm = ({
     { value: "Other", label: "Other" },
   ];
 
-  const toggleSelect = () => {
+  const toggleSelectClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleSelectBlur = () => {
+    if (isOpen) {
+      setIsOpen(!isOpen);
+    }
   };
 
   return (
@@ -37,22 +43,23 @@ const CompanyForm = ({
       <div className="w-7/12 mx-auto my-auto">
         <label className="form-control w-full mb-8">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What is your brand name?
             </span>
           </div>
           <input
             type="text"
-            placeholder="Type here"
+            placeholder="Brand Name"
             className="input input-bordered w-full"
             name="companyName"
             value={formData.companyName}
             onChange={(e) => handleFormChange(e)}
+            maxLength={50}
           />
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
-            <span className="label-text font-bold text-lg">
+            <span className="label-text font-bold text-xl">
               What industry best describes your brand?
             </span>
           </div>
@@ -65,8 +72,8 @@ const CompanyForm = ({
               name="industry"
               value={formData.industry}
               onChange={(e) => handleFormChange(e)}
-              onClick={toggleSelect}
-              onBlur={toggleSelect}
+              onClick={toggleSelectClick}
+              onBlur={toggleSelectBlur}
             >
               <option value="" disabled hidden>
                 Please select an industry
