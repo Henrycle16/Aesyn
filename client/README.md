@@ -26,14 +26,10 @@
 **APIs:** MapBox
 
 
-## Color Reference
+## Design References
 
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Example Color | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) #0a192f |
-| Example Color | ![#f8f8f8](https://via.placeholder.com/10/f8f8f8?text=+) #f8f8f8 |
-| Example Color | ![#00b48a](https://via.placeholder.com/10/00b48a?text=+) #00b48a |
-| Example Color | ![#00d1a0](https://via.placeholder.com/10/00b48a?text=+) #00d1a0 |
+| Design System | https://www.figma.com/proto/rqktpBJN7YFzyJMg7YP2ob/H2JC-Project?page-id=372%3A2&node-id=372-3&viewport=657%2C472%2C0.85&t=Trt06epenYD7YZzX-1&scaling=min-zoom|
+| --------------| -----------------------------------------------------------------|                                                         
 
 
 ## Run Locally
