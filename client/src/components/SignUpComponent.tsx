@@ -1,22 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
+import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
-
+import { signIn } from "next-auth/react";
 
 const SignUpComponent = () => {
   const router = useRouter();
@@ -28,9 +26,10 @@ const SignUpComponent = () => {
     lastName: "",
     email: "",
     password: "",
+    password2: "",
   });
 
-  const { firstName, lastName, email, password } = formData;
+  const { firstName, lastName, email, password, password2 } = formData;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -42,30 +41,41 @@ const SignUpComponent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const body = JSON.stringify({ firstName, lastName, email, password });
+    if (password != password2) {
+      console.log("Passwords do not match!");
+      return;
+    } else {
 
-    try {
-      await axios.post("http://localhost:5000/api/users", body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("User succesfully signed up");
+      try {
+        const signUpResponse = await signIn("sign-up", {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          redirect: false,
+        });
 
-      if (state === "true") {
-        router.push("/signup/brand");
-      } else {
-        router.push("/signup/creator");
+        if (signUpResponse && !signUpResponse.error) {
+          console.log("User succesfully signed up");
+          console.log(signUpResponse);
+
+          if (state === "true") {
+            router.push("/signup/brand");
+          } else {
+            router.push("/signup/creator");
+          }
+        } else {
+          console.log("Error!");
+        }
+
+      } catch (err) {
+        console.log(err);
       }
-
-    } catch (err) {
-      console.log(err);
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container maxWidth="xs">
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -87,7 +97,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="firstName"
                 value={firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="First Name"
                 autoFocus
               />
@@ -98,7 +110,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="lastName"
                 value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
@@ -110,7 +124,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -125,13 +141,31 @@ const SignUpComponent = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel sx={{paddingBottom: '10px'}}
-                control={<Checkbox value="allowExtraEmails" color="primary"/>}
+              <TextField
+                required
+                fullWidth
+                name="password2"
+                label="Confirm Password"
+                type="password"
+                id="password2"
+                value={password2}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                sx={{ paddingBottom: "10px" }}
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
@@ -140,7 +174,7 @@ const SignUpComponent = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className="mt-3 mb-2 bg-muiblue-style"
+            className="mt-3 mb-2 bg-muiblue"
           >
             Sign Up
           </Button>
@@ -153,7 +187,12 @@ const SignUpComponent = () => {
           </Grid>
         </Box>
       </Box>
-      <Typography variant="body2" color="text.secondary" align="center" sx={{paddingTop: '20px'}}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        sx={{ paddingTop: "20px" }}
+      >
         {"Copyright © "}
         <Link color="inherit" href="http://github.com/H2JC/H2JC">
           H2JC

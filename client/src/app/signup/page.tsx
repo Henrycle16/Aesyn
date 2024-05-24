@@ -1,13 +1,21 @@
-import { Suspense } from "react";
-import Loading from "./loading";
+import Image from "next/image";
 import SignUpComponent from "@/components/SignUpComponent";
 
 export default function SignUp() {
-    return (
-     <main>
-        <Suspense fallback={<Loading/>}>
-            <SignUpComponent/>
-        </Suspense>
-     </main>
-    );
+  return (
+    <div className="flex justify-between max-lg:flex-col max-lg:items-center">
+      <div>
+        <SignUpComponent />
+      </div>
+
+      <Image
+        src="https://dummyimage.com/720x600"
+        alt="hero"
+        className="object-cover object-center rounded"
+        width={720}
+        height={600}
+        priority={true}
+      />
+    </div>
+  );
 }

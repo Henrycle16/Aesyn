@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Creator.findOne({
-            user: req.user.id,
+            user: req.body.user.id,
         }).populate('user', [
             'username',
             'firstName', 
@@ -34,6 +34,19 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+// @route   Get api/creators
+// @desc    check if username exist
+// @access  Public -> Private
+router.get('/username/:username', async (req, res) => {
+    try {
+      const username = await Creator.findOne({ userName: req.params.username });
+      console.log(username);
+      res.status(200).json(username);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+});
+
 // @route   POST api/creators
 // @desc    Create Creator profile
 // @access  Private
@@ -50,29 +63,29 @@ router.post(
         }
 
         const {
-            socialMedias,
-            category,
+            userName,
+            gender,
             location,
-            bio
+            preferences,
+            niche
         } = req.body;
 
         
         //Build profile object
         const creatorProfileFields = {
-            user: req.user.id,
-            socialMedias: socialMedias,
-            category: category,
-            location: {
-                city: location.city,
-                country: location.country
-            },
-            bio: bio
+            user: req.body.user.id,
+            userName: userName,
+            gender: gender,
+            location: location,
+            preferences: preferences,
+            niche: niche
         };
 
         try {
-            let creatorProfile = await Creator.findOne({ user: req.user.id });
+            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
             // If found error
+            // ** Comment out below to test without having to delete **
             if (creatorProfile) {
                 return res.status(400).json({
                     errors: [{ msg: 'Creator already exists' }],
@@ -115,7 +128,7 @@ router.put(
 
         //Build profile object
         const creatorProfileFields = {
-            user: req.user.id,
+            user: req.body.user.id,
             socialMedias: socialMedias,
             category: category,
             location: {
@@ -126,12 +139,12 @@ router.put(
         };
 
         try {
-            let creatorProfile = await Creator.findOne({ user: req.user.id });
+            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
             //Update if found
             if (creatorProfile) {
                 creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.user.id },
+                    { user: req.body.user.id },
                     { $set: creatorProfileFields},
                     { new: true }
                 );
@@ -201,11 +214,11 @@ router.get('/user/:user_id', async (req, res) => {
 router.delete('/', auth, async (req, res) => {
     try {
         // Remove user posts
-        //await Post.deleteMany({ user: req.user.id });
+        //await Post.deleteMany({ user: req.body.user.id });
         // Remove profile
-        await Creator.findOneAndDelete({ user: req.user.id });
+        await Creator.findOneAndDelete({ user: req.body.user.id });
         // Remove user
-        await User.findOneAndDelete({ _id: req.user.id });
+        await User.findOneAndDelete({ _id: req.body.user.id });
 
         res.json({ msg: 'User deleted' });
     } catch (err) {

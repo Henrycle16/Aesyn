@@ -1,8 +1,5 @@
-"use client";
-
-import { Box, Button, Chip } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import {
   FaInstagram,
   FaSquareXTwitter,
@@ -10,116 +7,72 @@ import {
   FaTwitch,
   FaYoutube,
 } from "react-icons/fa6";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface SocialMediaSelectProps {
-  handleNextStep: () => void;
-  handlePrevStep: () => void;
-  handlePreferenceChange: (selected: string) => void;
   formData: any;
+  handlePreferenceChange: (selected: string) => void;
+  handleNextStep: () => void;
 }
 
-const SocialMediaSelect = ({ formData, handlePreferenceChange, handleNextStep, handlePrevStep } : SocialMediaSelectProps) => {
+// social media Options List
+const socialMediasArray = [
+  { key: 0, label: "Instagram", icon: <FaInstagram /> },
+  { key: 1, label: "TikTok", icon: <FaTiktok /> },
+  { key: 2, label: "Youtube", icon: <FaYoutube /> },
+  { key: 3, label: "Twitch", icon: <FaTwitch /> },
+  { key: 4, label: "Twitter/X", icon: <FaSquareXTwitter /> },
+];
+
+const SocialMediaSelect = ({
+  formData,
+  handlePreferenceChange,
+  handleNextStep,
+}: SocialMediaSelectProps) => {
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
-
-
+    <div className="flex flex-col w-full">
       {/* Box to seperate each social media preference */}
-      <Box className="col-start-3 col-span-5 row-start-3 row-span-6 justify-center items-center">
+      <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
-          <span className="label-text font-bold text-xl">
+          <span className="label-text font-bold text-lg">
             Social media preferences:
           </span>
         </div>
-        <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-8">
-          <Chip
-            onClick={() => handlePreferenceChange("Instagram")}
-            variant={
-              formData.preferences.includes("Instagram") ? "filled" : "outlined"
-            }
-            icon={<FaInstagram />}
-            label="Instagram"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Instagram")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("TikTok")}
-            variant={formData.preferences.includes("TikTok") ? "filled" : "outlined"}
-            icon={<FaTiktok />}
-            label="TikTok"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("TikTok")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("Youtube")}
-            variant={formData.preferences.includes("Youtube") ? "filled" : "outlined"}
-            icon={<FaYoutube />}
-            label="Youtube"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Youtube")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />
-          <Chip
-            onClick={() => handlePreferenceChange("Twitch")}
-            variant={formData.preferences.includes("Twitch") ? "filled" : "outlined"}
-            icon={<FaTwitch />}
-            label="Twitch"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Twitch")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />{" "}
-          <Chip
-            onClick={() => handlePreferenceChange("Twitter/X")}
-            variant={
-              formData.preferences.includes("Twitter/X") ? "filled" : "outlined"
-            }
-            icon={<FaSquareXTwitter />}
-            label="Twitter/X"
-            sx={{ fontSize: "16px", paddingY: "20px" }}
-            className={`${
-              formData.preferences.includes("Twitter/X")
-                ? "bg-blue-500 text-white"
-                : "bg-white"
-            }`}
-          />{" "}
+        <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-4">
+          {socialMediasArray.map((data) => (
+            <Chip
+              key={data.key}
+              onClick={() => handlePreferenceChange(data.label)}
+              variant={
+                formData.preferences.includes(data.label)
+                  ? "filled"
+                  : "outlined"
+              }
+              icon={data.icon}
+              label={data.label}
+              className={
+                "text-base h-10 " +
+                `${
+                  formData.preferences.includes(data.label)
+                    ? "bg-blue-500 text-white"
+                    : "bg-white"
+                }`
+              }
+            />
+          ))}
         </Box>
       </Box>
 
-      
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      <div className="self-end">
         <Button
-          type="button"
-          disabled={formData.preferences.length === 0}
+          disabled={!formData.preferences.length}
           onClick={handleNextStep}
+          type="button"
           variant="contained"
+          className="bg-muiblue py-3 px-6"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1 bg-muiblue-style"
-          sx={{ padding: "12px 24px" }}
         >
           Next
         </Button>
