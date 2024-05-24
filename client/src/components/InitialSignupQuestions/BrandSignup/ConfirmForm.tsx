@@ -7,9 +7,9 @@ interface ConfirmFormProps {
 
 const ConfirmForm = ({ formData }: ConfirmFormProps) => {
   return (
-    <div className="flex flex-col w-full mt-5 ml-16">
+    <div className="flex flex-col w-full mt-5 ml-20">
       {/* Header */}
-      <h1 className="form-control mb-8">
+      <h1 className="form-control mb-6">
         <span className="label-text font-bold	text-2xl truncate">
           Confirm Your Information
         </span>

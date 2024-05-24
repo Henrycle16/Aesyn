@@ -26,7 +26,7 @@ const GenderForm = ({
       {/* Handles Gender selection*/}
       <div className="w-4/6 mx-auto my-auto">
         <div className="form-control">
-          <div className="label mb-5">
+          <div className="label mb-1">
             <span className="label-text font-bold text-xl">
               Gender{" "}
               <Tooltip

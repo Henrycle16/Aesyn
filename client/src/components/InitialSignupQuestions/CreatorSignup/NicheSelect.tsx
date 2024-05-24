@@ -46,15 +46,15 @@ const ContactForm = ({
 }: NicheSelectProps) => {
   return (
     <div className="flex flex-col w-full">
-      <div className="w-10/12 mx-auto my-auto">
+      <div className="w-9/12 mx-auto my-auto">
         {/*Niche Selection Label*/}
-        <label className="form-control mb-6">
+        <label className="form-control mb-4">
           <div className="label flex flex-col items-start">
             <span className="label-text font-bold text-lg">
               Select the niche(s) that best fit your content
             </span>
             <p className="label-text font-light text-sm">
-              Select up to 6 niches
+              Select up to 6
             </p>
           </div>
         </label>
@@ -74,7 +74,7 @@ const ContactForm = ({
               }
               label={data.label}
               className={
-                "text-base h-10 w-[16.5rem] " +
+                "rounded-3xl text-base h-10 w-[15rem] " +
                 `${
                   formData.niche.includes(data.label)
                     ? "bg-blue-500 text-white"
