@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { signIn } from "next-auth/react";
 
 const SignUpComponent = () => {
   const router = useRouter();
@@ -44,21 +45,29 @@ const SignUpComponent = () => {
       console.log("Passwords do not match!");
       return;
     } else {
-      const body = JSON.stringify({ firstName, lastName, email, password });
 
       try {
-        await axios.post("http://localhost:5000/api/users", body, {
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const signUpResponse = await signIn("sign-up", {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          redirect: false,
         });
-        console.log("User succesfully signed up");
 
-        if (state === "true") {
-          router.push("/signup/brand");
+        if (signUpResponse && !signUpResponse.error) {
+          console.log("User succesfully signed up");
+          console.log(signUpResponse);
+
+          if (state === "true") {
+            router.push("/signup/brand");
+          } else {
+            router.push("/signup/creator");
+          }
         } else {
-          router.push("/signup/creator");
+          console.log("Error!");
         }
+
       } catch (err) {
         console.log(err);
       }
