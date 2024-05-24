@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "../SocialMediaSelect";
@@ -9,9 +12,6 @@ import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
 import { brandSignUp } from "./../../../actions/brand";
-
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 /* 
   This is the parent component
@@ -60,7 +60,7 @@ const SignUpBox = () => {
     } else {
       redirect("/login");
     }
-  }, [step]);
+  }, [step, session.data, session.status]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -138,41 +138,45 @@ const SignUpBox = () => {
       formData={formData}
       handleLocationChange={handleLocationChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
     <ContactForm
       key="ContactForm"
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
     <ConfirmForm
       key="ConfirmForm"
       formData={formData}
-      handleFormChange={handleFormChange}
-      handlePrevStep={handlePrevStep}
     />,
     <ToDashboard key="ToDashboard" />,
   ];
 
   return (
-    <div className="flex justify-center items-center h-auto pt-52">
-      <form onSubmit={(e) => handleSubmitForm(e)}>
-        <Box
-          className="p-5 bg-base-200 rounded-box"
-          sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-        >
-          {/* Render Form Parts Here */}
-          {steps[step]}
-        </Box>
+    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
+      <form onSubmit={(e) => handleSubmitForm(e)} className="min-h-[32rem] flex flex-col">
+        {/* Back Button */}
+        <div className="flex">
+          {step !== 0 && step !== steps.length -1 && (
+            <Button
+              onClick={handlePrevStep}
+              variant="text"
+              startIcon={<ArrowBackIcon />}
+              sx={{ padding: "12px 24px" }}
+            >
+              back
+            </Button>
+          )}
+        </div>
+
+        {/* Render Form Parts Here */}
+        <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
     </div>
   );

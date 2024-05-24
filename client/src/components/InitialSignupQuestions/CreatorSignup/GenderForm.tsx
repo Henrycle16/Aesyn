@@ -1,7 +1,4 @@
-"use client";
-
 import {
-  Button,
   FormControl,
   FormControlLabel,
   IconButton,
@@ -9,43 +6,27 @@ import {
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-import React from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import Button from "@mui/material/Button";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface GenderFormProps {
-  handleNextStep: () => void;
-  handlePrevStep: () => void;
-  handleGenderChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   formData: any;
+  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleNextStep: () => void;
 }
 
 const GenderForm = ({
   formData,
-  handleGenderChange,
+  handleFormChange,
   handleNextStep,
-  handlePrevStep,
 }: GenderFormProps) => {
   return (
-    <div className="grid grid-cols-9 grid-rows-9 gap-4 w-full h-full">
-      {/* Back Button */}
-      <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
-        <Button
-          onClick={handlePrevStep}
-          variant="text"
-          startIcon={<ArrowBackIcon />}
-          className="col-span-1"
-          sx={{ padding: "12px 24px" }}
-        >
-          back
-        </Button>
-      </div>
-
+    <div className="flex flex-col w-full">
       {/* Handles Gender selection*/}
-      <div className="col-start-3 col-span-5 row-start-3 row-span-5 justify-center items-center">
-        <div className="form-control w-full mb-4">
-          <div className="label">
+      <div className="w-4/6 mx-auto my-auto">
+        <div className="form-control">
+          <div className="label mb-1">
             <span className="label-text font-bold text-xl">
               Gender{" "}
               <Tooltip
@@ -64,7 +45,9 @@ const GenderForm = ({
               aria-label="gender"
               name="gender"
               value={formData.gender}
-              onChange={handleGenderChange}
+              onChange={(e) => {
+                handleFormChange(e);
+              }}
             >
               <FormControlLabel
                 value="Female"
@@ -111,15 +94,14 @@ const GenderForm = ({
       </div>
 
       {/* Next Button */}
-      <div className="col-start-8 col-span-1 row-start-8 row-span-1 justify-end pt-5">
+      <div className="self-end">
         <Button
           disabled={!formData.gender}
           onClick={handleNextStep}
           type="button"
           variant="contained"
+          className="bg-muiblue py-3 px-6"
           endIcon={<ArrowForwardIcon />}
-          className="col-span-1 bg-muiblue-style"
-          style={{ padding: "12px 24px" }}
         >
           Next
         </Button>

@@ -1,22 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import PersonPinOutlinedIcon from '@mui/icons-material/PersonPinOutlined';
+import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
-
 
 const SignUpComponent = () => {
   const router = useRouter();
@@ -69,8 +66,7 @@ const SignUpComponent = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container maxWidth="xs">
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -92,7 +88,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="firstName"
                 value={firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="First Name"
                 autoFocus
               />
@@ -103,7 +101,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="lastName"
                 value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
@@ -115,7 +115,9 @@ const SignUpComponent = () => {
                 fullWidth
                 id="email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -130,7 +132,9 @@ const SignUpComponent = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 autoComplete="new-password"
               />
             </Grid>
@@ -143,13 +147,16 @@ const SignUpComponent = () => {
                 type="password"
                 id="password2"
                 value={password2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
                 autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel sx={{paddingBottom: '10px'}}
-                control={<Checkbox value="allowExtraEmails" color="primary"/>}
+              <FormControlLabel
+                sx={{ paddingBottom: "10px" }}
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
@@ -158,7 +165,7 @@ const SignUpComponent = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className="mt-3 mb-2 bg-muiblue-style"
+            className="mt-3 mb-2 bg-muiblue"
           >
             Sign Up
           </Button>
@@ -171,7 +178,12 @@ const SignUpComponent = () => {
           </Grid>
         </Box>
       </Box>
-      <Typography variant="body2" color="text.secondary" align="center" sx={{paddingTop: '20px'}}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        sx={{ paddingTop: "20px" }}
+      >
         {"Copyright © "}
         <Link color="inherit" href="http://github.com/H2JC/H2JC">
           H2JC
