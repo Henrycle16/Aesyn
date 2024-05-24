@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,12 +15,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
+import SignUpPopup from "../signupPopup/SignUpPopup";
+
 
 const LoginComponent = () => {
+  const [state, setState] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+  }, [state]);
 
   const { email, password } = formData;
 
@@ -48,7 +54,11 @@ const LoginComponent = () => {
     }
   };
 
-  return (
+  function handleClick() {
+    state ? setState(false) : setState(true)
+  }
+
+  return state ? (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
@@ -112,7 +122,7 @@ const LoginComponent = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link onClick={handleClick}>
                 Don&apos;t have an account? Sign up
               </Link>
             </Grid>
@@ -133,6 +143,8 @@ const LoginComponent = () => {
         {"."}
       </Typography>
     </Container>
+  ) : (
+    <SignUpPopup handleClick={handleClick} />
   );
 };
 
