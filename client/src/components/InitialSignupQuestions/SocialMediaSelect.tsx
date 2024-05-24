@@ -35,11 +35,11 @@ const SocialMediaSelect = ({
       {/* Box to seperate each social media preference */}
       <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
-          <span className="label-text font-bold text-xl">
+          <span className="label-text font-bold text-lg">
             Social media preferences:
           </span>
         </div>
-        <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-8">
+        <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-4">
           {socialMediasArray.map((data) => (
             <Chip
               key={data.key}

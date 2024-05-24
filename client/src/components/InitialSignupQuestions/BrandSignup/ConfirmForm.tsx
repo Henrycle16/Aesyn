@@ -16,11 +16,11 @@ const ConfirmForm = ({ formData }: ConfirmFormProps) => {
       </h1>
 
       {/* Grid for the form data */}
-      <div className="grid grid-cols-3 grid-rows-4 gap-y-3">
+      <div className="grid grid-cols-3 grid-rows-4 gap-y-2 gap-x-3">
         {/* This block is for populating the Brand Name and Industry */}
         <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Brand Name</div>
-          <div className="pt-1 font-light">{formData.companyName}</div>
+          <div className="pt-1 font-light truncate">{formData.companyName}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Industry</div>

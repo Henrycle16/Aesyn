@@ -22,7 +22,7 @@ const LocationBox = ({
         {/* Location Box */}
         <label className="form-control">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               {" "}
               Where are you located?{" "}
             </span>

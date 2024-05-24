@@ -43,7 +43,7 @@ const CompanyForm = ({
       <div className="w-7/12 mx-auto my-auto">
         <label className="form-control w-full mb-8">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               What is your brand name?
             </span>
           </div>
@@ -59,7 +59,7 @@ const CompanyForm = ({
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               What industry best describes your brand?
             </span>
           </div>

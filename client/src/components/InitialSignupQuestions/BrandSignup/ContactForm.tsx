@@ -10,12 +10,11 @@ interface ContactFormProps {
 const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFormProps) => {
   return (
     <div className="flex flex-col w-full">
-
       {/* Handles POC Contact Information */}
       <div className="w-4/6 mx-auto my-auto">
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               Primary Contact Full Name
             </span>
           </div>
@@ -31,7 +30,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               Primary Contact Phone Number
             </span>
           </div>
@@ -47,7 +46,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
-            <span className="label-text font-bold text-xl">
+            <span className="label-text font-bold text-lg">
               Primary Contact Email
             </span>
           </div>
