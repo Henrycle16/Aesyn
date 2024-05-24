@@ -50,7 +50,6 @@ const LoginComponent = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
