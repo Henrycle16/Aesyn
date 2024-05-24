@@ -12,7 +12,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 
-const SignUpPopup = ({handleClick}) => {
+interface Props {
+  handleClick: Function
+  // any props that come into the component
+}
+
+const SignUpPopup = ({handleClick}: Props) => {
   const router = useRouter();
 
   const handleBrandSignup = () => {
