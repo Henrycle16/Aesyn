@@ -2,19 +2,11 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios";
+import { signIn } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { signIn } from "next-auth/react";
 
 const SignUpComponent = () => {
   const router = useRouter();
@@ -45,7 +37,6 @@ const SignUpComponent = () => {
       console.log("Passwords do not match!");
       return;
     } else {
-
       try {
         const signUpResponse = await signIn("sign-up", {
           firstName: firstName,
@@ -67,7 +58,6 @@ const SignUpComponent = () => {
         } else {
           console.log("Error!");
         }
-
       } catch (err) {
         console.log(err);
       }
@@ -75,132 +65,126 @@ const SignUpComponent = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box className="mt-8 flex flex-col items-center">
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-2"
+    >
+      {/* Form Header */}
+      <div className="mx-auto mt-16 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Box
-          className="mt-3"
-          component="form"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                value={firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
-                }
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
-                }
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
-                }
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
-                }
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password2"
-                label="Confirm Password"
-                type="password"
-                id="password2"
-                value={password2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
-                }
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                sx={{ paddingBottom: "10px" }}
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className="mt-3 mb-2 bg-muiblue"
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        sx={{ paddingTop: "20px" }}
+        <h1 className="text-2xl">Sign Up</h1>
+      </div>
+
+      {/* Input Fields */}
+      <div className="mt-5 flex gap-4">
+        <input
+          type="text"
+          className="input-md border border-gray-300 rounded-sm w-full"
+          placeholder="First Name*"
+          name="firstName"
+          id="firstName"
+          value={firstName}
+          onChange={onChange}
+          autoFocus
+          autoComplete="given-name"
+          required
+        />
+        <input
+          type="text"
+          className="input-md border border-gray-300 rounded-sm w-full"
+          placeholder="Last Name*"
+          name="lastName"
+          id="lastName"
+          value={lastName}
+          onChange={onChange}
+          autoComplete="family-name"
+          required
+        />
+      </div>
+      <input
+        type="email"
+        className="input-md border border-gray-300 rounded-sm"
+        placeholder="Email Address*"
+        name="email"
+        id="email"
+        value={email}
+        onChange={onChange}
+        autoComplete="email"
+        required
+      />
+      <input
+        type="password"
+        className="input-md border border-gray-300 rounded-sm"
+        placeholder="Password*"
+        name="password"
+        id="password"
+        value={password}
+        onChange={onChange}
+        autoComplete="new-password"
+        required
+      />
+      <input
+        type="password"
+        className="input-md border border-gray-300 rounded-sm"
+        placeholder="Confirm Password*"
+        name="password2"
+        id="password2"
+        value={password2}
+        onChange={onChange}
+        autoComplete="new-password"
+        required
+      />
+
+      {/* Checkboxes */}
+      <div className="flex items-start gap-3">
+        <input type="checkbox" className="mt-1" />
+        <p className="text-sm">
+          By signing up, you agree to our{" "}
+          <Link href={""} className="no-underline">
+            Terms and Conditions
+          </Link>{" "}
+          and{" "}
+          <Link href={""} className="no-underline">
+            Privacy Policy
+          </Link>
+          .<span className="text-red-500">*</span>
+        </p>
+      </div>
+      <div className="flex items-start gap-3">
+        <input type="checkbox" className="mt-1" />
+        <p className="text-sm">
+          I want to receive inspiration, marketing promotions and updates via
+          email.
+        </p>
+      </div>
+
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        className="py-3 bg-muiblue"
       >
-        {"Copyright © "}
-        <Link color="inherit" href="http://github.com/H2JC/H2JC">
-          H2JC
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    </Container>
+        Sign Up
+      </Button>
+
+      <div className="flex">
+        <Link href={"/login"} className="text-sm ml-auto">
+          Already have an account? Log in
+        </Link>
+      </div>
+
+      <div className="flex pt-16 pb-1">
+        <p className="mx-auto text-sm text-gray-500">
+          Copyright ©{" "}
+          <Link href={"/"} className="text-gray-500">
+            ShareFluence
+          </Link>{" "}
+          {new Date().getFullYear()}.
+        </p>
+      </div>
+    </form>
   );
 };
 
