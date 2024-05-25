@@ -49,6 +49,11 @@ const brandFormData: BrandForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
+  const [lng, setLng] = useState<number>(-98.5795);
+  const [lat, setLat] = useState<number>(39.8283);
+  const [zoom, setZoom] = useState<number>(3);
+  const [markerLocation, setMarkerLocation] = useState<[number, number] | null>(null);
+  const [isLocationSelected, setIsLocationSelected] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -83,11 +88,11 @@ const SignUpBox = () => {
 
   // Method to handle the location change event
   const handleLocationChange = (locationString: string) => {
-  setFormData((prevData) => ({
-    ...prevData,
-    location: locationString,
-  }));
-};
+    setFormData((prevData) => ({
+      ...prevData,
+      location: locationString,
+    }));
+  };
 
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
@@ -108,8 +113,25 @@ const SignUpBox = () => {
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
-    const { user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences } = formData;
-    const body = JSON.stringify({user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences, location});
+    const {
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+    } = formData;
+    const body = JSON.stringify({
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+      location,
+    });
 
     try {
       const brandSignUpResponse = await brandSignUp(body);
@@ -137,6 +159,16 @@ const SignUpBox = () => {
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
+      lng={lng}
+      lat={lat}
+      zoom={zoom}
+      setLng={setLng}
+      setLat={setLat}
+      setZoom={setZoom}
+      markerLocation={markerLocation}
+      setMarkerLocation={setMarkerLocation}
+      isLocationSelected={isLocationSelected}
+      setIsLocationSelected={setIsLocationSelected}
       handleNextStep={handleNextStep}
     />,
     <ContactForm
@@ -151,26 +183,26 @@ const SignUpBox = () => {
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
     />,
-    <ConfirmForm
-      key="ConfirmForm"
-      formData={formData}
-    />,
+    <ConfirmForm key="ConfirmForm" formData={formData} />,
     <ToDashboard key="ToDashboard" />,
   ];
 
   return (
     <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
-      <form onSubmit={(e) => handleSubmitForm(e)} className="min-h-[32rem] flex flex-col">
+      <form
+        onSubmit={(e) => handleSubmitForm(e)}
+        className="min-h-[32rem] flex flex-col"
+      >
         {/* Back Button */}
         <div className="flex">
-          {step !== 0 && step !== steps.length -1 && (
+          {step !== 0 && step !== steps.length - 1 && (
             <Button
               onClick={handlePrevStep}
               variant="text"
               startIcon={<ArrowBackIcon />}
               sx={{ padding: "12px 24px" }}
             >
-              back
+              Back
             </Button>
           )}
         </div>
