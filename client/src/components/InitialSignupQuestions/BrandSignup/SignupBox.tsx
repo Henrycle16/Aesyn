@@ -11,6 +11,7 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
+import ProgressBar from "@/components/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
 
 /* 
@@ -48,6 +49,7 @@ const brandFormData: BrandForm = {
 
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(20);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
   const session = useSession();
 
@@ -83,11 +85,11 @@ const SignUpBox = () => {
 
   // Method to handle the location change event
   const handleLocationChange = (locationString: string) => {
-  setFormData((prevData) => ({
-    ...prevData,
-    location: locationString,
-  }));
-};
+    setFormData((prevData) => ({
+      ...prevData,
+      location: locationString,
+    }));
+  };
 
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
@@ -108,8 +110,25 @@ const SignUpBox = () => {
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
-    const { user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences } = formData;
-    const body = JSON.stringify({user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences, location});
+    const {
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+    } = formData;
+    const body = JSON.stringify({
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+      location,
+    });
 
     try {
       const brandSignUpResponse = await brandSignUp(body);
@@ -151,19 +170,26 @@ const SignUpBox = () => {
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
     />,
-    <ConfirmForm
-      key="ConfirmForm"
-      formData={formData}
-    />,
+    <ConfirmForm key="ConfirmForm" formData={formData} />,
     <ToDashboard key="ToDashboard" />,
   ];
 
+  useEffect(() => {
+    if (step == steps.length - 1) return;
+    const totalSteps = steps.length - 1;
+    const val = ((step + 1) / totalSteps) * 100;
+    setProgress(val);
+  }, [step, steps.length]);
+
   return (
-    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
-      <form onSubmit={(e) => handleSubmitForm(e)} className="min-h-[32rem] flex flex-col">
+    <div className="mx-auto max-w-3xl">
+      <form
+        onSubmit={(e) => handleSubmitForm(e)}
+        className="min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+      >
         {/* Back Button */}
         <div className="flex">
-          {step !== 0 && step !== steps.length -1 && (
+          {step !== 0 && step !== steps.length - 1 && (
             <Button
               onClick={handlePrevStep}
               variant="text"
@@ -178,6 +204,9 @@ const SignUpBox = () => {
         {/* Render Form Parts Here */}
         <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
+
+      {/* Progress Bar */}
+      {step !== steps.length - 1 && <ProgressBar progress={progress} />}
     </div>
   );
 };
