@@ -36,7 +36,7 @@ const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
   const [isUsernameValid, setUsernameValid] = useState(false);
-  const [progress, setProgress] = useState<number>(17);
+  const [progress, setProgress] = useState<number>(16.66);
   const session = useSession();
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const SignUpBox = () => {
     <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className="min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+        className="min-h-[32rem] flex flex-col p-7 border border-b-0 border-gray-300 rounded-t-md"
       >
         {/* Back Button */}
         <div className="flex">

@@ -185,7 +185,7 @@ const SignUpBox = () => {
     <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className="min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+        className="min-h-[32rem] flex flex-col p-7 border border-b-0 border-gray-300 rounded-t-md"
       >
         {/* Back Button */}
         <div className="flex">
