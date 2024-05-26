@@ -1,40 +1,23 @@
-'use client'
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { styled } from '@mui/material/styles';
 
-import React from 'react';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
-  return (
-    <Box sx={{ display: 'grid', placeItems: 'center' }}>
-      <Box sx={{ width: '80%' }}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
+interface ProgressBarProps {
+  progress: number;
 }
 
-export default function ProgressBar() {
-  const [progress, setProgress] = React.useState(10);
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[200],
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    backgroundColor: '#308fe8',
+  },
+}));
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
+export default function ProgressBar({ progress }: ProgressBarProps ) {
   return (
-    <Box sx={{ display: 'grid', width: '80%', ml: "2rem" }}>
-      <LinearProgressWithLabel value={progress} />
-    </Box>
+    <>
+      <BorderLinearProgress variant="determinate" value={progress} className='rounded-b-md h-4 border border-t-0 border-gray-300' />
+    </>
   );
 }
