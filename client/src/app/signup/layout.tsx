@@ -9,7 +9,7 @@ export default function SignupLayout({
   return (
     <>
       <Header />
-      <main className="container flex-1 mx-auto flex items-center max-lg:py-5">
+      <main className="container flex-1 mx-auto flex items-center my-10">
         <section className="container">{children}</section>
       </main>
       <Footer />

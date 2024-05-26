@@ -1,72 +1,65 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
+import { z } from "zod";
+import { FormDataSchema } from "@/lib/zod-schemas/userSignupSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = z.infer<typeof FormDataSchema>;
 
 const SignUpComponent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const state = searchParams.get("state");
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    password2: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(FormDataSchema),
+    mode: 'onChange'
   });
 
-  const { firstName, lastName, email, password, password2 } = formData;
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    try {
+      const signUpResponse = await signIn("sign-up", {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
+      if (signUpResponse && !signUpResponse.error) {
+        console.log("User succesfully signed up");
+        console.log(signUpResponse);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (password != password2) {
-      console.log("Passwords do not match!");
-      return;
-    } else {
-      try {
-        const signUpResponse = await signIn("sign-up", {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          redirect: false,
-        });
-
-        if (signUpResponse && !signUpResponse.error) {
-          console.log("User succesfully signed up");
-          console.log(signUpResponse);
-
-          if (state === "true") {
-            router.push("/signup/brand");
-          } else {
-            router.push("/signup/creator");
-          }
+        if (state === "true") {
+          router.push("/signup/brand");
         } else {
-          console.log("Error!");
+          router.push("/signup/creator");
         }
-      } catch (err) {
-        console.log(err);
+      } else {
+        console.log("Error!");
       }
+    } catch (err) {
+      console.log(err);
     }
+    reset();
   };
 
   return (
     <form
-      onSubmit={(e) => handleSubmit(e)}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-2"
     >
       {/* Form Header */}
@@ -79,63 +72,77 @@ const SignUpComponent = () => {
 
       {/* Input Fields */}
       <div className="mt-5 flex gap-4">
-        <input
-          type="text"
-          className="input-md border border-gray-300 rounded-sm w-full"
-          placeholder="First Name*"
-          name="firstName"
-          id="firstName"
-          value={firstName}
-          onChange={onChange}
-          autoFocus
-          autoComplete="given-name"
-          required
-        />
-        <input
-          type="text"
-          className="input-md border border-gray-300 rounded-sm w-full"
-          placeholder="Last Name*"
-          name="lastName"
-          id="lastName"
-          value={lastName}
-          onChange={onChange}
-          autoComplete="family-name"
-          required
-        />
+        <div className="w-full">
+          <input
+            type="text"
+            className="input-md border border-gray-300 rounded-sm w-full"
+            placeholder="First Name*"
+            id="firstName"
+            {...register("firstName")}
+            autoFocus
+            autoComplete="given-name"
+          />
+          {errors.firstName?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.firstName.message}
+            </p>
+          )}
+        </div>
+        <div className="w-full">
+          <input
+            type="text"
+            className="input-md border border-gray-300 rounded-sm w-full"
+            placeholder="Last Name*"
+            id="lastName"
+            {...register("lastName")}
+            autoComplete="family-name"
+          />
+          {errors.lastName?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.lastName.message}
+            </p>
+          )}
+        </div>
       </div>
-      <input
-        type="email"
-        className="input-md border border-gray-300 rounded-sm"
-        placeholder="Email Address*"
-        name="email"
-        id="email"
-        value={email}
-        onChange={onChange}
-        autoComplete="email"
-        required
-      />
-      <input
-        type="password"
-        className="input-md border border-gray-300 rounded-sm"
-        placeholder="Password*"
-        name="password"
-        id="password"
-        value={password}
-        onChange={onChange}
-        autoComplete="new-password"
-        required
-      />
-      <input
-        type="password"
-        className="input-md border border-gray-300 rounded-sm"
-        placeholder="Confirm Password*"
-        name="password2"
-        id="password2"
-        value={password2}
-        onChange={onChange}
-        autoComplete="new-password"
-        required
-      />
+      <div>
+        <input
+          type="email"
+          className="w-full input-md border border-gray-300 rounded-sm"
+          placeholder="Email Address*"
+          id="email"
+          {...register("email")}
+          autoComplete="email"
+        />
+        {errors.email?.message && (
+          <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+        )}
+      </div>
+      <div>
+        <input
+          type="password"
+          className="w-full input-md border border-gray-300 rounded-sm"
+          placeholder="Password*"
+          id="password"
+          {...register("password")}
+          autoComplete="new-password"
+        />
+        {errors.password?.message && (
+          <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+        )}
+      </div>
+      <div>
+        <input
+          type="password"
+          className="w-full input-md border border-gray-300 rounded-sm"
+          placeholder="Confirm Password*"
+          id="password2"
+          {...register("password2")}
+          autoComplete="new-password"
+        />
+        {errors.password2?.message && (
+          <p className="mt-1 text-sm text-red-400">{errors.password2.message}</p>
+        )}
+      </div>
 
       {/* Checkboxes */}
       <div className="flex items-start gap-3">
