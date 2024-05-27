@@ -5,6 +5,10 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { z } from "zod";
+import { FormDataSchema } from "@/lib/zod-schemas/brandSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "../SocialMediaSelect";
@@ -14,35 +18,18 @@ import LocationBox from "../LocationBox";
 import ProgressBar from "@/components/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
 
-/* 
-  This is the parent component
-  This component will control and manage steps and data 
-*/
+type Inputs = z.infer<typeof FormDataSchema>;
 
-// Step 1: Company Form Info
-// Step 2: Location Info
-// Step 3: Contact Form Info
-// Step 4: Social Media Selector Info
-// Step 5: Confirm Form Data
-// Step 6: Redirect to dashboard
 interface BrandForm {
   user: object;
-  companyName: string;
   industry: string;
-  contactPersonName: string;
-  contactEmail: string;
-  contactPhoneNumber: string;
   location: string;
   preferences: string[];
 }
 
 const brandFormData: BrandForm = {
   user: {},
-  companyName: "",
   industry: "",
-  contactPersonName: "",
-  contactEmail: "",
-  contactPhoneNumber: "",
   location: "",
   preferences: [],
 };
@@ -63,6 +50,15 @@ const SignUpBox = () => {
       redirect("/login");
     }
   }, [step, session.data, session.status]);
+
+  const {
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(FormDataSchema),
+    mode: 'onChange'
+  });
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -112,20 +108,15 @@ const SignUpBox = () => {
     // Create the location object and encapsulate it with the form data
     const {
       user,
-      companyName,
       industry,
-      contactPersonName,
-      contactEmail,
-      contactPhoneNumber,
       preferences,
     } = formData;
     const body = JSON.stringify({
       user,
-      companyName,
+      companyName: getValues("companyName"),
       industry,
-      contactPersonName,
-      contactEmail,
-      contactPhoneNumber,
+      contactPersonName: getValues("contactPersonName"),
+      contactPhoneNumber: getValues("contactPhoneNumber"),
       preferences,
       location,
     });
@@ -151,6 +142,9 @@ const SignUpBox = () => {
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
+      register={register}
+      errors={errors}
+      getValues={getValues}
     />,
     <LocationBox
       key="LocationBox"
@@ -160,9 +154,10 @@ const SignUpBox = () => {
     />,
     <ContactForm
       key="ContactForm"
-      formData={formData}
-      handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
+      register={register}
+      errors={errors}
+      getValues={getValues}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
@@ -170,7 +165,7 @@ const SignUpBox = () => {
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
     />,
-    <ConfirmForm key="ConfirmForm" formData={formData} />,
+    <ConfirmForm key="ConfirmForm" formData={formData} getValues={getValues} />,
     <ToDashboard key="ToDashboard" />,
   ];
 
