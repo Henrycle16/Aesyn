@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import SmallFooter from "@/components/SmallFooter";
 
 export default function SignupLayout({
