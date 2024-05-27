@@ -2,7 +2,7 @@ import Link from "next/link";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 
-const Footer = () => {
+const LargeFooter = () => {
   return (
     <footer className="bg-[#0C2232]">
       <div className="mx-auto text-[#E5E7EB] w-full max-w-screen-2xl p-4 py-5 lg:py-6">
@@ -109,4 +109,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default LargeFooter;
