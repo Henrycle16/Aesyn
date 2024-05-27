@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="container flex-1 mx-auto flex items-center max-lg:py-5 px-5">
+      <main className="container flex-1 mx-auto flex items-center max-lg:py-5 px-5 min-h-screen">
         <HeroSection />
       </main>
       <LargeFooter />
