@@ -11,6 +11,7 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
+import ProgressBar from "@/components/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
 
 /* 
@@ -48,6 +49,7 @@ const brandFormData: BrandForm = {
 
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(20);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
   const [lng, setLng] = useState<number>(-98.5795);
   const [lat, setLat] = useState<number>(39.8283);
@@ -187,11 +189,18 @@ const SignUpBox = () => {
     <ToDashboard key="ToDashboard" />,
   ];
 
+  useEffect(() => {
+    if (step == steps.length - 1) return;
+    const totalSteps = steps.length - 1;
+    const val = ((step + 1) / totalSteps) * 100;
+    setProgress(val);
+  }, [step, steps.length]);
+
   return (
-    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
+    <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className="min-h-[32rem] flex flex-col"
+        className="min-h-[32rem] flex flex-col p-7 border border-b-0 border-gray-300 rounded-t-md"
       >
         {/* Back Button */}
         <div className="flex">
@@ -210,6 +219,9 @@ const SignUpBox = () => {
         {/* Render Form Parts Here */}
         <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
+
+      {/* Progress Bar */}
+      {step !== steps.length - 1 && <ProgressBar progress={progress} />}
     </div>
   );
 };

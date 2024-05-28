@@ -12,6 +12,7 @@ import SocialMediaSelect from "../SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
+import ProgressBar from "@/components/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
 interface CreatorForm {
   user: object;
@@ -35,6 +36,7 @@ const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
   const [isUsernameValid, setUsernameValid] = useState(false);
+  const [progress, setProgress] = useState<number>(16.66);
   const [lng, setLng] = useState<number>(-98.5795);
   const [lat, setLat] = useState<number>(39.8283);
   const [zoom, setZoom] = useState<number>(3);
@@ -183,12 +185,19 @@ const SignUpBox = () => {
     />,
     <ToDashboard key="ToDashboard" />,
   ];
+  useEffect(() => {
+    if (step == steps.length - 1) return;
+    const totalSteps = steps.length -1;
+    const val = ((step + 1) / totalSteps) * 100;
+    setProgress(val);
+  
+  }, [step, steps.length]);
 
   return (
-    <div className="border border-gray-300 rounded-md mx-auto max-w-3xl p-7">
+    <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className="min-h-[32rem] flex flex-col"
+        className="min-h-[32rem] flex flex-col p-7 border border-b-0 border-gray-300 rounded-t-md"
       >
         {/* Back Button */}
         <div className="flex">
@@ -207,6 +216,11 @@ const SignUpBox = () => {
         {/* Render Form Parts Here */}
         <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
+
+      {/* Progress Bar */}
+      {step !== steps.length -1 && (
+        <ProgressBar progress={progress} />
+      )}
     </div>
   );
 };
