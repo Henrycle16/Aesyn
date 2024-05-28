@@ -65,7 +65,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
       // Restore marker if it exists
       if (markerLocation) {
-        const newMarker = new mapboxgl.Marker()
+        const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
           .setLngLat(markerLocation)
           .addTo(mapInstance);
         markerRef.current = newMarker;
@@ -85,7 +85,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       if (markerRef.current) {
         markerRef.current.remove();
       }
-      const newMarker = new mapboxgl.Marker()
+      const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
         .setLngLat(markerLocation)
         .addTo(map);
       markerRef.current = newMarker;
@@ -126,7 +126,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           markerRef.current.remove();
         }
 
-        const newMarker = new mapboxgl.Marker()
+        const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
           .setLngLat([newLng, newLat])
           .addTo(map);
 
