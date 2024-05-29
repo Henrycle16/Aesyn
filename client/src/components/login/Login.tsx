@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -60,7 +60,6 @@ const LoginComponent = () => {
 
   return state ? (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -108,14 +107,14 @@ const LoginComponent = () => {
             type="submit"
             fullWidth
             variant="contained"
-            className="mt-3 mb-2 bg-muiblue-style"
+            className="mt-3 mb-2 bg-muiblue"
           >
             Login
           </Button>
           <Button
             fullWidth
             variant="contained"
-            className="mt-3 mb-2 bg-muiblue-style"
+            className="mt-3 mb-2 bg-muiblue"
             onClick={() => signOut({redirect: false})}
           >
             Sign Out

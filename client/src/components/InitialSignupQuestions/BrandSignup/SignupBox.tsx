@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
 import SocialMediaSelect from "../SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../ToDashboard";
 import LocationBox from "../LocationBox";
+import ProgressBar from "@/components/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
-
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 /* 
   This is the parent component
@@ -48,7 +49,13 @@ const brandFormData: BrandForm = {
 
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(20);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
+  const [lng, setLng] = useState<number>(-98.5795);
+  const [lat, setLat] = useState<number>(39.8283);
+  const [zoom, setZoom] = useState<number>(3);
+  const [markerLocation, setMarkerLocation] = useState<[number, number] | null>(null);
+  const [isLocationSelected, setIsLocationSelected] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -60,7 +67,7 @@ const SignUpBox = () => {
     } else {
       redirect("/login");
     }
-  }, [step]);
+  }, [step, session.data, session.status]);
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -83,11 +90,11 @@ const SignUpBox = () => {
 
   // Method to handle the location change event
   const handleLocationChange = (locationString: string) => {
-  setFormData((prevData) => ({
-    ...prevData,
-    location: locationString,
-  }));
-};
+    setFormData((prevData) => ({
+      ...prevData,
+      location: locationString,
+    }));
+  };
 
   // Method to handle the preference change event
   const handlePreferenceChange = (selected: string) => {
@@ -108,8 +115,25 @@ const SignUpBox = () => {
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
-    const { user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences } = formData;
-    const body = JSON.stringify({user, companyName, industry, contactPersonName, contactEmail, contactPhoneNumber, preferences, location});
+    const {
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+    } = formData;
+    const body = JSON.stringify({
+      user,
+      companyName,
+      industry,
+      contactPersonName,
+      contactEmail,
+      contactPhoneNumber,
+      preferences,
+      location,
+    });
 
     try {
       const brandSignUpResponse = await brandSignUp(body);
@@ -137,43 +161,67 @@ const SignUpBox = () => {
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
+      lng={lng}
+      lat={lat}
+      zoom={zoom}
+      setLng={setLng}
+      setLat={setLat}
+      setZoom={setZoom}
+      markerLocation={markerLocation}
+      setMarkerLocation={setMarkerLocation}
+      isLocationSelected={isLocationSelected}
+      setIsLocationSelected={setIsLocationSelected}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
     <ContactForm
       key="ContactForm"
       formData={formData}
       handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
       formData={formData}
       handlePreferenceChange={handlePreferenceChange}
       handleNextStep={handleNextStep}
-      handlePrevStep={handlePrevStep}
     />,
-    <ConfirmForm
-      key="ConfirmForm"
-      formData={formData}
-      handleFormChange={handleFormChange}
-      handlePrevStep={handlePrevStep}
-    />,
+    <ConfirmForm key="ConfirmForm" formData={formData} />,
     <ToDashboard key="ToDashboard" />,
   ];
 
+  useEffect(() => {
+    if (step == steps.length - 1) return;
+    const totalSteps = steps.length - 1;
+    const val = ((step + 1) / totalSteps) * 100;
+    setProgress(val);
+  }, [step, steps.length]);
+
   return (
-    <div className="flex justify-center items-center h-auto pt-52">
-      <form onSubmit={(e) => handleSubmitForm(e)}>
-        <Box
-          className="p-5 bg-base-200 rounded-box"
-          sx={{ width: "900px", height: "600px", border: "1px solid black" }}
-        >
-          {/* Render Form Parts Here */}
-          {steps[step]}
-        </Box>
+    <div className="mx-auto max-w-3xl">
+      <form
+        onSubmit={(e) => handleSubmitForm(e)}
+        className="min-h-[32rem] flex flex-col p-7 border border-b-0 border-gray-300 rounded-t-md"
+      >
+        {/* Back Button */}
+        <div className="flex">
+          {step !== 0 && step !== steps.length - 1 && (
+            <Button
+              onClick={handlePrevStep}
+              variant="text"
+              startIcon={<ArrowBackIcon />}
+              sx={{ padding: "12px 24px" }}
+            >
+              Back
+            </Button>
+          )}
+        </div>
+
+        {/* Render Form Parts Here */}
+        <div className="flex-1 flex justify-center">{steps[step]}</div>
       </form>
+
+      {/* Progress Bar */}
+      {step !== steps.length - 1 && <ProgressBar progress={progress} />}
     </div>
   );
 };

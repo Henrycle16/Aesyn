@@ -2,8 +2,8 @@ import SignUpBox from "@/components/InitialSignupQuestions/CreatorSignup/SignupB
 
 export default function CreatorQuestions() {
   return (
-    <div>
+    <>
       <SignUpBox />
-    </div>
+    </>
   );
 }
