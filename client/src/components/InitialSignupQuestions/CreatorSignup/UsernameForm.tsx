@@ -67,6 +67,7 @@ const UsernameForm = ({
             placeholder="Type here"
             className="input input-bordered w-full"
             name="userName"
+            onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
             value={formData.userName}
             onChange={(e) => {
               handleFormChange(e);
