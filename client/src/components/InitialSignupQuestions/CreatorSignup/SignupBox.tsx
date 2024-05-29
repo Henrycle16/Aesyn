@@ -37,6 +37,11 @@ const SignUpBox = () => {
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
   const [isUsernameValid, setUsernameValid] = useState(false);
   const [progress, setProgress] = useState<number>(16.66);
+  const [lng, setLng] = useState<number>(-98.5795);
+  const [lat, setLat] = useState<number>(39.8283);
+  const [zoom, setZoom] = useState<number>(3);
+  const [markerLocation, setMarkerLocation] = useState<[number, number] | null>(null);
+  const [isLocationSelected, setIsLocationSelected] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -147,10 +152,20 @@ const SignUpBox = () => {
       handleNextStep={handleNextStep}
     />,
     <LocationBox
-      key="LocationBox"
-      formData={formData}
-      handleLocationChange={handleLocationChange}
-      handleNextStep={handleNextStep}
+    key="LocationBox"
+    formData={formData}
+    handleLocationChange={handleLocationChange}
+    lng={lng}
+    lat={lat}
+    zoom={zoom}
+    setLng={setLng}
+    setLat={setLat}
+    setZoom={setZoom}
+    markerLocation={markerLocation}
+    setMarkerLocation={setMarkerLocation}
+    isLocationSelected={isLocationSelected}
+    setIsLocationSelected={setIsLocationSelected}
+    handleNextStep={handleNextStep}
     />,
     <SocialMediaSelect
       key="SocialMediaSelect"
