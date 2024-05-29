@@ -30,6 +30,7 @@ const UsernameForm = ({
             placeholder="Type here"
             className="input input-bordered w-full"
             id="userName"
+            onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
             {...register("userName")}
           />
           {errors.userName?.message && (
