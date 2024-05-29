@@ -3,11 +3,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ContactFormProps {
   handleNextStep: () => void;
-  handleFormChange: (event: any) => void;
-  formData: any;
+  register: any;
+  errors: any;
+  getValues: any;
 }
 
-const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFormProps) => {
+const ContactForm = ({
+  handleNextStep,
+  register,
+  errors,
+  getValues,
+}: ContactFormProps) => {
   return (
     <div className="flex flex-col w-full">
       {/* Handles POC Contact Information */}
@@ -21,12 +27,15 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
           <input
             type="text"
             placeholder="Full Name"
-            required
             className="input input-bordered w-full"
-            name="contactPersonName"
-            value={formData.contactPersonName}
-            onChange={(e) => handleFormChange(e)}
+            id="contactPersonName"
+            {...register("contactPersonName")}
           />
+          {errors.contactPersonName?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.contactPersonName.message}
+            </p>
+          )}
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
@@ -37,28 +46,16 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
           <input
             type="text"
             placeholder="(000) - 000 - 0000"
-            required
             className="input input-bordered w-full"
-            name="contactPhoneNumber"
-            value={formData.contactPhoneNumber}
-            onChange={(e) => handleFormChange(e)}
+            id="contactPhoneNumber"
+            {...register("contactPhoneNumber")}
+            maxLength={10}
           />
-        </label>
-        <label className="form-control w-full mb-6">
-          <div className="label">
-            <span className="label-text font-bold text-lg">
-              Primary Contact Email
-            </span>
-          </div>
-          <input
-            type="email"
-            placeholder="Email Address"
-            required
-            className="input input-bordered w-full"
-            name="contactEmail"
-            value={formData.contactEmail}
-            onChange={(e) => handleFormChange(e)}
-          />
+          {errors.contactPhoneNumber?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.contactPhoneNumber.message}
+            </p>
+          )}
         </label>
       </div>
 
@@ -66,9 +63,10 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
       <div className="self-end">
         <Button
           disabled={
-            !formData.contactPersonName ||
-            !formData.contactPhoneNumber ||
-            !formData.contactEmail
+            !getValues('contactPersonName') ||
+            !getValues('contactPhoneNumber') ||
+            !!errors.contactPersonName ||
+            !!errors.contactPhoneNumber
           }
           onClick={handleNextStep}
           type="button"

@@ -3,9 +3,10 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
   formData: any;
+  getValues: any;
 }
 
-const ConfirmForm = ({ formData }: ConfirmFormProps) => {
+const ConfirmForm = ({ formData, getValues, }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
       {/* Header */}
@@ -20,7 +21,7 @@ const ConfirmForm = ({ formData }: ConfirmFormProps) => {
         {/* This block is for populating the Brand Name and Industry */}
         <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Username</div>
-          <div className="pt-1 font-light">{formData.userName}</div>
+          <div className="pt-1 font-light">{getValues('userName')}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Gender</div>

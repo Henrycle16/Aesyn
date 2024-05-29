@@ -10,12 +10,18 @@ interface CompanyFormProps {
     event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => void;
   formData: any;
+  register: any;
+  errors: any;
+  getValues: any;
 }
 
 const CompanyForm = ({
   formData,
   handleFormChange,
   handleNextStep,
+  register,
+  errors,
+  getValues,
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,11 +57,15 @@ const CompanyForm = ({
             type="text"
             placeholder="Brand Name"
             className="input input-bordered w-full"
-            name="companyName"
-            value={formData.companyName}
-            onChange={(e) => handleFormChange(e)}
+            id="companyName"
+            {...register("companyName")}
             maxLength={50}
           />
+          {errors.companyName?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.companyName.message}
+            </p>
+          )}
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
@@ -108,7 +118,7 @@ const CompanyForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.companyName || !formData.industry}
+          disabled={!getValues('companyName') || !formData.industry || !!errors.companyName}
           onClick={handleNextStep}
           type="button"
           variant="contained"

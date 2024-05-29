@@ -18,14 +18,14 @@ router.get('/', auth, async (req: Request, res: Response) => {
   }
 });
 
-// @route   Get api/username
-// @desc    check if username exist
+// @route   Get api/email
+// @desc    check if email exist
 // @access  Public -> Private
-router.get('/username/:username', async (req: Request, res: Response) => {
+router.get('/email/:email', async (req: Request, res: Response) => {
   try {
-    const username = await User.findOne({ username: req.params.username });
-    console.log(username);
-    res.status(200).json(username);
+    const email = await User.findOne({ email: req.params.email });
+    console.log(email);
+    res.status(200).json(email);
   } catch (error) {
     res.status(500).json(error);
   }

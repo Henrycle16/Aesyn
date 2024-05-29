@@ -3,9 +3,10 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface ConfirmFormProps {
   formData: any;
+  getValues: any;
 }
 
-const ConfirmForm = ({ formData }: ConfirmFormProps) => {
+const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
       {/* Header */}
@@ -20,7 +21,7 @@ const ConfirmForm = ({ formData }: ConfirmFormProps) => {
         {/* This block is for populating the Brand Name and Industry */}
         <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Brand Name</div>
-          <div className="pt-1 font-light truncate">{formData.companyName}</div>
+          <div className="pt-1 font-light truncate">{getValues('companyName')}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Industry</div>
@@ -38,17 +39,13 @@ const ConfirmForm = ({ formData }: ConfirmFormProps) => {
           <div className="label-text font-semibold text-base ">
             Contact Person Name
           </div>
-          <div className="pt-1 font-light">{formData.contactPersonName}</div>
+          <div className="pt-1 font-light">{getValues('contactPersonName')}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-3 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">
             Phone Number
           </div>
-          <div className="pt-1 font-light">{formData.contactPhoneNumber}</div>
-        </div>
-        <div className="col-start-3 col-span-1 row-start-3 row-span-1 justify-end">
-          <div className="label-text font-semibold text-base ">Email</div>
-          <div className="pt-1 font-light">{formData.contactEmail}</div>
+          <div className="pt-1 font-light">{getValues('contactPhoneNumber')}</div>
         </div>
 
         {/* This block is for populating Social Media Preference */}
