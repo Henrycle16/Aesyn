@@ -6,16 +6,34 @@ import MapboxMap from "./MapBox";
 interface LocationBoxProps {
   formData: any;
   handleLocationChange: (location: string) => void;
+  lng: number;
+  lat: number;
+  zoom: number;
+  setLng: (lng: number) => void;
+  setLat: (lat: number) => void;
+  setZoom: (zoom: number) => void;
+  markerLocation: [number, number] | null;
+  setMarkerLocation: (location: [number, number] | null) => void;
+  isLocationSelected: boolean;
+  setIsLocationSelected: (isSelected: boolean) => void;
   handleNextStep: () => void;
 }
 
 const LocationBox = ({
   formData,
   handleLocationChange,
+  lng,
+  lat,
+  zoom,
+  setLng,
+  setLat,
+  setZoom,
+  markerLocation,
+  setMarkerLocation,
+  isLocationSelected,
+  setIsLocationSelected,
   handleNextStep,
 }: LocationBoxProps) => {
-  const [isLocationSelected, setIsLocationSelected] = useState(false);
-
   return (
     <div className="flex flex-col w-full">
       <div className="w-4/6 mx-auto my-auto">
@@ -34,6 +52,15 @@ const LocationBox = ({
           <MapboxMap
             isFormData={formData.location}
             handleLocationChange={handleLocationChange}
+            lng={lng}
+            lat={lat}
+            zoom={zoom}
+            setLng={setLng}
+            setLat={setLat}
+            setZoom={setZoom}
+            markerLocation={markerLocation}
+            setMarkerLocation={setMarkerLocation}
+            isLocationSelected={isLocationSelected}
             setIsLocationSelected={setIsLocationSelected}
           />
         </div>

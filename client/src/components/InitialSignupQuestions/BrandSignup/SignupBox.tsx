@@ -38,6 +38,11 @@ const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [progress, setProgress] = useState<number>(20);
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
+  const [lng, setLng] = useState<number>(-98.5795);
+  const [lat, setLat] = useState<number>(39.8283);
+  const [zoom, setZoom] = useState<number>(3);
+  const [markerLocation, setMarkerLocation] = useState<[number, number] | null>(null);
+  const [isLocationSelected, setIsLocationSelected] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -150,6 +155,16 @@ const SignUpBox = () => {
       key="LocationBox"
       formData={formData}
       handleLocationChange={handleLocationChange}
+      lng={lng}
+      lat={lat}
+      zoom={zoom}
+      setLng={setLng}
+      setLat={setLat}
+      setZoom={setZoom}
+      markerLocation={markerLocation}
+      setMarkerLocation={setMarkerLocation}
+      isLocationSelected={isLocationSelected}
+      setIsLocationSelected={setIsLocationSelected}
       handleNextStep={handleNextStep}
     />,
     <ContactForm
@@ -191,7 +206,7 @@ const SignUpBox = () => {
               startIcon={<ArrowBackIcon />}
               sx={{ padding: "12px 24px" }}
             >
-              back
+              Back
             </Button>
           )}
         </div>
