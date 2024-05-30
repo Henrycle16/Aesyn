@@ -40,7 +40,7 @@ const SignUpBox = () => {
   const [formData, setFormData] = useState<BrandForm>(brandFormData);
   const [lng, setLng] = useState<number>(-98.5795);
   const [lat, setLat] = useState<number>(39.8283);
-  const [zoom, setZoom] = useState<number>(3);
+  const [zoom, setZoom] = useState<number>(2.5);
   const [markerLocation, setMarkerLocation] = useState<[number, number] | null>(null);
   const [isLocationSelected, setIsLocationSelected] = useState<boolean>(false);
   const session = useSession();
