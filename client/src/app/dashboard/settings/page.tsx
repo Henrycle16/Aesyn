@@ -4,8 +4,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { config } from '@/utils/dashboard/config';
-import { Notifications } from '@/components/dashboard/settings/notifications';
-import { UpdatePasswordForm } from '@/components/dashboard/settings/update-password-form';
+import { Notifications } from '@/components/brand/dashboard/settings/notifications';
+import { UpdatePasswordForm } from '@/components/brand/dashboard/settings/update-password-form';
 
 export const metadata = { title: `Settings | Dashboard | ${config.site.name}` } satisfies Metadata;
 
