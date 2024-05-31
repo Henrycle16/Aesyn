@@ -11,11 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CompanyForm from "./CompanyForm";
 import ContactForm from "./ContactForm";
-import SocialMediaSelect from "../SocialMediaSelect";
+import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
-import ToDashboard from "../ToDashboard";
-import LocationBox from "../LocationBox";
-import ProgressBar from "@/components/ProgressBar";
+import ToDashboard from "../../ui/mapbox/ToDashboard";
+import LocationBox from "../../ui/mapbox/LocationBox";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
 
 type Inputs = z.infer<typeof FormDataSchema>;

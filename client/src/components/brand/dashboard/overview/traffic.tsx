@@ -14,7 +14,7 @@ import { DeviceTablet as DeviceTabletIcon } from '@phosphor-icons/react/dist/ssr
 import { Phone as PhoneIcon } from '@phosphor-icons/react/dist/ssr/Phone';
 import type { ApexOptions } from 'apexcharts';
 
-import { Chart } from '@/components/dashboard/core/chart';
+import { Chart } from '@/components/brand/dashboard/core/chart';
 
 const iconMapping = { Desktop: DesktopIcon, Tablet: DeviceTabletIcon, Phone: PhoneIcon } as Record<string, Icon>;
 

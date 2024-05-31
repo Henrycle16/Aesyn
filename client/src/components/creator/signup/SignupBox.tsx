@@ -10,13 +10,13 @@ import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
-import ToDashboard from "../ToDashboard";
-import LocationBox from "../LocationBox";
-import SocialMediaSelect from "../SocialMediaSelect";
+import ToDashboard from "../../ui/mapbox/ToDashboard";
+import LocationBox from "../../ui/mapbox/LocationBox";
+import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
 
 type Inputs = z.infer<typeof FormDataSchema>;
