@@ -12,9 +12,9 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import dayjs from 'dayjs';
 
 import { config } from '@/utils/dashboard/config';
-import { IntegrationCard } from '@/components/dashboard/integrations/integrations-card';
-import type { Integration } from '@/components/dashboard/integrations/integrations-card';
-import { CompaniesFilters } from '@/components/dashboard/integrations/integrations-filters';
+import { IntegrationCard } from '@/components/brand/dashboard/integrations/integrations-card';
+import type { Integration } from '@/components/brand/dashboard/integrations/integrations-card';
+import { CompaniesFilters } from '@/components/brand/dashboard/integrations/integrations-filters';
 
 export const metadata = { title: `Integrations | Dashboard | ${config.site.name}` } satisfies Metadata;
 

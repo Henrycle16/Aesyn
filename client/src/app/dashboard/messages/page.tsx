@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 
 import { config } from '@/utils/dashboard/config';
-import { MessagesFilters } from '@/components/dashboard/messages/messages-filters';
-import { MessagesTable } from '@/components/dashboard/messages/messages-table';
-import type { Messages } from '@/components/dashboard/messages/messages-table';
+import { MessagesFilters } from '@/components/brand/dashboard/messages/messages-filters';
+import { MessagesTable } from '@/components/brand/dashboard/messages/messages-table';
+import type { Messages } from '@/components/brand/dashboard/messages/messages-table';
 
 export const metadata = { title: `Messages | Dashboard | ${config.site.name}` } satisfies Metadata;
 
