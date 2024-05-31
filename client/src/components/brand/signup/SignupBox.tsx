@@ -15,7 +15,7 @@ import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../../ui/mapbox/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
 
 type Inputs = z.infer<typeof FormDataSchema>;

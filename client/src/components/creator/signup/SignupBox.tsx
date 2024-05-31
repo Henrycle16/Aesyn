@@ -16,7 +16,7 @@ import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
 
 type Inputs = z.infer<typeof FormDataSchema>;
