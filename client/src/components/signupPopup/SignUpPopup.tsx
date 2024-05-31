@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
@@ -17,7 +17,7 @@ interface Props {
   // any props that come into the component
 }
 
-const SignUpPopup = ({handleClick}: Props) => {
+const SignUpPopup = () => {
   const router = useRouter();
 
   const handleBrandSignup = () => {
@@ -38,11 +38,27 @@ const SignUpPopup = ({handleClick}: Props) => {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <button onClick={handleBrandSignup} className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Join as Brand!</button>
-        <button onClick={handleCreatorSignup} className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Join as Creator!</button>
+        <Link
+            href={{
+              pathname: "/signup",
+              query: { state: true },
+            }}
+            className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+          >
+            Join as Brand!
+          </Link>
+          <Link
+            href={{
+              pathname: "/signup",
+              query: { state: false },
+            }}
+            className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
+          >
+            Join as Creator!
+          </Link>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2" onClick={() => handleClick()}>
+            <Link href="?modal=true">
               Already have an account? Sign in
             </Link>
           </Grid>

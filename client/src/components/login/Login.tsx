@@ -16,6 +16,7 @@ import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "../signupPopup/SignUpPopup";
+import Modal from "../Modal";
 
 
 const LoginComponent = () => {
@@ -54,12 +55,11 @@ const LoginComponent = () => {
     }
   };
 
-  function handleClick() {
-    state ? setState(false) : setState(true)
-  }
-
-  return state ? (
+  return (
     <Container component="main" maxWidth="xs">
+      <Modal>
+        <SignUpPopup />
+      </Modal>
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -121,7 +121,7 @@ const LoginComponent = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link onClick={handleClick}>
+              <Link href="?modal=true">
                 Don&apos;t have an account? Sign up
               </Link>
             </Grid>
@@ -142,9 +142,7 @@ const LoginComponent = () => {
         {"."}
       </Typography>
     </Container>
-  ) : (
-    <SignUpPopup handleClick={handleClick} />
-  );
+  )
 };
 
 export default LoginComponent;
