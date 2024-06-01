@@ -10,12 +10,18 @@ interface CompanyFormProps {
     event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => void;
   formData: any;
+  register: any;
+  errors: any;
+  getValues: any;
 }
 
 const CompanyForm = ({
   formData,
   handleFormChange,
   handleNextStep,
+  register,
+  errors,
+  getValues,
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,12 +56,16 @@ const CompanyForm = ({
           <input
             type="text"
             placeholder="Brand Name"
-            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
-            name="companyName"
-            value={formData.companyName}
-            onChange={(e) => handleFormChange(e)}
+            className="input input-bordered w-full"
+            id="companyName"
+            {...register("companyName")}
             maxLength={50}
           />
+          {errors.companyName?.message && (
+            <p className="mt-1 text-sm text-red-400">
+              {errors.companyName.message}
+            </p>
+          )}
         </label>
         <label className="form-control w-full mb-4">
           <div className="label">
@@ -65,7 +75,7 @@ const CompanyForm = ({
           </div>
           <div className={`relative inline-block w-full`}>
             <select
-              className={`input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md pr-10 ${
+              className={`input input-bordered w-full pr-10 ${
                 isOpen ? "border-b-1" : ""
               }`}
               id="industry"
@@ -108,7 +118,7 @@ const CompanyForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.companyName || !formData.industry}
+          disabled={!getValues('companyName') || !formData.industry || !!errors.companyName}
           onClick={handleNextStep}
           type="button"
           variant="contained"

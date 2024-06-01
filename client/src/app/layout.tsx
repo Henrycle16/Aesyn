@@ -4,7 +4,7 @@ import React from "react";
 
 // Next-Auth
 import { getServerSession } from 'next-auth'
-import SessionProvider from "@/components/SessionProvider";
+import SessionProvider from "@/components/utils/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

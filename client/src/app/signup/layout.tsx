@@ -1,5 +1,5 @@
-import Header from "@/components/header/Header";
-import SmallFooter from "@/components/SmallFooter";
+import Header from "@/components/ui/header/Header";
+import SmallFooter from "@/components/ui/footer/SmallFooter";
 
 export default function SignupLayout({
   children, // will be a page or nested layout
@@ -9,7 +9,7 @@ export default function SignupLayout({
   return (
     <>
       <Header />
-      <main className="container flex-1 mx-auto flex items-center max-lg:py-5">
+      <main className="container flex-1 mx-auto flex items-center my-10">
         <section className="container">{children}</section>
       </main>
       <SmallFooter />

@@ -1,4 +1,4 @@
-import LoginComponent from "@/components/login/Login"; 
+import LoginComponent from "@/components/user/Login"; 
 
 export default function SignUp() {
     return (

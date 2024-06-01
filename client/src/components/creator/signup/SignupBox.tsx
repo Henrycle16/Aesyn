@@ -5,18 +5,24 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { z } from "zod";
+import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
-import ToDashboard from "../ToDashboard";
-import LocationBox from "../LocationBox";
-import SocialMediaSelect from "../SocialMediaSelect";
+import ToDashboard from "../../ui/mapbox/ToDashboard";
+import LocationBox from "../../ui/mapbox/LocationBox";
+import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
+
+type Inputs = z.infer<typeof FormDataSchema>;
+
 interface CreatorForm {
   user: object;
-  userName: string;
   gender: string;
   location: string;
   preferences: string[];
@@ -25,7 +31,6 @@ interface CreatorForm {
 
 const creatorFormData: CreatorForm = {
   user: {},
-  userName: "",
   gender: "",
   location: "",
   preferences: [],
@@ -35,7 +40,6 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
-  const [isUsernameValid, setUsernameValid] = useState(false);
   const [progress, setProgress] = useState<number>(16.66);
   const [lng, setLng] = useState<number>(-98.5795);
   const [lat, setLat] = useState<number>(39.8283);
@@ -54,6 +58,15 @@ const SignUpBox = () => {
       redirect("/login");
     }
   }, [step, session.data, session.status]);
+
+  const {
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(FormDataSchema),
+    mode: "onChange",
+  });
 
   // Method to handle the next step
   const handleNextStep = () => {
@@ -111,10 +124,10 @@ const SignUpBox = () => {
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
-    const { user, userName, gender, niche, preferences } = formData;
+    const { user, gender, niche, preferences } = formData;
     const body = JSON.stringify({
       user,
-      userName,
+      userName: getValues("userName"),
       gender,
       niche,
       preferences,
@@ -139,11 +152,10 @@ const SignUpBox = () => {
   const steps = [
     <UsernameForm
       key="userName"
-      formData={formData}
-      handleFormChange={handleFormChange}
       handleNextStep={handleNextStep}
-      isUsernameValid={isUsernameValid}
-      setUsernameValid={setUsernameValid}
+      register={register}
+      errors={errors}
+      getValues={getValues}
     />,
     <GenderForm
       key="GenderForm"
@@ -179,18 +191,14 @@ const SignUpBox = () => {
       handleNextStep={handleNextStep}
       handleNicheChange={handleNicheChange}
     />,
-    <ConfirmForm
-      key="ConfirmForm"
-      formData={formData}
-    />,
+    <ConfirmForm key="ConfirmForm" formData={formData} getValues={getValues} />,
     <ToDashboard key="ToDashboard" />,
   ];
   useEffect(() => {
     if (step == steps.length - 1) return;
-    const totalSteps = steps.length -1;
+    const totalSteps = steps.length - 1;
     const val = ((step + 1) / totalSteps) * 100;
     setProgress(val);
-  
   }, [step, steps.length]);
 
   return (
@@ -201,7 +209,7 @@ const SignUpBox = () => {
       >
         {/* Back Button */}
         <div className="flex">
-          {step !== 0 && step !== steps.length -1 && (
+          {step !== 0 && step !== steps.length - 1 && (
             <Button
               onClick={handlePrevStep}
               variant="text"
@@ -218,9 +226,7 @@ const SignUpBox = () => {
       </form>
 
       {/* Progress Bar */}
-      {step !== steps.length -1 && (
-        <ProgressBar progress={progress} />
-      )}
+      {step !== steps.length - 1 && <ProgressBar progress={progress} />}
     </div>
   );
 };

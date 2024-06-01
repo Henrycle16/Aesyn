@@ -3,12 +3,12 @@ import type { Metadata } from 'next';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { config } from '@/utils/dashboard/config';
-import { Budget } from '@/components/dashboard/overview/budget';
-import { Sales } from '@/components/dashboard/overview/sales';
-import { TasksProgress } from '@/components/dashboard/overview/tasks-progress';
-import { TotalCustomers } from '@/components/dashboard/overview/total-customers';
-import { TotalProfit } from '@/components/dashboard/overview/total-profit';
-import { Traffic } from '@/components/dashboard/overview/traffic';
+import { Budget } from '@/components/brand/dashboard/overview/budget';
+import { Sales } from '@/components/brand/dashboard/overview/sales';
+import { TasksProgress } from '@/components/brand/dashboard/overview/tasks-progress';
+import { TotalCustomers } from '@/components/brand/dashboard/overview/total-customers';
+import { TotalProfit } from '@/components/brand/dashboard/overview/total-profit';
+import { Traffic } from '@/components/brand/dashboard/overview/traffic';
 
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
