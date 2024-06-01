@@ -18,7 +18,7 @@ const ContactForm = ({
     <div className="flex flex-col w-full">
       {/* Handles POC Contact Information */}
       <div className="w-4/6 mx-auto my-auto">
-        <label className="form-control w-full mb-6">
+        <label className="form-control w-full mb-3">
           <div className="label">
             <span className="label-text font-bold text-lg">
               Primary Contact Full Name
@@ -31,11 +31,9 @@ const ContactForm = ({
             id="contactPersonName"
             {...register("contactPersonName")}
           />
-          {errors.contactPersonName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.contactPersonName.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.contactPersonName?.message}
+          </p>
         </label>
         <label className="form-control w-full mb-6">
           <div className="label">
@@ -51,11 +49,9 @@ const ContactForm = ({
             {...register("contactPhoneNumber")}
             maxLength={10}
           />
-          {errors.contactPhoneNumber?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.contactPhoneNumber.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.contactPhoneNumber?.message}
+          </p>
         </label>
       </div>
 
