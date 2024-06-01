@@ -29,7 +29,7 @@ const SignUpPopup = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container >
       <CssBaseline />
       <Grid className="mt-8 flex flex-col items-center">
         <Grid>
