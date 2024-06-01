@@ -1,3 +1,4 @@
+import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,11 +11,13 @@ const HeroSection = () => {
         </h1>
         <p className="mb-8 leading-relaxed">
           {" "}
-          Description of our product.... lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Praesent enim lectus, facilisis in facilisis eget,
-          pharetra at justo. Praesent malesuada tristique urna, at elementum
-          lectus bibendum id. Integer interdum sapien nec sapien luctus, non
-          elementum elit facilisis.{" "}
+          At ShareFluence, we are redefining digital marketing by seamlessly
+          connecting brands with creators utilizing cutting-edge AI for optimal
+          collaborations. We empower businesses, regardless of size, with
+          insightful metrics and help facilitate informed decisions. Within our
+          dynamic ecosystem, we cultivate meaningful connections that drive
+          success for both brands and creators in the ever-growing landscape of
+          social media.{" "}
         </p>
         <div className="flex justify-center">
           <Link

@@ -10,14 +10,14 @@ import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
-import ToDashboard from "../../ui/mapbox/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
-import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
+import SocialMediaSelect from "../../ui/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
+import ToProfile from "@/components/ui/ToProfile";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
@@ -192,7 +192,7 @@ const SignUpBox = () => {
       handleNicheChange={handleNicheChange}
     />,
     <ConfirmForm key="ConfirmForm" formData={formData} getValues={getValues} />,
-    <ToDashboard key="ToDashboard" />,
+    <ToProfile key="ToProfile" />,
   ];
   useEffect(() => {
     if (step == steps.length - 1) return;

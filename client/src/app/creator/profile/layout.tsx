@@ -1,5 +1,5 @@
-import SmallFooter from "@/components/SmallFooter";
-import ProfileHeader from "@/components/header/ProfileHeader";
+import SmallFooter from "@/components/ui/footer/SmallFooter";
+import ProfileHeader from "@/components/ui/header/ProfileHeader";
 
 export default function ProfileLayout({
   children, // will be a page or nested layout
