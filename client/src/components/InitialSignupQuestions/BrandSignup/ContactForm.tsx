@@ -22,7 +22,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
             type="text"
             placeholder="Full Name"
             required
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             name="contactPersonName"
             value={formData.contactPersonName}
             onChange={(e) => handleFormChange(e)}
@@ -38,7 +38,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
             type="text"
             placeholder="(000) - 000 - 0000"
             required
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             name="contactPhoneNumber"
             value={formData.contactPhoneNumber}
             onChange={(e) => handleFormChange(e)}
@@ -54,7 +54,7 @@ const ContactForm = ({ formData, handleFormChange, handleNextStep } : ContactFor
             type="email"
             placeholder="Email Address"
             required
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             name="contactEmail"
             value={formData.contactEmail}
             onChange={(e) => handleFormChange(e)}

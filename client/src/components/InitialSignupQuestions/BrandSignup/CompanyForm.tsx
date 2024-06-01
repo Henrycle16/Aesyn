@@ -50,7 +50,7 @@ const CompanyForm = ({
           <input
             type="text"
             placeholder="Brand Name"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             name="companyName"
             value={formData.companyName}
             onChange={(e) => handleFormChange(e)}
@@ -65,7 +65,7 @@ const CompanyForm = ({
           </div>
           <div className={`relative inline-block w-full`}>
             <select
-              className={`input input-bordered w-full pr-10 ${
+              className={`input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md pr-10 ${
                 isOpen ? "border-b-1" : ""
               }`}
               id="industry"

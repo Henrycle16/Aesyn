@@ -65,7 +65,7 @@ const UsernameForm = ({
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             name="userName"
             value={formData.userName}
             onChange={(e) => {

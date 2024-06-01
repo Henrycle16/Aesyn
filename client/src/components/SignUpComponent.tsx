@@ -81,7 +81,7 @@ const SignUpComponent = () => {
       <div className="mt-5 flex gap-4">
         <input
           type="text"
-          className="input-md border border-gray-300 rounded-sm w-full"
+          className="input-md border border-gray-300 rounded-sm w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
           placeholder="First Name*"
           name="firstName"
           id="firstName"
@@ -93,7 +93,7 @@ const SignUpComponent = () => {
         />
         <input
           type="text"
-          className="input-md border border-gray-300 rounded-sm w-full"
+          className="input-md border border-gray-300 rounded-sm w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
           placeholder="Last Name*"
           name="lastName"
           id="lastName"
@@ -105,7 +105,7 @@ const SignUpComponent = () => {
       </div>
       <input
         type="email"
-        className="input-md border border-gray-300 rounded-sm"
+        className="input-md border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
         placeholder="Email Address*"
         name="email"
         id="email"
@@ -116,7 +116,7 @@ const SignUpComponent = () => {
       />
       <input
         type="password"
-        className="input-md border border-gray-300 rounded-sm"
+        className="input-md border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
         placeholder="Password*"
         name="password"
         id="password"
@@ -127,7 +127,7 @@ const SignUpComponent = () => {
       />
       <input
         type="password"
-        className="input-md border border-gray-300 rounded-sm"
+        className="input-md border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
         placeholder="Confirm Password*"
         name="password2"
         id="password2"
