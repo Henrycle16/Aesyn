@@ -31,7 +31,7 @@ const SignUpPopup = () => {
   return (
     <Container >
       <CssBaseline />
-      <Grid className="mt-8 flex flex-col items-center">
+      <Grid className="pb-5 flex flex-col items-center">
         <Grid>
           <Typography component="h1" variant="h5">
             Create an Account
@@ -55,7 +55,7 @@ const SignUpPopup = () => {
               pathname: "/signup",
               query: { state: false },
             }}
-            className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
+            className="ml-4 inline-flex text-blue-500 border-solid border-2 border-blue-500 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
           >
             Join as Creator!
           </Link>
