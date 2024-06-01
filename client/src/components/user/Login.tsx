@@ -16,7 +16,7 @@ import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "../signupPopup/SignUpPopup";
-import Modal from "../Modal";
+import Modal from "../ui/Modal";
 
 const LoginComponent = () => {
   const [formData, setFormData] = useState({
