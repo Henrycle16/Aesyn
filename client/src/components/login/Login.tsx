@@ -18,16 +18,11 @@ import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "../signupPopup/SignUpPopup";
 import Modal from "../Modal";
 
-
 const LoginComponent = () => {
-  const [state, setState] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-  }, [state]);
 
   const { email, password } = formData;
 

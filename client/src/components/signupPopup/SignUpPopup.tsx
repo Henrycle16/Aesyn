@@ -13,7 +13,7 @@ import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  handleClick: Function
+  handleClick: Function;
   // any props that come into the component
 }
 
@@ -25,20 +25,23 @@ const SignUpPopup = () => {
   };
 
   const handleCreatorSignup = () => {
-   router.push(`/signup?state=${false}`);
+    router.push(`/signup?state=${false}`);
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Box className="mt-8 flex flex-col items-center">
-        <Avatar className="m-1 bg-blue-500">
-          <PersonPinOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
-        <Link
+      <Grid className="mt-8 flex flex-col items-center">
+        <Grid>
+          <Typography component="h1" variant="h5">
+            Create an Account
+          </Typography>
+          <p className="mb-8 leading-relaxed">
+            Choose which type of account you would like to sign up for.
+          </p>
+        </Grid>
+        <Grid>
+          <Link
             href={{
               pathname: "/signup",
               query: { state: true },
@@ -56,27 +59,8 @@ const SignUpPopup = () => {
           >
             Join as Creator!
           </Link>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link href="?modal=true">
-              Already have an account? Sign in
-            </Link>
-          </Grid>
         </Grid>
-      </Box>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        sx={{ paddingTop: "20px" }}
-      >
-        {"Copyright © "}
-        <Link color="inherit" href="http://github.com/H2JC/H2JC">
-          H2JC
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
+      </Grid>
     </Container>
   );
 };

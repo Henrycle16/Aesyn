@@ -1,7 +1,11 @@
 "use client";
 import { useSearchParams, usePathname } from "next/navigation";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import Link from "next/link";
-
+import { IconButton } from "@mui/material";
+import { DialogTitle } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -15,17 +19,16 @@ function Modal({ children }: LayoutProps) {
     <>
       {modal && (
         <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
-          <div className="bg-white m-auto p-8">
-            <div className="flex flex-col items-center">
-              {children}
-              <br />
-              <Link href={pathname}>
-                <button type="button" className="bg-red-500 text-white p-2">
-                  Close Modal
-                </button>
-              </Link>
-            </div>
-          </div>
+          <Container className="bg-white m-auto p-8">
+            <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton sx={{ ml: "auto" }}>
+                <Link href={pathname}>
+                  <CloseIcon />
+                </Link>
+              </IconButton>
+            </DialogTitle>
+            <div className="flex flex-col items-center">{children}</div>
+          </Container>
         </dialog>
       )}
     </>
