@@ -39,7 +39,7 @@ const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
           <div className="label-text font-semibold text-base ">
             Contact Person Name
           </div>
-          <div className="pt-1 font-light">{getValues('contactPersonName')}</div>
+          <div className="pt-1 font-light">{`${getValues("firstName")} ${getValues("lastName")}`}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-3 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">

@@ -120,7 +120,7 @@ const SignUpBox = () => {
       user,
       companyName: getValues("companyName"),
       industry,
-      contactPersonName: getValues("contactPersonName"),
+      contactPersonName: `${getValues("firstName")} ${getValues("lastName")}`,
       contactPhoneNumber: getValues("contactPhoneNumber"),
       preferences,
       location,
