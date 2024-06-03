@@ -18,29 +18,39 @@ const ContactForm = ({
     <div className="flex flex-col w-full">
       {/* Handles POC Contact Information */}
       <div className="w-4/6 mx-auto my-auto">
-        <label className="form-control w-full mb-6">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text font-bold text-lg">
-              Primary Contact Full Name
+              Person of Contact
             </span>
           </div>
           <input
             type="text"
-            placeholder="Full Name"
+            placeholder="First Name"
             className="input input-bordered w-full"
-            id="contactPersonName"
-            {...register("contactPersonName")}
+            id="firstName"
+            {...register("firstName")}
           />
-          {errors.contactPersonName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.contactPersonName.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.firstName?.message}
+          </p>
         </label>
-        <label className="form-control w-full mb-6">
+        <label className="form-control w-full mt-1">
+          <input
+            type="text"
+            placeholder="Last Name"
+            className="input input-bordered w-full"
+            id="lastName"
+            {...register("lastName")}
+          />
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.lastName?.message}
+          </p>
+        </label>
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text font-bold text-lg">
-              Primary Contact Phone Number
+              Phone Number
             </span>
           </div>
           <input
@@ -51,11 +61,9 @@ const ContactForm = ({
             {...register("contactPhoneNumber")}
             maxLength={10}
           />
-          {errors.contactPhoneNumber?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.contactPhoneNumber.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.contactPhoneNumber?.message}
+          </p>
         </label>
       </div>
 
@@ -63,9 +71,11 @@ const ContactForm = ({
       <div className="self-end">
         <Button
           disabled={
-            !getValues('contactPersonName') ||
+            !getValues('firstName') ||
+            !getValues('lastName') ||
             !getValues('contactPhoneNumber') ||
-            !!errors.contactPersonName ||
+            !!errors.firstName ||
+            !!errors.lastName ||
             !!errors.contactPhoneNumber
           }
           onClick={handleNextStep}

@@ -25,7 +25,7 @@ const SignUpComponent = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -60,7 +60,7 @@ const SignUpComponent = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-2"
+      className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
     >
       {/* Form Header */}
       <div className="mx-auto mt-16 flex flex-col items-center">
@@ -71,77 +71,73 @@ const SignUpComponent = () => {
       </div>
 
       {/* Input Fields */}
-      <div className="mt-5 flex gap-4">
-        <div className="w-full">
-          <input
-            type="text"
-            className="input-md border border-gray-300 rounded-sm w-full"
-            placeholder="First Name*"
-            id="firstName"
-            {...register("firstName")}
-            autoFocus
-            autoComplete="given-name"
-          />
-          {errors.firstName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.firstName.message}
-            </p>
-          )}
-        </div>
-        <div className="w-full">
-          <input
-            type="text"
-            className="input-md border border-gray-300 rounded-sm w-full"
-            placeholder="Last Name*"
-            id="lastName"
-            {...register("lastName")}
-            autoComplete="family-name"
-          />
-          {errors.lastName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.lastName.message}
-            </p>
-          )}
-        </div>
+      <div className="mt-5">
+        <input
+          type="text"
+          className="w-full input-md border border-gray-300 rounded-md"
+          placeholder="First Name*"
+          id="firstName"
+          {...register("firstName")}
+          autoFocus
+          autoComplete="given-name"
+        />
+        <p className="mt-1 text-sm text-red-400 min-h-5">
+          {errors.firstName?.message}
+        </p>
+      </div>
+      <div>
+        <input
+          type="text"
+          className="w-full input-md border border-gray-300 rounded-md"
+          placeholder="Last Name*"
+          id="lastName"
+          {...register("lastName")}
+          autoComplete="family-name"
+        />
+        <p className="mt-1 text-sm text-red-400 min-h-5">
+          {errors.lastName?.message}
+        </p>
       </div>
       <div>
         <input
           type="email"
-          className="w-full input-md border border-gray-300 rounded-sm"
+          className="w-full input-md border border-gray-300 rounded-md"
           placeholder="Email Address*"
           id="email"
           {...register("email")}
           autoComplete="email"
         />
-        {errors.email?.message && (
-          <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
-        )}
+        <p className="mt-1 text-sm text-red-400 min-h-5">
+          {errors.email?.message}
+        </p>
       </div>
       <div>
         <input
           type="password"
-          className="w-full input-md border border-gray-300 rounded-sm"
+          className="w-full input-md border border-gray-300 rounded-md"
           placeholder="Password*"
           id="password"
           {...register("password")}
           autoComplete="new-password"
+          maxLength={50}
         />
-        {errors.password?.message && (
-          <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
-        )}
+        <p className="mt-1 text-sm text-red-400 min-h-5">
+          {errors.password?.message}
+        </p>
       </div>
       <div>
         <input
           type="password"
-          className="w-full input-md border border-gray-300 rounded-sm"
+          className="w-full input-md border border-gray-300 rounded-md"
           placeholder="Confirm Password*"
           id="password2"
           {...register("password2")}
           autoComplete="new-password"
+          maxLength={50}
         />
-        {errors.password2?.message && (
-          <p className="mt-1 text-sm text-red-400">{errors.password2.message}</p>
-        )}
+        <p className="mt-1 text-sm text-red-400 min-h-5">
+          {errors.password2?.message}
+        </p>
       </div>
 
       {/* Checkboxes */}
@@ -171,7 +167,7 @@ const SignUpComponent = () => {
         type="submit"
         fullWidth
         variant="contained"
-        className="py-3 bg-muiblue"
+        className="py-2 bg-muiblue mt-5"
       >
         Sign Up
       </Button>
