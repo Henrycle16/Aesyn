@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 
 import { config } from '@/utils/dashboard/config';
-import { MessagesFilters } from '@/components/dashboard/messages/messages-filters';
-import { MessagesTable } from '@/components/dashboard/messages/messages-table';
-import type { Messages } from '@/components/dashboard/messages/messages-table';
+import { MessagesFilters } from '@/components/brand/dashboard/messages/messages-filters';
+import { MessagesTable } from '@/components/brand/dashboard/messages/messages-table';
+import type { Messages } from '@/components/brand/dashboard/messages/messages-table';
 
 export const metadata = { title: `Messages | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -16,7 +16,7 @@ const messages = [
     id: 'USR-010',
     name: 'Alcides Antonio',
     brand: 'Apple',
-    avatar: '/assets/avatar-10.png',
+    avatar: '',
     subject: 'Review Apple MacBook Pro 2023',
     createdAt: dayjs().subtract(2, 'hours').toDate(),
   },
@@ -24,7 +24,7 @@ const messages = [
     id: 'USR-009',
     name: 'Marcus Finn',
     brand: 'Dell',
-    avatar: '/assets/avatar-9.png',
+    avatar: '',
     subject: 'Review Dell XPS 13 2023',
     createdAt: dayjs().subtract(2, 'hours').toDate(),
   },
@@ -32,7 +32,7 @@ const messages = [
     id: 'USR-008',
     name: 'Jie Yan',
     brand: 'HP',
-    avatar: '/assets/avatar-8.png',
+    avatar: '',
     subject: 'Review HP Spectre x360 2023',
     createdAt: dayjs().subtract(2, 'hours').toDate(),
   },
@@ -40,7 +40,7 @@ const messages = [
     id: 'USR-007',
     name: 'Nasimiyu Danai',
     brand: 'Microsoft',
-    avatar: '/assets/avatar-7.png',
+    avatar: '',
     subject: 'Review Microsoft Surface Laptop 4',
     createdAt: dayjs().subtract(2, 'hours').toDate(),
   }

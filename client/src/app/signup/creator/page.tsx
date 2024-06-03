@@ -1,4 +1,4 @@
-import SignUpBox from "@/components/InitialSignupQuestions/CreatorSignup/SignupBox";
+import SignUpBox from "@/components/creator/signup/SignupBox";
 
 export default function CreatorQuestions() {
   return (
