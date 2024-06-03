@@ -119,6 +119,7 @@ const SignUpComponent = () => {
           id="password"
           {...register("password")}
           autoComplete="new-password"
+          maxLength={50}
         />
         <p className="mt-1 text-sm text-red-400 min-h-5">
           {errors.password?.message}
@@ -132,6 +133,7 @@ const SignUpComponent = () => {
           id="password2"
           {...register("password2")}
           autoComplete="new-password"
+          maxLength={50}
         />
         <p className="mt-1 text-sm text-red-400 min-h-5">
           {errors.password2?.message}
