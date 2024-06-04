@@ -25,7 +25,7 @@ const SignUpComponent = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -36,6 +36,8 @@ const SignUpComponent = () => {
         lastName: data.lastName,
         email: data.email,
         password: data.password,
+        promotional: data.promotional,
+        acceptedTerms: data.acceptedTerms,
         redirect: false,
       });
 
@@ -140,13 +142,20 @@ const SignUpComponent = () => {
           autoComplete="new-password"
         />
         {errors.password2?.message && (
-          <p className="mt-1 text-sm text-red-400">{errors.password2.message}</p>
+          <p className="mt-1 text-sm text-red-400">
+            {errors.password2.message}
+          </p>
         )}
       </div>
 
       {/* Checkboxes */}
       <div className="flex items-start gap-3">
-        <input type="checkbox" className="mt-1" />
+        <input
+          type="checkbox"
+          className="mt-1"
+          id="acceptedTerms"
+          {...register("acceptedTerms")}
+        />
         <p className="text-sm">
           By signing up, you agree to our{" "}
           <Link href={""} className="no-underline">
@@ -159,8 +168,18 @@ const SignUpComponent = () => {
           .<span className="text-red-500">*</span>
         </p>
       </div>
+      <div>
+      {errors.acceptedTerms?.message && (
+          <p className="mt-1 text-sm text-red-400">{errors.acceptedTerms.message}</p>
+        )}
+      </div>
       <div className="flex items-start gap-3">
-        <input type="checkbox" className="mt-1" />
+        <input
+          type="checkbox"
+          className="mt-1"
+          id="promotional"
+          {...register("promotional")}
+        />
         <p className="text-sm">
           I want to receive inspiration, marketing promotions and updates via
           email.

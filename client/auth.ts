@@ -55,6 +55,14 @@ export const config = {
           label: "Password",
           type: "password",
         },
+        promotional: {
+          label: "Promotional",
+          type: "checkbox",
+        },
+        acceptedTerms: {
+          label: "Accept terms",
+          type: "checkbox",
+        },
       },
       async authorize(credentials) {
         if (
@@ -62,7 +70,8 @@ export const config = {
           !credentials.email ||
           !credentials.password ||
           !credentials.firstName ||
-          !credentials.lastName
+          !credentials.lastName ||
+          !credentials.acceptedTerms
         ) {
           return null;
         } else {
@@ -70,7 +79,9 @@ export const config = {
             credentials.firstName,
             credentials.lastName,
             credentials.email,
-            credentials.password
+            credentials.password,
+            Boolean(credentials.promotional),
+            Boolean(credentials.acceptedTerms)
           );
           return res;
         }
