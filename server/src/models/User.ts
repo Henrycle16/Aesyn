@@ -38,6 +38,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         //required: true,
     },
+    promotional: {
+        type: Boolean,
+    },
+    acceptedTerms: {
+        type: Boolean,
+        //required: true,
+    },
 });
 
 

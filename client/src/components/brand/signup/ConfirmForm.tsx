@@ -6,6 +6,15 @@ interface ConfirmFormProps {
   getValues: any;
 }
 
+function formatPhoneNumber(phoneNumberString: string) {
+  const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return "(" + match[1] + ") " + match[2] + "-" + match[3];
+  }
+  return "";
+}
+
 const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
@@ -39,13 +48,13 @@ const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
           <div className="label-text font-semibold text-base ">
             Contact Person Name
           </div>
-          <div className="pt-1 font-light">{getValues('contactPersonName')}</div>
+          <div className="pt-1 font-light">{`${getValues("firstName")} ${getValues("lastName")}`}</div>
         </div>
         <div className="col-start-2 col-span-1 row-start-3 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">
             Phone Number
           </div>
-          <div className="pt-1 font-light">{getValues('contactPhoneNumber')}</div>
+          <div className="pt-1 font-light">{formatPhoneNumber(getValues('contactPhoneNumber'))}</div>
         </div>
 
         {/* This block is for populating Social Media Preference */}

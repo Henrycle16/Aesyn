@@ -7,7 +7,9 @@ export const FormDataSchema = z.object({
   lastName: z.string().min(1, "Last name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  password2: z.string().min(6, "Password must be at least 6 characters"),
+  password2: z.string().min(6, "Passwords must match"),
+  promotional: z.boolean().optional(),
+  acceptedTerms: z.boolean().refine((data) => data === true, "You must accept the terms and conditions"),
 }).superRefine(async ({ password, password2, email }, ctx) => {
   if (password2 !== password) {
     ctx.addIssue({

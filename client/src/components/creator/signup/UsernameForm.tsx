@@ -33,11 +33,9 @@ const UsernameForm = ({
             onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
             {...register("userName")}
           />
-          {errors.userName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.userName.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.userName?.message}
+          </p>
         </label>
       </div>
 
