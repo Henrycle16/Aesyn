@@ -28,16 +28,14 @@ const UsernameForm = ({
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             id="userName"
             onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
             {...register("userName")}
           />
-          {errors.userName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.userName.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.userName?.message}
+          </p>
         </label>
       </div>
 

@@ -47,7 +47,7 @@ const CompanyForm = ({
     <div className="flex flex-col w-full">
       {/* Handles Brand Name and Industry Selection */}
       <div className="w-7/12 mx-auto my-auto">
-        <label className="form-control w-full mb-8">
+        <label className="form-control w-full mb-4">
           <div className="label">
             <span className="label-text font-bold text-lg">
               What is your brand name?
@@ -56,18 +56,16 @@ const CompanyForm = ({
           <input
             type="text"
             placeholder="Brand Name"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             id="companyName"
             {...register("companyName")}
             maxLength={50}
           />
-          {errors.companyName?.message && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.companyName.message}
-            </p>
-          )}
+          <p className="mt-1 text-sm text-red-400 min-h-5">
+            {errors.companyName?.message}
+          </p>
         </label>
-        <label className="form-control w-full mb-4">
+        <label className="form-control w-full">
           <div className="label">
             <span className="label-text font-bold text-lg">
               What industry best describes your brand?
@@ -75,7 +73,7 @@ const CompanyForm = ({
           </div>
           <div className={`relative inline-block w-full`}>
             <select
-              className={`input input-bordered w-full pr-10 ${
+              className={`input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md pr-10 ${
                 isOpen ? "border-b-1" : ""
               }`}
               id="industry"
@@ -118,7 +116,11 @@ const CompanyForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!getValues('companyName') || !formData.industry || !!errors.companyName}
+          disabled={
+            !getValues("companyName") ||
+            !formData.industry ||
+            !!errors.companyName
+          }
           onClick={handleNextStep}
           type="button"
           variant="contained"
