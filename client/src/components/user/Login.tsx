@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 
-import { logIn, logOut } from "@/redux/features/auth-slice";
+import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 

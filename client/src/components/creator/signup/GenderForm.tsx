@@ -10,6 +10,11 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { creatorInfo } from "@/redux/slices/creator-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 interface GenderFormProps {
   formData: any;
   handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,6 +26,16 @@ const GenderForm = ({
   handleFormChange,
   handleNextStep,
 }: GenderFormProps) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+
+  const onNext = () => {
+    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
+    
+    handleNextStep();
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/* Handles Gender selection*/}
@@ -47,6 +62,7 @@ const GenderForm = ({
               value={formData.gender}
               onChange={(e) => {
                 handleFormChange(e);
+                dispatch(creatorInfo({ gender: e.target.value }));
               }}
             >
               <FormControlLabel
@@ -97,7 +113,7 @@ const GenderForm = ({
       <div className="self-end">
         <Button
           disabled={!formData.gender}
-          onClick={handleNextStep}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

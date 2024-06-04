@@ -10,6 +10,11 @@ import {
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { creatorInfo, removePref, addPref } from "@/redux/slices/creator-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 interface SocialMediaSelectProps {
   formData: any;
   handlePreferenceChange: (selected: string) => void;
@@ -30,6 +35,23 @@ const SocialMediaSelect = ({
   handlePreferenceChange,
   handleNextStep,
 }: SocialMediaSelectProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+  let preferences = useAppSelector((state) => state.creatorInfoReducer.value.preferences);
+
+  const handlePreferencesChanges = (selected: string) => {
+    if (preferences.includes(selected)) {
+      dispatch(removePref(selected));
+    } else {
+      dispatch(addPref(selected));
+    }
+  }
+
+  const onNext = () => {
+    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
+    handleNextStep();
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/* Box to seperate each social media preference */}
@@ -43,9 +65,9 @@ const SocialMediaSelect = ({
           {socialMediasArray.map((data) => (
             <Chip
               key={data.key}
-              onClick={() => handlePreferenceChange(data.label)}
+              onClick={() => handlePreferencesChanges(data.label)}
               variant={
-                formData.preferences.includes(data.label)
+                preferences.includes(data.label)
                   ? "filled"
                   : "outlined"
               }
@@ -54,7 +76,7 @@ const SocialMediaSelect = ({
               className={
                 "text-base h-10 " +
                 `${
-                  formData.preferences.includes(data.label)
+                  preferences.includes(data.label)
                     ? "bg-blue-500 text-white"
                     : "bg-white"
                 }`
@@ -67,8 +89,8 @@ const SocialMediaSelect = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.preferences.length}
-          onClick={handleNextStep}
+          disabled={!preferences.length}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

@@ -3,6 +3,11 @@
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { creatorInfo } from "@/redux/slices/creator-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 interface UsernameFormProps {
   handleNextStep: () => void;
   register: any;
@@ -16,6 +21,16 @@ const UsernameForm = ({
   errors,
   getValues,
 }: UsernameFormProps) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+
+  const onNext = () => {
+    dispatch(creatorInfo({ username: getValues('userName') }));
+    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
+    
+    handleNextStep();
+  }
 
   return (
     <div className="flex flex-col w-full">
@@ -43,7 +58,7 @@ const UsernameForm = ({
       <div className="self-end">
         <Button
           disabled={!getValues('userName') || !!errors.userName}
-          onClick={handleNextStep}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

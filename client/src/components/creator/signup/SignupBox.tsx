@@ -10,14 +10,19 @@ import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
-import ToDashboard from "../../ui/mapbox/ToDashboard";
+import ToDashboard from "../../ui/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
-import SocialMediaSelect from "../../ui/mapbox/SocialMediaSelect";
+import SocialMediaSelect from "../../ui/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
+
+import { creatorInfo } from "@/redux/slices/creator-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
@@ -78,6 +83,13 @@ const SignUpBox = () => {
     setStep((prevStep) => Math.max(prevStep - 1, 0));
   };
 
+  const onBack = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+
+    dispatch(creatorInfo({ currentStep: currentStep - 1 }));
+  }
+
   // Method to handle the Form Change event
   const handleFormChange = (event: any) => {
     const { name, value } = event.target;
@@ -118,6 +130,11 @@ const SignUpBox = () => {
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const dispatch = useDispatch<AppDispatch>();
+    let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+
+    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
 
     // Split the location string and create the location object
     const [city, state, country] = formData.location.split(",");
