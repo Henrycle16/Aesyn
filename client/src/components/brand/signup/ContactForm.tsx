@@ -39,7 +39,7 @@ const ContactForm = ({
           <input
             type="text"
             placeholder="Last Name"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             id="lastName"
             {...register("lastName")}
           />
@@ -56,7 +56,7 @@ const ContactForm = ({
           <input
             type="text"
             placeholder="(000) - 000 - 0000"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
             id="contactPhoneNumber"
             {...register("contactPhoneNumber")}
             maxLength={10}
