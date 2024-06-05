@@ -1,7 +1,9 @@
+import ProfileLanding from "@/components/creator/profile/ProfileLanding";
 
 export default function CreatorProfile() {
   return (
-    <div>Hello World
+    <div>
+      <ProfileLanding />
     </div>
   );
 }

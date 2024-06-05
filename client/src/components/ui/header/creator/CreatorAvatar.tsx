@@ -45,7 +45,7 @@ const CreatorAvatar: React.FC = () => {
             <NotificationsNoneOutlinedIcon />
           </IconButton>
         </Tooltip>
-        <Avatar onClick={handleClick} />
+        <Avatar onClick={handleClick} className="cursor-pointer" />
       </Stack>
 
       <Popover

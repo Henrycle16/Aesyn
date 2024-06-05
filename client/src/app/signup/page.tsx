@@ -9,14 +9,15 @@ export default function SignUp() {
       </div>
 
       <div className="max-w-lg grid place-items-center">
-        <Image
-          src="https://dummyimage.com/720x600"
-          alt="hero"
-          className="w-full h-auto"
-          width={500}
-          height={425}
-          priority={true}
-        />
+        <video
+          src="https://www.w3schools.com/html/mov_bbb.mp4"
+          controls
+          className="object-cover object-center rounded"
+          width="720"
+          height="600"
+        >
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   );

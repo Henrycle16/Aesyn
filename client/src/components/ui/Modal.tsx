@@ -2,10 +2,8 @@
 import { useSearchParams, usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
-import { DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 interface LayoutProps {
   children: React.ReactNode;

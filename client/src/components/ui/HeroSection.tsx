@@ -42,11 +42,11 @@ const HeroSection = () => {
       </div>
       <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
         <Image
-          src="https://dummyimage.com/720x600"
+          src="https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=600"
           alt="hero"
           className="object-cover object-center rounded"
-          width={720}
-          height={600}
+          width={820}
+          height={700}
           priority={true}
         />
       </div>
