@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThreeMenu from "./creator/ThreeMenu";
+import CreatorAvatar from "./creator/CreatorAvatar";
 
 const ProfileHeader = () => {
   return (
@@ -7,8 +8,11 @@ const ProfileHeader = () => {
       <Link href={"/"} className="text-2xl text-gray-900 font-semibold">
         ShareFluence
       </Link>
-      <div className="flex ml-40">
+      <div className="flex ml-40 items-center">
       <ThreeMenu />
+      </div>
+      <div className="flex ml-auto items-center">
+      <CreatorAvatar />
       </div>
     </header>
   );
