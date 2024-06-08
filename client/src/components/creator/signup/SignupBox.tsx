@@ -87,7 +87,7 @@ const SignUpBox = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
 
     // Split the location string and create the location object
-    const [city, state, country] = reduxLocation.split(",");
+    const [city, state, country] = reduxLocation.split(", ");
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
