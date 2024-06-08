@@ -44,9 +44,6 @@ router.post(
 
     const {
       companyName,
-      contactPersonName,
-      // contactEmail,
-      contactPhoneNumber,
       industry,
       location,
       preferences,
@@ -56,9 +53,6 @@ router.post(
     const brandFields = {
       user: req.body.user.id,
       companyName: companyName,
-      contactPersonName: contactPersonName,
-      // contactEmail: contactEmail,
-      contactPhoneNumber: contactPhoneNumber,
       industry: industry,
       location: location,
       preferences: preferences,
@@ -99,9 +93,6 @@ router.put("/", [], auth, async (req, res) => {
 
   const {
     companyName,
-    contactPersonName,
-    // contactEmail,
-    contactPhoneNumber,
     industry,
     preferences,
   } = req.body;
@@ -110,9 +101,6 @@ router.put("/", [], auth, async (req, res) => {
   const brandFields = {
     user: req.body.user.id,
     companyName: companyName,
-    contactPersonName: contactPersonName,
-    // contactEmail: contactEmail,
-    contactPhoneNumber: contactPhoneNumber,
     industry: industry,
     preferences: preferences,
   };
