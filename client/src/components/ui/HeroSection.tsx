@@ -1,6 +1,5 @@
 "use client"
 
-import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
 import Link from "next/link";
 
