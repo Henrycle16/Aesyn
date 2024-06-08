@@ -10,17 +10,23 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-interface GenderFormProps {
-  formData: any;
-  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleNextStep: () => void;
-}
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 const GenderForm = ({
-  formData,
-  handleFormChange,
-  handleNextStep,
-}: GenderFormProps) => {
+}) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+
+  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
+
+  const onNext = () => {
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/* Handles Gender selection*/}
@@ -44,9 +50,9 @@ const GenderForm = ({
             <RadioGroup
               aria-label="gender"
               name="gender"
-              value={formData.gender}
+              value={gender}
               onChange={(e) => {
-                handleFormChange(e);
+                dispatch(userInfo({ gender: e.target.value }));
               }}
             >
               <FormControlLabel
@@ -96,8 +102,8 @@ const GenderForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.gender}
-          onClick={handleNextStep}
+          disabled={gender === ""}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

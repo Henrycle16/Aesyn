@@ -3,11 +3,10 @@ import Chip from "@mui/material/Chip";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "../../../styles/nicheSelect.css";
 
-interface NicheSelectProps {
-  formData: any;
-  handleNicheChange: (selected: string) => void;
-  handleNextStep: () => void;
-}
+import { userInfo, removeNiche, addNiche } from "@/redux/slices/user-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 // Niche Options List
 const nichesArray = [
@@ -40,10 +39,23 @@ const nichesArray = [
 ];
 
 const ContactForm = ({
-  formData,
-  handleNicheChange,
-  handleNextStep,
-}: NicheSelectProps) => {
+}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let niches = useAppSelector((state) => state.userInfoReducer.value.niches);
+
+  const handleNicheChanges = (selected: string) => {
+    if (niches.includes(selected)) {
+      dispatch(removeNiche(selected));
+    } else {
+      dispatch(addNiche(selected));
+    }
+  }
+
+  const onNext = () => {
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
+  }
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-9/12 mx-auto my-auto">
@@ -65,18 +77,18 @@ const ContactForm = ({
             <Chip
               key={data.key}
               onClick={() => {
-                if (formData.niche.length < 6 || formData.niche.includes(data.label)) {
-                  handleNicheChange(data.label)
+                if (niches.length < 6 || niches.includes(data.label)) {
+                  handleNicheChanges(data.label)
                 }
               }}
               variant={
-                formData.niche.includes(data.label) ? "filled" : "outlined"
+                niches.includes(data.label) ? "filled" : "outlined"
               }
               label={data.label}
               className={
                 "rounded-3xl text-base h-10 w-[15rem] " +
                 `${
-                  formData.niche.includes(data.label)
+                  niches.includes(data.label)
                     ? "bg-blue-500 text-white"
                     : "bg-white"
                 }`
@@ -89,8 +101,8 @@ const ContactForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.niche.length}
-          onClick={handleNextStep}
+          disabled={!niches.length}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,12 +11,16 @@ import { FormDataSchema } from "@/lib/zod-schemas/userSignupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 type Inputs = z.infer<typeof FormDataSchema>;
 
 const SignUpComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const state = searchParams.get("state");
 
   const {
     register,
@@ -27,6 +31,8 @@ const SignUpComponent = () => {
     resolver: zodResolver(FormDataSchema),
     mode: "onChange",
   });
+
+  const isBrand = useAppSelector((state) => state.userInfoReducer.value.isBrand);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
@@ -41,11 +47,14 @@ const SignUpComponent = () => {
         redirect: false,
       });
 
+      dispatch(userInfo({ email: data.email}));
+
       if (signUpResponse && !signUpResponse.error) {
         console.log("User succesfully signed up");
         console.log(signUpResponse);
+        console.log("isBrand: ", isBrand)
 
-        if (state === "true") {
+        if (isBrand) {
           router.push("/signup/brand");
         } else {
           router.push("/signup/creator");

@@ -3,10 +3,7 @@
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -18,23 +15,20 @@ import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
 import Modal from "../ui/Modal";
 
+import { logIn, logOut } from "@/redux/slices/auth-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 const LoginComponent = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { email, password } = formData;
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    dispatch(logIn(email));
 
     const loginResponse = await signIn("login", {
       email: email,
@@ -49,6 +43,11 @@ const LoginComponent = () => {
       console.log("Error!");
     }
   };
+
+  const onClickLogOut = () => {
+    dispatch(logOut());
+    signOut({ redirect: false });
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -75,7 +74,7 @@ const LoginComponent = () => {
                 id="email"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
+                  setEmail(e.target.value)
                 }
                 label="Email Address"
                 name="email"
@@ -92,7 +91,7 @@ const LoginComponent = () => {
                 id="password"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(e)
+                  setPassword(e.target.value)
                 }
                 autoComplete="new-password"
               />
@@ -110,7 +109,7 @@ const LoginComponent = () => {
             fullWidth
             variant="contained"
             className="mt-3 mb-2 bg-muiblue"
-            onClick={() => signOut({redirect: false})}
+            onClick={onClickLogOut}
           >
             Sign Out
           </Button>

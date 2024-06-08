@@ -2,37 +2,27 @@ import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MapboxMap from "./MapBox";
 
-interface LocationBoxProps {
-  formData: any;
-  handleLocationChange: (location: string) => void;
-  lng: number;
-  lat: number;
-  zoom: number;
-  setLng: (lng: number) => void;
-  setLat: (lat: number) => void;
-  setZoom: (zoom: number) => void;
-  markerLocation: [number, number] | null;
-  setMarkerLocation: (location: [number, number] | null) => void;
-  isLocationSelected: boolean;
-  setIsLocationSelected: (isSelected: boolean) => void;
-  handleNextStep: () => void;
-}
+import { userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected } from "@/redux/slices/user-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 const LocationBox = ({
-  formData,
-  handleLocationChange,
-  lng,
-  lat,
-  zoom,
-  setLng,
-  setLat,
-  setZoom,
-  markerLocation,
-  setMarkerLocation,
-  isLocationSelected,
-  setIsLocationSelected,
-  handleNextStep,
-}: LocationBoxProps) => {
+}) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  const location = useAppSelector((state) => state.userInfoReducer.value.location);
+  const lng = useAppSelector((state) => state.userInfoReducer.value.lng);
+  const lat = useAppSelector((state) => state.userInfoReducer.value.lat);
+  const zoom = useAppSelector((state) => state.userInfoReducer.value.zoom);
+  const markerLocation = useAppSelector((state) => state.userInfoReducer.value.markerLocation);
+  const isLocationSelected = useAppSelector((state) => state.userInfoReducer.value.isLocationSelected);
+
+  const onNext = () => {
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
+  }
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-4/6 mx-auto my-auto">
@@ -49,18 +39,18 @@ const LocationBox = ({
         {/* Map */}
         <div className="h-80">
           <MapboxMap
-            isFormData={formData.location}
-            handleLocationChange={handleLocationChange}
+            isFormData={location}
+            handleLocationChange={(location: string) => dispatch(setLocation(location))}
             lng={lng}
             lat={lat}
             zoom={zoom}
-            setLng={setLng}
-            setLat={setLat}
-            setZoom={setZoom}
+            setLng={(lng: number) => dispatch(setLng(lng))}
+            setLat={(lat: number) => dispatch(setLat(lat))}
+            setZoom={(zoom: number) => dispatch(setZoom(zoom))}
             markerLocation={markerLocation}
-            setMarkerLocation={setMarkerLocation}
+            setMarkerLocation={(location: [number, number] | null) => dispatch(setMarkerLocation(location))}
             isLocationSelected={isLocationSelected}
-            setIsLocationSelected={setIsLocationSelected}
+            setIsLocationSelected={(isSelected: boolean) => dispatch(setIsLocationSelected(isSelected))}
           />
         </div>
       </div>
@@ -69,7 +59,7 @@ const LocationBox = ({
       <div className="self-end mt-auto">
         <Button
           disabled={!isLocationSelected}
-          onClick={handleNextStep}
+          onClick={onNext}
           type="button"
           variant="contained"
           className="bg-muiblue py-3 px-6"

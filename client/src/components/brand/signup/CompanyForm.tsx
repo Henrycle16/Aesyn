@@ -4,26 +4,24 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 interface CompanyFormProps {
-  handleNextStep: () => void;
-  handleFormChange: (
-    event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => void;
-  formData: any;
   register: any;
   errors: any;
   getValues: any;
 }
 
 const CompanyForm = ({
-  formData,
-  handleFormChange,
-  handleNextStep,
   register,
   errors,
   getValues,
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
 
   const options = [
     { value: "Agency", label: "Agency" },
@@ -42,6 +40,14 @@ const CompanyForm = ({
       setIsOpen(!isOpen);
     }
   };
+
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+
+  const onNext = () => {
+    dispatch(userInfo({ companyName: getValues("companyName")}));
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
+  }
 
   return (
     <div className="flex flex-col w-full">
@@ -78,8 +84,8 @@ const CompanyForm = ({
               }`}
               id="industry"
               name="industry"
-              value={formData.industry}
-              onChange={(e) => handleFormChange(e)}
+              value={industry}
+              onChange={(e) => dispatch(userInfo({ industry: e.target.value }))}
               onClick={toggleSelectClick}
               onBlur={toggleSelectBlur}
             >
@@ -118,10 +124,10 @@ const CompanyForm = ({
         <Button
           disabled={
             !getValues("companyName") ||
-            !formData.industry ||
+            industry === "" ||
             !!errors.companyName
           }
-          onClick={handleNextStep}
+          onClick={onNext}
           type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}
