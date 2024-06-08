@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,6 +11,9 @@ import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
+import SignUpPopup from "./SignUpPopup";
+import Modal from "../ui/Modal";
 
 import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
@@ -48,6 +51,9 @@ const LoginComponent = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Modal>
+        <SignUpPopup />
+      </Modal>
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -109,7 +115,7 @@ const LoginComponent = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="?modal=true">
                 Don&apos;t have an account? Sign up
               </Link>
             </Grid>
@@ -130,7 +136,7 @@ const LoginComponent = () => {
         {"."}
       </Typography>
     </Container>
-  );
+  )
 };
 
 export default LoginComponent;

@@ -10,7 +10,6 @@ import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
-import ToDashboard from "../../ui/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
 import SocialMediaSelect from "../../ui/SocialMediaSelect";
 import NicheSelect from "./NicheSelect";
@@ -18,6 +17,7 @@ import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "./../../../actions/creator";
+import ToProfile from "@/components/ui/ToProfile";
 
 import { userInfo } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
@@ -136,7 +136,7 @@ const SignUpBox = () => {
       key="NicheSelect"
     />,
     <ConfirmForm key="ConfirmForm" />,
-    <ToDashboard key="ToDashboard" />,
+    <ToProfile key="ToProfile" />,
   ];
 
   useEffect(() => {
