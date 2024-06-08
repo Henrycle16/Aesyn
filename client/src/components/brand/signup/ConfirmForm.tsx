@@ -3,20 +3,10 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useAppSelector } from "@/redux/store";
 
 interface ConfirmFormProps {
-  formData: any;
   getValues: any;
 }
 
-function formatPhoneNumber(phoneNumberString: string) {
-  const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    return "(" + match[1] + ") " + match[2] + "-" + match[3];
-  }
-  return "";
-}
-
-const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
+const ConfirmForm = ({ getValues }: ConfirmFormProps) => {
   const companyName = useAppSelector((state) => state.userInfoReducer.value.companyName);
   const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
   const location = useAppSelector((state) => state.userInfoReducer.value.location);
@@ -32,7 +22,7 @@ const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
       </h1>
 
       {/* Grid for the form data */}
-      <div className="grid grid-cols-3 grid-rows-4 gap-y-2 gap-x-3">
+      <div className="grid grid-cols-3 grid-rows-3 gap-y-4 gap-x-3">
         {/* This block is for populating the Brand Name and Industry */}
         <div className="col-start-1 col-span-1 row-start-1 row-span-1 justify-end">
           <div className="label-text font-semibold text-base ">Brand Name</div>
@@ -49,22 +39,8 @@ const ConfirmForm = ({ formData, getValues }: ConfirmFormProps) => {
           <div className="pt-1 font-light">{location}</div>
         </div>
 
-        {/* This block is for populating the POC Name, Phone Number and Email  */}
-        <div className="col-start-1 col-span-1 row-start-3 row-span-1 justify-end">
-          <div className="label-text font-semibold text-base ">
-            Contact Person Name
-          </div>
-          <div className="pt-1 font-light">{`${getValues("firstName")} ${getValues("lastName")}`}</div>
-        </div>
-        <div className="col-start-2 col-span-1 row-start-3 row-span-1 justify-end">
-          <div className="label-text font-semibold text-base ">
-            Phone Number
-          </div>
-          <div className="pt-1 font-light">{formatPhoneNumber(getValues('contactPhoneNumber'))}</div>
-        </div>
-
         {/* This block is for populating Social Media Preference */}
-        <div className="col-start-1 col-span-3 row-start-4 row-span-1 justify-end">
+        <div className="col-start-1 col-span-3 row-start-3 row-span-1 justify-end mt-5">
           <div className="label-text font-semibold text-base ">
             Social Media Preference
           </div>

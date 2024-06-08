@@ -10,7 +10,6 @@ import { FormDataSchema } from "@/lib/zod-schemas/brandSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CompanyForm from "./CompanyForm";
-import ContactForm from "./ContactForm";
 import SocialMediaSelect from "../../ui/SocialMediaSelect";
 import ConfirmForm from "./ConfirmForm";
 import ToDashboard from "../../ui/ToDashboard";
@@ -83,7 +82,7 @@ const SignUpBox = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
 
     // Split the location string and create the location object
-    const [city, state, country] = reduxLocation.split(",");
+    const [city, state, country] = reduxLocation.split(", ");
     const location = { city, state, country };
 
     // Create the location object and encapsulate it with the form data
@@ -93,8 +92,6 @@ const SignUpBox = () => {
       user,
       companyName,
       industry,
-      contactPersonName: `${getValues("firstName")} ${getValues("lastName")}`,
-      contactPhoneNumber: getValues("contactPhoneNumber"),
       preferences,
       location,
     });
@@ -124,16 +121,10 @@ const SignUpBox = () => {
     <LocationBox
       key="LocationBox"
     />,
-    <ContactForm
-      key="ContactForm"
-      register={register}
-      errors={errors}
-      getValues={getValues}
-    />,
     <SocialMediaSelect
       key="SocialMediaSelect"
     />,
-    <ConfirmForm key="ConfirmForm" formData={formData} getValues={getValues} />,
+    <ConfirmForm key="ConfirmForm" getValues={getValues} />,
     <ToDashboard key="ToDashboard" />,
   ];
 

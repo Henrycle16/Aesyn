@@ -38,7 +38,7 @@ const nichesArray = [
   { key: 25, label: "Automotive" },
 ];
 
-const ContactForm = ({
+const NicheForm = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
@@ -115,4 +115,4 @@ const ContactForm = ({
   );
 };
 
-export default ContactForm;
+export default NicheForm;
