@@ -1,7 +1,23 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { userInfo } from "@/redux/slices/user-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 const HeroSection = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onClickCreator = () => {
+    dispatch(userInfo({ isCreator: true, isBrand: false }));
+  }
+  
+  const onClickBrand = () => {
+    dispatch(userInfo({ isBrand: true, isCreator: false }));
+  }
+
   return (
     <section className="flex flex-col items-center text-gray-600 body-font md:flex-row">
       <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
@@ -18,19 +34,15 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center">
           <Link
-            href={{
-              pathname: "/signup",
-              query: { state: true },
-            }}
+            onClick={onClickBrand}
+            href={"/signup"}
             className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
           >
             Join as Brand!
           </Link>
           <Link
-            href={{
-              pathname: "/signup",
-              query: { state: false },
-            }}
+            onClick={onClickCreator}
+            href={"/signup"}
             className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
           >
             Join as Creator!

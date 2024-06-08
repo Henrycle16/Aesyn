@@ -1,19 +1,30 @@
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 interface ContactFormProps {
-  handleNextStep: () => void;
   register: any;
   errors: any;
   getValues: any;
 }
 
 const ContactForm = ({
-  handleNextStep,
   register,
   errors,
   getValues,
 }: ContactFormProps) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+
+  const onNext = () => {
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/* Handles POC Contact Information */}
@@ -78,7 +89,7 @@ const ContactForm = ({
             !!errors.lastName ||
             !!errors.contactPhoneNumber
           }
-          onClick={handleNextStep}
+          onClick={onNext}
           type="button"
           variant="contained"
           endIcon={<ArrowForwardIcon />}

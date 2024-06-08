@@ -1,48 +1,26 @@
-import { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MapboxMap from "./MapBox";
 
-import { creatorInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected } from "@/redux/slices/creator-slice";
+import { userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 
-interface LocationBoxProps {
-  formData: any;
-  handleLocationChange: (location: string) => void;
-  lng: number;
-  lat: number;
-  zoom: number;
-  setLng: (lng: number) => void;
-  setLat: (lat: number) => void;
-  setZoom: (zoom: number) => void;
-  markerLocation: [number, number] | null;
-  setMarkerLocation: (location: [number, number] | null) => void;
-  isLocationSelected: boolean;
-  setIsLocationSelected: (isSelected: boolean) => void;
-  handleNextStep: () => void;
-}
-
 const LocationBox = ({
-  formData,
-  handleLocationChange,
-  handleNextStep,
-}: LocationBoxProps) => {
+}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
-  const location = useAppSelector((state) => state.creatorInfoReducer.value.location);
-  const lng = useAppSelector((state) => state.creatorInfoReducer.value.lng);
-  const lat = useAppSelector((state) => state.creatorInfoReducer.value.lat);
-  const zoom = useAppSelector((state) => state.creatorInfoReducer.value.zoom);
-  const markerLocation = useAppSelector((state) => state.creatorInfoReducer.value.markerLocation);
-  const isLocationSelected = useAppSelector((state) => state.creatorInfoReducer.value.isLocationSelected);
+  const currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  const location = useAppSelector((state) => state.userInfoReducer.value.location);
+  const lng = useAppSelector((state) => state.userInfoReducer.value.lng);
+  const lat = useAppSelector((state) => state.userInfoReducer.value.lat);
+  const zoom = useAppSelector((state) => state.userInfoReducer.value.zoom);
+  const markerLocation = useAppSelector((state) => state.userInfoReducer.value.markerLocation);
+  const isLocationSelected = useAppSelector((state) => state.userInfoReducer.value.isLocationSelected);
 
   const onNext = () => {
-    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
-
-    handleNextStep();
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 
   return (

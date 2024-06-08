@@ -10,16 +10,10 @@ import {
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { creatorInfo, removePref, addPref } from "@/redux/slices/creator-slice";
+import { userInfo, removePref, addPref } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
-
-interface SocialMediaSelectProps {
-  formData: any;
-  handlePreferenceChange: (selected: string) => void;
-  handleNextStep: () => void;
-}
 
 // social media Options List
 const socialMediasArray = [
@@ -31,13 +25,10 @@ const socialMediasArray = [
 ];
 
 const SocialMediaSelect = ({
-  formData,
-  handlePreferenceChange,
-  handleNextStep,
-}: SocialMediaSelectProps) => {
+}) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
-  let preferences = useAppSelector((state) => state.creatorInfoReducer.value.preferences);
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
 
   const handlePreferencesChanges = (selected: string) => {
     if (preferences.includes(selected)) {
@@ -48,8 +39,7 @@ const SocialMediaSelect = ({
   }
 
   const onNext = () => {
-    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
-    handleNextStep();
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 
   return (

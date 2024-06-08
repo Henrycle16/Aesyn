@@ -10,30 +10,21 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { creatorInfo } from "@/redux/slices/creator-slice";
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
-
-interface GenderFormProps {
-  formData: any;
-  handleFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleNextStep: () => void;
-}
 
 const GenderForm = ({
-  formData,
-  handleFormChange,
-  handleNextStep,
-}: GenderFormProps) => {
+}) => {
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+
+  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
 
   const onNext = () => {
-    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
-    
-    handleNextStep();
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 
   return (
@@ -59,10 +50,9 @@ const GenderForm = ({
             <RadioGroup
               aria-label="gender"
               name="gender"
-              value={formData.gender}
+              value={gender}
               onChange={(e) => {
-                handleFormChange(e);
-                dispatch(creatorInfo({ gender: e.target.value }));
+                dispatch(userInfo({ gender: e.target.value }));
               }}
             >
               <FormControlLabel
@@ -112,7 +102,7 @@ const GenderForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!formData.gender}
+          disabled={gender === ""}
           onClick={onNext}
           type="button"
           variant="contained"

@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
-    value: creatorInfoReducer;
+    value: userInfoReducer;
 }
 
-type creatorInfoReducer = {
+type userInfoReducer = {
+    isCreator: boolean;
+    isBrand: boolean;
+    email: string;
+    companyName: string;
+    industry: string;
     username: string;
     gender: string;
     location: string;
@@ -20,6 +25,11 @@ type creatorInfoReducer = {
 
 const initialState = {
     value: {
+        isCreator: false,
+        isBrand: false,
+        email: "",
+        companyName: "",
+        industry: "",
         username: "",
         gender: "",
         location: "",
@@ -30,15 +40,15 @@ const initialState = {
         isLocationSelected: false,
         preferences: [],
         niches: [],
-        currentStep: 1,
-    } as creatorInfoReducer,
+        currentStep: 0,
+    } as userInfoReducer,
 } as InitialState
 
-export const creator = createSlice({
-    name: 'creator',
+export const user = createSlice({
+    name: 'user',
     initialState,
     reducers: {
-        creatorInfo: (state, action: PayloadAction<Partial<creatorInfoReducer>>) => {
+        userInfo: (state, action: PayloadAction<Partial<userInfoReducer>>) => {
             state.value = {
                 ...state.value,
                 ...action.payload,
@@ -79,5 +89,5 @@ export const creator = createSlice({
     },
 })
 
-export const {creatorInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addNiche, removeNiche, addPref, removePref} = creator.actions
-export default creator.reducer
+export const {userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addNiche, removeNiche, addPref, removePref} = user.actions
+export default user.reducer

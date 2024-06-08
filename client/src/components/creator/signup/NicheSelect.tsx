@@ -3,16 +3,10 @@ import Chip from "@mui/material/Chip";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "../../../styles/nicheSelect.css";
 
-import { creatorInfo, removeNiche, addNiche } from "@/redux/slices/creator-slice";
+import { userInfo, removeNiche, addNiche } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
-
-interface NicheSelectProps {
-  formData: any;
-  handleNicheChange: (selected: string) => void;
-  handleNextStep: () => void;
-}
 
 // Niche Options List
 const nichesArray = [
@@ -45,13 +39,10 @@ const nichesArray = [
 ];
 
 const ContactForm = ({
-  formData,
-  handleNicheChange,
-  handleNextStep,
-}: NicheSelectProps) => {
+}) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
-  let niches = useAppSelector((state) => state.creatorInfoReducer.value.niches);
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let niches = useAppSelector((state) => state.userInfoReducer.value.niches);
 
   const handleNicheChanges = (selected: string) => {
     if (niches.includes(selected)) {
@@ -62,8 +53,7 @@ const ContactForm = ({
   }
 
   const onNext = () => {
-    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
-    handleNextStep();
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 
   return (

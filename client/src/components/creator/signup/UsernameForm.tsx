@@ -3,33 +3,29 @@
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { creatorInfo } from "@/redux/slices/creator-slice";
+import { userInfo } from "@/redux/slices/user-slice";
+import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
 interface UsernameFormProps {
-  handleNextStep: () => void;
   register: any;
   errors: any;
   getValues: any;
 }
 
 const UsernameForm = ({
-  handleNextStep,
   register,
   errors,
   getValues,
 }: UsernameFormProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.creatorInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
 
   const onNext = () => {
-    dispatch(creatorInfo({ username: getValues('userName') }));
-    dispatch(creatorInfo({ currentStep: currentStep + 1 }));
-    
-    handleNextStep();
+    dispatch(userInfo({ username: getValues('userName') }));
+    dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 
   return (

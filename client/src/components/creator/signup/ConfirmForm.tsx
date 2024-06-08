@@ -2,17 +2,12 @@ import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useAppSelector } from "@/redux/store";
 
-interface ConfirmFormProps {
-  formData: any;
-  getValues: any;
-}
-
-const ConfirmForm = ({ formData, getValues, }: ConfirmFormProps) => {
-  const username = useAppSelector((state) => state.creatorInfoReducer.value.username);
-  const gender = useAppSelector((state) => state.creatorInfoReducer.value.gender);
-  const location = useAppSelector((state) => state.creatorInfoReducer.value.location);
-  const preferences = useAppSelector((state) => state.creatorInfoReducer.value.preferences);
-  const niches = useAppSelector((state) => state.creatorInfoReducer.value.niches);
+const ConfirmForm = () => {
+  const username = useAppSelector((state) => state.userInfoReducer.value.username);
+  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
+  const location = useAppSelector((state) => state.userInfoReducer.value.location);
+  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  const niches = useAppSelector((state) => state.userInfoReducer.value.niches);
 
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
