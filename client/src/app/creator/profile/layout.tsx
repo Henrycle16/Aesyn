@@ -10,7 +10,6 @@ export default function ProfileLayout({
     <>
       <ProfileHeader />
       <main className="container flex-1 mx-auto flex max-lg:py-5">
-        {/* <section className="container">{children}</section> */}
         {children}
       </main>
       <SmallFooter />
