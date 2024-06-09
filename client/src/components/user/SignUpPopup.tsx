@@ -1,32 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 
-interface Props {
-  handleClick: Function;
-  // any props that come into the component
-}
+import { userInfo } from "@/redux/slices/user-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 const SignUpPopup = () => {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleBrandSignup = () => {
-    router.push(`/signup?state=${true}`);
-  };
-
-  const handleCreatorSignup = () => {
-    router.push(`/signup?state=${false}`);
-  };
+  const onClickCreator = () => {
+    dispatch(userInfo({ isCreator: true, isBrand: false }));
+    router.push("/signup");
+  }
+  
+  const onClickBrand = () => {
+    dispatch(userInfo({ isBrand: true, isCreator: false }));
+    router.push("/signup");
+  }
 
   return (
     <Container >
@@ -42,19 +40,15 @@ const SignUpPopup = () => {
         </Grid>
         <Grid>
           <Link
-            href={{
-              pathname: "/signup",
-              query: { state: true },
-            }}
+            onClick={onClickBrand}
+            href={"/signup"}
             className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
           >
             Join as Brand!
           </Link>
           <Link
-            href={{
-              pathname: "/signup",
-              query: { state: false },
-            }}
+            onClick={onClickCreator}
+            href={"/signup"}
             className="ml-4 inline-flex text-blue-500 border-solid border-2 border-blue-500 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
           >
             Join as Creator!

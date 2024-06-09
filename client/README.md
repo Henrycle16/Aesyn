@@ -10,6 +10,7 @@
 - User data stored in MongoDB
 - MapBox Implementation
 - User token authentication
+- Redux State Management
 
 
 ## Roadmap
