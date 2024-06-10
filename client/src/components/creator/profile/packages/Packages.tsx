@@ -23,7 +23,7 @@ const packagesData = [
     packageDescription: "3 photo post",
     price: "$125",
   },
-]
+];
 
 const displayText = packagesData.length !== 0 ? "invisible" : "";
 
@@ -34,7 +34,7 @@ const Packages = () => {
       <p className={`text-sm font-medium mt-2 ${displayText}`}>
         Create our content packages to display for brands to purchase.
       </p>
-      <div className="flex-1 mt-4 ml-8 flex gap-5">
+      <div className="flex-1 mt-4 ml-8 gap-5 flex whitespace-nowrap overflow-x-auto">
         {/* IG Package */}
         {packagesData.map((packageData) => (
           <PackageCard
@@ -46,7 +46,7 @@ const Packages = () => {
           />
         ))}
         {/* Add new package Component */}
-        <NewPackageCard />
+        {packagesData.length <= 3 && <NewPackageCard />}
       </div>
     </section>
   );

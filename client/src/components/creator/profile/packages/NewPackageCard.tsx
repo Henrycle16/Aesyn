@@ -8,7 +8,7 @@ type Props = {
 
 const NewPackageCard = (props: Props) => {
   return (
-    <div className="border border-[#D7D7D7] flex-1 flex flex-col gap-3 justify-center items-center p-4 rounded-2xl">
+    <div className="border border-[#D7D7D7] min-w-[21rem] flex flex-col gap-3 justify-center items-center p-4 rounded-2xl">
       <AddCircleOutlineIcon
         sx={{ color: "#184465" }}
         fontSize="large"

@@ -12,7 +12,7 @@ type Props = {
 
 const PackageCard = (props: Props) => {
   return (
-    <div className="border border-[#D7D7D7] p-4 rounded-2xl flex-1 flex flex-col">
+    <div className="border border-[#D7D7D7] p-4 rounded-2xl min-w-[21rem] flex flex-col">
       {/* Top Section */}
       <div className="flex items-center">
         <InstagramIcon fontSize="large" />
