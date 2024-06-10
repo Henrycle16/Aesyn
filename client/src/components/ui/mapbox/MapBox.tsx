@@ -44,139 +44,149 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
   React.useEffect(() => {
-    // Function to initialize the map
-    const initializeMap = () => {
-      const mapInstance = new mapboxgl.Map({
-        container: mapContainer.current!,
-        style: "mapbox://styles/henrycle16/clufzf01c016b01qfe9u27o4a",
-        center: [lng, lat],
-        zoom: zoom,
-        interactive: false,
-      });
-
-      mapInstance.on("moveend", () => {
-        const newCenter = mapInstance.getCenter();
-        setLng(newCenter.lng);
-        setLat(newCenter.lat);
-        setZoom(mapInstance.getZoom());
-      });
-
-      setMap(mapInstance);
-
-      // Restore marker if it exists
-      if (markerLocation) {
-        const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
-          .setLngLat(markerLocation)
-          .addTo(mapInstance);
-        markerRef.current = newMarker;
-        mapInstance.flyTo({ center: markerLocation, zoom: 12 });
-      }
-
-      // Clean up map instance on component unmount
-      return () => mapInstance.remove();
-    };
-
-    // Initialize map if it is not already initialized
-    if (!map) {
-      initializeMap();
-    } else if (markerLocation) {
-      // If the map is already initialized and we have a marker location
-      map.flyTo({ center: markerLocation, zoom: 12 });
-      if (markerRef.current) {
-        markerRef.current.remove();
-      }
-      const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
-        .setLngLat(markerLocation)
-        .addTo(map);
-      markerRef.current = newMarker;
-    }
-
-    // Initialize geocoder if it is not already initialized
-    if (map && geocoderContainer.current && !geocoderInitialized.current) {
-      const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl,
-        placeholder: "Search for a city in the United States",
-        types: "place",
-        countries: "us",
-      });
-
-      // Handle geocoder result event
-      geocoder.on("result", (e) => {
-        const inputField = geocoderContainer.current?.querySelector(
-          ".mapboxgl-ctrl-geocoder--input"
-        ) as HTMLInputElement;
-        if (inputField) {
-          inputField.value = e.result.place_name;
-
-          handleLocationChange(inputField.value);
-
-          // Enable Next button
-          setIsLocationSelected(true);
-          inputField.disabled = true;
+    if (mapboxgl.supported()) {
+      // Function to initialize the map
+      const initializeMap = () => {
+        // Ensure the map container is empty
+        if (mapContainer.current) {
+          mapContainer.current.innerHTML = '';
         }
 
-        const [newLng, newLat] = e.result.center;
-        setLng(newLng);
-        setLat(newLat);
-        setZoom(12);
-        setMarkerLocation([newLng, newLat]);
-
-        if (markerRef.current) {
-          markerRef.current.remove();
-        }
-
-        const newMarker = new mapboxgl.Marker({ color: '#3DA9FC'})
-          .setLngLat([newLng, newLat])
-          .addTo(map);
-
-        markerRef.current = newMarker;
-        map.flyTo({ center: [newLng, newLat], zoom: 12 });
-      });
-
-      // Handle geocoder clear event
-      geocoder.on("clear", () => {
-        // If the input box is cleared, disable Next button
-        setIsLocationSelected(false);
-        handleLocationChange("");
-        const inputField = geocoderContainer.current?.querySelector(
-          ".mapboxgl-ctrl-geocoder--input"
-        ) as HTMLInputElement;
-        if (inputField) {
-          inputField.disabled = false;
-        }
-        if (markerRef.current) {
-          markerRef.current.remove();
-          markerRef.current = null;
-        }
-        setMarkerLocation(null);
-        map.flyTo({ center: [-98.5795, 39.8283], zoom: 3.5 });
-      });
-
-      // Add geocoder to its container
-      geocoderContainer.current.appendChild(geocoder.onAdd(map));
-
-      // Add event listener for input event
-      const inputField = geocoderContainer.current.querySelector(
-        ".mapboxgl-ctrl-geocoder--input"
-      ) as HTMLInputElement;
-
-      if (isFormData.length > 0) {
-        inputField.value = isFormData;
-      }
-
-      if (inputField) {
-        inputField.addEventListener("input", () => {
-          // If the input value is manually changed, disable Next button
-          setIsLocationSelected(false);
+        const mapInstance = new mapboxgl.Map({
+          container: mapContainer.current!,
+          style: "mapbox://styles/henrycle16/clufzf01c016b01qfe9u27o4a",
+          center: [lng, lat],
+          zoom: zoom,
+          interactive: false,
         });
+
+        mapInstance.on("moveend", () => {
+          const newCenter = mapInstance.getCenter();
+          setLng(newCenter.lng);
+          setLat(newCenter.lat);
+          setZoom(mapInstance.getZoom());
+        });
+
+        setMap(mapInstance);
+
+        // Restore marker if it exists
+        if (markerLocation) {
+          const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+            .setLngLat(markerLocation)
+            .addTo(mapInstance);
+          markerRef.current = newMarker;
+          mapInstance.flyTo({ center: markerLocation, zoom: 12 });
+        }
+
+        // Clean up map instance on component unmount
+        return () => mapInstance.remove();
+      };
+
+      // Initialize map if it is not already initialized
+      if (!map) {
+        initializeMap();
+      } else if (markerLocation) {
+        // If the map is already initialized and we have a marker location
+        map.flyTo({ center: markerLocation, zoom: 12 });
+        if (markerRef.current) {
+          markerRef.current.remove();
+        }
+        const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+          .setLngLat(markerLocation)
+          .addTo(map);
+        markerRef.current = newMarker;
       }
 
-      if (inputField.value === isFormData && isFormData.length > 0) {
-        setIsLocationSelected(true);
-      }
+      // Initialize geocoder if it is not already initialized
+      if (map && geocoderContainer.current && !geocoderInitialized.current) {
+        const geocoder = new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
+          placeholder: "Search for a city in the United States",
+          types: "place",
+          countries: "us",
+        });
 
-      geocoderInitialized.current = true;
+        // Handle geocoder result event
+        geocoder.on("result", (e) => {
+          const inputField = geocoderContainer.current?.querySelector(
+            ".mapboxgl-ctrl-geocoder--input"
+          ) as HTMLInputElement;
+          if (inputField) {
+            inputField.value = e.result.place_name;
+
+            handleLocationChange(inputField.value);
+
+            // Enable Next button
+            setIsLocationSelected(true);
+            inputField.disabled = true;
+          }
+
+          const [newLng, newLat] = e.result.center;
+          setLng(newLng);
+          setLat(newLat);
+          setZoom(12);
+          setMarkerLocation([newLng, newLat]);
+
+          if (markerRef.current) {
+            markerRef.current.remove();
+          }
+
+          const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+            .setLngLat([newLng, newLat])
+            .addTo(map);
+
+          markerRef.current = newMarker;
+          map.flyTo({ center: [newLng, newLat], zoom: 12 });
+        });
+
+        // Handle geocoder clear event
+        geocoder.on("clear", () => {
+          // If the input box is cleared, disable Next button
+          setIsLocationSelected(false);
+          handleLocationChange("");
+          const inputField = geocoderContainer.current?.querySelector(
+            ".mapboxgl-ctrl-geocoder--input"
+          ) as HTMLInputElement;
+          if (inputField) {
+            inputField.disabled = false;
+          }
+          if (markerRef.current) {
+            markerRef.current.remove();
+            markerRef.current = null;
+          }
+          setMarkerLocation(null);
+          map.flyTo({ center: [-98.5795, 39.8283], zoom: 3.5 });
+        });
+
+        // Add geocoder to its container
+        geocoderContainer.current.appendChild(geocoder.onAdd(map));
+
+        // Add event listener for input event
+        const inputField = geocoderContainer.current.querySelector(
+          ".mapboxgl-ctrl-geocoder--input"
+        ) as HTMLInputElement;
+
+        if (isFormData.length > 0) {
+          inputField.value = isFormData;
+        }
+
+        if (inputField) {
+          inputField.addEventListener("input", () => {
+            // If the input value is manually changed, disable Next button
+            setIsLocationSelected(false);
+          });
+        }
+
+        if (inputField.value === isFormData && isFormData.length > 0) {
+          setIsLocationSelected(true);
+        }
+
+        geocoderInitialized.current = true;
+      }
+    } else {
+      // Display a message to the user that WebGL is not supported
+      console.log("WebGL is not supported on your browser.");
     }
   }, [
     handleLocationChange,
