@@ -23,6 +23,20 @@ const packagesData = [
     packageDescription: "3 photo post",
     price: "$125",
   },
+  // {
+  //   id: 3,
+  //   socialMedia: "Instagram",
+  //   packageType: "Multi-Photo Post",
+  //   packageDescription: "3 photo post",
+  //   price: "$125",
+  // },
+  // {
+  //   id: 4,
+  //   socialMedia: "Instagram",
+  //   packageType: "Multi-Photo Post",
+  //   packageDescription: "3 photo post",
+  //   price: "$125",
+  // },
 ];
 
 const displayText = packagesData.length !== 0 ? "invisible" : "";
