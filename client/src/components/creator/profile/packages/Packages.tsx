@@ -1,3 +1,4 @@
+import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageCard from "./NewPackageCard";
 

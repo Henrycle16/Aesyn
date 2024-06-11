@@ -16,7 +16,7 @@ const PackageCard = (props: Props) => {
       {/* Top Section */}
       <div className="flex">
         <InstagramLogo />
-        {/* <p className=" font-medium text-lg ml-5">{props.socialMedia}</p> */}
+        {/* Text Container */}
         <div className="ml-5">
           <p className="font-medium text-lg">{props.socialMedia}</p>
           <p className="font-bold text-lg mt-4">{props.packageType}</p>
@@ -28,11 +28,6 @@ const PackageCard = (props: Props) => {
           onClick={() => console.log("Edit Package")}
         />
       </div>
-      {/* Middle Section */}
-      {/* <div className="ml-12 mt-4">
-        <p className="font-bold text-lg">{props.packageType}</p>
-        <p className="font-medium mt-1">{props.packageDescription}</p>
-      </div> */}
       {/* Bottom Section */}
       <p className="self-end mt-auto text-2xl">{props.price}</p>
     </div>
