@@ -3,6 +3,7 @@
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import InstagramLogo from "@/components/ui/logos/Instagram";
 import EditPackage from "./modals/EditPackage";
+import DeletePackage from "./modals/DeletePackage";
 
 type Props = {
   id: number;
@@ -35,6 +36,7 @@ const PackageCard = (props: Props) => {
         <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
       </div>
       <EditPackage {...props} />
+      <DeletePackage id={props.id} />
     </>
   );
 };

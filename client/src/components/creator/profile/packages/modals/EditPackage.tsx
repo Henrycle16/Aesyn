@@ -23,7 +23,11 @@ const EditPackage = (props: Props) => {
             <DeleteOutlineIcon
               sx={{ color: "#FF0000" }}
               className="cursor-pointer"
-              onClick={() => console.log("Delete Package")}
+              onClick={() => {
+                (document.getElementById(`edit_package_modal_${props.id}`) as HTMLDialogElement).close();
+                (document.getElementById(`delete_package_modal_${props.id}`) as HTMLDialogElement).showModal();
+                console.log("Open Delete Package Modal");
+              }}
             />
           </div>
           <p className="pb-4 pt-2 text-sm">
@@ -123,7 +127,7 @@ const EditPackage = (props: Props) => {
             <button
               onClick={() => console.log("Save Package")}
               // type="submit"
-              className="bg-[#3798E3] text-white py-2 px-7 capitalize font-medium rounded-md hover:bg-[#2C7AB6]"
+              className="bg-[#3798E3] text-white py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
             >
               Save
             </button>

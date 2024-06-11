@@ -97,7 +97,7 @@ const AddPackage = (props: Props) => {
             <button
               onClick={() => console.log("Save Package")}
               // type="submit"
-              className="bg-[#3798E3] text-white font-medium py-2 px-7 capitalize rounded-md hover:bg-[#2C7AB6]"
+              className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
             >
               Save
             </button>

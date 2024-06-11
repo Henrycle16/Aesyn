@@ -2,7 +2,6 @@ import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageCard from "./NewPackageCard";
 import AddPackage from "./modals/AddPackage";
-import EditPackage from "./modals/EditPackage";
 
 const packagesData = [
   {
