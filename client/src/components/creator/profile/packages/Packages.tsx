@@ -2,6 +2,7 @@ import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageCard from "./NewPackageCard";
 import AddPackage from "./modals/AddPackage";
+import EditPackage from "./modals/EditPackage";
 
 const packagesData = [
   {
@@ -9,21 +10,21 @@ const packagesData = [
     socialMedia: "Instagram",
     packageType: "Reel Post",
     packageDescription: "15 sec video post",
-    price: "$100",
+    price: 100,
   },
   {
     id: 1,
     socialMedia: "Instagram",
     packageType: "Photo Post",
     packageDescription: "Single photo post",
-    price: "$50",
+    price: 50,
   },
   {
     id: 2,
     socialMedia: "Instagram",
     packageType: "Multi-Photo Post",
     packageDescription: "3 photo post",
-    price: "$125",
+    price: 125,
   },
   // {
   //   id: 3,
@@ -55,6 +56,7 @@ const Packages = () => {
         {packagesData.map((packageData) => (
           <PackageCard
             key={packageData.id}
+            id={packageData.id}
             socialMedia={packageData.socialMedia}
             packageType={packageData.packageType}
             packageDescription={packageData.packageDescription}

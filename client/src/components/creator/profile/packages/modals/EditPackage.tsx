@@ -1,17 +1,31 @@
 "use client";
 
 import Button from "@mui/material/Button";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-type Props = {};
+type Props = {
+  id: number;
+  socialMedia: string;
+  packageType: string;
+  packageDescription: string;
+  price: number;
+}
 
-const AddPackage = (props: Props) => {
+const EditPackage = (props: Props) => {
   return (
-    <dialog id="add_package_modal" className="modal">
+    <dialog id={`edit_package_modal_${props.id}`} className="modal">
       <div className="modal-box bg-white text-[#4A4A4A] min-w-[60rem] pt-10 pl-14 pr-10 pb-2">
         {/* Header Text */}
         <div className="">
-          <h1 className="text-[#184465] font-semibold text-2xl">Add New Package</h1>
-          <p className="pb-4 pt-2 text-sm">Create your content package plan to list on your profile for brands to purchase.</p>
+          <div className="flex gap-3 items-center">
+            <h1 className="text-[#184465] font-semibold text-2xl">Edit Package</h1>
+            <DeleteOutlineIcon
+              sx={{ color: "#FF0000" }}
+              className="cursor-pointer"
+              onClick={() => console.log("Delete Package")}
+            />
+          </div>
+          <p className="pb-4 pt-2 text-sm">Edit your content package plan to list on your profile for brands to purchase.</p>
         </div>
         {/* Input Fields Container */}
         <div className="grid grid-cols-2 gap-x-12 gap-y-7">
@@ -21,13 +35,16 @@ const AddPackage = (props: Props) => {
               *Social Media
             </label>
             <select
-              id="social_media"
+              id={`social_media_${props.id}`}
               name="social_media"
+              // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
+              defaultValue={props.socialMedia}
               className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
             >
-              <option>[Select]</option>
-              <option>Twitter</option>
-              <option>Facebook</option>
+              <option value="">[Select]</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Twitter">Twitter</option>
+              <option value="Facebook">Facebook</option>
             </select>
           </div>
           {/* Social Media Select */}
@@ -36,11 +53,16 @@ const AddPackage = (props: Props) => {
               *Package Type
             </label>
             <select
-              id="package_type"
+              id={`package_type_${props.id}`}
               name="package_type"
+              // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
+              defaultValue={props.packageType}
               className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
             >
               <option>[Select]</option>
+              <option value="Reel Post">Reel Post</option>
+              <option value="Photo Post">Photo Post</option>
+              <option value="Multi-Photo Post">Multi-Photo Post</option>
             </select>
           </div>
           {/* Description */}
@@ -49,38 +71,42 @@ const AddPackage = (props: Props) => {
               Description
             </label>
             <textarea
-              id="description"
+              id={`description_${props.id}`}
               name="description"
               placeholder="Enter package description here..."
               maxLength={100}
               rows={4}
+              // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
+              defaultValue={props.packageDescription}
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
             ></textarea>
           </div>
           {/* Qty and Price Container */}
           <div className="flex gap-12">
             {/* Quantiy */}
-            <div>
+            <div className="flex-1">
               <label htmlFor="qty" className="block font-bold">
                 *Quantity
               </label>
               <input 
                 type="text" 
-                id="qty" 
+                id={`qty_${props.id}`} 
                 name="qty"
                 placeholder="#"
                 className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
               />
             </div>
             {/* Price */}
-            <div>
+            <div className="flex-1">
               <label htmlFor="price" className="block font-bold">
                 *Price (USD)
               </label>
-              <input 
+              <input
                 type="number" 
-                id="price" 
+                id={`price_${props.id}`} 
                 name="price"
+                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
+                defaultValue={props.price}
                 className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
               />
               <span className="absolute right-auto top-[54.5%] ml-4">$</span>
@@ -106,7 +132,7 @@ const AddPackage = (props: Props) => {
         </div>
       </div>
     </dialog>
-  );
-};
+  )
+}
 
-export default AddPackage;
+export default EditPackage
