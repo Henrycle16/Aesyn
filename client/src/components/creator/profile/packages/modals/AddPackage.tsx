@@ -101,7 +101,7 @@ const AddPackage = (props: Props) => {
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">X</button>
+            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">✕</button>
           </form>
         </div>
       </div>
