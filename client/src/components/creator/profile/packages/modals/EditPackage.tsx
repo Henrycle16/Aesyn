@@ -118,7 +118,7 @@ const EditPackage = (props: Props) => {
                   defaultValue={props.price}
                   className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
                 />
-                <span className="absolute right-auto top-[54.5%] ml-4">$</span>
+                <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
               </div>
             </div>
           </div>
