@@ -1,6 +1,7 @@
 import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageCard from "./NewPackageCard";
+import AddPackage from "./modals/AddPackage";
 
 const packagesData = [
   {
@@ -63,6 +64,8 @@ const Packages = () => {
         {/* Add new package Component */}
         {packagesData.length <= 3 && <NewPackageCard />}
       </div>
+      {/* Add Package Modal */}
+      <AddPackage />
     </section>
   );
 };

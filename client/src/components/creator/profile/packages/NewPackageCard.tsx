@@ -13,7 +13,7 @@ const NewPackageCard = (props: Props) => {
         sx={{ color: "#184465" }}
         fontSize="large"
         className="cursor-pointer"
-        onClick={() => console.log("New Package")}
+        onClick={() => (document.getElementById('add_package_modal') as HTMLDialogElement).showModal()}
       />
       <p className=" font-bold">Add New Package</p>
     </div>
