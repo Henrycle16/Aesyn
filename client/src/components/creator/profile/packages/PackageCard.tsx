@@ -1,6 +1,6 @@
 "use client";
 
-import InstagramIcon from "@mui/icons-material/Instagram";
+import InstagramLogo from "@/components/ui/logos/Instagram";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
 type Props = {
@@ -15,7 +15,7 @@ const PackageCard = (props: Props) => {
     <div className="border border-[#D7D7D7] p-4 rounded-2xl min-w-[21rem] flex flex-col">
       {/* Top Section */}
       <div className="flex items-center">
-        <InstagramIcon fontSize="large" />
+        <InstagramLogo />
         <p className=" font-medium text-lg ml-5">{props.socialMedia}</p>
         <ModeEditOutlineOutlinedIcon
           sx={{ color: "#3798E3", fontSize: 25 }}
