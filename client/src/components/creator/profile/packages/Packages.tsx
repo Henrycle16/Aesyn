@@ -58,11 +58,7 @@ const Packages = () => {
         {packagesData.map((packageData) => (
           <PackageCard
             key={packageData.id}
-            id={packageData.id}
-            socialMedia={packageData.socialMedia}
-            packageType={packageData.packageType}
-            packageDescription={packageData.packageDescription}
-            price={packageData.price}
+            {...packageData}
           />
         ))}
       </div>
