@@ -1,6 +1,6 @@
 import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
-import NewPackageCard from "./NewPackageCard";
+import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 
 const packagesData = [
@@ -41,16 +41,19 @@ const packagesData = [
   // },
 ];
 
-const displayText = packagesData.length !== 0 ? "invisible" : "";
-
 const Packages = () => {
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[22rem] p-10 flex flex-col text-[#184465]">
-      <h1 className="text-2xl font-semibold">Packages</h1>
-      <p className={`text-sm font-medium mt-2 ${displayText}`}>
+    <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
+      {/* Packages Header Container */}
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold self-end mb-2">Packages</h1>
+        <NewPackageButton />
+      </div>
+      {!packagesData.length && <p className="text-sm font-medium mt-10">
         Create our content packages to display for brands to purchase.
-      </p>
-      <div className="flex-1 mt-4 ml-8 gap-5 flex whitespace-nowrap overflow-x-auto">
+      </p>}
+      {/* Package Cards Container */}
+      <div className="flex-1 mt-6 ml-8 gap-5 flex whitespace-nowrap overflow-x-auto">
         {/* IG Package */}
         {packagesData.map((packageData) => (
           <PackageCard
@@ -62,8 +65,6 @@ const Packages = () => {
             price={packageData.price}
           />
         ))}
-        {/* Add new package Component */}
-        {packagesData.length <= 3 && <NewPackageCard />}
       </div>
       {/* Add Package Modal */}
       <AddPackage />
