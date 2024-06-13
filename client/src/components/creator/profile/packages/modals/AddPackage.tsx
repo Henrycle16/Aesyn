@@ -28,7 +28,7 @@ const AddPackage = (props: Props) => {
               <select
                 id="social_media"
                 name="social_media"
-                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
                 <option>Twitter</option>
@@ -43,7 +43,7 @@ const AddPackage = (props: Props) => {
               <select
                 id="package_type"
                 name="package_type"
-                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
               </select>
@@ -59,7 +59,7 @@ const AddPackage = (props: Props) => {
                 placeholder="Enter package description here..."
                 maxLength={100}
                 rows={4}
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               ></textarea>
             </div>
             {/* Qty and Price Container */}
@@ -74,7 +74,7 @@ const AddPackage = (props: Props) => {
                   id="qty"
                   name="qty"
                   placeholder="#"
-                  className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                  className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
               </div>
               {/* Price */}
@@ -86,7 +86,7 @@ const AddPackage = (props: Props) => {
                   type="number"
                   id="price"
                   name="price"
-                  className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                  className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
                 <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
               </div>

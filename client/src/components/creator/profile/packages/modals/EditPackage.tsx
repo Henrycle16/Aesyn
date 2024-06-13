@@ -48,7 +48,7 @@ const EditPackage = (props: Props) => {
                 name="social_media"
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 defaultValue={props.socialMedia}
-                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option value="">[Select]</option>
                 <option value="Instagram">Instagram</option>
@@ -66,7 +66,7 @@ const EditPackage = (props: Props) => {
                 name="package_type"
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 defaultValue={props.packageType}
-                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
                 <option value="Reel Post">Reel Post</option>
@@ -87,7 +87,7 @@ const EditPackage = (props: Props) => {
                 rows={4}
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 defaultValue={props.packageDescription}
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               ></textarea>
             </div>
             {/* Qty and Price Container */}
@@ -102,7 +102,7 @@ const EditPackage = (props: Props) => {
                   id={`qty_${props.id}`}
                   name="qty"
                   placeholder="#"
-                  className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                  className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
               </div>
               {/* Price */}
@@ -116,7 +116,7 @@ const EditPackage = (props: Props) => {
                   name="price"
                   // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                   defaultValue={props.price}
-                  className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#3798E3] focus:border-[#3798E3] sm:text-sm"
+                  className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
                 <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
               </div>
