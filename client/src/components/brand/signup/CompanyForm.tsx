@@ -62,7 +62,7 @@ const CompanyForm = ({
           <input
             type="text"
             placeholder="Brand Name"
-            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md focus:bg-gray-100"
             id="companyName"
             {...register("companyName")}
             maxLength={50}
@@ -79,7 +79,7 @@ const CompanyForm = ({
           </div>
           <div className={`relative inline-block w-full`}>
             <select
-              className={`input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 rounded-md pr-10 ${
+              className={`input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-gray-100 rounded-md pr-10 ${
                 isOpen ? "border-b-1" : ""
               }`}
               id="industry"
