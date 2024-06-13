@@ -13,7 +13,7 @@ type Props = {
 const EditPackage = (props: Props) => {
   return (
     <dialog id={`edit_package_modal_${props.id}`} className="modal">
-      <div className="modal-box bg-white text-[#4A4A4A] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
+      <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
           <div className="flex gap-3 items-center">
@@ -40,7 +40,7 @@ const EditPackage = (props: Props) => {
           <div className="grid grid-cols-2 gap-x-12 gap-y-7">
             {/* Social Media Select */}
             <div>
-              <label htmlFor="social_media" className="block font-bold">
+              <label htmlFor="social_media" className="text-[#4A4A4A] block font-bold">
                 *Social Media
               </label>
               <select
@@ -58,7 +58,7 @@ const EditPackage = (props: Props) => {
             </div>
             {/* Social Media Select */}
             <div>
-              <label htmlFor="package_type" className="block font-bold">
+              <label htmlFor="package_type" className="text-[#4A4A4A] block font-bold">
                 *Package Type
               </label>
               <select
@@ -76,7 +76,7 @@ const EditPackage = (props: Props) => {
             </div>
             {/* Description */}
             <div className="">
-              <label htmlFor="description" className="block font-bold">
+              <label htmlFor="description" className="text-[#4A4A4A] block font-bold">
                 Description
               </label>
               <textarea
@@ -94,7 +94,7 @@ const EditPackage = (props: Props) => {
             <div className="flex gap-12">
               {/* Quantiy */}
               <div className="flex-1">
-                <label htmlFor="qty" className="block font-bold">
+                <label htmlFor="qty" className="text-[#4A4A4A] block font-bold">
                   *Quantity
                 </label>
                 <input
@@ -107,7 +107,7 @@ const EditPackage = (props: Props) => {
               </div>
               {/* Price */}
               <div className="flex-1">
-                <label htmlFor="price" className="block font-bold">
+                <label htmlFor="price" className="text-[#4A4A4A] block font-bold">
                   *Price (USD)
                 </label>
                 <input
