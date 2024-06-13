@@ -37,7 +37,7 @@ const EditPackage = (props: Props) => {
         </div>
         <form method="dialog">
           {/* Input Fields Container */}
-          <div className="grid grid-cols-2 gap-x-12 gap-y-7">
+          <div className="grid grid-cols-2 gap-x-10 gap-y-7">
             {/* Social Media Select */}
             <div>
               <label htmlFor="social_media" className="text-[#4A4A4A] block font-bold">
