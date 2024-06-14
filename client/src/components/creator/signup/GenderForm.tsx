@@ -59,19 +59,19 @@ const GenderForm = ({
                 value="Female"
                 control={<Radio />}
                 label="Female"
-                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-gray-100"
+                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-neutral-100"
               />
               <FormControlLabel
                 value="Male"
                 control={<Radio />}
                 label="Male"
-                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-gray-100"
+                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-neutral-100"
               />
               <FormControlLabel
                 value="Other"
                 control={<Radio />}
                 label="Other"
-                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-gray-100"
+                className="mx-0 rounded border border-neutral-300 p-2 mb-4 w-full hover:bg-neutral-100"
               />
             </RadioGroup>
           </FormControl>

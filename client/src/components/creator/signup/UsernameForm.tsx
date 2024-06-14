@@ -39,7 +39,7 @@ const UsernameForm = ({
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
             id="userName"
             onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
             {...register("userName")}

@@ -85,7 +85,7 @@ const SignUpComponent = () => {
       <div className="mt-5">
         <input
           type="text"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
           placeholder="First Name*"
           id="firstName"
           {...register("firstName")}
@@ -99,7 +99,7 @@ const SignUpComponent = () => {
       <div>
         <input
           type="text"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
           placeholder="Last Name*"
           id="lastName"
           {...register("lastName")}
@@ -112,7 +112,7 @@ const SignUpComponent = () => {
       <div>
         <input
           type="email"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
           placeholder="Email Address*"
           id="email"
           {...register("email")}
@@ -125,7 +125,7 @@ const SignUpComponent = () => {
       <div>
         <input
           type="password"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
           placeholder="Password*"
           id="password"
           {...register("password")}
@@ -139,7 +139,7 @@ const SignUpComponent = () => {
       <div>
         <input
           type="password"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 focus:border-blue-500 focus:bg-neutral-100 rounded-md"
+          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
           placeholder="Confirm Password*"
           id="password2"
           {...register("password2")}
