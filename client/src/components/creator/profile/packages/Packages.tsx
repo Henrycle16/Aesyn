@@ -5,43 +5,43 @@ import AddPackage from "./modals/AddPackage";
 
 const packagesData = [
   {
-    id: 0,
+    packageId: 0,
     socialMedia: "Instagram",
-    packageType: "Reel Post",
-    packageDescription: "15 sec video post",
+    type: "Reel Post",
+    description: "15 sec video post",
     price: 100,
     quantity: 1,
   },
   {
-    id: 1,
+    packageId: 1,
     socialMedia: "Instagram",
-    packageType: "Photo Post",
-    packageDescription: "Single photo post",
+    type: "Photo Post",
+    description: "Single photo post",
     price: 50,
     quantity: 1,
   },
   {
-    id: 2,
+    packageId: 2,
     socialMedia: "Instagram",
-    packageType: "Multi-Photo Post",
-    packageDescription: "3 photo post",
+    type: "Multi-Photo Post",
+    description: "3 photo post",
     price: 125,
     quantity: 3,
   },
   // {
-  //   id: 3,
+  //   packageId: 3,
   //   socialMedia: "Instagram",
-  //   packageType: "Multi-Photo Post",
-  //   packageDescription: "3 photo post",
-  //   price: "$125",
+  //   type: "Multi-Photo Post",
+  //   description: "3 photo post",
+  //   price: 125,
   //   quantity: 1,
   // },
   // {
-  //   id: 4,
+  //   packageId: 4,
   //   socialMedia: "Instagram",
-  //   packageType: "Multi-Photo Post",
-  //   packageDescription: "3 photo post",
-  //   price: "$125",
+  //   type: "Multi-Photo Post",
+  //   description: "3 photo post",
+  //   price: 125,
   //   quantity: 1,
   // },
 ];
@@ -62,7 +62,7 @@ const Packages = () => {
         {/* IG Package */}
         {packagesData.map((packageData) => (
           <PackageCard
-            key={packageData.id}
+            key={packageData.packageId}
             {...packageData}
           />
         ))}

@@ -3,17 +3,17 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 type Props = {
-  id: number;
+  packageId: number;
   socialMedia: string;
-  packageType: string;
-  packageDescription: string;
+  type: string;
+  description: string;
   price: number;
   quantity: number;
 };
 
 const EditPackage = (props: Props) => {
   return (
-    <dialog id={`edit_package_modal_${props.id}`} className="modal">
+    <dialog id={`edit_package_modal_${props.packageId}`} className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
@@ -25,8 +25,8 @@ const EditPackage = (props: Props) => {
               sx={{ color: "#FF0000" }}
               className="cursor-pointer"
               onClick={() => {
-                (document.getElementById(`edit_package_modal_${props.id}`) as HTMLDialogElement).close();
-                (document.getElementById(`delete_package_modal_${props.id}`) as HTMLDialogElement).showModal();
+                (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).close();
+                (document.getElementById(`delete_package_modal_${props.packageId}`) as HTMLDialogElement).showModal();
                 console.log("Open Delete Package Modal");
               }}
             />
@@ -45,7 +45,7 @@ const EditPackage = (props: Props) => {
                 *Social Media
               </label>
               <select
-                id={`social_media_${props.id}`}
+                id={`social_media_${props.packageId}`}
                 name="social_media"
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 defaultValue={props.socialMedia}
@@ -63,10 +63,10 @@ const EditPackage = (props: Props) => {
                 *Package Type
               </label>
               <select
-                id={`package_type_${props.id}`}
+                id={`package_type_${props.packageId}`}
                 name="package_type"
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                defaultValue={props.packageType}
+                defaultValue={props.type}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
@@ -81,13 +81,13 @@ const EditPackage = (props: Props) => {
                 Description
               </label>
               <textarea
-                id={`description_${props.id}`}
+                id={`description_${props.packageId}`}
                 name="description"
                 placeholder="Enter package description here..."
                 maxLength={100}
                 rows={4}
                 // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                defaultValue={props.packageDescription}
+                defaultValue={props.description}
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               ></textarea>
             </div>
@@ -100,7 +100,7 @@ const EditPackage = (props: Props) => {
                 </label>
                 <input
                   type="text"
-                  id={`qty_${props.id}`}
+                  id={`qty_${props.packageId}`}
                   name="qty"
                   placeholder="#"
                   // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
@@ -115,7 +115,7 @@ const EditPackage = (props: Props) => {
                 </label>
                 <input
                   type="number"
-                  id={`price_${props.id}`}
+                  id={`price_${props.packageId}`}
                   name="price"
                   // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                   defaultValue={props.price}
