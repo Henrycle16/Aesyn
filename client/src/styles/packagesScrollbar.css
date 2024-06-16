@@ -1,0 +1,25 @@
+/* Niche Select Scrollbar */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+/* width */
+section div::-webkit-scrollbar {
+    height: 5px;
+}
+ 
+/* Track */
+section div::-webkit-scrollbar-track {
+    /* background: #f1f1f1; */
+}
+ 
+/* Handle */
+section div::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+section div::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
