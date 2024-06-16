@@ -11,6 +11,7 @@ type Props = {
   packageType: string;
   packageDescription: string;
   price: number;
+  quantity: number;
 }
 
 const PackageCard = (props: Props) => {
@@ -23,7 +24,7 @@ const PackageCard = (props: Props) => {
           {/* Text Container */}
           <div className="ml-5">
             <p className="font-medium text-lg">{props.socialMedia}</p>
-            <p className="font-bold text-lg mt-4">{props.packageType}</p>
+            <p className="font-bold text-lg mt-4">{`${props.quantity} ${props.packageType}`}</p>
             <p className="font-medium mt-1">{props.packageDescription}</p>
           </div>
           <ModeEditOutlineOutlinedIcon

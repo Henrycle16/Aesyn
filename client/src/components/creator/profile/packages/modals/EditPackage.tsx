@@ -8,6 +8,7 @@ type Props = {
   packageType: string;
   packageDescription: string;
   price: number;
+  quantity: number;
 };
 
 const EditPackage = (props: Props) => {
@@ -102,6 +103,8 @@ const EditPackage = (props: Props) => {
                   id={`qty_${props.id}`}
                   name="qty"
                   placeholder="#"
+                  // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
+                  defaultValue={props.quantity}
                   className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
               </div>

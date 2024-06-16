@@ -10,6 +10,7 @@ const packagesData = [
     packageType: "Reel Post",
     packageDescription: "15 sec video post",
     price: 100,
+    quantity: 1,
   },
   {
     id: 1,
@@ -17,6 +18,7 @@ const packagesData = [
     packageType: "Photo Post",
     packageDescription: "Single photo post",
     price: 50,
+    quantity: 1,
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ const packagesData = [
     packageType: "Multi-Photo Post",
     packageDescription: "3 photo post",
     price: 125,
+    quantity: 3,
   },
   // {
   //   id: 3,
@@ -31,6 +34,7 @@ const packagesData = [
   //   packageType: "Multi-Photo Post",
   //   packageDescription: "3 photo post",
   //   price: "$125",
+  //   quantity: 1,
   // },
   // {
   //   id: 4,
@@ -38,6 +42,7 @@ const packagesData = [
   //   packageType: "Multi-Photo Post",
   //   packageDescription: "3 photo post",
   //   price: "$125",
+  //   quantity: 1,
   // },
 ];
 
