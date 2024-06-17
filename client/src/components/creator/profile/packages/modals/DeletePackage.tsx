@@ -1,10 +1,27 @@
+import {
+  deletePackage,
+} from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 type Props = {
-  id: number;
+  packageId?: number;
 }
 
 const DeletePackage = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentPackage = useAppSelector(
+    (state) => state.creatorPackagesReducer.value.currentPackage
+  );
+
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault(); 
+    dispatch(deletePackage(currentPackage));
+  } 
+
   return (
-    <dialog id={`delete_package_modal_${props.id}`} className="modal">
+    <dialog id={`delete_package_modal_${props.packageId}`} className="modal">
       <div className="modal-box bg-white text-[#4A4A4A] min-w-[38rem] pt-8 pl-8 pr-6 pb-6">
         {/* Header Text */}
         <div className="">
@@ -15,12 +32,12 @@ const DeletePackage = (props: Props) => {
             You are about to delete this package. Are you sure you want to continue?
           </p>
         </div>
-        <form method="dialog">
+        <form method="dialog" onSubmit={onFormSubmit}>
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
-                (document.getElementById(`edit_package_modal_${props.id}`) as HTMLDialogElement).showModal();
+                (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).showModal();
                 console.log("Cancel Delete Package");
               }}
               // type="button"
@@ -29,8 +46,7 @@ const DeletePackage = (props: Props) => {
               Cancel
             </button>
             <button
-              onClick={() => console.log("Delete Package")}
-              // type="submit"
+              type="submit"
               className="bg-[#B21717] text-white py-3 px-6 capitalize font-bold rounded-md hover:bg-[#b21717c9]"
             >
               Delete

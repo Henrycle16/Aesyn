@@ -2,13 +2,22 @@
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
+import { creatorPackagesInfo, resetCurrentPackage } from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 type Props = {};
 
 const NewPackageButton = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <button
       type="button"
-      onClick={() => (document.getElementById('add_package_modal') as HTMLDialogElement).showModal()}
+      onClick={() => {
+        dispatch(resetCurrentPackage());
+        (document.getElementById('add_package_modal') as HTMLDialogElement).showModal()}
+      }
       className="flex gap-2 border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize rounded-md hover:bg-[#F5F5F5]"
     >
       <AddCircleOutlineIcon

@@ -1,52 +1,20 @@
+"use client";
+
 import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 
-const packagesData = [
-  {
-    packageId: 0,
-    socialMedia: "Instagram",
-    type: "Reel Post",
-    description: "15 sec video post",
-    price: 100,
-    quantity: 1,
-  },
-  {
-    packageId: 1,
-    socialMedia: "Instagram",
-    type: "Photo Post",
-    description: "Single photo post",
-    price: 50,
-    quantity: 1,
-  },
-  {
-    packageId: 2,
-    socialMedia: "Instagram",
-    type: "Multi-Photo Post",
-    description: "3 photo post",
-    price: 125,
-    quantity: 3,
-  },
-  // {
-  //   packageId: 3,
-  //   socialMedia: "Instagram",
-  //   type: "Multi-Photo Post",
-  //   description: "3 photo post",
-  //   price: 125,
-  //   quantity: 1,
-  // },
-  // {
-  //   packageId: 4,
-  //   socialMedia: "Instagram",
-  //   type: "Multi-Photo Post",
-  //   description: "3 photo post",
-  //   price: 125,
-  //   quantity: 1,
-  // },
-];
+import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 const Packages = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  // dispatch(creatorPackagesInfo({ packages: packagesData }));
+  let testPackages = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
+
   return (
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       {/* Packages Header Container */}
@@ -54,13 +22,13 @@ const Packages = () => {
         <h1 className="text-2xl font-semibold self-end mb-2">Packages</h1>
         <NewPackageButton />
       </div>
-      {!packagesData.length && <p className="text-sm font-medium mt-10">
+      {!testPackages.length && <p className="text-sm font-medium mt-10">
         Create our content packages to display for brands to purchase.
       </p>}
       {/* Package Cards Container */}
       <div className="flex-1 mt-6 ml-8 gap-5 flex whitespace-nowrap overflow-x-auto">
         {/* IG Package */}
-        {packagesData.map((packageData) => (
+        {testPackages.map((packageData) => (
           <PackageCard
             key={packageData.packageId}
             {...packageData}

@@ -5,8 +5,13 @@ import InstagramLogo from "@/components/ui/logos/Instagram";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
 
+import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 type Props = {
-  packageId: number;
+  packageId?: number;
   socialMedia: string;
   type: string;
   description: string;
@@ -15,6 +20,8 @@ type Props = {
 }
 
 const PackageCard = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <>
       <div className="border border-[#D7D7D7] p-4 rounded-2xl min-w-[21rem] flex flex-col">
@@ -30,14 +37,17 @@ const PackageCard = (props: Props) => {
           <ModeEditOutlineOutlinedIcon
             sx={{ color: "#3798E3", fontSize: 25 }}
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
-            onClick={() => (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).showModal()}
+            onClick={() => {
+              dispatch(creatorPackagesInfo({ currentPackage: props }));
+              (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).showModal()
+            }}
           />
         </div>
         {/* Bottom Section */}
         <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
       </div>
       <EditPackage {...props} />
-      <DeletePackage id={props.packageId} />
+      <DeletePackage packageId={props.packageId} />
     </>
   );
 };

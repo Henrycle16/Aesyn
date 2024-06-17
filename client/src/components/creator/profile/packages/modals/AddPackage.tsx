@@ -1,8 +1,21 @@
 "use client";
 
+import {
+  creatorPackagesInfo,
+  addPackage,
+} from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
+
 type Props = {};
 
 const AddPackage = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentPackage = useAppSelector(
+    (state) => state.creatorPackagesReducer.value.currentPackage
+  );
+
   return (
     <dialog id="add_package_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
@@ -28,11 +41,23 @@ const AddPackage = (props: Props) => {
               <select
                 id="social_media"
                 name="social_media"
+                value={currentPackage.socialMedia}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        socialMedia: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
-                <option>[Select]</option>
-                <option>Twitter</option>
-                <option>Facebook</option>
+                <option value="">[Select]</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Twitter">Twitter</option>
+                <option value="Facebook">Facebook</option>
               </select>
             </div>
             {/* Social Media Select */}
@@ -43,9 +68,23 @@ const AddPackage = (props: Props) => {
               <select
                 id="package_type"
                 name="package_type"
+                value={currentPackage.type}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        type: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
+                <option value="Reel Post">Reel Post</option>
+                <option value="Photo Post">Photo Post</option>
+                <option value="Multi-Photo Post">Multi-Photo Post</option>
               </select>
             </div>
             {/* Description */}
@@ -59,6 +98,17 @@ const AddPackage = (props: Props) => {
                 placeholder="Enter package description here..."
                 maxLength={100}
                 rows={4}
+                value={currentPackage.description}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        description: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               ></textarea>
             </div>
@@ -74,6 +124,17 @@ const AddPackage = (props: Props) => {
                   id="qty"
                   name="qty"
                   placeholder="#"
+                  value={currentPackage.quantity}
+                  onChange={(e) => {
+                    dispatch(
+                      creatorPackagesInfo({
+                        currentPackage: {
+                          ...currentPackage,
+                          quantity: +e.target.value,
+                        },
+                      })
+                    );
+                  }}
                   className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
               </div>
@@ -86,6 +147,17 @@ const AddPackage = (props: Props) => {
                   type="number"
                   id="price"
                   name="price"
+                  value={currentPackage.price}
+                  onChange={(e) => {
+                    dispatch(
+                      creatorPackagesInfo({
+                        currentPackage: {
+                          ...currentPackage,
+                          price: +e.target.value,
+                        },
+                      })
+                    );
+                  }}
                   className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
                 <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
@@ -95,7 +167,7 @@ const AddPackage = (props: Props) => {
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-14">
             <button
-              onClick={() => console.log("Save Package")}
+              onClick={() => dispatch(addPackage(currentPackage))}
               // type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
             >
