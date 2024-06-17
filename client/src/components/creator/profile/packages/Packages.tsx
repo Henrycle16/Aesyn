@@ -4,16 +4,12 @@ import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
+import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
 
-import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 
 const Packages = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  // dispatch(creatorPackagesInfo({ packages: packagesData }));
   let testPackages = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
 
   return (
@@ -36,8 +32,9 @@ const Packages = () => {
           />
         ))}
       </div>
-      {/* Add Package Modal */}
+      {/* Package Modals */}
       <AddPackage />
+      <EditPackage />
       <DeletePackage />
     </section>
   );

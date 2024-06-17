@@ -10,26 +10,14 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 
-type Props = {
-  packageId?: number;
-  socialMedia: string;
-  type: string;
-  description: string;
-  price: number;
-  quantity: number;
-};
-
-const EditPackage = (props: Props) => {
+const EditPackage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
 
   return (
-    <dialog
-      id={`edit_package_modal_${props.packageId}`}
-      className="modal"
-    >
+    <dialog id="edit_package_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
@@ -43,7 +31,7 @@ const EditPackage = (props: Props) => {
               onClick={() => {
                 (
                   document.getElementById(
-                    `edit_package_modal_${props.packageId}`
+                    "edit_package_modal"
                   ) as HTMLDialogElement
                 ).close();
                 (
@@ -72,9 +60,8 @@ const EditPackage = (props: Props) => {
                 *Social Media
               </label>
               <select
-                id={`social_media_${props.packageId}`}
+                id={`social_media`}
                 name="social_media"
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 value={currentPackage.socialMedia}
                 onChange={(e) => {
                   dispatch(
@@ -103,9 +90,8 @@ const EditPackage = (props: Props) => {
                 *Package Type
               </label>
               <select
-                id={`package_type_${props.packageId}`}
+                id={`package_type`}
                 name="package_type"
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 value={currentPackage.type}
                 onChange={(e) => {
                   dispatch(
@@ -134,12 +120,11 @@ const EditPackage = (props: Props) => {
                 Description
               </label>
               <textarea
-                id={`description_${props.packageId}`}
+                id={`description`}
                 name="description"
                 placeholder="Enter package description here..."
                 maxLength={100}
                 rows={4}
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                 value={currentPackage.description}
                 onChange={(e) => {
                   dispatch(
@@ -163,10 +148,9 @@ const EditPackage = (props: Props) => {
                 </label>
                 <input
                   type="text"
-                  id={`qty_${props.packageId}`}
+                  id={`qty`}
                   name="qty"
                   placeholder="#"
-                  // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                   value={currentPackage.quantity}
                   onChange={(e) => {
                     dispatch(
@@ -191,9 +175,8 @@ const EditPackage = (props: Props) => {
                 </label>
                 <input
                   type="number"
-                  id={`price_${props.packageId}`}
+                  id={`price`}
                   name="price"
-                  // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
                   value={currentPackage.price}
                   onChange={(e) => {
                     dispatch(

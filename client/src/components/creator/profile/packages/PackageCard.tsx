@@ -2,12 +2,10 @@
 
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import InstagramLogo from "@/components/ui/logos/Instagram";
-import EditPackage from "./modals/EditPackage";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
 type Props = {
   packageId?: number;
@@ -38,14 +36,14 @@ const PackageCard = (props: Props) => {
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
             onClick={() => {
               dispatch(creatorPackagesInfo({ currentPackage: props }));
-              (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).showModal()
+              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).showModal()
             }}
           />
         </div>
         {/* Bottom Section */}
         <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
       </div>
-      <EditPackage {...props} />
+      
     </>
   );
 };
