@@ -6,10 +6,10 @@ import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 
 const TopComponent = () => {
   return (
-    <div className="border-b border-gray-300 col-span-2 p-5">
+    <div className="border-b border-gray-300 col-span-2 py-5 px-10">
       <div className="flex items-center h-full">
         {/* Avatar */}
-        <div className="ml-7">
+        <div className="ml-8">
           <div>
             <Badge
               overlap="circular"
@@ -21,13 +21,13 @@ const TopComponent = () => {
                 />
               }
             >
-              <Avatar sx={{ width: 125, height: 125 }} />
+              <Avatar sx={{ width: 150, height: 150 }} />
             </Badge>{" "}
           </div>
         </div>
 
         {/* Name, location and Verification button*/}
-        <div className="flex flex-col flex-1 mb-12 pl-10">
+        <div className="flex flex-col flex-1 mb-20 pl-10">
           <div className="flex items-center">
             <h1 className="text-2xl font-semibold text-[#184465]">Jane Doe </h1>
 
@@ -55,8 +55,8 @@ const TopComponent = () => {
 
         {/* Public View Button */}
         <div
-          className="flex flex-col ml-auto"
-          style={{ marginBottom: "5.5rem" }}
+          className="flex flex-col ml-auto mb-28"
+         
         >
           {" "}
           <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center">

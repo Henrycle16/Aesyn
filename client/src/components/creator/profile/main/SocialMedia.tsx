@@ -1,15 +1,45 @@
 "use client";
 
+import React, { useState } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Youtube from "@/components/ui/svgs/Youtube";
 import Instagram from "@/components/ui/svgs/Instagram";
 import X from "@/components/ui/svgs/X";
 import Tiktok from "@/components/ui/svgs/Tiktok";
 import Facebook from "@/components/ui/svgs/Facebook";
+import SocialMediaCard from "./SocialMediaCard";
+
+const socialMediaData = [
+  {
+    id: 0,
+    socialMedia: "Instagram",
+    username: "Jane Doe",
+    followers: 150000,
+    avgPosts: 150,
+    component: <Instagram />,
+  },
+  {
+    id: 1,
+    socialMedia: "Tiktok",
+    username: "Henrayleeee",
+    followers: 50000000,
+    avgPosts: 1,
+    component: <Tiktok />,
+  },
+  {
+    id: 2,
+    socialMedia: "Youtube",
+    username: "Henrie",
+    followers: 1000,
+    avgPosts: 200,
+    component: <Youtube />,
+  },
+];
 
 const SocialMedia = () => {
+  const [isModalClosed, setIsModalClosed] = useState(false);
+
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
-  // This is styling for all the social media tiles so that they are consistent
   const SocialTiles = ({
     icon,
     text,
@@ -24,6 +54,11 @@ const SocialMedia = () => {
       </div>
     </button>
   );
+
+  const closeModal = () => {
+    setIsModalClosed(true);
+    (document.getElementById(`social_modal`) as HTMLDialogElement).close();
+  };
 
   return (
     <>
@@ -43,9 +78,20 @@ const SocialMedia = () => {
           />
         </div>
         <div className="flex flex-col">
-          <p className="text-[#4A4A4A] text-md mt-4 mb-10 flex-grow">
-            Link your social media accounts to display here.
-          </p>
+          {isModalClosed ? (
+            <div className="grid grid-cols-2 grid-rows-4 gap-4" style={{gridTemplateRows: 'auto 1fr auto 1fr'}}>
+              {socialMediaData.map((socialMediaData, index) => (
+                <SocialMediaCard
+                  key={socialMediaData.id}
+                  {...socialMediaData}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-[#4A4A4A] text-md mt-4 mb-10 flex-grow">
+              Link your social media accounts to display here.
+            </p>
+          )}
         </div>
       </div>
 
@@ -70,7 +116,7 @@ const SocialMedia = () => {
             <div className="flex justify-end mt-10">
               {/* if there is a button, it will close the modal */}
               <button
-                onClick={() => console.log("Save Bio")}
+                onClick={closeModal}
                 // type="submit"
                 className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-lg hover:bg-[#2C7AB6]"
               >

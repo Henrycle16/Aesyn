@@ -26,7 +26,7 @@ const Interests = () => {
           <div
             key={data.key}
             className={
-              "rounded-3xl text-base font-semibold h-10 w-auto px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
+              "rounded-3xl text-base font-semibold w-auto py-2 px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
             }
           >
             {data.label}
