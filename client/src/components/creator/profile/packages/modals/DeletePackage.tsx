@@ -37,7 +37,7 @@ const DeletePackage = () => {
               onClick={() => {
                 (
                   document.getElementById(
-                    `edit_package_modal_${currentPackage.packageId}`
+                    `edit_package_modal`
                   ) as HTMLDialogElement
                 ).showModal();
                 (
