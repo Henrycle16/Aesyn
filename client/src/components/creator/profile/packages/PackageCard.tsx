@@ -14,7 +14,7 @@ type Props = {
   description: string;
   price: number;
   quantity: number;
-}
+};
 
 const PackageCard = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,14 +36,17 @@ const PackageCard = (props: Props) => {
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
             onClick={() => {
               dispatch(creatorPackagesInfo({ currentPackage: props }));
-              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).showModal()
+              (
+                document.getElementById(
+                  `edit_package_modal`
+                ) as HTMLDialogElement
+              ).showModal();
             }}
           />
         </div>
         {/* Bottom Section */}
         <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
       </div>
-      
     </>
   );
 };

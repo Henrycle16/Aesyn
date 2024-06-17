@@ -33,7 +33,10 @@ const AddPackage = () => {
           <div className="grid grid-cols-2 gap-x-10 gap-y-7">
             {/* Social Media Select */}
             <div>
-              <label htmlFor="social_media" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="social_media"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 *Social Media
               </label>
               <select
@@ -60,7 +63,10 @@ const AddPackage = () => {
             </div>
             {/* Social Media Select */}
             <div>
-              <label htmlFor="package_type" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="package_type"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 *Package Type
               </label>
               <select
@@ -87,7 +93,10 @@ const AddPackage = () => {
             </div>
             {/* Description */}
             <div className="">
-              <label htmlFor="description" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="description"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 Description
               </label>
               <textarea
@@ -138,7 +147,10 @@ const AddPackage = () => {
               </div>
               {/* Price */}
               <div>
-                <label htmlFor="price" className="text-[#4A4A4A] block font-bold">
+                <label
+                  htmlFor="price"
+                  className="text-[#4A4A4A] block font-bold"
+                >
                   *Price (USD)
                 </label>
                 <input
@@ -158,7 +170,9 @@ const AddPackage = () => {
                   }}
                   className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
-                <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
+                <span className="absolute right-auto top-[54%] ml-4 text-sm">
+                  $
+                </span>
               </div>
             </div>
           </div>

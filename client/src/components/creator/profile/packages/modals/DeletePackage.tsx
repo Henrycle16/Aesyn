@@ -1,6 +1,4 @@
-import {
-  deletePackage,
-} from "@/redux/slices/creatorPackages-slice";
+import { deletePackage } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -11,11 +9,13 @@ const DeletePackage = () => {
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
-    e.preventDefault(); 
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(deletePackage(currentPackage));
-    (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
-  } 
+    (
+      document.getElementById(`delete_package_modal`) as HTMLDialogElement
+    ).close();
+  };
 
   return (
     <dialog id="delete_package_modal" className="modal">
@@ -26,7 +26,8 @@ const DeletePackage = () => {
             Delete Package?
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            You are about to delete this package. Are you sure you want to continue?
+            You are about to delete this package. Are you sure you want to
+            continue?
           </p>
         </div>
         <form method="dialog" onSubmit={onFormSubmit}>
@@ -34,8 +35,16 @@ const DeletePackage = () => {
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
-                (document.getElementById(`edit_package_modal_${currentPackage.packageId}`) as HTMLDialogElement).showModal();
-                (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
+                (
+                  document.getElementById(
+                    `edit_package_modal_${currentPackage.packageId}`
+                  ) as HTMLDialogElement
+                ).showModal();
+                (
+                  document.getElementById(
+                    `delete_package_modal`
+                  ) as HTMLDialogElement
+                ).close();
               }}
               type="button"
               className="border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize font-bold rounded-md hover:bg-[#F5F5F5]"
@@ -52,7 +61,7 @@ const DeletePackage = () => {
         </form>
       </div>
     </dialog>
-  )
-}
+  );
+};
 
-export default DeletePackage
+export default DeletePackage;
