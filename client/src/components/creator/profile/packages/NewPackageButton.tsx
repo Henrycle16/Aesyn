@@ -2,14 +2,11 @@
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-import { creatorPackagesInfo, resetCurrentPackage } from "@/redux/slices/creatorPackages-slice";
+import { resetCurrentPackage } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
-type Props = {};
-
-const NewPackageButton = (props: Props) => {
+const NewPackageButton = () => {
   const dispatch = useDispatch<AppDispatch>();
   return (
     <button

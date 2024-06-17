@@ -8,9 +8,7 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 
-type Props = {};
-
-const AddPackage = (props: Props) => {
+const AddPackage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage

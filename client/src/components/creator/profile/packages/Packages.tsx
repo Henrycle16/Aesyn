@@ -4,6 +4,7 @@ import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
+import DeletePackage from "./modals/DeletePackage";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
@@ -37,6 +38,7 @@ const Packages = () => {
       </div>
       {/* Add Package Modal */}
       <AddPackage />
+      <DeletePackage />
     </section>
   );
 };

@@ -24,9 +24,6 @@ const EditPackage = (props: Props) => {
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
-  /* const packages = useAppSelector(
-    (state) => state.creatorPackagesReducer.value.packages
-  ); */
 
   return (
     <dialog
@@ -51,7 +48,7 @@ const EditPackage = (props: Props) => {
                 ).close();
                 (
                   document.getElementById(
-                    `delete_package_modal_${props.packageId}`
+                    "delete_package_modal"
                   ) as HTMLDialogElement
                 ).showModal();
                 console.log("Open Delete Package Modal");

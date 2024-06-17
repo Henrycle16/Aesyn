@@ -5,11 +5,7 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 
-type Props = {
-  packageId?: number;
-}
-
-const DeletePackage = (props: Props) => {
+const DeletePackage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
@@ -18,10 +14,11 @@ const DeletePackage = (props: Props) => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault(); 
     dispatch(deletePackage(currentPackage));
+    (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
   } 
 
   return (
-    <dialog id={`delete_package_modal_${props.packageId}`} className="modal">
+    <dialog id="delete_package_modal" className="modal">
       <div className="modal-box bg-white text-[#4A4A4A] min-w-[38rem] pt-8 pl-8 pr-6 pb-6">
         {/* Header Text */}
         <div className="">
@@ -37,10 +34,10 @@ const DeletePackage = (props: Props) => {
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
-                (document.getElementById(`edit_package_modal_${props.packageId}`) as HTMLDialogElement).showModal();
-                console.log("Cancel Delete Package");
+                (document.getElementById(`edit_package_modal_${currentPackage.packageId}`) as HTMLDialogElement).showModal();
+                (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
               }}
-              // type="button"
+              type="button"
               className="border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize font-bold rounded-md hover:bg-[#F5F5F5]"
             >
               Cancel

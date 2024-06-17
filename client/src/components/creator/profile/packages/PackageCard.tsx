@@ -3,7 +3,6 @@
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import InstagramLogo from "@/components/ui/logos/Instagram";
 import EditPackage from "./modals/EditPackage";
-import DeletePackage from "./modals/DeletePackage";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
@@ -47,7 +46,6 @@ const PackageCard = (props: Props) => {
         <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
       </div>
       <EditPackage {...props} />
-      <DeletePackage packageId={props.packageId} />
     </>
   );
 };
