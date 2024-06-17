@@ -14,21 +14,22 @@ import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
 import Modal from "../ui/Modal";
+import { useSession } from "next-auth/react";
 
 import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 const LoginComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const session = useSession();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    dispatch(logIn(email));
 
     const loginResponse = await signIn("login", {
       email: email,
@@ -38,6 +39,9 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
+
+      dispatch(logIn(session.data?.user.id));
+
       console.log(loginResponse);
     } else {
       console.log("Error!");
