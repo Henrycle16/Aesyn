@@ -147,7 +147,7 @@ const EditPackage = () => {
                   *Quantity
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id={`qty`}
                   name="qty"
                   placeholder="#"
