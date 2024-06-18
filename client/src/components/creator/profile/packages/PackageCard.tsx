@@ -4,6 +4,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import InstagramLogo from "@/components/ui/logos/Instagram";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
+import { creatorProfileInfo } from "@/redux/slices/creatorProfile-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -35,12 +36,9 @@ const PackageCard = (props: Props) => {
             sx={{ color: "#3798E3", fontSize: 25 }}
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
             onClick={() => {
+              dispatch(creatorProfileInfo({ previousModalId: "edit_package_modal" }));
               dispatch(creatorPackagesInfo({ currentPackage: props }));
-              (
-                document.getElementById(
-                  `edit_package_modal`
-                ) as HTMLDialogElement
-              ).showModal();
+              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).showModal();
             }}
           />
         </div>

@@ -16,6 +16,14 @@ const EditPackage = () => {
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
 
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(editPackage(currentPackage));
+    (
+      document.getElementById(`edit_package_modal`) as HTMLDialogElement
+    ).close();
+  };
+
   return (
     <dialog id="edit_package_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
@@ -48,7 +56,7 @@ const EditPackage = () => {
             purchase.
           </p>
         </div>
-        <form method="dialog">
+        <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
           <div className="grid grid-cols-2 gap-x-10 gap-y-7">
             {/* Social Media Select */}
@@ -199,16 +207,20 @@ const EditPackage = () => {
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-14">
             <button
-              onClick={() => {
-                dispatch(editPackage(currentPackage));
-              }}
-              // type="submit"
+              type="submit"
               className="bg-[#3798E3] text-white py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
             >
               Save
             </button>
           </div>
-          <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
+          <button 
+            onClick={() => {
+              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).close();
+              // TODO: Add logic to show unsaved changes modal if there are any changes
+              // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
+            }}
+            type="button"
+            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
             ✕
           </button>
         </form>
