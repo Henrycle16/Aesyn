@@ -4,9 +4,8 @@ import {
   creatorPackagesInfo,
   addPackage,
 } from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
 const AddPackage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,9 +16,7 @@ const AddPackage = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addPackage(currentPackage));
-    (
-      document.getElementById(`add_package_modal`) as HTMLDialogElement
-    ).close();
+    (document.getElementById(`add_package_modal`) as HTMLDialogElement).close();
   };
 
   return (

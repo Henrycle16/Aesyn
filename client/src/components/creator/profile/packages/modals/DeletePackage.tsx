@@ -1,7 +1,6 @@
 import { deletePackage } from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
 const DeletePackage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -12,9 +11,7 @@ const DeletePackage = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(deletePackage(currentPackage));
-    (
-      document.getElementById(`delete_package_modal`) as HTMLDialogElement
-    ).close();
+    (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
   };
 
   return (
@@ -35,16 +32,8 @@ const DeletePackage = () => {
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
-                (
-                  document.getElementById(
-                    `edit_package_modal`
-                  ) as HTMLDialogElement
-                ).showModal();
-                (
-                  document.getElementById(
-                    `delete_package_modal`
-                  ) as HTMLDialogElement
-                ).close();
+                (document.getElementById("edit_package_modal") as HTMLDialogElement).showModal();
+                (document.getElementById("delete_package_modal") as HTMLDialogElement).close();
               }}
               type="button"
               className="border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize font-bold rounded-md hover:bg-[#F5F5F5]"

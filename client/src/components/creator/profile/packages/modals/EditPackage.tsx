@@ -6,9 +6,8 @@ import {
   creatorPackagesInfo,
   editPackage,
 } from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 
 const EditPackage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,9 +18,7 @@ const EditPackage = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(editPackage(currentPackage));
-    (
-      document.getElementById(`edit_package_modal`) as HTMLDialogElement
-    ).close();
+    (document.getElementById(`edit_package_modal`) as HTMLDialogElement).close();
   };
 
   return (
@@ -37,17 +34,8 @@ const EditPackage = () => {
               sx={{ color: "#FF0000" }}
               className="cursor-pointer"
               onClick={() => {
-                (
-                  document.getElementById(
-                    "edit_package_modal"
-                  ) as HTMLDialogElement
-                ).close();
-                (
-                  document.getElementById(
-                    "delete_package_modal"
-                  ) as HTMLDialogElement
-                ).showModal();
-                console.log("Open Delete Package Modal");
+                (document.getElementById("edit_package_modal") as HTMLDialogElement).close();
+                (document.getElementById("delete_package_modal") as HTMLDialogElement).showModal();
               }}
             />
           </div>
