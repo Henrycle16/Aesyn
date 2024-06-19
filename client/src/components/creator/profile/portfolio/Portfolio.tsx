@@ -5,6 +5,7 @@ import NewContentButton from "./NewContentButton";
 import PersonalPortfolioCard from "./PersonalPortfolioCard";
 import CampaignPortfolioCard from "./CampaignPortfolioCard";
 import AddPersonal from "./modals/AddPersonal";
+import AddCampaign from "./modals/AddCampaign";
 
 const personalContentData: any[] = [
   {
@@ -62,7 +63,7 @@ const Portfolio = () => {
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       <div className="flex mb-2 space-x-2">
         <h1 className="text-2xl font-semibold self-end">Portfolio</h1>
-        <NewContentButton />
+        <NewContentButton isPersonalPortfolio={isPersonalPortfolio}/>
       </div>
       <div className="my-5 flex gap-12">
         <button
@@ -117,6 +118,7 @@ const Portfolio = () => {
       </div>
       {/* Add Portfolio Modal */}
       <AddPersonal />
+      <AddCampaign />
     </section>
   );
 };

@@ -8,7 +8,7 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-const AddPersonal = () => {
+const AddCampaign = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
@@ -17,25 +17,76 @@ const AddPersonal = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addPackage(currentPackage));
-    (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
+    (
+      document.getElementById(`add_campaign_modal`) as HTMLDialogElement
+    ).close();
   };
 
   return (
-    <dialog id="add_content_modal" className="modal">
+    <dialog id="add_campaign_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
-            Add New Personal Content Project
+            Add New Campaign Project
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            Display your personal content projects for brands to see.
+            Display your past campaign work for brands to see.
           </p>
         </div>
         {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
-          <div className="w-fit flex flex-col">
+          <div className="grid grid-cols-2 gap-14">
+            <div className="grid-col-1 ">
+              <label
+                htmlFor="social_media"
+                className="text-[#4A4A4A] block font-bold"
+              >
+                *Social Media
+              </label>
+              <select
+                id="social_media"
+                name="social_media"
+                value={currentPackage.socialMedia}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        socialMedia: e.target.value,
+                      },
+                    })
+                  );
+                }}
+                className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
+              >
+                <option value="">[Select]</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Twitter">Twitter</option>
+                <option value="Facebook">Facebook</option>
+              </select>
+            </div>
+
+            <div className="grid-col-2">
+              <label
+                htmlFor="description"
+                className="text-[#4A4A4A] block font-bold pr-5"
+              >
+                Description
+              </label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                className="w-full mt-1 py-3 pb-16 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+                placeholder="Briefly describe your work on this campaign"
+              />
+              <p className="flex justify-end">100 characters left</p>
+            </div>
+          </div>
+
+          <div className="w-fit flex flex-col mt-10">
             <label
               htmlFor="url"
               className="text-[#4A4A4A] block font-bold pr-5"
@@ -81,7 +132,7 @@ const AddPersonal = () => {
             onClick={() => {
               (
                 document.getElementById(
-                  `add_content_modal`
+                  `add_campaign_modal`
                 ) as HTMLDialogElement
               ).close();
               // TODO: Add logic to show unsaved changes modal if there are any changes
@@ -98,4 +149,4 @@ const AddPersonal = () => {
   );
 };
 
-export default AddPersonal;
+export default AddCampaign;
