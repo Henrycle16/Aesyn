@@ -2,18 +2,27 @@
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-type Props = {
-  id: number;
-  socialMedia: string;
-  packageType: string;
-  packageDescription: string;
-  price: number;
-  quantity: number;
-};
+import {
+  creatorPackagesInfo,
+  editPackage,
+} from "@/redux/slices/creatorPackages-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
-const EditPackage = (props: Props) => {
+const EditPackage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentPackage = useAppSelector(
+    (state) => state.creatorPackagesReducer.value.currentPackage
+  );
+
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(editPackage(currentPackage));
+    (document.getElementById(`edit_package_modal`) as HTMLDialogElement).close();
+  };
+
   return (
-    <dialog id={`edit_package_modal_${props.id}`} className="modal">
+    <dialog id="edit_package_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
@@ -25,9 +34,8 @@ const EditPackage = (props: Props) => {
               sx={{ color: "#FF0000" }}
               className="cursor-pointer"
               onClick={() => {
-                (document.getElementById(`edit_package_modal_${props.id}`) as HTMLDialogElement).close();
-                (document.getElementById(`delete_package_modal_${props.id}`) as HTMLDialogElement).showModal();
-                console.log("Open Delete Package Modal");
+                (document.getElementById("edit_package_modal") as HTMLDialogElement).close();
+                (document.getElementById("delete_package_modal") as HTMLDialogElement).showModal();
               }}
             />
           </div>
@@ -36,19 +44,31 @@ const EditPackage = (props: Props) => {
             purchase.
           </p>
         </div>
-        <form method="dialog">
+        <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
           <div className="grid grid-cols-2 gap-x-10 gap-y-7">
             {/* Social Media Select */}
             <div>
-              <label htmlFor="social_media" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="social_media"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 *Social Media
               </label>
               <select
-                id={`social_media_${props.id}`}
+                id={`social_media`}
                 name="social_media"
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                defaultValue={props.socialMedia}
+                value={currentPackage.socialMedia}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        socialMedia: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option value="">[Select]</option>
@@ -59,14 +79,26 @@ const EditPackage = (props: Props) => {
             </div>
             {/* Social Media Select */}
             <div>
-              <label htmlFor="package_type" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="package_type"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 *Package Type
               </label>
               <select
-                id={`package_type_${props.id}`}
+                id={`package_type`}
                 name="package_type"
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                defaultValue={props.packageType}
+                value={currentPackage.type}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        type: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option>[Select]</option>
@@ -77,17 +109,29 @@ const EditPackage = (props: Props) => {
             </div>
             {/* Description */}
             <div className="">
-              <label htmlFor="description" className="text-[#4A4A4A] block font-bold">
+              <label
+                htmlFor="description"
+                className="text-[#4A4A4A] block font-bold"
+              >
                 Description
               </label>
               <textarea
-                id={`description_${props.id}`}
+                id={`description`}
                 name="description"
                 placeholder="Enter package description here..."
                 maxLength={100}
                 rows={4}
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                defaultValue={props.packageDescription}
+                value={currentPackage.description}
+                onChange={(e) => {
+                  dispatch(
+                    creatorPackagesInfo({
+                      currentPackage: {
+                        ...currentPackage,
+                        description: e.target.value,
+                      },
+                    })
+                  );
+                }}
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               ></textarea>
             </div>
@@ -99,43 +143,72 @@ const EditPackage = (props: Props) => {
                   *Quantity
                 </label>
                 <input
-                  type="text"
-                  id={`qty_${props.id}`}
+                  type="number"
+                  id={`qty`}
                   name="qty"
                   placeholder="#"
-                  // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                  defaultValue={props.quantity}
+                  value={currentPackage.quantity}
+                  onChange={(e) => {
+                    dispatch(
+                      creatorPackagesInfo({
+                        currentPackage: {
+                          ...currentPackage,
+                          quantity: +e.target.value,
+                        },
+                      })
+                    );
+                  }}
                   className="w-full mt-1 block py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
               </div>
               {/* Price */}
               <div className="flex-1">
-                <label htmlFor="price" className="text-[#4A4A4A] block font-bold">
+                <label
+                  htmlFor="price"
+                  className="text-[#4A4A4A] block font-bold"
+                >
                   *Price (USD)
                 </label>
                 <input
                   type="number"
-                  id={`price_${props.id}`}
+                  id={`price`}
                   name="price"
-                  // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                  defaultValue={props.price}
+                  value={currentPackage.price}
+                  onChange={(e) => {
+                    dispatch(
+                      creatorPackagesInfo({
+                        currentPackage: {
+                          ...currentPackage,
+                          price: +e.target.value,
+                        },
+                      })
+                    );
+                  }}
                   className="w-full mt-1 block py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 />
-                <span className="absolute right-auto top-[54%] ml-4 text-sm">$</span>
+                <span className="absolute right-auto top-[54%] ml-4 text-sm">
+                  $
+                </span>
               </div>
             </div>
           </div>
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-14">
             <button
-              onClick={() => console.log("Save Package")}
-              // type="submit"
+              type="submit"
               className="bg-[#3798E3] text-white py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
             >
               Save
             </button>
           </div>
-          <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
+          <button 
+            onClick={() => {
+              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).close();
+              // TODO: Add logic to show unsaved changes modal if there are any changes
+              // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
+            }}
+            type="button"
+            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
             ✕
           </button>
         </form>
