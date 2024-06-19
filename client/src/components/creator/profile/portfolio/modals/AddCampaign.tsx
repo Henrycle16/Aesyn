@@ -1,25 +1,15 @@
 "use client";
 
 import Upload from "@/components/ui/svgs/Upload";
-import {
-  creatorPackagesInfo,
-  addPackage,
-} from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+
+// TODO: Add logic to reset form fields after successfully submitting form
 
 const AddCampaign = () => {
   const [charCount, setCharCount] = useState(100);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const currentPackage = useAppSelector(
-    (state) => state.creatorPackagesReducer.value.currentPackage
-  );
-
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addPackage(currentPackage));
     (
       document.getElementById(`add_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -51,17 +41,6 @@ const AddCampaign = () => {
               <select
                 id="social_media"
                 name="social_media"
-                value={currentPackage.socialMedia}
-                onChange={(e) => {
-                  dispatch(
-                    creatorPackagesInfo({
-                      currentPackage: {
-                        ...currentPackage,
-                        socialMedia: e.target.value,
-                      },
-                    })
-                  );
-                }}
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option value="">[Select]</option>

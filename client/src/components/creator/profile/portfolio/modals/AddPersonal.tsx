@@ -1,22 +1,14 @@
 "use client";
 
 import Upload from "@/components/ui/svgs/Upload";
-import {
-  creatorPackagesInfo,
-  addPackage,
-} from "@/redux/slices/creatorPackages-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+
+// TODO: Add logic to reset form fields after successfully submitting form
 
 const AddPersonal = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const currentPackage = useAppSelector(
-    (state) => state.creatorPackagesReducer.value.currentPackage
-  );
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addPackage(currentPackage));
     (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
   };
 
