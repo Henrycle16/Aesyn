@@ -9,7 +9,7 @@ export default function ProfileLayout({
   return (
     <>
       <ProfileHeader />
-      <main className="container flex-1 mx-auto flex max-lg:py-5">
+      <main className="container flex-1 mx-auto max-lg:py-5">
         {children}
       </main>
       <SmallFooter />
