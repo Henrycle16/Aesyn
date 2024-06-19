@@ -1,6 +1,7 @@
 import Main from "./main/Main";
 import Packages from "./packages/Packages";
 import Portfolio from "./portfolio/Portfolio";
+import UnsavedModal from "./UnsavedModal";
 
 const ProfileLanding = () => {
   return (
@@ -11,6 +12,8 @@ const ProfileLanding = () => {
       <Packages />
       {/* Portfolio Section */}
       <Portfolio />
+      {/* Unsaved Modal */}
+      <UnsavedModal />
     </div>
   );
 };

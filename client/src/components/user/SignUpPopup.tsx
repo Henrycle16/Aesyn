@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -27,8 +26,7 @@ const SignUpPopup = () => {
   }
 
   return (
-    <Container >
-      <CssBaseline />
+    <Container>
       <Grid className="pb-5 flex flex-col items-center">
         <Grid>
           <Typography component="h1" variant="h5">

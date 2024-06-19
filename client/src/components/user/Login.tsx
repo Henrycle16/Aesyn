@@ -13,16 +13,20 @@ import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
-import Modal from "../ui/Modal";
+import { useSession } from "next-auth/react";
+import SignUpModal from "../user/SignUpModal";
 import { useSession } from "next-auth/react";
 
 import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
+
 
 const LoginComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const session = useSession();
   const session = useSession();
 
   const [email, setEmail] = useState("");
@@ -42,6 +46,9 @@ const LoginComponent = () => {
 
       dispatch(logIn(session.data?.user.id));
 
+
+      dispatch(logIn(session.data?.user.id));
+
       console.log(loginResponse);
     } else {
       console.log("Error!");
@@ -55,9 +62,9 @@ const LoginComponent = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Modal>
+      <SignUpModal>
         <SignUpPopup />
-      </Modal>
+      </SignUpModal>
       <Box className="mt-8 flex flex-col items-center">
         <Avatar className="m-1 bg-blue-500">
           <PersonPinOutlinedIcon />
@@ -119,9 +126,13 @@ const LoginComponent = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="?modal=true">
-                Don&apos;t have an account? Sign up
-              </Link>
+              <button
+                onClick={() =>
+                  document.getElementById("sign-up-modal").showModal()
+                }
+              >
+                <Link href="#">Don&apos;t have an account? Sign up</Link>
+              </button>
             </Grid>
           </Grid>
         </Box>
@@ -140,7 +151,7 @@ const LoginComponent = () => {
         {"."}
       </Typography>
     </Container>
-  )
+  );
 };
 
 export default LoginComponent;
