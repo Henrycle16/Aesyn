@@ -4,6 +4,7 @@ import { useState } from "react";
 import NewContentButton from "./NewContentButton";
 import PersonalPortfolioCard from "./PersonalPortfolioCard";
 import CampaignPortfolioCard from "./CampaignPortfolioCard";
+import AddPersonal from "./modals/AddPersonal";
 
 const personalContentData: any[] = [
   {
@@ -59,8 +60,8 @@ const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
   return (
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold self-end mb-2">Portfolio</h1>
+      <div className="flex mb-2 space-x-2">
+        <h1 className="text-2xl font-semibold self-end">Portfolio</h1>
         <NewContentButton />
       </div>
       <div className="my-5 flex gap-12">
@@ -115,6 +116,7 @@ const Portfolio = () => {
         )}
       </div>
       {/* Add Portfolio Modal */}
+      <AddPersonal />
     </section>
   );
 };
