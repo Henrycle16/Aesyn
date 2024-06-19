@@ -5,7 +5,7 @@ import UnsavedModal from "./UnsavedModal";
 
 const ProfileLanding = () => {
   return (
-    <div className="my-10 flex flex-col gap-10">
+    <div className="my-10 flex flex-col gap-10 w-[77.5rem]">
       {/* Main Section */}
       <Main />
       {/* Packages Section */}

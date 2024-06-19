@@ -17,13 +17,12 @@ const NewPackageButton = () => {
         dispatch(resetCurrentPackage());
         (document.getElementById('add_package_modal') as HTMLDialogElement).showModal()}
       }
-      className="flex gap-2 border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize rounded-md hover:bg-[#F5F5F5]"
+      className=""
     >
       <AddCircleOutlineIcon
-        sx={{ color: "#3798E3" }}
+        sx={{ color: "#3798E3", fontSize: "29px"}}
         className="cursor-pointer"
       />
-      <span className="font-semibold">Add New Package</span>
     </button>
   );
 };

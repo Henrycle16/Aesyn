@@ -5,7 +5,7 @@ import SocialMedia from "./SocialMedia";
 
 const Main = () => {
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[42rem] grid grid-cols-[1.5fr,4fr] grid-rows-[auto,1fr]">
+    <section className="border border-gray-300 rounded-badge min-h-[38.625rem] grid grid-cols-[1fr,3.1fr] grid-rows-[12.75rem,1fr]">
       {/* Top Component */}
       <TopComponent />
       {/* Interests */}

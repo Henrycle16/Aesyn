@@ -58,7 +58,7 @@ const previousCampaignData: any[] = [
 const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
+    <section className="border border-gray-300 rounded-badge min-h-[13.625rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold self-end mb-2">Portfolio</h1>
         <NewContentButton />
