@@ -13,7 +13,6 @@ import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
-import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
 import { useSession } from "next-auth/react";
 
@@ -21,12 +20,10 @@ import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
-import { useAppSelector } from "@/redux/store";
 
 
 const LoginComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const session = useSession();
   const session = useSession();
 
   const [email, setEmail] = useState("");
