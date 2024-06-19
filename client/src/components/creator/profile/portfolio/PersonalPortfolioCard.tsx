@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   id: number;
