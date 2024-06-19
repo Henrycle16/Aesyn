@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+ input {
+  @apply border border-gray-300 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md 
+ }
+}
+
+@layer component {
+ .btn-primary-color {
+  @apply bg-[#3798e3]
+ }
+ .hover-btn-color {
+  @apply bg-[#2c7ab6]
+ }
+ .progress-bar-color {
+  @apply bg-[#93d4fe]
+ }
+ .bg-color {
+  @apply bg-[#d8eefe]
+ }
+ .heading-color {
+  @apply bg-[#184465]
+ }
+ .footer-color {
+  @apply bg-[#0c2232]
+ }
+ .text-body-color {
+  @apply bg-[#061119]
+ }
+ .delete-btn-color {
+  @apply bg-[#b21717]
+ }
+ .delete-pkg-color {
+  @apply bg-[#b21717]
+ }
+ .delete-btn-hover-color {
+  @apply bg-[#8e1212]
+ }
+ .success-color {
+  @apply bg-[#1d8133]
+ }
+ .saved-changes-color {
+  @apply bg-[#1d8133]
+ }
+}
