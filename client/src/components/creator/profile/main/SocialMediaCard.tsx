@@ -14,7 +14,7 @@ type Props = {
 
 const SocialMediaCard = (props: Props) => {
   return (
-    <div className="">
+    <div className="mt-4">
       <div className="flex items-center space-x-4 font-medium text-[#184465]">
         {props.component}
         <span className="text-sm font-medium text-[#184465]">
