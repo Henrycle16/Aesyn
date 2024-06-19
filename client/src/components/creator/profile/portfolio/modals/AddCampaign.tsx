@@ -6,9 +6,12 @@ import {
   addPackage,
 } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const AddCampaign = () => {
+  const [charCount, setCharCount] = useState(100);
+
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
@@ -75,14 +78,15 @@ const AddCampaign = () => {
               >
                 Description
               </label>
-              <input
-                type="url"
+              <textarea
                 id="url"
                 name="url"
-                className="w-full mt-1 py-3 pb-16 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+                maxLength={100}
+                onChange={(e) => setCharCount(100 - e.target.value.length)}
+                className="pt-3 w-full h-20 mt-1 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
                 placeholder="Briefly describe your work on this campaign"
               />
-              <p className="flex justify-end">100 characters left</p>
+              <p className="flex justify-end">{charCount} characters left</p>
             </div>
           </div>
 
