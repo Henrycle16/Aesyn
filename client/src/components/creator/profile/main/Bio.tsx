@@ -5,7 +5,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 const Bio = () => {
   return (
     <>
-      <div className="h-[13rem]">
+      <div className="min-h-[13rem]">
         <div className="flex justify-start">
           <h1 className="text-2xl font-semibold text-[#184465]">Bio</h1>
           <ModeEditOutlineOutlinedIcon
