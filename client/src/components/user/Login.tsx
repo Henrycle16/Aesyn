@@ -55,7 +55,10 @@ const LoginComponent = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container 
+    className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
+    component="main" 
+    maxWidth="sm">
       <SignUpModal>
         <SignUpPopup />
       </SignUpModal>
@@ -73,32 +76,35 @@ const LoginComponent = () => {
         >
           <Grid container spacing={2} className="pb-6">
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
+              <input
+                className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+                type="text"
+                placeholder="Email Address"
                 id="email"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setEmail(e.target.value)
                 }
-                label="Email Address"
                 name="email"
+                autoFocus
                 autoComplete="email"
+                required
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
+              <input
+                className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
                 type="password"
+                placeholder="Password"
                 id="password"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setPassword(e.target.value)
                 }
+                name="password"
+                autoFocus
                 autoComplete="new-password"
+                required
               />
             </Grid>
           </Grid>
