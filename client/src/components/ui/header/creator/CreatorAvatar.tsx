@@ -34,7 +34,7 @@ const CreatorAvatar: React.FC = () => {
 
   return (
     <div className="flex items-center">
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={1}>
         <Tooltip title="Help">
           <IconButton className="text-gray-700">
             <HelpOutlineOutlinedIcon />
