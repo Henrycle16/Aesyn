@@ -26,7 +26,7 @@ const SignUpPopup = () => {
   }
 
   return (
-    <Container >
+    <Container>
       <Grid className="pb-5 flex flex-col items-center">
         <Grid>
           <Typography component="h1" variant="h5">
