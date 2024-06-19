@@ -1,7 +1,7 @@
 "use client";
 
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import InstagramLogo from "@/components/ui/logos/Instagram";
+import InstagramLogo from "@/components/ui/svgs/Instagram";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { creatorProfileInfo } from "@/redux/slices/creatorProfile-slice";

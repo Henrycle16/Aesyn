@@ -10,7 +10,7 @@ const Main = () => {
       <TopComponent />
       {/* Interests */}
       <Interests />
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col py-8 px-10">
         {/* Bio */}
         <Bio />
         {/* Social Media */}
