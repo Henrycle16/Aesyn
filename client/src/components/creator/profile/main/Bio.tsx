@@ -1,6 +1,6 @@
 const Bio = () => {
   return (
-    <div className="flex-1">
+    <div className="h-[13rem]">
       Bio
     </div>
   )
