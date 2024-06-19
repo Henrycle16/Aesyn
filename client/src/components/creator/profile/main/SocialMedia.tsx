@@ -14,7 +14,7 @@ const socialMediaData = [
     id: 0,
     socialMedia: "Instagram",
     username: "Jane Doe",
-    followers: 150000,
+    followers: "150k",
     avgPosts: 150,
     component: <Instagram />,
   },
@@ -22,7 +22,7 @@ const socialMediaData = [
     id: 1,
     socialMedia: "Tiktok",
     username: "Henrayleeee",
-    followers: 50000000,
+    followers: "50M",
     avgPosts: 1,
     component: <Tiktok />,
   },
@@ -30,7 +30,7 @@ const socialMediaData = [
     id: 2,
     socialMedia: "Youtube",
     username: "Henrie",
-    followers: 1000,
+    followers: "100",
     avgPosts: 200,
     component: <Youtube />,
   },
@@ -79,8 +79,8 @@ const SocialMedia = () => {
         </div>
         <div className="flex flex-col">
           {isModalClosed ? (
-            <div className="grid grid-cols-2 grid-rows-4 gap-4" style={{gridTemplateRows: 'auto 1fr auto 1fr'}}>
-              {socialMediaData.map((socialMediaData, index) => (
+            <div className="grid grid-cols-2 grid-rows-2 gap-x-8 gap-y-9">
+              {socialMediaData.map((socialMediaData) => (
                 <SocialMediaCard
                   key={socialMediaData.id}
                   {...socialMediaData}
