@@ -22,15 +22,15 @@ const PackageCard = (props: Props) => {
 
   return (
     <>
-      <div className="border border-[#D7D7D7] p-4 rounded-2xl min-w-[21rem] flex flex-col">
+      <div className="border border-[#D7D7D7] p-4 rounded-2xl w-[17.438rem] flex flex-col">
         {/* Top Section */}
         <div className="flex">
           <InstagramLogo />
           {/* Text Container */}
           <div className="ml-5">
-            <p className="font-medium text-lg">{props.socialMedia}</p>
-            <p className="font-bold text-lg mt-4">{`${props.quantity} ${props.type}`}</p>
-            <p className="font-medium mt-1">{props.description}</p>
+            <p className="font-medium">{props.socialMedia}</p>
+            <p className="font-bold mt-4">{`${props.quantity} ${props.type}`}</p>
+            <p className="mt-1 text-[#061119]">{props.description}</p>
           </div>
           <ModeEditOutlineOutlinedIcon
             sx={{ color: "#3798E3", fontSize: 25 }}
@@ -43,7 +43,7 @@ const PackageCard = (props: Props) => {
           />
         </div>
         {/* Bottom Section */}
-        <p className="self-end mt-auto text-2xl">{"$" + props.price}</p>
+        <p className="self-end mt-auto text-xl font-normal">{"$" + props.price}</p>
       </div>
     </>
   );
