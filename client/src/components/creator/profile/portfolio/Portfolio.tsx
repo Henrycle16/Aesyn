@@ -34,25 +34,29 @@ const previousCampaignData: any[] = [
   {
     id: 0,
     imageURI: "/biden.jpg",
-    description: "Worked with Joe Biden on his presidential campaign. #Biden2020",
+    description:
+      "Worked with Joe Biden on his presidential campaign. #Biden2020",
     date: "2021-10-10",
   },
   {
     id: 1,
     imageURI: "/trump.jpg",
-    description: "Worked with Donald Trump on his presidential campaign. #Trump2020",
+    description:
+      "Worked with Donald Trump on his presidential campaign. #Trump2020",
     date: "2021-10-10",
   },
   {
     id: 2,
     imageURI: "/obama.jpg",
-    description: "Worked with Barack Obama on his presidential campaign. #Obama2020",
+    description:
+      "Worked with Barack Obama on his presidential campaign. #Obama2020",
     date: "2021-10-10",
   },
   {
     id: 3,
     imageURI: "/bush.jpg",
-    description: "Worked with George Bush on his presidential campaign. #Bush2020",
+    description:
+      "Worked with George Bush on his presidential campaign. #Bush2020",
     date: "2021-10-10",
   },
 ];
@@ -63,7 +67,7 @@ const Portfolio = () => {
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       <div className="flex mb-2 space-x-2">
         <h1 className="text-2xl font-semibold self-end">Portfolio</h1>
-        <NewContentButton isPersonalPortfolio={isPersonalPortfolio}/>
+        <NewContentButton isPersonalPortfolio={isPersonalPortfolio} />
       </div>
       <div className="my-5 flex gap-12">
         <button
@@ -91,11 +95,11 @@ const Portfolio = () => {
           Previous Campaigns
         </button>
       </div>
-      <div className="mt-6 ml-8 gap-5 flex flex-wrap">
+      <div className="mt-6 flex flex-wrap -m-2">
         {isPersonalPortfolio ? (
           personalContentData.length > 0 ? (
             personalContentData.map((contentData) => (
-              <div className="w-1/4" key={contentData.id}>
+              <div className="w-1/4 p-2" key={contentData.id}>
                 <PersonalPortfolioCard {...contentData} />
               </div>
             ))
@@ -106,7 +110,7 @@ const Portfolio = () => {
           )
         ) : previousCampaignData.length > 0 ? (
           previousCampaignData.map((campaignData) => (
-            <div className="w-1/4" key={campaignData.id}>
+            <div className="w-1/4 p-2" key={campaignData.id}>
               <CampaignPortfolioCard {...campaignData} />
             </div>
           ))
