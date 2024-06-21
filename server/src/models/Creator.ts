@@ -28,6 +28,26 @@ const CreatorSchema = new mongoose.Schema({
     niche: {
         type: [String]
     },
+    packages: [
+        {
+            socialMedia: {
+                type: String,
+                enum: ['Instagram', 'Facebook', 'Twitter/X', 'TikTok', 'YouTube', 'Snapchat']
+            },
+            type: {
+                type: String
+            },
+            description: {
+                type: String
+            },
+            price: {
+                type: Number
+            },
+            quantity: {
+                type: Number
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now,
