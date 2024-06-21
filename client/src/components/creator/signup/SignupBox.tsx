@@ -111,8 +111,6 @@ const SignUpBox = () => {
     } catch {
       console.log("Error!");
     }
-    console.log(formData);
-
     return;
   };
 
