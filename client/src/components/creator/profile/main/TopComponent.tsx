@@ -27,11 +27,18 @@ const TopComponent = () => {
         </div>
 
         {/* Name, location and Verification button*/}
-        <div className="flex flex-col flex-1 mb-20 pl-10">
+        <div className="flex flex-col justify-items-start flex-1 mb-12 pl-10">
           <div className="flex items-center">
-            <h1 className="text-2xl font-semibold text-[#184465]">Jane Doe </h1>
+            <div className="flex flex-col gap-1">
+              <h1 className="text-2xl font-semibold text-[#184465]">
+                Jane Doe{" "}
+              </h1>
+              <span className="text-sm text-[#061119] flex-grow">
+                @Henrayleeee
+              </span>
+            </div>
 
-            <div className="flex-none pl-6">
+            <div className="flex flex-col mb-2.5 pl-6">
               <button className="border-dashed border-2 border-[#3798E3] py-2 px-5 rounded-md flex items-center justify-center">
                 <span className="text-[#3798E3] font-semibold">
                   {" "}
@@ -45,7 +52,7 @@ const TopComponent = () => {
             </div>
           </div>
 
-          <div className="flex items-center mt-2.5 gap-1">
+          <div className="flex items-center mt-2.5 gap-1 ml-[-0.3rem]">
             <LocationOnOutlinedIcon sx={{ color: "#6D6D6D" }} />
             <span className="text-sm text-[#061119] flex-grow">
               Narnia, Houston
@@ -54,10 +61,7 @@ const TopComponent = () => {
         </div>
 
         {/* Public View Button */}
-        <div
-          className="flex flex-col ml-auto mb-28"
-         
-        >
+        <div className="flex flex-col ml-auto mb-24">
           {" "}
           <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center">
             <span className="text-[#3798E3] font-semibold">

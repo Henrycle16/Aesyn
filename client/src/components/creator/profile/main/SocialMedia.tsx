@@ -62,7 +62,7 @@ const SocialMedia = () => {
 
   return (
     <>
-      <div className="flex-[1.25]">
+      <div className="flex-1">
         <div className="flex justify-start">
           <h1 className="text-2xl font-semibold text-[#184465]">
             Social Media{" "}

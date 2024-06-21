@@ -208,7 +208,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     <div className="h-full flex flex-col gap-3">
       {/* Geocoder Container */}
       <div>
-        <div ref={geocoderContainer} className="input input-bordered" />
+        <div ref={geocoderContainer} />
       </div>
 
       {/* Map Container */}
