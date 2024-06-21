@@ -27,7 +27,7 @@ const AddPersonal = () => {
         {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
-          <div className="w-fit flex flex-col">
+          <div className="w-full flex flex-col">
             <label
               htmlFor="url"
               className="text-[#4A4A4A] block font-bold pr-5"
@@ -38,7 +38,7 @@ const AddPersonal = () => {
               type="url"
               id="url"
               name="url"
-              className="w-full mt-1 py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+              className="mt-1 py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               placeholder="URL Link"
             />
           </div>
