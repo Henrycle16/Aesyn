@@ -6,8 +6,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Image from "next/legacy/image";
 
 type Props = {
-  id: number;
-  imageURI: string;
+  contentId?: number;
+  uri: string;
   description: string;
   date: string;
 };
@@ -20,7 +20,7 @@ const CampaignPortfolioCard = (props: Props) => {
   return (
     <div className="relative">
       <Image
-        src={props.imageURI}
+        src={props.uri}
         alt="image"
         width={1000}
         height={1000}
@@ -39,7 +39,10 @@ const CampaignPortfolioCard = (props: Props) => {
             onMouseLeave={() => setIsHovered(false)}
           />
           <DeleteOutlineIcon
-            sx={{ color: "red", fontSize: 25 }}
+            sx={{ color: "#FF0000" }}
+            onClick={() => {
+              (document.getElementById("delete_content_modal") as HTMLDialogElement).showModal();
+            }}
             className="p-[.12rem] absolute bottom-4 left-2 cursor-pointer"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
