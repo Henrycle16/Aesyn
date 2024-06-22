@@ -1,16 +1,19 @@
-import { deleteContent } from "@/redux/slices/creatorPortfolio-slice";
+import { deleteContent, resetCurrentContent } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 const DeletePortfolioContent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
-    (state) => state.creatorContentReducer.value.currentContent
+    (state) => state.creatorContentReducer.value.currentContent?.contentId
   );
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(deleteContent(currentContent));
+    if (currentContent !== undefined){
+      dispatch(deleteContent(currentContent));
+    }
+    dispatch(resetCurrentContent());
     (document.getElementById(`delete_content_modal`) as HTMLDialogElement).close();
   };
 
@@ -32,6 +35,7 @@ const DeletePortfolioContent = () => {
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
+                dispatch(resetCurrentContent());
                 (document.getElementById("delete_content_modal") as HTMLDialogElement).close();
               }}
               type="button"

@@ -5,6 +5,10 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Image from "next/legacy/image";
 
+import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
 type Props = {
   contentId?: number;
   uri: string;
@@ -16,6 +20,7 @@ const CampaignPortfolioCard = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const imageStyle = isHovered ? { filter: "grayscale(1)" } : {};
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="relative">
@@ -41,7 +46,18 @@ const CampaignPortfolioCard = (props: Props) => {
           <DeleteOutlineIcon
             sx={{ color: "#FF0000" }}
             onClick={() => {
-              (document.getElementById("delete_content_modal") as HTMLDialogElement).showModal();
+              dispatch(
+                creatorContentInfo({
+                  currentContent: {
+                    contentId: props.contentId,
+                  },
+                })
+              );
+              (
+                document.getElementById(
+                  "delete_content_modal"
+                ) as HTMLDialogElement
+              ).showModal();
             }}
             className="p-[.12rem] absolute bottom-4 left-2 cursor-pointer"
             onMouseEnter={() => setIsHovered(true)}

@@ -2,42 +2,42 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const contentData = [
   {
-    id: 0,
+    contentId: 0,
     type: "personal",
     uri: "/joe-cool.jpg",
     description: "",
     date: "",
   },
   {
-    id: 1,
+    contentId: 1,
     type: "personal",
     uri: "/luka-cool.jpg",
     description: "",
     date: "",
   },
   {
-    id: 2,
+    contentId: 2,
     type: "personal",
     uri: "/s-cool.jpg",
     description: "",
     date: "",
   },
   {
-    id: 3,
+    contentId: 3,
     type: "personal",
     uri: "/scott-cool.jpg",
     description: "",
     date: "",
   },
   {
-    id: 4,
+    contentId: 4,
     type: "personal",
     uri: "/calvin-cool.jpg",
     description: "",
     date: "",
   },
   {
-    id: 5,
+    contentId: 5,
     type: "campaign",
     uri: "/biden.jpg",
     description:
@@ -45,7 +45,7 @@ const contentData = [
     date: "2021-10-10",
   },
   {
-    id: 6,
+    contentId: 6,
     type: "campaign",
     uri: "/trump.jpg",
     description:
@@ -53,7 +53,7 @@ const contentData = [
     date: "2021-10-10",
   },
   {
-    id: 7,
+    contentId: 7,
     type: "campaign",
     uri: "/obama.jpg",
     description:
@@ -61,7 +61,7 @@ const contentData = [
     date: "2021-10-10",
   },
   {
-    id: 8,
+    contentId: 8,
     type: "campaign",
     uri: "/bush.jpg",
     description:
@@ -91,6 +91,7 @@ const initialState = {
   value: {
     content: contentData,
     currentContent: {
+      contentId: 0,
       type: "",
       uri: "",
       description: "",
@@ -105,11 +106,14 @@ export const creatorContent = createSlice({
   reducers: {
     creatorContentInfo: (
       state,
-      action: PayloadAction<Partial<creatorContentInfoReducer>>
+      action: PayloadAction<{ currentContent: Partial<Content> }>
     ) => {
       state.value = {
         ...state.value,
-        ...action.payload,
+        currentContent: {
+          ...state.value.currentContent,
+          ...action.payload.currentContent,
+        },
       };
     },
     editContent: (state, action: PayloadAction<Content>) => {
@@ -142,9 +146,9 @@ export const creatorContent = createSlice({
         };
         },
         */
-    deleteContent: (state, action: PayloadAction<Content>) => {
+    deleteContent: (state, action: PayloadAction<number>) => {
       state.value.content = state.value.content.filter(
-        (contentData) => contentData.contentId !== action.payload.contentId
+        (contentData) => contentData.contentId !== action.payload
       );
     },
   },
