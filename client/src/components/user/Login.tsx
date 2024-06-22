@@ -13,8 +13,8 @@ import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
-import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
+import { useSession } from "next-auth/react";
 
 import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
@@ -40,6 +40,9 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
+
+      dispatch(logIn(session.data?.user.id));
+
 
       dispatch(logIn(session.data?.user.id));
 
