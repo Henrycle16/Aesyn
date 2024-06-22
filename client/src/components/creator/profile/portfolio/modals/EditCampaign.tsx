@@ -1,30 +1,48 @@
 "use client";
 
 import Upload from "@/components/ui/svgs/Upload";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import {
+  creatorContentInfo,
+  editContent,
+} from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
-const AddCampaign = () => {
+const EditCampaign = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
+
   const [charCount, setCharCount] = useState(100);
+
+  useEffect(() => {
+    setCharCount(100 - currentContent.description.length);
+  }, [currentContent.description]);
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(editContent({ ...currentContent }));
     (
-      document.getElementById(`add_campaign_modal`) as HTMLDialogElement
+      document.getElementById(`edit_campaign_modal`) as HTMLDialogElement
     ).close();
   };
 
   return (
-    <dialog id="add_campaign_modal" className="modal">
+    <dialog id="edit_campaign_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
-            Add New Campaign Project
+            Edit Previous Campaign Project
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            Display your past campaign work for brands to see. You can either paste a URl or upload your work.
+            Display your past campaign work for brands to see. You can either
+            paste a URl or upload your work.
           </p>
         </div>
         {/* Form */}
@@ -41,6 +59,14 @@ const AddCampaign = () => {
               <select
                 id="social_media"
                 name="social_media"
+                value={currentContent.socialMedia}
+                onChange={(e) =>
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: { socialMedia: e.target.value },
+                    })
+                  )
+                }
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option value="">[Select]</option>
@@ -61,9 +87,17 @@ const AddCampaign = () => {
                 id="url"
                 name="url"
                 maxLength={100}
-                onChange={(e) => setCharCount(100 - e.target.value.length)}
+                onChange={(e) => {
+                  setCharCount(100 - e.target.value.length);
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: { description: e.target.value },
+                    })
+                  );
+                }}
                 className="pt-3 w-full h-20 mt-1 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
                 placeholder="Briefly describe your work on this campaign"
+                value={currentContent.description}
               />
               <p className="flex justify-end">{charCount} characters left</p>
             </div>
@@ -115,7 +149,7 @@ const AddCampaign = () => {
             onClick={() => {
               (
                 document.getElementById(
-                  `add_campaign_modal`
+                  `edit_campaign_modal`
                 ) as HTMLDialogElement
               ).close();
               // TODO: Add logic to show unsaved changes modal if there are any changes
@@ -132,4 +166,4 @@ const AddCampaign = () => {
   );
 };
 
-export default AddCampaign;
+export default EditCampaign;

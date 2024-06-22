@@ -2,26 +2,44 @@
 
 import Upload from "@/components/ui/svgs/Upload";
 import { useState } from "react";
+import Image from "next/legacy/image";
+
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+
+import {
+  creatorContentInfo,
+  editContent,
+} from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
-const AddPersonal = () => {
+const EditPersonal = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
+    dispatch(editContent(currentContent));
+    (
+      document.getElementById(`edit_content_modal`) as HTMLDialogElement
+    ).close();
   };
 
   return (
-    <dialog id="add_content_modal" className="modal">
+    <dialog id="edit_content_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
-            Add New Personal Content
+            Edit Personal Content
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            Display your personal content for brands to see. You can either paste a URL or upload your content.
+            Display your personal content for brands to see. You can either
+            paste a URL or upload your content.
           </p>
         </div>
         {/* Form */}
@@ -49,13 +67,25 @@ const AddPersonal = () => {
             <span className="border-t border-gray-300 flex-1"></span>
           </div>
 
-          <div className="flex flex-col mt-10">
-            <p className="text-[#4A4A4A] block font-bold pr-5">
-              Upload your photo or video
-            </p>
-            <div className="w-full mt-2 py-8 px-8 border-dotted border-2 border-gray-600 rounded-md shadow-sm flex justify-center">
-              <div className="border-4 border-gray-300 rounded-3xl p-1">
-                <Upload />
+          <div className="flex mt-10">
+            <div className="mt-8">
+              <Image
+                src={currentContent.uri}
+                alt="image"
+                width={400}
+                height={400}
+                objectFit="cover"
+                className="rounded"
+              />
+            </div>
+            <div className="flex flex-col justify-start ml-10 w-full">
+              <p className="text-[#4A4A4A] block font-bold pr-5">
+                Upload a different photo or video
+              </p>
+              <div className="mt-2 w-full py-8 px-8 border-dotted border-2 border-gray-600 rounded-md shadow-sm flex justify-center">
+                <div className="border-4 border-gray-300 rounded-3xl p-1">
+                  <Upload />
+                </div>
               </div>
             </div>
           </div>
@@ -73,7 +103,7 @@ const AddPersonal = () => {
             onClick={() => {
               (
                 document.getElementById(
-                  `add_content_modal`
+                  `edit_content_modal`
                 ) as HTMLDialogElement
               ).close();
               // TODO: Add logic to show unsaved changes modal if there are any changes
@@ -90,4 +120,4 @@ const AddPersonal = () => {
   );
 };
 
-export default AddPersonal;
+export default EditPersonal;

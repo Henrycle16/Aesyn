@@ -4,6 +4,7 @@ const contentData = [
   {
     contentId: 0,
     type: "personal",
+    socialMedia: "",
     uri: "/joe-cool.jpg",
     description: "",
     date: "",
@@ -11,6 +12,7 @@ const contentData = [
   {
     contentId: 1,
     type: "personal",
+    socialMedia: "",
     uri: "/luka-cool.jpg",
     description: "",
     date: "",
@@ -18,6 +20,7 @@ const contentData = [
   {
     contentId: 2,
     type: "personal",
+    socialMedia: "",
     uri: "/s-cool.jpg",
     description: "",
     date: "",
@@ -25,6 +28,7 @@ const contentData = [
   {
     contentId: 3,
     type: "personal",
+    socialMedia: "",
     uri: "/scott-cool.jpg",
     description: "",
     date: "",
@@ -32,6 +36,7 @@ const contentData = [
   {
     contentId: 4,
     type: "personal",
+    socialMedia: "",
     uri: "/calvin-cool.jpg",
     description: "",
     date: "",
@@ -39,6 +44,7 @@ const contentData = [
   {
     contentId: 5,
     type: "campaign",
+    socialMedia: "Instagram",
     uri: "/biden.jpg",
     description:
       "Worked with Joe Biden on his presidential campaign. #Biden2020",
@@ -47,6 +53,7 @@ const contentData = [
   {
     contentId: 6,
     type: "campaign",
+    socialMedia: "Twitter",
     uri: "/trump.jpg",
     description:
       "Worked with Donald Trump on his presidential campaign. #Trump2020",
@@ -55,6 +62,7 @@ const contentData = [
   {
     contentId: 7,
     type: "campaign",
+    socialMedia: "Facebook",
     uri: "/obama.jpg",
     description:
       "Worked with Barack Obama on his presidential campaign. #Obama2020",
@@ -63,6 +71,7 @@ const contentData = [
   {
     contentId: 8,
     type: "campaign",
+    socialMedia: "Facebook",
     uri: "/bush.jpg",
     description:
       "Worked with George Bush on his presidential campaign. #Bush2020",
@@ -77,6 +86,7 @@ type InitialState = {
 type Content = {
   contentId?: number;
   type: string;
+  socialMedia: string;
   uri: string;
   description: string;
   date: string;
@@ -93,6 +103,7 @@ const initialState = {
     currentContent: {
       contentId: 0,
       type: "",
+      socialMedia: "",
       uri: "",
       description: "",
       date: "",
@@ -131,6 +142,7 @@ export const creatorContent = createSlice({
       state.value.currentContent = {
         contentId: state.value.content.length,
         type: "",
+        socialMedia: "",
         uri: "",
         description: "",
         date: "",

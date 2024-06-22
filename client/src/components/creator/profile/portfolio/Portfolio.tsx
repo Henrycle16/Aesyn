@@ -6,6 +6,9 @@ import PersonalPortfolioCard from "./PersonalPortfolioCard";
 import CampaignPortfolioCard from "./CampaignPortfolioCard";
 import AddPersonal from "./modals/AddPersonal";
 import AddCampaign from "./modals/AddCampaign";
+import EditPersonal from "./modals/EditPersonal";
+import EditCampaign from "./modals/EditCampaign";
+
 import DeletePortfolioContent from "./modals/DeletePortfolioContent";
 
 import { useAppSelector } from "@/redux/store";
@@ -68,7 +71,8 @@ const Portfolio = () => {
       {/* Add Portfolio Modal */}
       <AddPersonal />
       <AddCampaign />
-
+      <EditPersonal />
+      <EditCampaign />
       <DeletePortfolioContent />
     </section>
   );

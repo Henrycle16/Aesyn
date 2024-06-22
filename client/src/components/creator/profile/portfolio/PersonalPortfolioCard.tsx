@@ -40,6 +40,10 @@ const PersonalPortfolioCard = (props: Props) => {
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] absolute top-2 right-2 cursor-pointer"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={() => {
+              dispatch(creatorContentInfo({ currentContent: props }));
+              (document.getElementById(`edit_content_modal`) as HTMLDialogElement).showModal();
+            }}
           />
           <DeleteOutlineIcon
             sx={{ color: "#FF0000" }}
