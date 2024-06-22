@@ -24,24 +24,16 @@ const Portfolio = () => {
       </div>
       <div className="my-5 flex gap-12">
         <button
-          style={{
-            textDecoration: isPersonalPortfolio ? "underline" : "none",
-            textUnderlineOffset: "0.5rem",
-          }}
-          className={`text-xl mb-2 ${
-            isPersonalPortfolio ? "font-semibold" : ""
+          className={`text-md mb-2 ${
+            isPersonalPortfolio ? "underline decoration-2 underline-offset-8 font-semibold" : "none"
           }`}
           onClick={() => setisPersonalPortfolio(true)}
         >
           Personal Content
         </button>
         <button
-          style={{
-            textDecoration: isPersonalPortfolio ? "none" : "underline",
-            textUnderlineOffset: "0.5rem",
-          }}
-          className={`text-xl mb-2 ${
-            isPersonalPortfolio ? "" : "font-semibold"
+          className={`text-md mb-2 ${
+            isPersonalPortfolio ? "none" : "underline decoration-2 underline-offset-8 font-semibold"
           }`}
           onClick={() => setisPersonalPortfolio(false)}
         >
