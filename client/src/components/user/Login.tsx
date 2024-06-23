@@ -3,15 +3,9 @@
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { signIn, signOut } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
 import SignUpPopup from "./SignUpPopup";
 import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
@@ -54,17 +48,20 @@ const LoginComponent = () => {
   };
 
   return (
-    <div>
+    <>
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
       >
-        <div className="mt-8 flex flex-col items-center">
+        {/* Form Header */}
+        <div className="mx-auto mt-16 flex flex-col items-center">
           <Avatar className="m-1 bg-blue-500">
             <PersonPinOutlinedIcon />
           </Avatar>
           <h1 className="text-2xl">Login</h1>
         </div>
+
+        {/* Input Fields */}
         <div className="mt-5">
           <input
             className="input-md w-full"
@@ -134,7 +131,7 @@ const LoginComponent = () => {
       <SignUpModal>
         <SignUpPopup />
       </SignUpModal>
-    </div>
+    </>
   );
 };
 

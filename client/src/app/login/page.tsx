@@ -7,7 +7,7 @@ import login from "../../../public/login.jpg"
 export default function SignUp() {
   return (
     <div className="flex justify-between px-12 max-lg:flex-col max-lg:items-center gap-2">
-      <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+      <div className="max-w-xl">
         <LoginComponent />
       </div>
 
