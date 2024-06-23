@@ -31,7 +31,7 @@ interface CreatorForm {
   gender: string;
   location: string;
   preferences: string[];
-  niche: string[];
+  niches: string[];
 }
 
 const creatorFormData: CreatorForm = {
@@ -39,7 +39,7 @@ const creatorFormData: CreatorForm = {
   gender: "",
   location: "",
   preferences: [],
-  niche: [],
+  niches: [],
 };
 
 const SignUpBox = () => {

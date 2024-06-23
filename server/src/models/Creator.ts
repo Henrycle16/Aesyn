@@ -25,7 +25,7 @@ const CreatorSchema = new mongoose.Schema({
     preferences: {
         type: [String]
     },
-    niche: {
+    niches: {
         type: [String]
     },
     date: {
