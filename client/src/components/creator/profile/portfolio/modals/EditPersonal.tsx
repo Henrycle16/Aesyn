@@ -1,6 +1,6 @@
 "use client";
 
-import Upload from "@/components/ui/svgs/Upload";
+import FileUpload from "../FileUpload";
 import { useState } from "react";
 import Image from "next/legacy/image";
 
@@ -82,10 +82,8 @@ const EditPersonal = () => {
               <p className="text-[#4A4A4A] block font-bold pr-5">
                 Upload a different photo or video
               </p>
-              <div className="mt-2 w-full py-8 px-8 border-dotted border-2 border-gray-600 rounded-md shadow-sm flex justify-center">
-                <div className="border-4 border-gray-300 rounded-3xl p-1">
-                  <Upload />
-                </div>
+              <div>
+                  <FileUpload />
               </div>
             </div>
           </div>
