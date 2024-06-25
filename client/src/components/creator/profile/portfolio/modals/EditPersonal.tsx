@@ -69,21 +69,25 @@ const EditPersonal = () => {
 
           <div className="flex mt-10">
             <div className="mt-8">
-              <Image
-                src={currentContent.uri}
-                alt="image"
-                width={400}
-                height={400}
-                objectFit="cover"
-                className="rounded"
-              />
+              {currentContent.uri ? (
+                <Image
+                  src={currentContent.uri}
+                  alt="image"
+                  width={400}
+                  height={400}
+                  objectFit="cover"
+                  className="rounded"
+                />
+              ) : (
+                <div className="">Image not available</div>
+              )}
             </div>
             <div className="flex flex-col justify-start ml-10 w-full">
               <p className="text-[#4A4A4A] block font-bold pr-5">
                 Upload a different photo or video
               </p>
               <div>
-                  <FileUpload />
+                <FileUpload />
               </div>
             </div>
           </div>
