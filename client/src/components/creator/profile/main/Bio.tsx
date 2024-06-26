@@ -1,8 +1,31 @@
 "use client";
 
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
-const Bio = () => {
+const Bio: React.FC = () => {
+  const [bioText, setBioText] = useState<string>("");
+  const [tempBioText, setTempBioText] = useState<string>("");
+
+  const handleBioChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setTempBioText(event.target.value);
+  };
+
+  const openModal = () => {
+    setTempBioText(bioText);
+    (document.getElementById("bio_modal") as HTMLDialogElement).showModal();
+  };
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setBioText(tempBioText);
+    closeModal();
+  };
+
+  const closeModal = () => {
+    (document.getElementById("bio_modal") as HTMLDialogElement).close();
+  };
+
   return (
     <>
       <div className="min-h-[13rem]">
@@ -11,69 +34,57 @@ const Bio = () => {
           <ModeEditOutlineOutlinedIcon
             sx={{ color: "#3798E3", fontSize: 25 }}
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] cursor-pointer ml-3 mt-1"
-            onClick={() =>
-              (
-                document.getElementById(`bio_modal`) as HTMLDialogElement
-              ).showModal()
-            }
+            onClick={openModal}
           />
         </div>
         <div className="flex flex-col">
-          <p className=" text-[#061119] text-md mt-4 mb-10 flex-grow">
-            Hi, I’m Calvin, and I live in the beautiful state of California. I’m
-            a proud gay man living life to the fullest on the West Coast. By
-            day, I’m a Professional Anal Inspector, passionate about guys. When
-            I’m not working, you can find me exploring California’s stunning
-            beaches, hiking trails, and vibrant city life. I’m an advocate for
-            LGBTQ+ rights and love being part of such a supportive and diverse
-            community. Whether it’s attending pride events, volunteering, or
-            simply sharing stories, I’m all about celebrating love and
-            individuality. In my free time, I enjoy gaming, discovering new
-            music, and trying out the latest food spots in town. Always up for a
-            good conversation and meeting new people, so don’t hesitate to reach
-            out. Let’s connect and share our California adventures.
+          <p className="text-[#4A4A4A] text-md mt-4 mb-10 flex-grow">
+            {bioText || "Write a short bio that best describes who you are!"}
           </p>
         </div>
       </div>
 
       {/* Modal */}
       <dialog id="bio_modal" className="modal">
-        <div className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6">
+        <form
+          onSubmit={handleSubmit}
+          className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6"
+        >
           <h1 className="text-[#184465] font-semibold text-2xl">Bio</h1>
-          <h2 className="py-2 text-[#4A4A4A]">Give a brief description for your profile.</h2>
-          <form method="dialog">
-            <div className="">
-              <textarea
-                name="description"
-                placeholder="Enter your bio here..."
-                maxLength={100}
-                rows={7}
-                // ! Should not used defaultValue, use value instead with onChange. (Only for static data, defaultValue is used.)
-                className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
-                style={{
-                  paddingLeft: "1%",
-                  paddingTop: "1%",
-                  resize: "none",
-                  fontSize: "16px",
-                }}
-              ></textarea>
-            </div>
-
-            <div className="flex justify-end mt-10">
-              {/* if there is a button, it will close the modal */}
-              <button
-                onClick={() => console.log("Save Bio")}
-                // type="submit"
-                className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
-              >
-                Save
-              </button>
-            </div>
-            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
-              ✕
+          <h2 className="py-2 text-[#4A4A4A]">
+            Give a brief description for your profile.
+          </h2>
+          <textarea
+            name="description"
+            placeholder="Enter your bio here..."
+            maxLength={100}
+            rows={7}
+            value={tempBioText}
+            onChange={handleBioChange}
+            className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+            style={{
+              paddingLeft: "1%",
+              paddingTop: "1%",
+              resize: "none",
+              fontSize: "16px",
+            }}
+          />
+          <div className="modal-action">
+            <button
+              type="submit"
+              className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
+            >
+              Save
             </button>
-          </form>
-        </div>
+            <button
+              onClick={closeModal}
+              type="button"
+              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
+            >
+              X
+            </button>
+          </div>
+        </form>
       </dialog>
     </>
   );
