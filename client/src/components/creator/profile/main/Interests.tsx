@@ -126,6 +126,7 @@ const Interests = () => {
               <Select
                 isMulti
                 name="interests"
+                closeMenuOnSelect={false}
                 options={options}
                 onChange={handleChange}
                 value={value}
