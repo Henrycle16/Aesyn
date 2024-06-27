@@ -1,6 +1,3 @@
-import Instagram from "@/components/ui/svgs/Instagram";
-import Tiktok from "@/components/ui/svgs/Tiktok";
-import Youtube from "@/components/ui/svgs/Youtube";
 import Avatar from "@mui/material/Avatar";
 
 type Props = {
