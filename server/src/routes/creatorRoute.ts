@@ -67,7 +67,7 @@ router.post(
             gender,
             location,
             preferences,
-            niche
+            niches
         } = req.body;
 
         
@@ -78,7 +78,7 @@ router.post(
             gender: gender,
             location: location,
             preferences: preferences,
-            niche: niche
+            niches: niches
         };
 
         try {
