@@ -7,8 +7,8 @@ import Link from "@mui/material/Link";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
-import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
+import { useSession } from "next-auth/react";
 
 import { logIn } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
@@ -42,6 +42,9 @@ const LoginComponent = () => {
         email: session.data?.user.email,
         userId:session.data?.user.id
       }));
+
+
+      dispatch(logIn(session.data?.user.id));
 
       console.log(loginResponse);
     } else {
