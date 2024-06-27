@@ -22,17 +22,21 @@ const PersonalPortfolioCard = (props: Props) => {
 
   return (
     <div className="relative">
-      <Image
-        src={props.uri}
-        alt="image"
-        width={1000}
-        height={1000}
-        objectFit="cover"
-        className="rounded"
-        style={imageStyle}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      />
+      {props.uri ? (
+        <Image
+          src={props.uri}
+          alt="personal content"
+          width={1000}
+          height={1000}
+          objectFit="cover"
+          className="rounded"
+          style={imageStyle}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        />
+      ) : (
+        <div className="">Image not available</div>
+      )}
       {isHovered && (
         <>
           <ModeEditOutlineOutlinedIcon
@@ -42,7 +46,11 @@ const PersonalPortfolioCard = (props: Props) => {
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
               dispatch(creatorContentInfo({ currentContent: props }));
-              (document.getElementById(`edit_content_modal`) as HTMLDialogElement).showModal();
+              (
+                document.getElementById(
+                  `edit_content_modal`
+                ) as HTMLDialogElement
+              ).showModal();
             }}
           />
           <DeleteOutlineIcon

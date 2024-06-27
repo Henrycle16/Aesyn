@@ -1,7 +1,7 @@
 "use client";
 
-import Upload from "@/components/ui/svgs/Upload";
 import { useState } from "react";
+import FileUpload from "../FileUpload";
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
@@ -53,10 +53,8 @@ const AddPersonal = () => {
             <p className="text-[#4A4A4A] block font-bold pr-5">
               Upload your photo or video
             </p>
-            <div className="w-full mt-2 py-8 px-8 border-dotted border-2 border-gray-600 rounded-md shadow-sm flex justify-center">
-              <div className="border-4 border-gray-300 rounded-3xl p-1">
-                <Upload />
-              </div>
+            <div>
+                <FileUpload />
             </div>
           </div>
 

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
 
 import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
@@ -24,17 +24,21 @@ const CampaignPortfolioCard = (props: Props) => {
 
   return (
     <div className="relative">
-      <Image
-        src={props.uri}
-        alt="image"
-        width={1000}
-        height={1000}
-        objectFit="cover"
-        className="rounded"
-        style={imageStyle}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      />
+      {props.uri ? (
+        <Image
+          src={props.uri}
+          alt="image"
+          width={1000}
+          height={1000}
+          objectFit="cover"
+          className="rounded"
+          style={imageStyle}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        />
+      ) : (
+        <div className="">Image not available</div>
+      )}
       {isHovered && (
         <>
           <ModeEditOutlineOutlinedIcon
@@ -44,7 +48,11 @@ const CampaignPortfolioCard = (props: Props) => {
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
               dispatch(creatorContentInfo({ currentContent: props }));
-              (document.getElementById(`edit_campaign_modal`) as HTMLDialogElement).showModal();
+              (
+                document.getElementById(
+                  `edit_campaign_modal`
+                ) as HTMLDialogElement
+              ).showModal();
             }}
           />
           <DeleteOutlineIcon
