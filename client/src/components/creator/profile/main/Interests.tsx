@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { nichesArray, Niche } from "@/lib/user/nichesLib";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Select, {
@@ -18,13 +18,14 @@ type OptionType = {
 };
 
 const Interests = () => {
-  const [isModalClosed, setIsModalClosed] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [displayedNiches, setDisplayedNiches] = useState<Niche[]>([]);
   const [selectedNiches, setSelectedNiches] = useState<Niche[]>([]);
   const [isLimitExceeded, setIsLimitExceeded] = useState(false);
 
+  // Handles the change in the selected options
   const handleChange = (
     selectedOptions: MultiValue<OptionType>,
-    actionMeta: ActionMeta<OptionType>
   ) => {
     if (!selectedOptions) {
       setSelectedNiches([]);
@@ -38,22 +39,32 @@ const Interests = () => {
 
     if (newSelectedNiches.length <= 6) {
       setSelectedNiches(newSelectedNiches);
-      setIsLimitExceeded(false); // Reset the limit exceeded flag when within limit
+      setIsLimitExceeded(false);
     } else {
-      setIsLimitExceeded(true); // Set the flag instead of using alert
+      setIsLimitExceeded(true);
     }
   };
 
+  // Convert nichesArray to options
   const options: OptionType[] = nichesArray.map((niche) => ({
     value: niche.key.toString(),
     label: niche.label,
   }));
 
+  // Convert selectedNiches to value
   const value: OptionType[] = selectedNiches.map((niche) => ({
     value: niche.key.toString(),
     label: niche.label,
   }));
 
+  // Remove the niche from the selected
+  const removeNiche = (keyToRemove: number) => {
+    setSelectedNiches(
+      selectedNiches.filter((niche) => niche.key !== keyToRemove)
+    );
+  };
+
+  // Custom ValueContainer to display the number of selected
   const ValueContainer = ({
     children,
     getValue,
@@ -70,40 +81,43 @@ const Interests = () => {
     );
   };
 
-  const removeNiche = (keyToRemove: number) => {
-    setSelectedNiches(
-      selectedNiches.filter((niche) => niche.key !== keyToRemove)
-    );
+  const handleSave = () => {
+    setDisplayedNiches([...selectedNiches]);
+    closeModal();
+  };
+
+  // This displays the selected niches in the main profile page when modal is open
+  const openModal = () => {
+    setIsModalOpen(true);
+    setSelectedNiches([...displayedNiches]);
+    (
+      document.getElementById(`interests_modal`) as HTMLDialogElement
+    ).showModal();
   };
 
   const closeModal = () => {
-    setIsModalClosed(true);
+    setIsModalOpen(false);
     (document.getElementById(`interests_modal`) as HTMLDialogElement).close();
   };
 
   return (
+    // Main Interests Display
     <div className="border-r border-gray-300 py-8 px-10">
       <div className="flex justify-start">
         <h1 className="text-2xl font-semibold text-[#184465]">Interests </h1>
         <ModeEditOutlineOutlinedIcon
           sx={{ color: "#3798E3", fontSize: 25 }}
           className="border-2 border-[#3798E3] rounded-full p-[.12rem] cursor-pointer ml-3 mt-1"
-          onClick={() =>
-            (
-              document.getElementById(`interests_modal`) as HTMLDialogElement
-            ).showModal()
-          }
+          onClick={openModal}
         />
       </div>
       <div className="flex flex-wrap pt-8 gap-x-2 gap-y-3">
-        {selectedNiches.slice(0, 6).map((data) => (
+        {displayedNiches.map((niche) => (
           <div
-            key={data.key}
-            className={
-              "rounded-3xl text-base font-semibold w-auto py-2 px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
-            }
+            key={niche.key}
+            className="rounded-3xl text-base font-semibold w-auto py-2 px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
           >
-            {data.label}
+            {niche.label}
           </div>
         ))}
       </div>
@@ -126,19 +140,17 @@ const Interests = () => {
               <Select
                 isMulti
                 name="interests"
-                closeMenuOnSelect={false}
+                closeMenuOnSelect={selectedNiches.length === 5}
                 options={options}
                 onChange={handleChange}
                 value={value}
                 components={{ ValueContainer }}
                 placeholder="[Select]"
                 isDisabled={selectedNiches.length >= 6}
-                // className="css-1n6sfyn-MenuList"
               />
               {selectedNiches.length === 6 && (
                 <div className="text-[#B21717] mt-2">
-                  You can only choose up to 6 interests. Please remove an
-                  interest to add another.
+                  You can select a maximum of 6 interests. Please deselect one before adding another.
                 </div>
               )}
             </div>
@@ -167,13 +179,21 @@ const Interests = () => {
           <form method="dialog">
             <div className="flex justify-end mt-10">
               <button
-                onClick={closeModal}
-                className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-lg hover:bg-[#2C7AB6]"
+                onClick={handleSave}
+                disabled={selectedNiches.length === 0}
+                className={`ml-auto py-3 px-6 capitalize font-bold rounded-lg text-white ${
+                  selectedNiches.length === 0
+                    ? "bg-gray-400 hover:bg-gray-400"
+                    : "bg-[#3798E3] hover:bg-[#2C7AB6]"
+                }`}
               >
                 Save
               </button>
             </div>
-            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
+            <button
+              onClick={closeModal}
+              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
+            >
               ✕
             </button>
           </form>
