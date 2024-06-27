@@ -140,6 +140,7 @@ const Interests = () => {
               <Select
                 isMulti
                 name="interests"
+                instanceId="interests-select"
                 closeMenuOnSelect={selectedNiches.length === 5}
                 options={options}
                 onChange={handleChange}
