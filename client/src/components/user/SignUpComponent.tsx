@@ -85,61 +85,61 @@ const SignUpComponent = () => {
       <div className="mt-5">
         <input
           type="text"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+          className="input-md w-full input-focus-primary"
           placeholder="First Name*"
           id="firstName"
           {...register("firstName")}
           autoFocus
           autoComplete="given-name"
         />
-        <p className="mt-1 text-sm text-red-400 min-h-5">
+        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
           {errors.firstName?.message}
         </p>
       </div>
       <div>
         <input
           type="text"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+          className="input-md w-full input-focus-primary"
           placeholder="Last Name*"
           id="lastName"
           {...register("lastName")}
           autoComplete="family-name"
         />
-        <p className="mt-1 text-sm text-red-400 min-h-5">
+        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
           {errors.lastName?.message}
         </p>
       </div>
       <div>
         <input
           type="email"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+          className="input-md w-full input-focus-primary"
           placeholder="Email Address*"
           id="email"
           {...register("email")}
           autoComplete="email"
         />
-        <p className="mt-1 text-sm text-red-400 min-h-5">
+        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
           {errors.email?.message}
         </p>
       </div>
       <div>
         <input
           type="password"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+          className="input-md w-full input-focus-primary"
           placeholder="Password*"
           id="password"
           {...register("password")}
           autoComplete="new-password"
           maxLength={50}
         />
-        <p className="mt-1 text-sm text-red-400 min-h-5">
+        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
           {errors.password?.message}
         </p>
       </div>
       <div>
         <input
           type="password"
-          className="input-md border border-gray-300 w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+          className="input-md w-full input-focus-primary"
           placeholder="Confirm Password*"
           id="password2"
           {...register("password2")}
@@ -147,7 +147,7 @@ const SignUpComponent = () => {
           maxLength={50}
         />
         {errors.password2?.message && (
-          <p className="mt-1 text-sm text-red-400">
+          <p className="mt-1 text-sm delete-btn-text-color">
             {errors.password2.message}
           </p>
         )}
@@ -175,7 +175,7 @@ const SignUpComponent = () => {
       </div>
       <div>
       {errors.acceptedTerms?.message && (
-          <p className="mt-1 text-sm text-red-400">{errors.acceptedTerms.message}</p>
+          <p className="mt-1 text-sm delete-btn-text-color">{errors.acceptedTerms.message}</p>
         )}
       </div>
       <div className="flex items-start gap-3">
