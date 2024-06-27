@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
@@ -16,10 +17,45 @@ import { ListItemIcon, MenuItem } from "@mui/material";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
+
+import { logIn, logOut } from "@/redux/slices/auth-slice";
+import { useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const session = useSession();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (session.data && session.status === "authenticated") {
+      dispatch(logIn({
+        isAuth: true,
+        name: session.data?.user.name,
+        email: session.data?.user.email,
+        userId:session.data?.user.id
+      }));
+    } else {
+      redirect("/login");
+    }
+  }, [session.data, session.status]);
+
+  // redux store
+  const authName = useAppSelector(
+    (state) => state.authReducer.value.name
+  );
+  const authEmail = useAppSelector(
+    (state) => state.authReducer.value.email
+  );
+
+  const handleSignOut = () => {
+    dispatch(logOut());
+    signOut({ redirect: true, callbackUrl: "/" });
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -59,9 +95,9 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography variant="subtitle1">Hello World</Typography>
+          <Typography variant="subtitle1">{authName}</Typography>
           <Typography color="text.secondary" variant="body2">
-            I.am.Caorin@gm.com
+            {authEmail}
           </Typography>
         </Box>
         <Divider />
@@ -78,7 +114,7 @@ const CreatorAvatar: React.FC = () => {
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <LogoutOutlinedIcon fontSize="medium" />
           </ListItemIcon>

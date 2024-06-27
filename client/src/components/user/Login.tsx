@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
 import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
 
-import { logIn, logOut } from "@/redux/slices/auth-slice";
+import { logIn } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -34,17 +34,17 @@ const LoginComponent = () => {
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
 
-      dispatch(logIn(session.data?.user.id));
+      dispatch(logIn({
+        isAuth: true,
+        name: session.data?.user.name,
+        email: session.data?.user.email,
+        userId:session.data?.user.id
+      }));
 
       console.log(loginResponse);
     } else {
       console.log("Error!");
     }
-  };
-
-  const onClickLogOut = () => {
-    dispatch(logOut());
-    signOut({ redirect: false });
   };
 
   return (
@@ -102,14 +102,6 @@ const LoginComponent = () => {
           className="mt-3 mb-2 btn-primary-color"
         >
           Login
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          className="mt-3 mb-2"
-          onClick={onClickLogOut}
-        >
-          Sign Out
         </Button>
 
         <button
