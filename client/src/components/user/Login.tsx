@@ -25,10 +25,12 @@ const LoginComponent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // callbackURL placeholder for now
     const loginResponse = await signIn("login", {
       email: email,
       password: password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/creator/profile"
     });
 
     if (loginResponse && !loginResponse.error) {
