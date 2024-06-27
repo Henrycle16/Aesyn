@@ -69,7 +69,7 @@ const LoginComponent = () => {
         {/* Input Fields */}
         <div className="mt-5">
           <input
-            className="input-md w-full"
+            className="input-md w-full input-focus-primary"
             type="text"
             placeholder="Email Address"
             id="email"
@@ -82,10 +82,13 @@ const LoginComponent = () => {
             autoComplete="email"
             required
           />
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+          {}
+        </p>
         </div>
         <div>
           <input
-            className="input-md w-full"
+            className="input-md w-full input-focus-primary"
             type="password"
             placeholder="Password"
             id="password"
@@ -98,6 +101,9 @@ const LoginComponent = () => {
             autoComplete="new-password"
             required
           />
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+          {}
+        </p>
         </div>
 
         <Button
