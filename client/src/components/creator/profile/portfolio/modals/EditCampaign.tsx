@@ -84,8 +84,8 @@ const EditCampaign = () => {
                 Description
               </label>
               <textarea
-                id="url"
-                name="url"
+                id="description"
+                name="description"
                 maxLength={100}
                 onChange={(e) => {
                   setCharCount(100 - e.target.value.length);
