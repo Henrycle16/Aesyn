@@ -1,5 +1,6 @@
-import express from "express";
-import { check, validationResult } from "express-validator";
+import express from 'express';
+// import { check } from 'express-validator';
+import {validationResult } from 'express-validator';
 
 import Creator from "../models/Creator";
 import User from "../models/User";
@@ -42,17 +43,24 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { userName, gender, location, preferences, niche } = req.body;
+        const {
+            userName,
+            gender,
+            location,
+            preferences,
+            interests
+        } = req.body;
 
-    //Build profile object
-    const creatorProfileFields = {
-      user: req.body.user.id,
-      userName: userName,
-      gender: gender,
-      location: location,
-      preferences: preferences,
-      niche: niche,
-    };
+        
+        //Build profile object
+        const creatorProfileFields = {
+            user: req.body.user.id,
+            userName: userName,
+            gender: gender,
+            location: location,
+            preferences: preferences,
+            interests: interests
+        };
 
     try {
       let creatorProfile = await Creator.findOne({ user: req.body.user.id });

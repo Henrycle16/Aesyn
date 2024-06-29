@@ -48,7 +48,7 @@ const SocialMediaSelect = ({
       <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
           <span className="label-text font-bold text-lg">
-            Social media preferences:
+            Select your platform(s). 
           </span>
         </div>
         <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-4">

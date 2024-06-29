@@ -25,8 +25,11 @@ const CreatorSchema = new mongoose.Schema({
     preferences: {
         type: [String]
     },
-    niche: {
+    interests: {
         type: [String]
+    },
+    bio: {
+        type: String
     },
     packages: [
         {

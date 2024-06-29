@@ -1,26 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { signIn, signOut } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
+import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
-import { useSession } from "next-auth/react";
 import SignUpModal from "../user/SignUpModal";
+import { useSession } from "next-auth/react";
 
-import { logIn, logOut } from "@/redux/slices/auth-slice";
+import { logIn } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
-
 
 const LoginComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,14 +25,24 @@ const LoginComponent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // callbackURL placeholder for now
     const loginResponse = await signIn("login", {
       email: email,
       password: password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/creator/profile"
     });
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
+
+      dispatch(logIn({
+        isAuth: true,
+        name: session.data?.user.name,
+        email: session.data?.user.email,
+        userId:session.data?.user.id
+      }));
+
 
       dispatch(logIn(session.data?.user.id));
 
@@ -49,102 +52,89 @@ const LoginComponent = () => {
     }
   };
 
-  const onClickLogOut = () => {
-    dispatch(logOut());
-    signOut({ redirect: false });
-  }
-
   return (
-    <Container component="main" maxWidth="xs">
+    <>
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
+      >
+        {/* Form Header */}
+        <div className="mx-auto mt-16 flex flex-col items-center">
+          <Avatar className="m-1 bg-blue-500">
+            <PersonPinOutlinedIcon />
+          </Avatar>
+          <h1 className="text-2xl">Login</h1>
+        </div>
+
+        {/* Input Fields */}
+        <div className="mt-5">
+          <input
+            className="input-md w-full input-focus-primary"
+            type="text"
+            placeholder="Email Address"
+            id="email"
+            value={email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
+            name="email"
+            autoFocus
+            autoComplete="email"
+            required
+          />
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+          {}
+        </p>
+        </div>
+        <div>
+          <input
+            className="input-md w-full input-focus-primary"
+            type="password"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+            name="password"
+            autoFocus
+            autoComplete="new-password"
+            required
+          />
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+          {}
+        </p>
+        </div>
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className="mt-3 mb-2 btn-primary-color"
+        >
+          Login
+        </Button>
+
+        <button
+          onClick={() => (document.getElementById("sign-up-modal") as HTMLDialogElement).showModal()}
+        >
+          <Link href="#">Don&apos;t have an account? Sign up</Link>
+        </button>
+
+        <div className="flex pt-16 pb-1">
+          <p className="mx-auto text-sm text-gray-500">
+            Copyright ©{" "}
+            <Link href={"/"} className="text-gray-500">
+              ShareFluence
+            </Link>{" "}
+            {new Date().getFullYear()}.
+          </p>
+        </div>
+      </form>
       <SignUpModal>
         <SignUpPopup />
       </SignUpModal>
-      <Box className="mt-8 flex flex-col items-center">
-        <Avatar className="m-1 bg-blue-500">
-          <PersonPinOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <Box
-          className="mt-3"
-          component="form"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <Grid container spacing={2} className="pb-6">
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPassword(e.target.value)
-                }
-                autoComplete="new-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className="mt-3 mb-2 bg-muiblue"
-          >
-            Login
-          </Button>
-          <Button
-            fullWidth
-            variant="contained"
-            className="mt-3 mb-2 bg-muiblue"
-            onClick={onClickLogOut}
-          >
-            Sign Out
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <button
-                onClick={() =>
-                  document.getElementById("sign-up-modal").showModal()
-                }
-              >
-                <Link href="#">Don&apos;t have an account? Sign up</Link>
-              </button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        sx={{ paddingTop: "20px" }}
-      >
-        {"Copyright © "}
-        <Link color="inherit" href="http://github.com/H2JC/H2JC">
-          H2JC
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    </Container>
+    </>
   );
 };
 

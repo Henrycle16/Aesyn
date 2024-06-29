@@ -8,6 +8,8 @@ import { userInfo } from "@/redux/slices/user-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import { industryArray } from "@/lib/user/industriesLib";
+
 
 interface CompanyFormProps {
   register: any;
@@ -22,14 +24,7 @@ const CompanyForm = ({
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
-
-  const options = [
-    { value: "Agency", label: "Agency" },
-    { value: "E-commerce", label: "E-commerce" },
-    { value: "Website/App", label: "Website/App" },
-    { value: "Brick & Mortar", label: "Brick & Mortar" },
-    { value: "Other", label: "Other" },
-  ];
+  
 
   const toggleSelectClick = () => {
     setIsOpen(!isOpen);
@@ -92,9 +87,9 @@ const CompanyForm = ({
               <option value="" disabled hidden>
                 Please select an industry
               </option>
-              {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+              {industryArray.map((industry) => (
+                <option key={industry.value} value={industry.value}>
+                  {industry.label}
                 </option>
               ))}
             </select>
