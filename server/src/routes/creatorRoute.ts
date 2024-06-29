@@ -225,7 +225,7 @@ router.post("/:user_id/packages", async (req, res) => {
   }
 });
 
-// UPDATE a package - api/creators/:user_id/packages/:package_id
+// UPDATE a package - api/creators/:user_id/packages
 router.put("/:user_id/packages", async (req, res) => {
   try {
     const updatedPackage = req.body;
