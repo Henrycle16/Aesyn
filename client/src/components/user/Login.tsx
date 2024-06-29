@@ -116,7 +116,7 @@ const LoginComponent = () => {
         </Button>
 
         <button
-          onClick={() => document.getElementById("sign-up-modal").showModal()}
+          onClick={() => (document.getElementById("sign-up-modal") as HTMLDialogElement).showModal()}
         >
           <Link href="#">Don&apos;t have an account? Sign up</Link>
         </button>

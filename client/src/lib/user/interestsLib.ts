@@ -1,4 +1,4 @@
-export const nichesArray = [
+export const interestsArray = [
     { key: 0, label: "Lifestyle" },
     { key: 1, label: "Fashion" },
     { key: 2, label: "Beauty" },
@@ -26,10 +26,8 @@ export const nichesArray = [
     { key: 24, label: "Skilled Trades" },
     { key: 25, label: "Automotive" },
   ];
-
-
   
-  export type Niche = {
+  export type Interest = {
     key: number;
     label: string;
   };

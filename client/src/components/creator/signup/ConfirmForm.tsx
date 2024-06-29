@@ -7,7 +7,7 @@ const ConfirmForm = () => {
   const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
   const location = useAppSelector((state) => state.userInfoReducer.value.location);
   const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
-  const niches = useAppSelector((state) => state.userInfoReducer.value.niches);
+  const interests = useAppSelector((state) => state.userInfoReducer.value.interests);
 
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
@@ -46,10 +46,10 @@ const ConfirmForm = () => {
           </div>
         </div>
 
-        {/* This block is for populating the Niche Selection  */}
+        {/* This block is for populating the Interest Selection  */}
         <div className="col-start-1 col-span-2 row-start-3 row-span-1 justify-end">
-          <div className="label-text font-semibold text-base ">Niche(s)</div>
-          <div className="pt-1 font-light">{niches.join(", ")}</div>
+          <div className="label-text font-semibold text-base ">Interest(s)</div>
+          <div className="pt-1 font-light">{interests.join(", ")}</div>
         </div>
       </div>
 

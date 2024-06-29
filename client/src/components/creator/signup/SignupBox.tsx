@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import UsernameForm from "./UsernameForm";
 import LocationBox from "../../ui/mapbox/LocationBox";
 import SocialMediaSelect from "../../ui/SocialMediaSelect";
-import NicheSelect from "./InterestSelect";
+import InterestSelect from "./InterestSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
@@ -31,7 +31,7 @@ interface CreatorForm {
   gender: string;
   location: string;
   preferences: string[];
-  niches: string[];
+  interests: string[];
 }
 
 const creatorFormData: CreatorForm = {
@@ -39,7 +39,7 @@ const creatorFormData: CreatorForm = {
   gender: "",
   location: "",
   preferences: [],
-  niches: [],
+  interests: [],
 };
 
 const SignUpBox = () => {
@@ -78,7 +78,7 @@ const SignUpBox = () => {
   const userName = useAppSelector((state) => state.userInfoReducer.value.username);
   const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
   const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
-  const niches = useAppSelector((state) => state.userInfoReducer.value.niches);
+  const interests = useAppSelector((state) => state.userInfoReducer.value.interests);
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,7 +96,7 @@ const SignUpBox = () => {
       user,
       userName,
       gender,
-      niches,
+      interests,
       preferences,
       location,
     });
@@ -130,8 +130,8 @@ const SignUpBox = () => {
     <SocialMediaSelect
       key="SocialMediaSelect"
     />,
-    <NicheSelect
-      key="NicheSelect"
+    <InterestSelect
+      key="InterestSelect"
     />,
     <ConfirmForm key="ConfirmForm" />,
     <ToProfile key="ToProfile" />,

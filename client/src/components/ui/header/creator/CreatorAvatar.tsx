@@ -42,7 +42,7 @@ const CreatorAvatar: React.FC = () => {
     } else {
       redirect("/login");
     }
-  }, [session.data, session.status]);
+  }, [dispatch, session.data, session.status]);
 
   // redux store
   const authName = useAppSelector(
@@ -104,15 +104,15 @@ const CreatorAvatar: React.FC = () => {
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <SettingsOutlinedIcon fontSize="medium" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
             <PersonOutlineOutlinedIcon fontSize="medium" />
           </ListItemIcon>
           Profile
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <SettingsOutlinedIcon fontSize="medium" />
+          </ListItemIcon>
+          Settings
         </MenuItem>
         <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
