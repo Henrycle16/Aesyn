@@ -1,26 +1,26 @@
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import "../../../styles/nicheSelect.css";
+import "../../../styles/interestSelect.css";
 
-import { userInfo, removeNiche, addNiche } from "@/redux/slices/user-slice";
+import { userInfo, removeInterest, addInterest } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
-import { nichesArray } from "@/lib/user/nichesLib";
+import { interestsArray } from "@/lib/user/interestsLib";
 
 
-const NicheForm = ({
+const InterestForm = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
-  let niches = useAppSelector((state) => state.userInfoReducer.value.niches);
+  let interests = useAppSelector((state) => state.userInfoReducer.value.interests);
 
-  const handleNicheChanges = (selected: string) => {
-    if (niches.includes(selected)) {
-      dispatch(removeNiche(selected));
+  const handleInterestChanges = (selected: string) => {
+    if (interests.includes(selected)) {
+      dispatch(removeInterest(selected));
     } else {
-      dispatch(addNiche(selected));
+      dispatch(addInterest(selected));
     }
   }
 
@@ -31,7 +31,7 @@ const NicheForm = ({
   return (
     <div className="flex flex-col w-full">
       <div className="w-9/12 mx-auto my-auto">
-        {/*Niche Selection Label*/}
+        {/*Interest Selection Label*/}
         <label className="form-control mb-4">
           <div className="label flex flex-col items-start">
             <span className="label-text font-bold text-lg">
@@ -43,24 +43,24 @@ const NicheForm = ({
           </div>
         </label>
 
-        {/* Niche Select Options */}
+        {/* interest Select Options */}
         <div className="flex flex-wrap gap-x-8 gap-y-3 overflow-y-auto max-h-[16rem]">
-          {nichesArray.map((data) => (
+          {interestsArray.map((data) => (
             <Chip
               key={data.key}
               onClick={() => {
-                if (niches.length < 6 || niches.includes(data.label)) {
-                  handleNicheChanges(data.label)
+                if (interests.length < 6 || interests.includes(data.label)) {
+                  handleInterestChanges(data.label)
                 }
               }}
               variant={
-                niches.includes(data.label) ? "filled" : "outlined"
+                interests.includes(data.label) ? "filled" : "outlined"
               }
               label={data.label}
               className={
                 "rounded-3xl text-base h-10 w-[15rem] " +
                 `${
-                  niches.includes(data.label)
+                  interests.includes(data.label)
                     ? "bg-blue-500 text-white"
                     : "bg-white"
                 }`
@@ -73,7 +73,7 @@ const NicheForm = ({
       {/* Next Button */}
       <div className="self-end">
         <Button
-          disabled={!niches.length}
+          disabled={!interests.length}
           onClick={onNext}
           type="button"
           variant="contained"
@@ -87,4 +87,4 @@ const NicheForm = ({
   );
 };
 
-export default NicheForm;
+export default InterestForm;

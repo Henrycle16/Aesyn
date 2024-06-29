@@ -16,7 +16,6 @@ import ToDashboard from "../../ui/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
-
 import { userInfo } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";

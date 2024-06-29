@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { nichesArray, Niche } from "@/lib/user/nichesLib";
+import React, {useState } from "react";
+import { interestsArray, Interest } from "@/lib/user/interestsLib";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Select, {
   components,
-  ActionMeta,
   MultiValue,
   ValueContainerProps,
   GroupBase,
 } from "react-select";
-import "@/styles/nicheSelect.css";
+import "@/styles/interestSelect.css";
 
 type OptionType = {
   value: string;
@@ -19,8 +18,8 @@ type OptionType = {
 
 const Interests = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [displayedNiches, setDisplayedNiches] = useState<Niche[]>([]);
-  const [selectedNiches, setSelectedNiches] = useState<Niche[]>([]);
+  const [displayedInterests, setDisplayedInterests] = useState<Interest[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<Interest[]>([]);
   const [isLimitExceeded, setIsLimitExceeded] = useState(false);
 
   // Handles the change in the selected options
@@ -28,39 +27,39 @@ const Interests = () => {
     selectedOptions: MultiValue<OptionType>,
   ) => {
     if (!selectedOptions) {
-      setSelectedNiches([]);
+      setSelectedInterests([]);
       return;
     }
 
-    const newSelectedNiches: Niche[] = selectedOptions.map((option) => ({
+    const newSelectedInterests: Interest[] = selectedOptions.map((option) => ({
       key: parseInt(option.value),
       label: option.label,
     }));
 
-    if (newSelectedNiches.length <= 6) {
-      setSelectedNiches(newSelectedNiches);
+    if (newSelectedInterests.length <= 6) {
+      setSelectedInterests(newSelectedInterests);
       setIsLimitExceeded(false);
     } else {
       setIsLimitExceeded(true);
     }
   };
 
-  // Convert nichesArray to options
-  const options: OptionType[] = nichesArray.map((niche) => ({
-    value: niche.key.toString(),
-    label: niche.label,
+  // Convert interestsArray to options
+  const options: OptionType[] = interestsArray.map((interest) => ({
+    value: interest.key.toString(),
+    label: interest.label,
   }));
 
-  // Convert selectedNiches to value
-  const value: OptionType[] = selectedNiches.map((niche) => ({
-    value: niche.key.toString(),
-    label: niche.label,
+  // Convert selectedInterests to value
+  const value: OptionType[] = selectedInterests.map((interest) => ({
+    value: interest.key.toString(),
+    label: interest.label,
   }));
 
-  // Remove the niche from the selected
-  const removeNiche = (keyToRemove: number) => {
-    setSelectedNiches(
-      selectedNiches.filter((niche) => niche.key !== keyToRemove)
+  // Remove the interest from the selected
+  const removeInterest = (keyToRemove: number) => {
+    setSelectedInterests(
+      selectedInterests.filter((interest) => interest.key !== keyToRemove)
     );
   };
 
@@ -82,14 +81,14 @@ const Interests = () => {
   };
 
   const handleSave = () => {
-    setDisplayedNiches([...selectedNiches]);
+    setDisplayedInterests([...selectedInterests]);
     closeModal();
   };
 
-  // This displays the selected niches in the main profile page when modal is open
+  // This displays the selected interests in the main profile page when modal is open
   const openModal = () => {
     setIsModalOpen(true);
-    setSelectedNiches([...displayedNiches]);
+    setSelectedInterests([...displayedInterests]);
     (
       document.getElementById(`interests_modal`) as HTMLDialogElement
     ).showModal();
@@ -112,12 +111,12 @@ const Interests = () => {
         />
       </div>
       <div className="flex flex-wrap pt-8 gap-x-2 gap-y-3">
-        {displayedNiches.map((niche) => (
+        {displayedInterests.map((interest) => (
           <div
-            key={niche.key}
+            key={interest.key}
             className="rounded-3xl text-base font-semibold w-auto py-2 px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
           >
-            {niche.label}
+            {interest.label}
           </div>
         ))}
       </div>
@@ -141,15 +140,15 @@ const Interests = () => {
                 isMulti
                 name="interests"
                 instanceId="interests-select"
-                closeMenuOnSelect={selectedNiches.length === 5}
+                closeMenuOnSelect={selectedInterests.length === 5}
                 options={options}
                 onChange={handleChange}
                 value={value}
                 components={{ ValueContainer }}
                 placeholder="[Select]"
-                isDisabled={selectedNiches.length >= 6}
+                isDisabled={selectedInterests.length >= 6}
               />
-              {selectedNiches.length === 6 && (
+              {selectedInterests.length === 6 && (
                 <div className="text-[#B21717] mt-2">
                   You can select a maximum of 6 interests. Please deselect one before adding another.
                 </div>
@@ -159,15 +158,15 @@ const Interests = () => {
             {/* Display the selected interests */}
             <div className="flex-grow border border-gray-300 rounded-md max-w-[31.063rem] ml-6 py-3 px-4 overflow-auto">
               <div className="flex flex-wrap gap-x-2 gap-y-3">
-                {selectedNiches.map((niche) => (
+                {selectedInterests.map((interest) => (
                   <div
-                    key={niche.key}
+                    key={interest.key}
                     className="rounded-3xl text-base font-semibold w-auto py-2 px-4 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
                   >
-                    <span>{niche.label}</span>
+                    <span>{interest.label}</span>
                     <button
                       className="ml-3 text-[#6D6D6D] font-semibold"
-                      onClick={() => removeNiche(niche.key)}
+                      onClick={() => removeInterest(interest.key)}
                     >
                       X
                     </button>
@@ -181,9 +180,9 @@ const Interests = () => {
             <div className="flex justify-end mt-10">
               <button
                 onClick={handleSave}
-                disabled={selectedNiches.length === 0}
+                disabled={selectedInterests.length === 0}
                 className={`ml-auto py-3 px-6 capitalize font-bold rounded-lg text-white ${
-                  selectedNiches.length === 0
+                  selectedInterests.length === 0
                     ? "bg-gray-400 hover:bg-gray-400"
                     : "bg-[#3798E3] hover:bg-[#2C7AB6]"
                 }`}

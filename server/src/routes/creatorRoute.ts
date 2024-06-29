@@ -1,5 +1,6 @@
 import express from 'express';
-import { check, validationResult } from 'express-validator';
+// import { check } from 'express-validator';
+import {validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
@@ -67,7 +68,7 @@ router.post(
             gender,
             location,
             preferences,
-            niches
+            interests
         } = req.body;
 
         
@@ -78,7 +79,7 @@ router.post(
             gender: gender,
             location: location,
             preferences: preferences,
-            niches: niches
+            interests: interests
         };
 
         try {

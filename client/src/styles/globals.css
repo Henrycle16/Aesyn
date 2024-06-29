@@ -11,7 +11,7 @@
  --g5: #4A4A4A; /* Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
 
  /* Tints & Shades */
- --ts1: #3798e3; /* Success; Linked Icon; linked border */
+ --ts1: #3798e3; /*Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
  --ts2: #2c7ab6; /* Hover Buttons */
  --ts3: #9ed4fe; /* Progress Bar */
  --ts4: #d8eefe; /* Background Color; multi-select button */
