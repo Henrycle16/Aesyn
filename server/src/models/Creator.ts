@@ -32,7 +32,7 @@ const CreatorSchema = new mongoose.Schema({
         {
             socialMedia: {
                 type: String,
-                enum: ['Instagram', 'Facebook', 'Twitter/X', 'TikTok', 'YouTube', 'Snapchat']
+                // enum: ['Instagram', 'Facebook', 'Twitter/X', 'TikTok', 'YouTube', 'Snapchat']
             },
             type: {
                 type: String

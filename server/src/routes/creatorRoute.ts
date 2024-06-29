@@ -136,47 +136,6 @@ router.put("/", [], auth, async (req, res) => {
   }
 });
 
-// @route   PUT api/creators/:creator_username/packages
-// @desc    Add package to creator.packages
-// @access  Private
-router.put("/:user_id/packages", async (req, res) => {
-  try {
-    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id },
-      { $push: { packages: req.body } },
-      { 
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.status(200).json(creatorProfile.packages);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send(err.message);
-  }
-});
-
-// @route   PUT api/creators/:creator_username/packages/:package_id
-// @desc    Update package to creator.packages
-// @access  Private
-router.put("/:user_id/packages/:package_id", async (req, res) => {
-  try {
-    const updatedPackage = { _id: req.params.package_id, ...req.body};
-
-    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id, "packages._id": req.params.package_id},
-      { $set: { 'packages.$': updatedPackage } },
-      { 
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    res.status(200).json(creatorProfile.packages);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send(err.message);
-  }
-});
-
 // @route   GET api/creators
 // @desc    Get all Creator profiles
 // @access  Public
@@ -233,6 +192,61 @@ router.delete("/", auth, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+/* =====Package Endpoints===== */
+
+// CREATE package to creator.packages - api/creators/:user_id/packages
+router.post("/:user_id/packages", async (req, res) => {
+  try {
+    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id },
+      { $push: { packages: req.body } },
+      { 
+        new: true,
+        runValidators: true,
+      }
+    );
+    const newPackage = creatorProfile.packages[creatorProfile.packages.length - 1];
+    res.status(200).json(newPackage);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+// UPDATE a package - api/creators/:user_id/packages/:package_id
+router.put("/:user_id/packages", async (req, res) => {
+  try {
+    const updatedPackage = req.body;
+
+    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id, "packages._id": updatedPackage._id},
+      { $set: { 'packages.$': updatedPackage } },
+      { 
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json(creatorProfile.packages);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+// DELETE a package - api/creators/:user_id/packages/:package_id
+router.delete("/:user_id/packages/:package_id", async (req, res) => {
+  try {
+    const creatorProfile = await Creator.updateOne(
+      { user: req.params.user_id, "packages._id": req.params.package_id},
+      { $pull: { 'packages._id': req.params.package_id } },
+    );
+
+    res.status(200).json(creatorProfile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
   }
 });
 
