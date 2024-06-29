@@ -8,8 +8,14 @@ type Package = {
   quantity: number;
 };
 
+//! Might need to delete this function and use getCreatorByUserId instead
 const getCreatorByUserId = (userId: string) => {
   return api().get(`/api/creators/user/${userId}`);
+}
+
+
+const getCreatorByUsername = (username: string) => {
+  return api().get(`/api/creators/user/${username}`);
 }
 
 const addPackage = (userId: string, packageData: Package) => {
