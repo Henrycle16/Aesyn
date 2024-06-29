@@ -58,8 +58,8 @@ const AddCampaign = () => {
                 Description
               </label>
               <textarea
-                id="url"
-                name="url"
+                id="description"
+                name="description"
                 maxLength={100}
                 onChange={(e) => setCharCount(100 - e.target.value.length)}
                 className="pt-3 w-full h-20 mt-1 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
