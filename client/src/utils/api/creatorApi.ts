@@ -32,6 +32,7 @@ const deletePackage = (userId: string, packageId: string) => {
 
 export {
   getCreatorByUserId,
+  getCreatorByUsername,
   addPackage,
   updatePackage,
   deletePackage

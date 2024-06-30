@@ -250,7 +250,7 @@ router.delete("/:user_id/packages/:package_id", async (req, res) => {
   try {
     const creatorProfile = await Creator.updateOne(
       { user: req.params.user_id, "packages._id": req.params.package_id},
-      { $pull: { 'packages._id': req.params.package_id } },
+      { $pull: { 'packages': { _id: req.params.package_id} } },
     );
 
     res.status(200).json(creatorProfile);

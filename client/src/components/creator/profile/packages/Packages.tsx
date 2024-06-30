@@ -23,19 +23,18 @@ type Package = {
 
 const Packages = () => {
   const [packages, setPackages] = useState([] as Package[]);
+  const [socialMediaTypes, setSocialMediaTypes] = useState(Array.from(new Set(packages.map(packageValue => packageValue.socialMedia))));
+  const [socialMediaTab, setSocialMediaTab] = useState<string>(""); 
   // !Todo: Change to grab userId from url parameter
-  const userId = useAppSelector((state) => state.authReducer.value.userId);
+  // const userId = useAppSelector((state) => state.authReducer.value.userId);
   const session = useSession();
   const testId = session.data?.user.id;
-  // TODO: Social Media Tab is broken
-  const socialMediaTypes =  Array.from(new Set(packages.map(packageValue => packageValue.socialMedia)));
-  const [socialMediaTab, setSocialMediaTab] = useState(socialMediaTypes[0]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (socialMediaTypes.length === 1) {
       setSocialMediaTab(socialMediaTypes[0]);
     }
-  }, [socialMediaTypes]);
+  }, [socialMediaTypes]); */
 
   useEffect(() => {
     if (testId === undefined) return;
@@ -44,6 +43,9 @@ const Packages = () => {
       try {
         const response = await getCreatorByUserId(testId);
         setPackages(response.data.packages);
+        let smTypes: string[] = Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia)));
+        setSocialMediaTypes(Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia))));
+        setSocialMediaTab(smTypes[0]);
         console.log("Packages: ", response.data.packages);
       } catch (error) {
         console.error(error);
@@ -89,7 +91,7 @@ const Packages = () => {
       {/* TODO: setPackages prop for modals below */}
       <AddPackage setPackages={setPackages} />
       <EditPackage setPackages={setPackages} />
-      <DeletePackage />
+      <DeletePackage setPackages={setPackages} />
     </section>
   );
 };
