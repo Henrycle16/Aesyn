@@ -6,9 +6,12 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 const Bio: React.FC = () => {
   const [bioText, setBioText] = useState<string>("");
   const [tempBioText, setTempBioText] = useState<string>("");
+  const [charCount, setCharCount] = useState(500);
 
   const handleBioChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setTempBioText(event.target.value);
+    const newValue = event.target.value;
+    setTempBioText(newValue); 
+    setCharCount(500 - newValue.length);
   };
 
   const openModal = () => {
@@ -54,21 +57,25 @@ const Bio: React.FC = () => {
           <h2 className="py-2 text-[#4A4A4A]">
             Give a brief description for your profile.
           </h2>
-          <textarea
-            name="description"
-            placeholder="Enter your bio here..."
-            maxLength={100}
-            rows={7}
-            value={tempBioText}
-            onChange={handleBioChange}
-            className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
-            style={{
-              paddingLeft: "1%",
-              paddingTop: "1%",
-              resize: "none",
-              fontSize: "16px",
-            }}
-          />
+          <div>
+            <textarea
+              name="description"
+              placeholder="Enter your bio here..."
+              maxLength={500}
+              rows={7}
+              value={tempBioText}
+              onChange={handleBioChange}
+              className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+              style={{
+                paddingLeft: "1%",
+                paddingTop: "1%",
+                resize: "none",
+                fontSize: "16px",
+              }}
+            />
+            <p className="flex justify-end">{charCount} characters left</p>
+          </div>
+
           <div className="modal-action">
             <button
               type="submit"

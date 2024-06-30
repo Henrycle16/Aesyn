@@ -23,9 +23,6 @@
  --ts10: #1d8133; /* Success; Linked Icon; linked border */
 }
 
-/* Montserrat imported from google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 @layer base {
  input {
   @apply border rounded-md 

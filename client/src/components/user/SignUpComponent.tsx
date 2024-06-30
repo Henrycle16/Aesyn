@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
@@ -15,12 +16,16 @@ import { userInfo } from "@/redux/slices/user-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
 const SignUpComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -32,7 +37,19 @@ const SignUpComponent = () => {
     mode: "onChange",
   });
 
-  const isBrand = useAppSelector((state) => state.userInfoReducer.value.isBrand);
+  const isBrand = useAppSelector(
+    (state) => state.userInfoReducer.value.isBrand
+  );
+
+  // Toggle function for the first password input
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Toggle function for the confirm password input
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
@@ -47,12 +64,12 @@ const SignUpComponent = () => {
         redirect: false,
       });
 
-      dispatch(userInfo({ email: data.email}));
+      dispatch(userInfo({ email: data.email }));
 
       if (signUpResponse && !signUpResponse.error) {
         console.log("User succesfully signed up");
         console.log(signUpResponse);
-        console.log("isBrand: ", isBrand)
+        console.log("isBrand: ", isBrand);
 
         if (isBrand) {
           router.push("/signup/brand");
@@ -122,35 +139,61 @@ const SignUpComponent = () => {
           {errors.email?.message}
         </p>
       </div>
-      <div>
-        <input
-          type="password"
-          className="input-md w-full input-focus-primary"
-          placeholder="Password*"
-          id="password"
-          {...register("password")}
-          autoComplete="new-password"
-          maxLength={50}
-        />
+
+      {/* Passwords Input Fields*/}
+      <div className="relative">
+        <div className="flex flex-row items-center justify-between">
+          <input
+            type={showPassword ? "text" : "password"}
+            className="input-md w-full input-focus-primary pr-10"
+            placeholder="Password*"
+            id="password"
+            {...register("password")}
+            autoComplete="new-password"
+            maxLength={50}
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute right-0 pr-3 text-sm leading-5"
+          >
+            {showPassword ? (
+              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+            ) : (
+              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+            )}
+          </button>
+        </div>
         <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
           {errors.password?.message}
         </p>
       </div>
-      <div>
-        <input
-          type="password"
-          className="input-md w-full input-focus-primary"
-          placeholder="Confirm Password*"
-          id="password2"
-          {...register("password2")}
-          autoComplete="new-password"
-          maxLength={50}
-        />
-        {errors.password2?.message && (
-          <p className="mt-1 text-sm delete-btn-text-color">
-            {errors.password2.message}
-          </p>
-        )}
+      <div className="relative">
+        <div className="flex flex-row items-center justify-between">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            className="input-md w-full input-focus-primary"
+            placeholder="Confirm Password*"
+            id="password2"
+            {...register("password2")}
+            autoComplete="new-password"
+            maxLength={50}
+          />
+          <button
+            type="button"
+            onClick={toggleConfirmPasswordVisibility}
+            className="absolute right-0 pr-3 text-sm leading-5"
+          >
+            {showConfirmPassword ? (
+              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+            ) : (
+              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+            )}
+          </button>
+        </div>
+        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+          {errors.password2?.message}
+        </p>
       </div>
 
       {/* Checkboxes */}
@@ -174,8 +217,10 @@ const SignUpComponent = () => {
         </p>
       </div>
       <div>
-      {errors.acceptedTerms?.message && (
-          <p className="mt-1 text-sm delete-btn-text-color">{errors.acceptedTerms.message}</p>
+        {errors.acceptedTerms?.message && (
+          <p className="mt-1 text-sm delete-btn-text-color">
+            {errors.acceptedTerms.message}
+          </p>
         )}
       </div>
       <div className="flex items-start gap-3">
