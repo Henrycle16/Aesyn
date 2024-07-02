@@ -7,10 +7,7 @@ import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
-import { getCreatorByUserId } from "@/utils/api/creatorApi";
-
-import { useAppSelector } from "@/redux/store";
-import { useSession } from "next-auth/react";
+import { getCreatorByUsername } from "@/utils/api/creatorApi";
 
 type Package = {
   _id?: string;
@@ -21,27 +18,16 @@ type Package = {
   quantity: number;
 };
 
-const Packages = () => {
+const Packages = ({username}: {username: string}) => {
+  // TODO: Social Media Tab Logic is broken
   const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTypes, setSocialMediaTypes] = useState(Array.from(new Set(packages.map(packageValue => packageValue.socialMedia))));
   const [socialMediaTab, setSocialMediaTab] = useState<string>(""); 
-  // !Todo: Change to grab userId from url parameter
-  // const userId = useAppSelector((state) => state.authReducer.value.userId);
-  const session = useSession();
-  const testId = session.data?.user.id;
-
-  /* useEffect(() => {
-    if (socialMediaTypes.length === 1) {
-      setSocialMediaTab(socialMediaTypes[0]);
-    }
-  }, [socialMediaTypes]); */
 
   useEffect(() => {
-    if (testId === undefined) return;
-    console.log("UserID: " + testId);
     const getPackages = async () => {
       try {
-        const response = await getCreatorByUserId(testId);
+        const response = await getCreatorByUsername(username);
         setPackages(response.data.packages);
         let smTypes: string[] = Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia)));
         setSocialMediaTypes(Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia))));
@@ -52,7 +38,7 @@ const Packages = () => {
       }
     }
     getPackages();
-  }, [testId]);
+  }, [username]);
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[19.75rem] p-10 flex flex-col text-[#184465]">
@@ -88,7 +74,6 @@ const Packages = () => {
         ))}
       </div>
       {/* Package Modals */}
-      {/* TODO: setPackages prop for modals below */}
       <AddPackage setPackages={setPackages} />
       <EditPackage setPackages={setPackages} />
       <DeletePackage setPackages={setPackages} />

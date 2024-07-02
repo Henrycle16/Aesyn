@@ -27,7 +27,7 @@ const EditPackage = ({setPackages}: Props) => {
   const editPackage = async ( userId: string, currentPackage: any) => {
     try {
       const response = await updatePackage(userId, currentPackage);
-      console.log(response);
+      console.log(response.data);
       setPackages((prevPackages: any[]) => prevPackages.map((packageValue) => 
           packageValue._id === currentPackage._id ? {...currentPackage} : packageValue
         )

@@ -15,7 +15,7 @@ const getCreatorByUserId = (userId: string) => {
 
 
 const getCreatorByUsername = (username: string) => {
-  return api().get(`/api/creators/user/${username}`);
+  return api().get(`/api/creators/username/${username}`);
 }
 
 const addPackage = (userId: string, packageData: Package) => {
