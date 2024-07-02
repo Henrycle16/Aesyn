@@ -1,16 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/legacy/image";
 import FileUpload from "../FileUpload";
 import {
   creatorContentInfo,
   addContent,
   editContent,
-  resetCurrentContent
+  resetCurrentContent,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
+
+import "../crop.css";
+
+import React, { useState, useCallback } from 'react'
+import ReactDOM from 'react-dom'
+import Cropper from 'react-easy-crop'
+import { getCroppedImg, getRotatedImage } from '../canvasUtils'
+
+const ORIENTATION_TO_ANGLE = {
+  '3': 180,
+  '6': 90,
+  '8': -90,
+}
+
+interface Crop {
+  x: number;
+  y: number;
+}
+
+interface CroppedArea {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
@@ -19,6 +43,41 @@ const AddPersonal = () => {
   const currentContent = useAppSelector(
     (state) => state.creatorContentReducer.value.currentContent
   );
+
+  //----------
+
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
+const [rotation, setRotation] = useState<number>(0);
+const [zoom, setZoom] = useState<number>(1);
+const [croppedAreaPixels, setCroppedAreaPixels] = useState<CroppedArea | null>(null);
+const [croppedImage, setCroppedImage] = useState<string | null>(null);
+
+const onCropComplete = (croppedArea: CroppedArea, croppedAreaPixels: CroppedArea) => {
+  setCroppedAreaPixels(croppedAreaPixels);
+};
+
+const showCroppedImage = async () => {
+  try {
+    if (imageSrc && croppedAreaPixels) {
+      const croppedImage = await getCroppedImg(
+        imageSrc,
+        croppedAreaPixels,
+        rotation
+      );
+      console.log('donee', { croppedImage });
+      setCroppedImage(croppedImage);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const onClose = () => {
+  setCroppedImage(null);
+};
+
+  //----------
 
   const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
     dispatch(creatorContentInfo({ currentContent: { uri, name } }));
@@ -71,14 +130,17 @@ const AddPersonal = () => {
 
           <div className={`${currentContent.uri ? "flex mt-10" : "mt-10"}`}>
             {currentContent.uri ? (
-              <div className="mt-8">
-                <Image
-                  src={currentContent.uri}
-                  alt="image"
-                  width={400}
-                  height={600}
-                  objectFit="cover"
-                  className="rounded"
+              <div className="cropContainer">
+                <Cropper
+                  image={currentContent.uri}
+                  crop={crop}
+                  rotation={rotation}
+                  zoom={zoom}
+                  aspect={4 / 3}
+                  onCropChange={setCrop}
+                  onRotationChange={setRotation}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
                 />
               </div>
             ) : null}
@@ -93,9 +155,15 @@ const AddPersonal = () => {
                 Upload your photo or video
               </p>
               <div>
-                <FileUpload onFileUpload={handleFileUpload}/>
+                <FileUpload onFileUpload={handleFileUpload} />
               </div>
-              {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
+              {currentContent.name ? (
+                <p className="text-gray-400 text-xs">
+                  .../{currentContent.name}
+                </p>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 
@@ -110,12 +178,10 @@ const AddPersonal = () => {
           </div>
           <button
             onClick={() => {
-              (
-                dispatch(resetCurrentContent()),
-                document.getElementById(
-                  `add_content_modal`
-                ) as HTMLDialogElement
-              ).close();
+              (dispatch(resetCurrentContent()),
+              document.getElementById(
+                `add_content_modal`
+              ) as HTMLDialogElement).close();
               // TODO: Add logic to show unsaved changes modal if there are any changes
               // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
             }}
