@@ -26,7 +26,7 @@ const PersonalPortfolioCard = (props: Props) => {
         <Image
           src={props.uri}
           alt="personal content"
-          width={1000}
+          width={666}
           height={1000}
           objectFit="cover"
           className="rounded"

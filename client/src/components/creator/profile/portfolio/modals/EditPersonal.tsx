@@ -8,6 +8,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import {
   creatorContentInfo,
+  resetCurrentContent,
   editContent,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -21,9 +22,14 @@ const EditPersonal = () => {
     (state) => state.creatorContentReducer.value.currentContent
   );
 
+  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
+    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  };
+
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(editContent(currentContent));
+    dispatch(editContent({ ...currentContent }));
+    dispatch(resetCurrentContent());
     (
       document.getElementById(`edit_content_modal`) as HTMLDialogElement
     ).close();
@@ -74,7 +80,7 @@ const EditPersonal = () => {
                   src={currentContent.uri}
                   alt="image"
                   width={400}
-                  height={400}
+                  height={600}
                   objectFit="cover"
                   className="rounded"
                 />
@@ -87,8 +93,9 @@ const EditPersonal = () => {
                 Upload a different photo or video
               </p>
               <div>
-                <FileUpload />
+                <FileUpload onFileUpload={handleFileUpload}/>
               </div>
+              {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
             </div>
           </div>
 
@@ -104,6 +111,7 @@ const EditPersonal = () => {
           <button
             onClick={() => {
               (
+                dispatch(resetCurrentContent()),
                 document.getElementById(
                   `edit_content_modal`
                 ) as HTMLDialogElement

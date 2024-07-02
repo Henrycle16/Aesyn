@@ -4,8 +4,11 @@ import { Loader2 } from "lucide-react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
+interface FileUploadProps {
+  onFileUpload: (data: { uri: string; name: string }) => void;
+}
 
-const FileUpload = () => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   const [uploading, setUploading] = React.useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -13,7 +16,7 @@ const FileUpload = () => {
       "image/jpeg": [".jpeg", ".jpg"],
       "image/png": [".png"],
       "video/mp4": [".mp4"],
-      "video/quicktime": [".mov"]
+      "video/quicktime": [".mov"],
     },
     maxFiles: 1,
     onDrop: async (acceptedFiles) => {
@@ -24,6 +27,19 @@ const FileUpload = () => {
         toast.error("File too large.");
         return;
       }
+
+      const reader = new FileReader();
+      reader.onabort = () => toast.error("File reading was aborted.");
+      reader.onerror = () => toast.error("File reading has failed.");
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          // Pass an object with both the URI and the file name
+          onFileUpload({ uri: reader.result, name: file.name });
+        } else {
+          toast.error("File could not be read as a data URL.");
+        }
+      };
+      reader.readAsDataURL(file);
     },
   });
 

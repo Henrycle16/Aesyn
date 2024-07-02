@@ -6,6 +6,7 @@ const contentData = [
     type: "personal",
     socialMedia: "",
     uri: "/joe-cool.jpg",
+    name: "joe.jpg",
     description: "",
     date: "",
   },
@@ -14,6 +15,7 @@ const contentData = [
     type: "personal",
     socialMedia: "",
     uri: "/luka-cool.jpg",
+    name: "luka.jpg",
     description: "",
     date: "",
   },
@@ -22,6 +24,7 @@ const contentData = [
     type: "personal",
     socialMedia: "",
     uri: "/s-cool.jpg",
+    name: "s.jpg",
     description: "",
     date: "",
   },
@@ -30,6 +33,7 @@ const contentData = [
     type: "personal",
     socialMedia: "",
     uri: "/scott-cool.jpg",
+    name: "scott.jpg",
     description: "",
     date: "",
   },
@@ -38,6 +42,7 @@ const contentData = [
     type: "personal",
     socialMedia: "",
     uri: "/calvin-cool.jpg",
+    name: "calvin.jpg",
     description: "",
     date: "",
   },
@@ -46,6 +51,7 @@ const contentData = [
     type: "campaign",
     socialMedia: "Instagram",
     uri: "/biden.jpg",
+    name: "biden.jpg",
     description:
       "Worked with Joe Biden on his presidential campaign. #Biden2020",
     date: "2021-10-10",
@@ -55,6 +61,7 @@ const contentData = [
     type: "campaign",
     socialMedia: "Twitter",
     uri: "/trump.jpg",
+    name: "trump.jpg",
     description:
       "Worked with Donald Trump on his presidential campaign. #Trump2020",
     date: "2021-10-10",
@@ -64,6 +71,7 @@ const contentData = [
     type: "campaign",
     socialMedia: "Facebook",
     uri: "/obama.jpg",
+    name: "obama.jpg",
     description:
       "Worked with Barack Obama on his presidential campaign. #Obama2020",
     date: "2021-10-10",
@@ -73,6 +81,7 @@ const contentData = [
     type: "campaign",
     socialMedia: "Facebook",
     uri: "/bush.jpg",
+    name: "bush.jpg",
     description:
       "Worked with George Bush on his presidential campaign. #Bush2020",
     date: "2021-10-10",
@@ -88,6 +97,7 @@ type Content = {
   type: string;
   socialMedia: string;
   uri: string;
+  name: string;
   description: string;
   date: string;
 };
@@ -105,6 +115,7 @@ const initialState = {
       type: "",
       socialMedia: "",
       uri: "",
+      name: "",
       description: "",
       date: "",
     },
@@ -144,6 +155,7 @@ export const creatorContent = createSlice({
         type: "",
         socialMedia: "",
         uri: "",
+        name: "",
         description: "",
         date: "",
       };

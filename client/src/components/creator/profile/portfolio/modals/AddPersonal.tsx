@@ -1,14 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/legacy/image";
 import FileUpload from "../FileUpload";
+import {
+  creatorContentInfo,
+  addContent,
+  editContent,
+  resetCurrentContent
+} from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
 const AddPersonal = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
+
+  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
+    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  };
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(addContent(currentContent));
+    dispatch(resetCurrentContent());
     (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
   };
 
@@ -21,7 +40,8 @@ const AddPersonal = () => {
             Add New Personal Content
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            Display your personal content for brands to see. You can either paste a URL or upload your content.
+            Display your personal content for brands to see. You can either
+            paste a URL or upload your content.
           </p>
         </div>
         {/* Form */}
@@ -49,12 +69,33 @@ const AddPersonal = () => {
             <span className="border-t border-gray-300 flex-1"></span>
           </div>
 
-          <div className="flex flex-col mt-10">
-            <p className="text-[#4A4A4A] block font-bold pr-5">
-              Upload your photo or video
-            </p>
-            <div>
-                <FileUpload />
+          <div className={`${currentContent.uri ? "flex mt-10" : "mt-10"}`}>
+            {currentContent.uri ? (
+              <div className="mt-8">
+                <Image
+                  src={currentContent.uri}
+                  alt="image"
+                  width={400}
+                  height={600}
+                  objectFit="cover"
+                  className="rounded"
+                />
+              </div>
+            ) : null}
+            <div
+              className={`${
+                currentContent.uri
+                  ? "flex flex-col justify-start ml-10 w-full"
+                  : "flex flex-col justify-start w-full"
+              }`}
+            >
+              <p className="text-[#4A4A4A] block font-bold pr-5">
+                Upload your photo or video
+              </p>
+              <div>
+                <FileUpload onFileUpload={handleFileUpload}/>
+              </div>
+              {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
             </div>
           </div>
 
@@ -70,6 +111,7 @@ const AddPersonal = () => {
           <button
             onClick={() => {
               (
+                dispatch(resetCurrentContent()),
                 document.getElementById(
                   `add_content_modal`
                 ) as HTMLDialogElement
