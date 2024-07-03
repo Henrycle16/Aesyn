@@ -54,7 +54,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
         const mapInstance = new mapboxgl.Map({
           container: mapContainer.current!,
-          style: "mapbox://styles/henrycle16/cly0qmzct008x01qr2vwb9o2r?optimize=true",
+          style: "mapbox://styles/henrycle16/cly0qmzct008x01qr2vwb9o2r",
           center: [lng, lat],
           zoom: zoom,
           interactive: false,
