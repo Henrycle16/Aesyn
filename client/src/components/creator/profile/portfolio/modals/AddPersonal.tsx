@@ -11,9 +11,9 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Cropper from "react-easy-crop";
-import { getCroppedImg, getRotatedImage } from "../canvasUtils";
+import { getCroppedImg } from "../canvasUtils";
 
 interface Crop {
   x: number;
@@ -35,12 +35,9 @@ const AddPersonal = () => {
     (state) => state.creatorContentReducer.value.currentContent
   );
 
-  //----------
-
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
   const [rotation, setRotation] = useState<number>(0);
-  const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] =
     useState<CroppedArea | null>(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
@@ -71,8 +68,6 @@ const AddPersonal = () => {
   const onClose = () => {
     setCroppedImage(null);
   };
-
-  //----------
 
   const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
     dispatch(creatorContentInfo({ currentContent: { uri, name } }));
@@ -133,7 +128,6 @@ const AddPersonal = () => {
                   onCropChange={setCrop}
                   onRotationChange={setRotation}
                   onCropComplete={onCropComplete}
-                  onZoomChange={setZoom}
                   objectFit="contain"
                 />
               </div>
