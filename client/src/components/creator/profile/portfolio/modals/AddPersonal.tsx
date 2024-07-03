@@ -11,18 +11,9 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-import "../crop.css";
-
-import React, { useState, useCallback } from 'react'
-import ReactDOM from 'react-dom'
-import Cropper from 'react-easy-crop'
-import { getCroppedImg, getRotatedImage } from '../canvasUtils'
-
-const ORIENTATION_TO_ANGLE = {
-  '3': 180,
-  '6': 90,
-  '8': -90,
-}
+import React, { useState, useCallback } from "react";
+import Cropper from "react-easy-crop";
+import { getCroppedImg, getRotatedImage } from "../canvasUtils";
 
 interface Crop {
   x: number;
@@ -47,35 +38,39 @@ const AddPersonal = () => {
   //----------
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
-const [rotation, setRotation] = useState<number>(0);
-const [zoom, setZoom] = useState<number>(1);
-const [croppedAreaPixels, setCroppedAreaPixels] = useState<CroppedArea | null>(null);
-const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState<number>(0);
+  const [zoom, setZoom] = useState<number>(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] =
+    useState<CroppedArea | null>(null);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
 
-const onCropComplete = (croppedArea: CroppedArea, croppedAreaPixels: CroppedArea) => {
-  setCroppedAreaPixels(croppedAreaPixels);
-};
+  const onCropComplete = (
+    croppedArea: CroppedArea,
+    croppedAreaPixels: CroppedArea
+  ) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
 
-const showCroppedImage = async () => {
-  try {
-    if (imageSrc && croppedAreaPixels) {
-      const croppedImage = await getCroppedImg(
-        imageSrc,
-        croppedAreaPixels,
-        rotation
-      );
-      console.log('donee', { croppedImage });
-      setCroppedImage(croppedImage);
+  const showCroppedImage = async () => {
+    try {
+      if (imageSrc && croppedAreaPixels) {
+        const croppedImage = await getCroppedImg(
+          imageSrc,
+          croppedAreaPixels,
+          rotation
+        );
+        console.log("donee", { croppedImage });
+        setCroppedImage(croppedImage);
+      }
+    } catch (e) {
+      console.error(e);
     }
-  } catch (e) {
-    console.error(e);
-  }
-};
+  };
 
-const onClose = () => {
-  setCroppedImage(null);
-};
+  const onClose = () => {
+    setCroppedImage(null);
+  };
 
   //----------
 
@@ -130,17 +125,16 @@ const onClose = () => {
 
           <div className={`${currentContent.uri ? "flex mt-10" : "mt-10"}`}>
             {currentContent.uri ? (
-              <div className="cropContainer">
+              <div className="relative w-[100%] h-[400px] bg-gray-50">
                 <Cropper
                   image={currentContent.uri}
                   crop={crop}
-                  rotation={rotation}
-                  zoom={zoom}
-                  aspect={4 / 3}
+                  aspect={2 / 3}
                   onCropChange={setCrop}
                   onRotationChange={setRotation}
                   onCropComplete={onCropComplete}
                   onZoomChange={setZoom}
+                  objectFit="contain"
                 />
               </div>
             ) : null}
