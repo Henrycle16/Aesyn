@@ -32,7 +32,7 @@ const LoginComponent = () => {
     const loginResponse = await signIn("login", {
       email: email,
       password: password,
-      redirect: true,
+      redirect: false,
       callbackUrl: "/creator/profile",
     });
 
