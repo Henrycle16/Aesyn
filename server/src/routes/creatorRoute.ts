@@ -4,17 +4,17 @@ import {validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
-import auth from "../middleware/auth";
 
 const router = express.Router();
 
 // @route   GET api/creators/me
 // @desc    Get current users Creator profile
 // @access  Private
-router.get('/me', auth, async (req, res) => {
+router.get('/me', async (req, res) => {
     try {
+        console.log("PARAMS: ", req.query.userId)
         const profile = await Creator.findOne({
-            user: req.body.user.id,
+            user: req.query.userId,
         }).populate('user', [
             'username',
             'firstName', 
@@ -56,7 +56,6 @@ router.post(
     [
         // ** EXPRESS-VALIDATION CHECKS HERE
     ],
-    auth, 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -112,8 +111,7 @@ router.put(
     '/',
     [
 
-    ], 
-    auth,
+    ],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -187,6 +185,7 @@ router.get('/', async (req, res) => {
 // @access  Public
 router.get('/user/:user_id', async (req, res) => {
     try {
+        console.log("here")
         const profile = await Creator.findOne({
             user: req.params.user_id,
         }).populate('user', [
@@ -201,18 +200,18 @@ router.get('/user/:user_id', async (req, res) => {
         }
         res.json(profile);
     } catch (err) {
-        console.error(err.message);
-        if (err.kind == 'ObjectId') {
-            return res.status(400).json({ msg: 'Profile not found' });
-        }
-        res.status(500).send('Server Error');
+        //console.error(err.message);
+        //if (err.kind == 'ObjectId') {
+        //    return res.status(400).json({ msg: 'Profile not found' });
+        //}
+        //res.status(500).send('Server Error');
     }
 });
 
 // @route   DELETE api/creators
 // @desc    Delete Creators profile, user, & posts
 // @access  Private
-router.delete('/', auth, async (req, res) => {
+router.delete('/', async (req, res) => {
     try {
         // Remove user posts
         //await Post.deleteMany({ user: req.body.user.id });
