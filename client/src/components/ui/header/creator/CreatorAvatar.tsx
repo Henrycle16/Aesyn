@@ -45,11 +45,8 @@ const CreatorAvatar: React.FC = () => {
   }, [dispatch, session.data, session.status]);
 
   // redux store
-  const authName = useAppSelector(
-    (state) => state.authReducer.value.name
-  );
-  const authEmail = useAppSelector(
-    (state) => state.authReducer.value.email
+  const authStore = useAppSelector(
+    (state) => state.authReducer.value
   );
 
   const handleSignOut = () => {
@@ -95,9 +92,9 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography variant="subtitle1">{authName}</Typography>
+          <Typography variant="subtitle1">{authStore.name}</Typography>
           <Typography color="text.secondary" variant="body2">
-            {authEmail}
+            {authStore.email}
           </Typography>
         </Box>
         <Divider />

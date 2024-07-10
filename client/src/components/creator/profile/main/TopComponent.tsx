@@ -1,10 +1,20 @@
+
+import { getServerSession } from "next-auth";
+import { config } from '@../../../auth'
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
+import { getCreatorSelf } from "@/utils/api/creatorApi";
 
-const TopComponent = () => {
+
+const TopComponent = async () => {
+  const session = await getServerSession(config);
+
+  const res = await getCreatorSelf(session?.user.id);
+  const location = `${res?.data.location.city}, ${res?.data.location.state}, ${res?.data.location.country}`
+
   return (
     <div className="border-b border-gray-300 col-span-2 py-5 px-10">
       <div className="flex items-center h-full">
@@ -31,10 +41,10 @@ const TopComponent = () => {
           <div className="flex items-center">
             <div className="flex flex-col gap-1">
               <h1 className="text-2xl font-semibold text-[#184465]">
-                Jane Doe{" "}
+                {session?.user.name}
               </h1>
               <span className="text-sm text-[#061119] flex-grow">
-                @Henrayleeee
+                @{res?.data.userName}
               </span>
             </div>
 
@@ -55,7 +65,7 @@ const TopComponent = () => {
           <div className="flex items-center mt-2.5 gap-1 ml-[-0.3rem]">
             <LocationOnOutlinedIcon sx={{ color: "#6D6D6D" }} />
             <span className="text-sm text-[#061119] flex-grow">
-              Narnia, Houston
+              {location}
             </span>
           </div>
         </div>
