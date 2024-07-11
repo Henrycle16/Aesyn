@@ -1,32 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const packagesData = [
-  {
-    packageId: 0,
-    socialMedia: "Instagram",
-    type: "Reel Post",
-    description: "15 sec video post",
-    price: 100,
-    quantity: 1,
-  },
-  {
-    packageId: 1,
-    socialMedia: "Instagram",
-    type: "Photo Post",
-    description: "Single photo post",
-    price: 50,
-    quantity: 1,
-  },
-  {
-    packageId: 2,
-    socialMedia: "Instagram",
-    type: "Multi-Photo Post",
-    description: "3 photo post",
-    price: 125,
-    quantity: 3,
-  },
-];
-
 type InitialState = {
   value: creatorPackagesInfoReducer;
 };
@@ -47,7 +20,7 @@ type creatorPackagesInfoReducer = {
 
 const initialState = {
   value: {
-    packages: packagesData,
+    packages: [],
     currentPackage: {
       _id: "",
       socialMedia: "",
