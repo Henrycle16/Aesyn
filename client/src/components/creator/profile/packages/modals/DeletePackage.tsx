@@ -1,16 +1,35 @@
-import { deletePackage } from "@/redux/slices/creatorPackages-slice";
+// import { deletePackage } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-const DeletePackage = () => {
-  const dispatch = useDispatch<AppDispatch>();
+import { deletePackage } from "@/utils/api/creatorApi";
+import { useSession } from "next-auth/react";
+
+type Props = {
+  setPackages: any;
+};
+
+const DeletePackage = ({setPackages}: Props) => {
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
 
+  const session = useSession();
+  const testId = session.data?.user.id;
+
+  const removePackage = async ( userId: string, packageId: string) => {
+    try {
+      const response = await deletePackage(userId, packageId);
+      console.log(response.data);
+      setPackages((prevPackages: any[]) => prevPackages.filter((data)=> data._id != currentPackage._id ));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(deletePackage(currentPackage));
+    removePackage(testId, currentPackage._id!);
     (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
   };
 

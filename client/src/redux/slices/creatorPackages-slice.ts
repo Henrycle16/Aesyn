@@ -32,7 +32,7 @@ type InitialState = {
 };
 
 type Package = {
-  packageId?: number;
+  _id?: string;
   socialMedia: string;
   type: string;
   description: string;
@@ -49,6 +49,7 @@ const initialState = {
   value: {
     packages: packagesData,
     currentPackage: {
+      _id: "",
       socialMedia: "",
       type: "",
       description: "",
@@ -73,7 +74,7 @@ export const creatorPackages = createSlice({
     },
     editPackage: (state, action: PayloadAction<Package>) => {
       for (let i = 0; i < state.value.packages.length; i++) {
-        if (state.value.packages[i].packageId === action.payload.packageId) {
+        if (state.value.packages[i]._id === action.payload._id) {
           state.value.packages[i] = action.payload;
           console.log(state.value.packages[i]);
         }
@@ -84,7 +85,6 @@ export const creatorPackages = createSlice({
     },
     resetCurrentPackage: (state) => {
       state.value.currentPackage = {
-        packageId: state.value.packages.length,
         socialMedia: "",
         type: "",
         description: "",
@@ -92,20 +92,8 @@ export const creatorPackages = createSlice({
         quantity: 0,
       };
     },
-    /* 
-    ! Use this resetCurrentPackage instead of the one above once we start pulling data from the backend
-    resetCurrentPackage: (state) => {
-      state.value.currentPackage = {
-        socialMedia: "",
-        type: "",
-        description: "",
-        price: 0,
-        quantity: 0,
-        };
-        },
-        */
     deletePackage: (state, action: PayloadAction<Package>) => {
-      state.value.packages = state.value.packages.filter(packageData => packageData.packageId !== action.payload.packageId);
+      state.value.packages = state.value.packages.filter(packageData => packageData._id !== action.payload._id);
     },
   },
 });

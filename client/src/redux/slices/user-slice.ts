@@ -19,7 +19,7 @@ type userInfoReducer = {
     markerLocation: [number, number] | null;
     isLocationSelected: boolean;
     preferences: string[];
-    niches: string[];
+    interests: string[];
     currentStep: number;
 }
 
@@ -34,12 +34,12 @@ const initialState = {
         gender: "",
         location: "",
         lng: -98.5795,
-        lat: 39.8283,
-        zoom: 2.5,
+        lat: 37.8283,
+        zoom: 2.4,
         markerLocation: null,
         isLocationSelected: false,
         preferences: [],
-        niches: [],
+        interests: [],
         currentStep: 0,
     } as userInfoReducer,
 } as InitialState
@@ -72,13 +72,13 @@ export const user = createSlice({
         setIsLocationSelected: (state, action: PayloadAction<boolean>) => {
             state.value.isLocationSelected = action.payload;
         },
-        addNiche: (state, action: PayloadAction<string>) => {
-            if (state.value.niches.length < 6) {
-                state.value.niches.push(action.payload);
+        addInterest: (state, action: PayloadAction<string>) => {
+            if (state.value.interests.length < 6) {
+                state.value.interests.push(action.payload);
             }
         },
-        removeNiche: (state, action: PayloadAction<string>) => {
-            state.value.niches = state.value.niches.filter(niche => niche !== action.payload);
+        removeInterest: (state, action: PayloadAction<string>) => {
+            state.value.interests = state.value.interests.filter(interest => interest !== action.payload);
         },
         addPref: (state, action: PayloadAction<string>) => {
             state.value.preferences.push(action.payload);
@@ -89,5 +89,5 @@ export const user = createSlice({
     },
 })
 
-export const {userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addNiche, removeNiche, addPref, removePref} = user.actions
+export const {userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addInterest, removeInterest, addPref, removePref} = user.actions
 export default user.reducer

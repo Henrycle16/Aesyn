@@ -1,25 +1,30 @@
-/* Niche Select Scrollbar */
+/* Interest Select Scrollbar */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
- 
+
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #bbbbbb;
-    border-radius: 5px;
+  background: #bbbbbb;
+  border-radius: 5px;
 }
- 
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
+}
+
+/* For Select dropdown */
+.css-1n6sfyn-MenuList {
+  max-height: 260px !important;
 }

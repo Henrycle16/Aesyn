@@ -25,9 +25,32 @@ const CreatorSchema = new mongoose.Schema({
     preferences: {
         type: [String]
     },
-    niche: {
+    interests: {
         type: [String]
     },
+    bio: {
+        type: String
+    },
+    packages: [
+        {
+            socialMedia: {
+                type: String,
+                // enum: ['Instagram', 'Facebook', 'Twitter/X', 'TikTok', 'YouTube', 'Snapchat']
+            },
+            type: {
+                type: String
+            },
+            description: {
+                type: String
+            },
+            price: {
+                type: Number
+            },
+            quantity: {
+                type: Number
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now,
