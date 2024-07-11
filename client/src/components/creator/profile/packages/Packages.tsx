@@ -1,25 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
+import { getCreatorByUsername } from "@/utils/api/creatorApi";
 
-import { useAppSelector } from "@/redux/store";
+type Package = {
+  _id?: string;
+  socialMedia: string;
+  type: string;
+  description: string;
+  price: number;
+  quantity: number;
+};
 
-const Packages = () => {
-  let testPackages = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
-  const socialMediaTypes =  Array.from(new Set(testPackages.map((packageValue: any) => packageValue.socialMedia)));
-  const [socialMediaTab, setSocialMediaTab] = useState(socialMediaTypes[0]);
+const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages.map(packageValue => packageValue.socialMedia)));
 
+const Packages = ({username}: {username: string}) => {
+  const [packages, setPackages] = useState([] as Package[]);
+  const [socialMediaTab, setSocialMediaTab] = useState(''); 
+  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packages), [packages]);
+
+  
   useEffect(() => {
-    if (socialMediaTypes.length === 1) {
-      setSocialMediaTab(socialMediaTypes[0]);
+    const getPackages = async () => {
+      try {
+        const response = await getCreatorByUsername(username);
+        setPackages(response.data.packages);
+        console.log("Packages: ", response.data.packages);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, [testPackages, socialMediaTypes]);
+    getPackages();
+  }, [username]);
+  
+  useEffect(() => {
+    setSocialMediaTab(socialMediaTypes[0]);
+  }, [socialMediaTypes]);
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[19.75rem] p-10 flex flex-col text-[#184465]">
@@ -28,7 +50,7 @@ const Packages = () => {
         <h1 className="text-2xl font-semibold self-end">Packages</h1>
         <NewPackageButton />
       </div>
-      {!testPackages.length && <p className="text-sm font-medium mt-10">
+      {!packages.length && <p className="text-sm font-medium mt-10">
         Create our content packages to display for brands to purchase.
       </p>}
       <div className="my-5 flex gap-6">
@@ -47,17 +69,17 @@ const Packages = () => {
       {/* Package Cards Container */}
       <div className="h-[10.688rem] gap-5 flex whitespace-nowrap overflow-x-auto">
         {/* IG Package */}
-        {testPackages.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
+        {packages.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
           <PackageCard
-            key={packageData.packageId}
+            key={packageData._id}
             {...packageData}
           />
         ))}
       </div>
       {/* Package Modals */}
-      <AddPackage />
-      <EditPackage />
-      <DeletePackage />
+      <AddPackage setPackages={setPackages} />
+      <EditPackage setPackages={setPackages} />
+      <DeletePackage setPackages={setPackages} />
     </section>
   );
 };
