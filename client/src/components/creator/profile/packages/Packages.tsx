@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "@/styles/packagesScrollbar.css";
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
@@ -18,20 +18,19 @@ type Package = {
   quantity: number;
 };
 
-const Packages = ({username}: {username: string}) => {
-  // TODO: Social Media Tab Logic is broken
-  const [packages, setPackages] = useState([] as Package[]);
-  const [socialMediaTypes, setSocialMediaTypes] = useState(Array.from(new Set(packages.map(packageValue => packageValue.socialMedia))));
-  const [socialMediaTab, setSocialMediaTab] = useState<string>(""); 
+const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages.map(packageValue => packageValue.socialMedia)));
 
+const Packages = ({username}: {username: string}) => {
+  const [packages, setPackages] = useState([] as Package[]);
+  const [socialMediaTab, setSocialMediaTab] = useState(''); 
+  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packages), [packages]);
+
+  
   useEffect(() => {
     const getPackages = async () => {
       try {
         const response = await getCreatorByUsername(username);
         setPackages(response.data.packages);
-        let smTypes: string[] = Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia)));
-        setSocialMediaTypes(Array.from(new Set(response.data.packages.map((packageValue: Package) => packageValue.socialMedia))));
-        setSocialMediaTab(smTypes[0]);
         console.log("Packages: ", response.data.packages);
       } catch (error) {
         console.error(error);
@@ -39,6 +38,10 @@ const Packages = ({username}: {username: string}) => {
     }
     getPackages();
   }, [username]);
+  
+  useEffect(() => {
+    setSocialMediaTab(socialMediaTypes[0]);
+  }, [socialMediaTypes]);
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[19.75rem] p-10 flex flex-col text-[#184465]">

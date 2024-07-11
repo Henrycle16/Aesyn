@@ -8,7 +8,7 @@ type Package = {
   quantity: number;
 };
 
-//! Might need to delete this function and use getCreatorByUserId instead
+//! Might need to delete this function and use getCreatorByUsername instead
 const getCreatorByUserId = (userId: string) => {
   return api().get(`/api/creators/user/${userId}`);
 }
