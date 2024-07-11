@@ -14,6 +14,8 @@ import { logIn } from "@/redux/slices/auth-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const LoginComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +23,7 @@ const LoginComponent = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,19 +33,20 @@ const LoginComponent = () => {
       email: email,
       password: password,
       redirect: true,
-      callbackUrl: "/creator/profile"
+      callbackUrl: "/creator/profile",
     });
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
 
-      dispatch(logIn({
-        isAuth: true,
-        name: session.data?.user.name,
-        email: session.data?.user.email,
-        userId:session.data?.user.id
-      }));
-
+      dispatch(
+        logIn({
+          isAuth: true,
+          name: session.data?.user.name,
+          email: session.data?.user.email,
+          userId: session.data?.user.id,
+        })
+      );
 
       dispatch(logIn(session.data?.user.id));
 
@@ -50,6 +54,10 @@ const LoginComponent = () => {
     } else {
       console.log("Error!");
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -82,28 +90,37 @@ const LoginComponent = () => {
             autoComplete="email"
             required
           />
-          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
-          {}
-        </p>
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">{}</p>
         </div>
-        <div>
-          <input
-            className="input-md w-full input-focus-primary"
-            type="password"
-            placeholder="Password"
-            id="password"
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            name="password"
-            autoFocus
-            autoComplete="new-password"
-            required
-          />
-          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
-          {}
-        </p>
+        <div className="relative">
+          <div className="flex flex-row items-center justify-between">
+            <input
+              className="input-md w-full input-focus-primary"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              id="password"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+              name="password"
+              autoFocus
+              autoComplete="new-password"
+              required
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-0 pr-3 text-sm leading-5"
+            >
+              {showPassword ? (
+                <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+              ) : (
+                <VisibilityIcon className="h-5 w-5 text-gray-700" />
+              )}
+            </button>
+          </div>
+          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">{}</p>
         </div>
 
         <Button
@@ -116,7 +133,11 @@ const LoginComponent = () => {
         </Button>
 
         <button
-          onClick={() => (document.getElementById("sign-up-modal") as HTMLDialogElement).showModal()}
+          onClick={() =>
+            (
+              document.getElementById("sign-up-modal") as HTMLDialogElement
+            ).showModal()
+          }
         >
           <Link href="#">Don&apos;t have an account? Sign up</Link>
         </button>

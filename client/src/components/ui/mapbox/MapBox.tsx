@@ -54,7 +54,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
         const mapInstance = new mapboxgl.Map({
           container: mapContainer.current!,
-          style: "mapbox://styles/henrycle16/clufzf01c016b01qfe9u27o4a",
+          style: "mapbox://styles/henrycle16/cly0qmzct008x01qr2vwb9o2r",
           center: [lng, lat],
           zoom: zoom,
           interactive: false,
@@ -71,7 +71,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
         // Restore marker if it exists
         if (markerLocation) {
-          const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+          const newMarker = new mapboxgl.Marker({ color: "#3798E3" })
             .setLngLat(markerLocation)
             .addTo(mapInstance);
           markerRef.current = newMarker;
@@ -91,7 +91,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         if (markerRef.current) {
           markerRef.current.remove();
         }
-        const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+        const newMarker = new mapboxgl.Marker({ color: "#3798E3" })
           .setLngLat(markerLocation)
           .addTo(map);
         markerRef.current = newMarker;
@@ -132,7 +132,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             markerRef.current.remove();
           }
 
-          const newMarker = new mapboxgl.Marker({ color: "#3DA9FC" })
+          const newMarker = new mapboxgl.Marker({ color: "#3798E3" })
             .setLngLat([newLng, newLat])
             .addTo(map);
 
@@ -156,7 +156,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             markerRef.current = null;
           }
           setMarkerLocation(null);
-          map.flyTo({ center: [-98.5795, 39.8283], zoom: 3.5 });
+          map.flyTo({ center: [-98.5795, 37.8283 ], zoom: 3.5 });
         });
 
         // Add geocoder to its container

@@ -7,10 +7,10 @@ interface ProgressBarProps {
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: theme.palette.grey[200],
+    backgroundColor: 'var(--g1)',
   },
   [`& .${linearProgressClasses.bar}`]: {
-    backgroundColor: '#308fe8',
+    backgroundColor: 'var(--ts3)',
   },
 }));
 
