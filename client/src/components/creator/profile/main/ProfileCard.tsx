@@ -4,7 +4,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 
-const TopComponent = () => {
+const ProfileCard = () => {
   return (
     <div className="border-b border-gray-300 col-span-2 py-5 px-10">
       <div className="flex items-center h-full">
@@ -34,7 +34,7 @@ const TopComponent = () => {
                 Jane Doe{" "}
               </h1>
               <span className="text-sm text-[#061119] flex-grow">
-                @Henrayleeee
+                @blahblah
               </span>
             </div>
 
@@ -75,4 +75,4 @@ const TopComponent = () => {
   );
 };
 
-export default TopComponent;
+export default ProfileCard;

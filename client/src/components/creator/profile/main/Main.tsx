@@ -1,4 +1,4 @@
-import TopComponent from "./TopComponent";
+import TopComponent from "./ProfileCard";
 import Interests from "./Interests";
 import Bio from "./Bio";
 import SocialMedia from "./SocialMedia";
