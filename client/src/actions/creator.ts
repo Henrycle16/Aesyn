@@ -1,6 +1,25 @@
 import axios from "axios";
 
-//Get User by ID
+// Get Creator Self
+// Private
+export const getCreatorSelf = async (user: object) => {
+  try {
+    const res = await axios.get("http://localhost:5000/api/creators/me", user);
+
+    return res.data;
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+      console.log(err.toUpperCase()); // works, `e` narrowed to string
+    } else if (err instanceof Error) {
+      console.log(err.message); // works, `e` narrowed to Error
+    } else if (err && typeof err === "object" && "message" in err) {
+      console.log(err.message);
+    }
+  }
+}
+
+// Create Creator
+// Public
 export const creatorSignUp = async (formData: string) => {
 
  try {
