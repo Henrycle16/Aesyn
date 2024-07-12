@@ -9,6 +9,8 @@ import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
 import { getCreatorByUsername } from "@/utils/api/creatorApi";
 
+import { useAppSelector } from "@/redux/store";
+
 type Package = {
   _id?: string;
   socialMedia: string;
@@ -20,24 +22,17 @@ type Package = {
 
 const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages.map(packageValue => packageValue.socialMedia)));
 
-const Packages = ({username}: {username: string}) => {
+const Packages = () => {
+  const packagesList = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
+  console.log("Packages Test: ", packagesList);
+
   const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
   const socialMediaTypes = useMemo(() => getSocialMediaTypes(packages), [packages]);
 
-  
   useEffect(() => {
-    const getPackages = async () => {
-      try {
-        const response = await getCreatorByUsername(username);
-        setPackages(response.data.packages);
-        console.log("Packages: ", response.data.packages);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getPackages();
-  }, [username]);
+    setPackages(packagesList);
+  }, [[], setPackages]);
   
   useEffect(() => {
     setSocialMediaTab(socialMediaTypes[0]);

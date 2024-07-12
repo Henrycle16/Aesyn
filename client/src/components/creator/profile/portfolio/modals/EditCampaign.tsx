@@ -2,9 +2,11 @@
 
 import FileUpload from "../FileUpload";
 import React, { useState, useEffect } from "react";
+import Image from "next/legacy/image";
 
 import {
   creatorContentInfo,
+  resetCurrentContent,
   editContent,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -24,9 +26,14 @@ const EditCampaign = () => {
     setCharCount(100 - currentContent.description.length);
   }, [currentContent.description]);
 
+  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
+    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  };
+
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(editContent({ ...currentContent }));
+    dispatch(resetCurrentContent());
     (
       document.getElementById(`edit_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -125,12 +132,29 @@ const EditCampaign = () => {
             <span className="border-t border-gray-300 flex-1"></span>
           </div>
 
-          <div className="flex flex-col mt-10">
-            <p className="text-[#4A4A4A] block font-bold pr-5">
-              Upload your photo or video
-            </p>
-            <div>
-                <FileUpload />
+          <div className="flex mt-10">
+            <div className="mt-8">
+              {currentContent.uri ? (
+                <Image
+                  src={currentContent.uri}
+                  alt="image"
+                  width={400}
+                  height={600}
+                  objectFit="cover"
+                  className="rounded"
+                />
+              ) : (
+                <div className="">Image not available</div>
+              )}
+            </div>
+            <div className="flex flex-col justify-start ml-10 w-full">
+              <p className="text-[#4A4A4A] block font-bold pr-5">
+                Upload a different photo or video
+              </p>
+              <div>
+                <FileUpload onFileUpload={handleFileUpload}/>
+              </div>
+              {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
             </div>
           </div>
 
@@ -146,6 +170,7 @@ const EditCampaign = () => {
           <button
             onClick={() => {
               (
+                dispatch(resetCurrentContent()),
                 document.getElementById(
                   `edit_campaign_modal`
                 ) as HTMLDialogElement

@@ -178,7 +178,7 @@ router.get("/username/:username", async (req, res) => {
   try {
     const creator = await Creator.findOne({ 
       userName: req.params.username 
-    }).populate("user", ["firstName", "lastName", "avatar"]);
+    }).populate("user", ["firstName", "lastName", "avatar", "email"]);
     console.log(creator);
     res.status(200).json(creator);
   } catch (error) {

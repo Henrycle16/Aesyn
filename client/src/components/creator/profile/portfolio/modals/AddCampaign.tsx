@@ -1,15 +1,39 @@
 "use client";
 
 import FileUpload from "../FileUpload";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Image from "next/legacy/image";
+
+import {
+  creatorContentInfo,
+  addContent,
+  editContent,
+  resetCurrentContent,
+} from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 // TODO: Add logic to reset form fields after successfully submitting form
 
 const AddCampaign = () => {
   const [charCount, setCharCount] = useState(100);
+  const dispatch = useDispatch<AppDispatch>();
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
+
+  useEffect(() => {
+    setCharCount(100 - currentContent.description.length);
+  }, [currentContent.description]);
+
+  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
+    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  };
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(addContent(currentContent));
+    dispatch(resetCurrentContent());
     (
       document.getElementById(`add_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -24,7 +48,8 @@ const AddCampaign = () => {
             Add New Campaign Project
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            Display your past campaign work for brands to see. You can either paste a URl or upload your work.
+            Display your past campaign work for brands to see. You can either
+            paste a URl or upload your work.
           </p>
         </div>
         {/* Form */}
@@ -32,7 +57,7 @@ const AddCampaign = () => {
           {/* Input Fields Container */}
           <div className="grid grid-cols-2 gap-14">
             <div className="grid-col-1 ">
-              <label
+            <label
                 htmlFor="social_media"
                 className="text-[#4A4A4A] block font-bold"
               >
@@ -41,6 +66,14 @@ const AddCampaign = () => {
               <select
                 id="social_media"
                 name="social_media"
+                value={currentContent.socialMedia}
+                onChange={(e) =>
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: { socialMedia: e.target.value },
+                    })
+                  )
+                }
                 className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
               >
                 <option value="">[Select]</option>
@@ -61,9 +94,17 @@ const AddCampaign = () => {
                 id="description"
                 name="description"
                 maxLength={100}
-                onChange={(e) => setCharCount(100 - e.target.value.length)}
+                onChange={(e) => {
+                  setCharCount(100 - e.target.value.length);
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: { description: e.target.value },
+                    })
+                  );
+                }}
                 className="pt-3 w-full h-20 mt-1 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
                 placeholder="Briefly describe your work on this campaign"
+                value={currentContent.description}
               />
               <p className="flex justify-end">{charCount} characters left</p>
             </div>
@@ -91,12 +132,39 @@ const AddCampaign = () => {
             <span className="border-t border-gray-300 flex-1"></span>
           </div>
 
-          <div className="flex flex-col mt-10">
-            <p className="text-[#4A4A4A] block font-bold pr-5">
-              Upload your photo or video
-            </p>
-            <div>
-                <FileUpload />
+          <div className={`${currentContent.uri ? "flex mt-10" : "mt-10"}`}>
+            {currentContent.uri ? (
+              <div className="mt-8">
+                <Image
+                  src={currentContent.uri}
+                  alt="image"
+                  width={400}
+                  height={600}
+                  objectFit="cover"
+                  className="rounded"
+                />
+              </div>
+            ) : null}
+            <div
+              className={`${
+                currentContent.uri
+                  ? "flex flex-col justify-start ml-10 w-full"
+                  : "flex flex-col justify-start w-full"
+              }`}
+            >
+              <p className="text-[#4A4A4A] block font-bold pr-5">
+                Upload your photo or video
+              </p>
+              <div>
+                <FileUpload onFileUpload={handleFileUpload} />
+              </div>
+              {currentContent.name ? (
+                <p className="text-gray-400 text-xs">
+                  .../{currentContent.name}
+                </p>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 
@@ -111,11 +179,10 @@ const AddCampaign = () => {
           </div>
           <button
             onClick={() => {
-              (
-                document.getElementById(
-                  `add_campaign_modal`
-                ) as HTMLDialogElement
-              ).close();
+              (dispatch(resetCurrentContent()),
+              document.getElementById(
+                `add_campaign_modal`
+              ) as HTMLDialogElement).close();
               // TODO: Add logic to show unsaved changes modal if there are any changes
               // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
             }}
