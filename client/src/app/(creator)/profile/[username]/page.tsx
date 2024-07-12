@@ -19,7 +19,7 @@ type Params = {
 export default function CreatorProfile({ params }: { params: Params }) {
   const dispatch = useDispatch<AppDispatch>();
 
-  const getPackages = async () => {
+  const getProfileInfo = async () => {
     try {
       const response = await getCreatorByUsername(params.username);
 
@@ -50,7 +50,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
   };
 
   useEffect(() => {
-    getPackages();
+    getProfileInfo();
   }, []);
 
   return (
