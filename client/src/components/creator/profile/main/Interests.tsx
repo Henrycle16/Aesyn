@@ -125,7 +125,7 @@ const Interests = () => {
       <dialog id="interests_modal" className="modal">
         <div className="modal-box bg-white text-[#061119] min-w-[60.625rem] min-h-[27.938rem] pt-8 px-10 pb-6 overflow-y-hidden">
           <h1 className="text-[#184465] font-semibold text-2xl">Interests</h1>
-          <h2 className="py-2 text-[#4A4A4A]">
+          <h2 className="py-2 gc-label-color body1">
             Add or remove interests that best match your content for brands to
             see. You can choose up to 6.
           </h2>
