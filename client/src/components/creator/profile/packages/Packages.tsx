@@ -7,7 +7,6 @@ import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
-import { getCreatorByUsername } from "@/utils/api/creatorApi";
 
 import { useAppSelector } from "@/redux/store";
 
@@ -28,12 +27,13 @@ const Packages = () => {
 
   const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
-  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packages), [packages]);
+  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packagesList), [packagesList]);
 
-  useEffect(() => {
-    setPackages(packagesList);
-  }, [[], setPackages]);
+  // useEffect(() => {
+  //   setPackages(packagesList);
+  // }, [[], setPackages]);
   
+  // TODO: Fix bug where socialMediaTab sets to first tab when a new socialMediaType is created
   useEffect(() => {
     setSocialMediaTab(socialMediaTypes[0]);
   }, [socialMediaTypes]);
@@ -45,7 +45,7 @@ const Packages = () => {
         <h1 className="text-2xl font-semibold self-end">Packages</h1>
         <NewPackageButton />
       </div>
-      {!packages.length && <p className="text-sm font-medium mt-10">
+      {!packagesList.length && <p className="text-sm font-medium mt-10">
         Create our content packages to display for brands to purchase.
       </p>}
       <div className="my-5 flex gap-6">
@@ -64,7 +64,7 @@ const Packages = () => {
       {/* Package Cards Container */}
       <div className="h-[10.688rem] gap-5 flex whitespace-nowrap overflow-x-auto">
         {/* IG Package */}
-        {packages.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
+        {packagesList.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
           <PackageCard
             key={packageData._id}
             {...packageData}
@@ -72,7 +72,7 @@ const Packages = () => {
         ))}
       </div>
       {/* Package Modals */}
-      <AddPackage setPackages={setPackages} />
+      <AddPackage />
       <EditPackage setPackages={setPackages} />
       <DeletePackage setPackages={setPackages} />
     </section>

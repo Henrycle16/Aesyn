@@ -45,6 +45,9 @@ export const creatorPackages = createSlice({
         ...action.payload,
       };
     },
+    addPackage: (state, action: PayloadAction<Package>) => {
+      state.value.packages.push(action.payload);
+    },
     editPackage: (state, action: PayloadAction<Package>) => {
       for (let i = 0; i < state.value.packages.length; i++) {
         if (state.value.packages[i]._id === action.payload._id) {
@@ -53,8 +56,8 @@ export const creatorPackages = createSlice({
         }
       }
     },
-    addPackage: (state, action: PayloadAction<Package>) => {
-      state.value.packages.push(action.payload);
+    deletePackage: (state, action: PayloadAction<Package>) => {
+      state.value.packages = state.value.packages.filter(packageData => packageData._id !== action.payload._id);
     },
     resetCurrentPackage: (state) => {
       state.value.currentPackage = {
@@ -64,9 +67,6 @@ export const creatorPackages = createSlice({
         price: 0,
         quantity: 0,
       };
-    },
-    deletePackage: (state, action: PayloadAction<Package>) => {
-      state.value.packages = state.value.packages.filter(packageData => packageData._id !== action.payload._id);
     },
   },
 });
