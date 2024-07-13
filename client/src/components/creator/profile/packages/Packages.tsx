@@ -23,7 +23,6 @@ const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages
 
 const Packages = () => {
   const packagesList = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
-  console.log("Packages Test: ", packagesList);
 
   const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
@@ -73,7 +72,7 @@ const Packages = () => {
       </div>
       {/* Package Modals */}
       <AddPackage />
-      <EditPackage setPackages={setPackages} />
+      <EditPackage />
       <DeletePackage setPackages={setPackages} />
     </section>
   );
