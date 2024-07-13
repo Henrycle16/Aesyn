@@ -23,14 +23,8 @@ const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages
 
 const Packages = () => {
   const packagesList = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
-
-  const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
   const socialMediaTypes = useMemo(() => getSocialMediaTypes(packagesList), [packagesList]);
-
-  // useEffect(() => {
-  //   setPackages(packagesList);
-  // }, [[], setPackages]);
   
   // TODO: Fix bug where socialMediaTab sets to first tab when a new socialMediaType is created
   useEffect(() => {
@@ -73,7 +67,7 @@ const Packages = () => {
       {/* Package Modals */}
       <AddPackage />
       <EditPackage />
-      <DeletePackage setPackages={setPackages} />
+      <DeletePackage />
     </section>
   );
 };
