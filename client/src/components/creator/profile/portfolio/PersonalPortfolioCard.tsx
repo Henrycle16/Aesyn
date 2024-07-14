@@ -24,7 +24,6 @@ const PersonalPortfolioCard = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    // ComponentDidMount equivalent, runs only on client
     setIsClient(true);
   }, []);
 
