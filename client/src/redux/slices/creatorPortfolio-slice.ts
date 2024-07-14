@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const contentData = [
   {
     contentId: 0,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/joe-cool.jpg",
     name: "joe.jpg",
@@ -12,7 +13,8 @@ const contentData = [
   },
   {
     contentId: 1,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/luka-cool.jpg",
     name: "luka.jpg",
@@ -21,7 +23,8 @@ const contentData = [
   },
   {
     contentId: 2,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/s-cool.jpg",
     name: "s.jpg",
@@ -30,7 +33,8 @@ const contentData = [
   },
   {
     contentId: 3,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/scott-cool.jpg",
     name: "scott.jpg",
@@ -39,7 +43,8 @@ const contentData = [
   },
   {
     contentId: 4,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/calvin-cool.jpg",
     name: "calvin.jpg",
@@ -48,7 +53,8 @@ const contentData = [
   },
   {
     contentId: 5,
-    type: "campaign",
+    contentType: "campaign",
+    mediaType: "image",
     socialMedia: "Instagram",
     uri: "/biden.jpg",
     name: "biden.jpg",
@@ -58,7 +64,8 @@ const contentData = [
   },
   {
     contentId: 6,
-    type: "campaign",
+    contentType: "campaign",
+    mediaType: "image",
     socialMedia: "Twitter",
     uri: "/trump.jpg",
     name: "trump.jpg",
@@ -68,7 +75,8 @@ const contentData = [
   },
   {
     contentId: 7,
-    type: "campaign",
+    contentType: "campaign",
+    mediaType: "image",
     socialMedia: "Facebook",
     uri: "/obama.jpg",
     name: "obama.jpg",
@@ -78,7 +86,18 @@ const contentData = [
   },
   {
     contentId: 8,
-    type: "campaign",
+    contentType: "personal",
+    mediaType: "video",
+    socialMedia: "",
+    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
+    name: "IU Music Video",
+    description: "",
+    date: "",
+  },
+  {
+    contentId: 9,
+    contentType: "campaign",
+    mediaType: "image",
     socialMedia: "Facebook",
     uri: "/bush.jpg",
     name: "bush.jpg",
@@ -94,7 +113,8 @@ type InitialState = {
 
 type Content = {
   contentId?: number;
-  type: string;
+  contentType: string;
+  mediaType: string;
   socialMedia: string;
   uri: string;
   name: string;
@@ -112,7 +132,8 @@ const initialState = {
     content: contentData,
     currentContent: {
       contentId: 0,
-      type: "",
+      contentType: "",
+      mediaType: "",
       socialMedia: "",
       uri: "",
       name: "",
@@ -152,7 +173,8 @@ export const creatorContent = createSlice({
     resetCurrentContent: (state) => {
       state.value.currentContent = {
         contentId: state.value.content.length,
-        type: "",
+        contentType: "",
+        mediaType: "",
         socialMedia: "",
         uri: "",
         name: "",
