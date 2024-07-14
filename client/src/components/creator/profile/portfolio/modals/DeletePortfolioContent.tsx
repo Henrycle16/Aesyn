@@ -12,6 +12,7 @@ const DeletePortfolioContent = () => {
     e.preventDefault();
     if (currentContent !== undefined){
       dispatch(deleteContent(currentContent));
+      dispatch(resetCurrentContent());
     }
     (document.getElementById(`delete_content_modal`) as HTMLDialogElement).close();
   };
@@ -34,6 +35,7 @@ const DeletePortfolioContent = () => {
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {
+                dispatch(resetCurrentContent()),
                 (document.getElementById("delete_content_modal") as HTMLDialogElement).close();
               }}
               type="button"

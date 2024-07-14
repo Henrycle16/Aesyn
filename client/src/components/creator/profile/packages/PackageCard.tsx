@@ -9,7 +9,7 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 type Props = {
-  packageId?: number;
+  _id?: string;
   socialMedia: string;
   type: string;
   description: string;

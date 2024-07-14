@@ -22,30 +22,15 @@ router.get('/me', async (req, res) => {
             'avatar',
         ]);
 
-        if (!profile) {
-            return res
-                .status(400)
-                .json({ msg: 'There is no profile for this user' });
-        }
-
-        res.json(profile);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+    if (!profile) {
+      return res.status(400).json({ msg: "There is no profile for this user" });
     }
-});
 
-// @route   Get api/creators
-// @desc    check if username exist
-// @access  Public -> Private
-router.get('/username/:username', async (req, res) => {
-    try {
-      const username = await Creator.findOne({ userName: req.params.username });
-      console.log(username);
-      res.status(200).json(username);
-    } catch (error) {
-      res.status(500).json(error);
-    }
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route   POST api/creators
@@ -81,27 +66,27 @@ router.post(
             interests: interests
         };
 
-        try {
-            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
+    try {
+      let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
-            // If found error
-            // ** Comment out below to test without having to delete **
-            if (creatorProfile) {
-                return res.status(400).json({
-                    errors: [{ msg: 'Creator already exists' }],
-                  });
-            }
+      // If found error
+      // ** Comment out below to test without having to delete **
+      if (creatorProfile) {
+        return res.status(400).json({
+          errors: [{ msg: "Creator already exists" }],
+        });
+      }
 
-            //Create if not found
-            creatorProfile = new Creator(creatorProfileFields);
+      //Create if not found
+      creatorProfile = new Creator(creatorProfileFields);
 
-            await creatorProfile.save();
-            res.json(creatorProfile);
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server Error');
-        }
+      await creatorProfile.save();
+      res.json(creatorProfile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
     }
+  }
 );
 
 // @route   PUT api/creators
@@ -118,66 +103,59 @@ router.put(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const {
-            socialMedias,
-            category,
-            location,
-            bio
-        } = req.body;
+  const { socialMedias, category, location, bio } = req.body;
 
-        //Build profile object
-        const creatorProfileFields = {
-            user: req.body.user.id,
-            socialMedias: socialMedias,
-            category: category,
-            location: {
-                city: location.city,
-                country: location.country
-            },
-            bio: bio
-        };
+  //Build profile object
+  const creatorProfileFields = {
+    user: req.body.user.id,
+    socialMedias: socialMedias,
+    category: category,
+    location: {
+      city: location.city,
+      country: location.country,
+    },
+    bio: bio,
+  };
 
-        try {
-            let creatorProfile = await Creator.findOne({ user: req.body.user.id });
+  try {
+    let creatorProfile = await Creator.findOne({ user: req.body.user.id });
 
-            //Update if found
-            if (creatorProfile) {
-                creatorProfile = await Creator.findOneAndUpdate(
-                    { user: req.body.user.id },
-                    { $set: creatorProfileFields},
-                    { new: true }
-                );
+    //Update if found
+    if (creatorProfile) {
+      creatorProfile = await Creator.findOneAndUpdate(
+        { user: req.body.user.id },
+        { $set: creatorProfileFields },
+        { new: true }
+      );
 
-                return res.json(creatorProfile);
-            } else {
-                return res.status(400).json({
-                    errors: [{ msg: 'No Creator profile found' }],
-                  });
-            }
-
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server Error');
-        }
+      return res.json(creatorProfile);
+    } else {
+      return res.status(400).json({
+        errors: [{ msg: "No Creator profile found" }],
+      });
     }
-);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   GET api/creators
 // @desc    Get all Creator profiles
 // @access  Public
-router.get('/', async (req, res) => {
-    try {
-        const profiles = await Creator.find().populate('user', [
-            'username',
-            'firstName', 
-            'lastName',
-            'avatar',
-        ]);
-        res.json(profiles);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
+router.get("/", async (req, res) => {
+  try {
+    const profiles = await Creator.find().populate("user", [
+      "username",
+      "firstName",
+      "lastName",
+      "avatar",
+    ]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route   GET api/creators/user/:user_id
@@ -220,11 +198,66 @@ router.delete('/', async (req, res) => {
         // Remove user
         await User.findOneAndDelete({ _id: req.body.user.id });
 
-        res.json({ msg: 'User deleted' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
+    res.json({ msg: "User deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+/* =====Package Endpoints===== */
+
+// CREATE package to creator.packages - api/creators/:user_id/packages
+router.post("/:user_id/packages", async (req, res) => {
+  try {
+    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id },
+      { $push: { packages: req.body } },
+      { 
+        new: true,
+        runValidators: true,
+      }
+    );
+    const newPackage = creatorProfile.packages[creatorProfile.packages.length - 1];
+    res.status(200).json(newPackage);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+// UPDATE a package - api/creators/:user_id/packages
+router.put("/:user_id/packages", async (req, res) => {
+  try {
+    const updatedPackage = req.body;
+
+    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id, "packages._id": updatedPackage._id},
+      { $set: { 'packages.$': updatedPackage } },
+      { 
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json(creatorProfile.packages);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+// DELETE a package - api/creators/:user_id/packages/:package_id
+router.delete("/:user_id/packages/:package_id", async (req, res) => {
+  try {
+    const creatorProfile = await Creator.updateOne(
+      { user: req.params.user_id, "packages._id": req.params.package_id},
+      { $pull: { 'packages': { _id: req.params.package_id} } },
+    );
+
+    res.status(200).json(creatorProfile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
 });
 
 export default router;

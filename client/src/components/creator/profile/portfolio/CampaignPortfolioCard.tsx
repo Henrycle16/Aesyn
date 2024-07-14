@@ -28,7 +28,7 @@ const CampaignPortfolioCard = (props: Props) => {
         <Image
           src={props.uri}
           alt="image"
-          width={1000}
+          width={666}
           height={1000}
           objectFit="cover"
           className="rounded"

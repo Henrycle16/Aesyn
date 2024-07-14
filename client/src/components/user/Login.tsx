@@ -8,19 +8,11 @@ import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
 import SignUpModal from "../user/SignUpModal";
-import { useSession } from "next-auth/react";
 
-import { logIn } from "@/redux/slices/auth-slice";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const LoginComponent = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const session = useSession();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,17 +30,6 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
-
-      dispatch(
-        logIn({
-          isAuth: true,
-          name: session.data?.user.name,
-          email: session.data?.user.email,
-          userId: session.data?.user.id,
-        })
-      );
-
-      dispatch(logIn(session.data?.user.id));
 
       console.log(loginResponse);
     } else {

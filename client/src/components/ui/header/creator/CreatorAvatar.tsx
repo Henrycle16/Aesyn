@@ -20,8 +20,8 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-import { logIn, logOut } from "@/redux/slices/auth-slice";
 import { useAppSelector } from "@/redux/store";
+import { resetProfileData } from "@/redux/slices/profileData-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -29,16 +29,14 @@ const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const session = useSession();
+
   const dispatch = useDispatch<AppDispatch>();
+  const firstName = useAppSelector((state) => state.profileDataReducer.value.firstName);
+  const lastName = useAppSelector((state) => state.profileDataReducer.value.lastName);
+  const email = useAppSelector((state) => state.profileDataReducer.value.email);
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
-      dispatch(logIn({
-        isAuth: true,
-        name: session.data?.user.name,
-        email: session.data?.user.email,
-        userId:session.data?.user.id
-      }));
     } else {
       redirect("/login");
     }
@@ -50,7 +48,7 @@ const CreatorAvatar: React.FC = () => {
   );
 
   const handleSignOut = () => {
-    dispatch(logOut());
+    dispatch(resetProfileData());
     signOut({ redirect: true, callbackUrl: "/" });
   }
 
