@@ -34,8 +34,8 @@ const PersonalPortfolioCard = (props: Props) => {
           <Image
             src={props.uri}
             alt="personal content"
-            width={666}
-            height={1000}
+            width={500}
+            height={400}
             objectFit="cover"
             className="rounded"
             style={imageStyle}
@@ -43,12 +43,15 @@ const PersonalPortfolioCard = (props: Props) => {
             onMouseLeave={() => setIsHovered(false)}
           />
         ) : (
-          <ReactPlayer
-            url={props.uri}
-            light={true}
-            width="100%"
-            playIcon={<></>}
-          />
+          <div className="w-[17.35rem] h-[13.88rem] max-w-full max-h-full rounded overflow-hidden">
+            <ReactPlayer
+              url={props.uri}
+              light={true}
+              width="100%"
+              height="100%"
+              playIcon={<></>}
+            />
+          </div>
         )
       ) : (
         <div className="">Media not available</div>

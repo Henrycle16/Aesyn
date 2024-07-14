@@ -124,7 +124,7 @@ const AddPersonal = () => {
                 <Cropper
                   image={currentContent.uri}
                   crop={crop}
-                  aspect={1 / 0.8}
+                  aspect={5 / 4}
                   onCropChange={setCrop}
                   onRotationChange={setRotation}
                   onCropComplete={onCropComplete}

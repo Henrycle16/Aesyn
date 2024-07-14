@@ -105,6 +105,16 @@ const contentData = [
       "Worked with George Bush on his presidential campaign. #Bush2020",
     date: "2021-10-10",
   },
+  {
+    contentId: 10,
+    contentType: "personal",
+    mediaType: "video",
+    socialMedia: "",
+    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
+    name: "IU Music Video",
+    description: "",
+    date: "",
+  },
 ];
 
 type InitialState = {
