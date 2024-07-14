@@ -153,7 +153,7 @@ const Interests = () => {
                   You can select a maximum of 6 interests. Please deselect one before adding another.
                 </div>
               )}
-            </div>
+            </div>    
 
             {/* Display the selected interests */}
             <div className="flex-grow border border-gray-300 rounded-md max-w-[31.063rem] ml-6 py-3 px-4 overflow-auto">

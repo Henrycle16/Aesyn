@@ -52,7 +52,7 @@
  }
  /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
  .gc-label-color {
-  @apply text-[var(--g4)]
+  @apply text-[var(--g5)]
  }
  .gc-checkbox-outline {
   @apply border-[var(--g4)]
@@ -87,7 +87,7 @@
  /* TS7 - Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
  .text-body-text-color {
   @apply text-[var(--ts7)]
- }
+ } 
  /* TS8 - Delete Button/Icon/Text; Error Text  */
  .delete-btn-text-color {
   @apply text-[var(--ts8)]
