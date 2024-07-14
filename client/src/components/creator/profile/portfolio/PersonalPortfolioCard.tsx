@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ReactPlayer from "react-player/lazy";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
@@ -12,30 +13,46 @@ import { useDispatch } from "react-redux";
 type Props = {
   contentId?: number;
   uri: string;
+  mediaType: string;
 };
 
 const PersonalPortfolioCard = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const imageStyle = isHovered ? { filter: "grayscale(1)" } : {};
   const dispatch = useDispatch<AppDispatch>();
 
+  useEffect(() => {
+    // ComponentDidMount equivalent, runs only on client
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="relative">
-      {props.uri ? (
-        <Image
-          src={props.uri}
-          alt="personal content"
-          width={666}
-          height={1000}
-          objectFit="cover"
-          className="rounded"
-          style={imageStyle}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        />
+      {props.uri && isClient ? (
+        props.mediaType === "image" ? (
+          <Image
+            src={props.uri}
+            alt="personal content"
+            width={666}
+            height={1000}
+            objectFit="cover"
+            className="rounded"
+            style={imageStyle}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
+        ) : (
+          <ReactPlayer
+            url={props.uri}
+            light={true}
+            width="100%"
+            playIcon={<></>}
+          />
+        )
       ) : (
-        <div className="">Image not available</div>
+        <div className="">Media not available</div>
       )}
       {isHovered && (
         <>
