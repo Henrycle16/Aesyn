@@ -1,6 +1,10 @@
 import { Children, ReactElement, ReactNode } from "react";
 import Carousel from "react-multi-carousel";
-import { ButtonGroupProps, ArrowProps, DotProps } from 'react-multi-carousel/lib/types';
+import {
+  ButtonGroupProps,
+  ArrowProps,
+  DotProps,
+} from "react-multi-carousel/lib/types";
 import "react-multi-carousel/lib/styles.css";
 import "./carousel.css";
 
@@ -30,38 +34,55 @@ const responsive = {
   },
 };
 
-
-
-const CustomButtonGroupAsArrows = ({ next, previous, className }:CarouselButtonGroupProps) => {
+const CustomButtonGroupAsArrows = ({
+  next,
+  previous,
+  className,
+}: CarouselButtonGroupProps) => {
   return (
     <div className={className}>
-      <button onClick={previous} className="custom-left-arrow"></button>
-      <button onClick={next} className="custom-right-arrow"></button>
+      <button onClick={previous} className="custom-left-arrow">
+        <span className="custom-left-arrow-icon self-center ml-1"></span>
+      </button>
+      <button onClick={next} className="custom-right-arrow">
+        <span className="custom-right-arrow-icon mr-1"></span>
+      </button>
     </div>
   );
 };
 
-const CarouselWrapper = ({children} : Props) => {
-  const arrowstyle = Array.isArray(children) && children.length < 4 ? "hidden" : "";
+const CarouselWrapper = ({ children }: Props) => {
+  const arrowstyle =Array.isArray(children) && children.length < 4 ? "hidden" : "";
+
+  const CustomDots = ({ active, onClick }: DotProps) => {
+    const dotActive = active ? "custom-dot--active " : "";
+    return (
+      <li className={"custom-dot " + dotActive + arrowstyle}>
+        <button onClick={() => onClick && onClick()} />
+      </li>
+    );
+  };
+
   return (
-      <Carousel
-        arrows={false}
-        className=""
-        containerClass=""
-        customButtonGroup={<CustomButtonGroupAsArrows className={arrowstyle}/>}
-        dotListClass=""
-        draggable={false}
-        // infinite={true}
-        itemClass=""
-        keyBoardControl={true}
-        renderButtonGroupOutside={true}
-        renderDotsOutside={true}
-        responsive={responsive}
-        showDots={true}
-        slidesToSlide={4}
-      >
-        {children}
-      </Carousel>
+    <Carousel
+      arrows={false}
+      className=""
+      containerClass=""
+      customButtonGroup={<CustomButtonGroupAsArrows className={arrowstyle} />}
+      customDot={<CustomDots />}
+      dotListClass=""
+      draggable={false}
+      // infinite={true}
+      itemClass=""
+      keyBoardControl={true}
+      renderButtonGroupOutside={true}
+      renderDotsOutside={true}
+      responsive={responsive}
+      showDots={true}
+      slidesToSlide={4}
+    >
+      {children}
+    </Carousel>
   );
 };
 
