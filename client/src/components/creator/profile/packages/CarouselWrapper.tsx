@@ -66,14 +66,10 @@ const CarouselWrapper = ({ children }: Props) => {
   return (
     <Carousel
       arrows={false}
-      className=""
-      containerClass=""
       customButtonGroup={<CustomButtonGroupAsArrows className={arrowstyle} />}
       customDot={<CustomDots />}
-      dotListClass=""
       draggable={false}
-      // infinite={true}
-      itemClass=""
+      infinite={true}
       keyBoardControl={true}
       renderButtonGroupOutside={true}
       renderDotsOutside={true}
