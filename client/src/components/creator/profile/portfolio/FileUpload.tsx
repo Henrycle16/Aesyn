@@ -5,10 +5,11 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
 interface FileUploadProps {
-  onFileUpload: (data: { uri: string; name: string }) => void;
+  onFileUpload: (data: { uri: string; name: string, }) => void;
+  paddingY?: string;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, paddingY = "py-8" }) => {
   const [uploading, setUploading] = React.useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -48,7 +49,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       <div
         {...getRootProps({
           className:
-            "border-dotted border-2 rounded-md cursor-pointer border-gray-300 py-8 flex justify-center items-center flex-col",
+            `border-dotted border-2 rounded-md cursor-pointer border-gray-300 ${paddingY} flex justify-center items-center flex-col`,
         })}
       >
         <input {...getInputProps()} />
