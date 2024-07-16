@@ -6,7 +6,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import FileUpload from "../portfolio/FileUpload";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/legacy/image";
 
 interface Avatar {
@@ -16,19 +16,55 @@ interface Avatar {
 
 const ProfileCard = () => {
   const [avatar, setAvatar] = useState<Avatar | null>(null);
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [tempAvatar, setTempAvatar] = useState<Avatar | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showFileUpload, setShowFileUpload] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   const handleFileUpload = ({ uri, name }: Avatar) => {
-    setAvatar({ uri, name });
+    setTempAvatar({ uri, name });
+    setPreviewUrl(uri);
   };
 
   const openModal = () => {
+    setTempAvatar(avatar);
+    setPreviewUrl(avatar?.uri || null);
+    setShowFileUpload(false);
     (document.getElementById("avatar_modal") as HTMLDialogElement).showModal();
   };
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (tempAvatar) {
+      setAvatar(tempAvatar);
+      setPreviewUrl(null);
+    }
     (document.getElementById(`avatar_modal`) as HTMLDialogElement).close();
+  };
+
+  const closeModal = () => {
+    setPreviewUrl(null);
+    (document.getElementById(`avatar_modal`) as HTMLDialogElement).close();
+  };
+
+  const handleChangeImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          handleFileUpload({ uri: reader.result as string, name: file.name });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -49,7 +85,14 @@ const ProfileCard = () => {
                   />
                 }
               >
-                <Avatar sx={{ width: 150, height: 150 }} />
+                <Avatar
+                  alt={avatar?.name || "Default Name"}
+                  src={
+                    avatar?.uri ||
+                    "https://avatarfiles.alphacoders.com/161/161002.jpg"
+                  }
+                  sx={{ width: 150, height: 150 }}
+                />
               </Badge>{" "}
             </div>
           </div>
@@ -91,7 +134,7 @@ const ProfileCard = () => {
           {/* Public View Button */}
           <div className="flex flex-col ml-auto mb-24">
             {" "}
-            <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center">
+            <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]">
               <span className="text-[#3798E3] font-semibold">
                 {" "}
                 See Public View
@@ -112,13 +155,17 @@ const ProfileCard = () => {
           </div>
 
           {/* Upload box */}
-          <form method="dialog" className="flex flex-col flex-1">
+          <form
+            onSubmit={onFormSubmit}
+            method="dialog"
+            className="flex flex-col flex-1"
+          >
             <div className="flex flex-1">
               <div className="pt-6 px-24 w-full">
-                {avatar && avatar.uri ? (
+                {previewUrl ? (
                   <div className="relative w-[100%] h-[264px] bg-gray-50 ">
                     <Image
-                      src={avatar.uri}
+                      src={previewUrl}
                       alt="image"
                       width={368}
                       height={264}
@@ -136,19 +183,30 @@ const ProfileCard = () => {
             </div>
 
             <div className="flex justify-end mt-8">
+              {previewUrl && (
+                <button
+                  type="button"
+                  onClick={handleChangeImageClick}
+                  className="border-solid border-2 border-[#3798E3] text-[#3798E3] font-semibold py-2 px-6 rounded-md flex items-center justify-center mr-3 hover:bg-[#F5F5F5]"
+                >
+                  Change Image
+                </button>
+              )}
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileInputChange}
+              />
               <button
                 type="submit"
-                className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+                className="bg-[#3798E3] text-white font-bold py-3 px-7 capitalize rounded-md hover:bg-[#2C7AB6]"
               >
                 Save
               </button>
             </div>
             <button
-              onClick={() => {
-                (
-                  document.getElementById(`avatar_modal`) as HTMLDialogElement
-                ).close();
-              }}
+              onClick={closeModal}
               type="button"
               className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
             >
