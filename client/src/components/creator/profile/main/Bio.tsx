@@ -54,7 +54,7 @@ const Bio: React.FC = () => {
           className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6"
         >
           <h1 className="text-[#184465] font-semibold text-2xl">Bio</h1>
-          <h2 className="py-2 text-[#4A4A4A]">
+          <h2 className="py-2 gc-label-color body1">
             Give a brief description for your profile.
           </h2>
           <div>
