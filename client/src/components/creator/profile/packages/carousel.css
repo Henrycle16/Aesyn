@@ -1,0 +1,68 @@
+.custom-right-arrow-icon {
+  border: 1px solid grey;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(-45deg);
+}
+.custom-right-arrow {
+  position: absolute !important;
+  right: -32px;
+  top: 0px;
+  z-index: 1;
+  height: 171px;
+  width: 33px;
+  border-radius: 8px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.custom-right-arrow:hover {
+  opacity: 1;
+  background: #F5F5F5;
+}
+
+.custom-left-arrow-icon {
+  border: 1px solid grey;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(135deg);
+}
+.custom-left-arrow {
+  position: absolute !important;
+  left: -40px;
+  top: 0px;
+  z-index: 1;
+  height: 171px;
+  width: 33px;
+  border-radius: 8px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.custom-left-arrow:hover {
+  opacity: 1;
+  background: #F5F5F5;
+}
+
+.custom-dot button {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 1;
+  padding: 5px 5px 5px 5px;
+  box-shadow: none;
+  transition: background .5s;
+  padding: 0;
+  margin: 0;
+  margin-right: 6px;
+  outline: 0;
+  cursor: pointer;
+  background: #D7D7D7;
+}
+.custom-dot button:hover:active {
+  background: #184465;
+}
+.custom-dot--active button {
+  background: #184465;
+}
