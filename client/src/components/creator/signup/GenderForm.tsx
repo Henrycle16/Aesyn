@@ -85,7 +85,7 @@ const GenderForm = ({
           onClick={onNext}
           type="button"
           variant="contained"
-          className="bg-muiblue py-3 px-6"
+          className="btn-primary-color py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
           Next

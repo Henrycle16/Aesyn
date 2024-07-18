@@ -158,9 +158,9 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityOffIcon className="h-5 w-5 gc-label-color" />
             ) : (
-              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityIcon className="h-5 w-5 gc-label-color" />
             )}
           </button>
         </div>
@@ -185,9 +185,9 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showConfirmPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityOffIcon className="h-5 w-5 gc-label-color" />
             ) : (
-              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityIcon className="h-5 w-5 gc-label-color" />
             )}
           </button>
         </div>
@@ -252,9 +252,9 @@ const SignUpComponent = () => {
       </div>
 
       <div className="flex pt-16 pb-1">
-        <p className="mx-auto text-sm text-gray-500">
+        <p className="mx-auto text-sm gc-text-color">
           Copyright ©{" "}
-          <Link href={"/"} className="text-gray-500">
+          <Link href={"/"} className="gc-text-color">
             ShareFluence
           </Link>{" "}
           {new Date().getFullYear()}.

@@ -48,14 +48,14 @@
  }
  /* G4 - Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
  .gc-text-color {
-  @apply bg-[var(--g4)]
+  @apply text-[var(--g4)]
  }
  /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
  .gc-label-color {
-  @apply text-[var(--g4)]
+  @apply text-[var(--g5)]
  }
  .gc-checkbox-outline {
-  @apply border-[var(--g4)]
+  @apply border-[var(--g5)]
  }
 
  
@@ -63,6 +63,9 @@
  /* TS1 - Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
  .btn-primary-color {
   @apply bg-[var(--ts1)]
+ }
+ .ts1-text {
+  @apply text-[var(--ts1)]
  }
  /* TS2 - Hover Buttons */
  .hover-btn-color {
@@ -146,5 +149,13 @@
  /* Input fields */
  .input-focus-primary {
   @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:gc-progress-color gc-border-color
+ }
+
+ /* Button */
+ .primary-btn {
+  @apply inline-flex text-white btn-primary-color border-0 py-2 px-6 focus:outline-none hover-btn-color rounded text-lg
+ }
+ .secondary-btn {
+  @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:gc-input-color rounded text-lg
  }
 }
