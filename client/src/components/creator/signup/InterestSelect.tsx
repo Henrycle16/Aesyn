@@ -61,7 +61,7 @@ const InterestForm = ({
                 "rounded-3xl text-base h-10 w-[15rem] " +
                 `${
                   interests.includes(data.label)
-                    ? "btn-primary-color text-white"
+                    ? "ts1-bg text-white"
                     : "bg-white"
                 }`
               }
@@ -77,7 +77,7 @@ const InterestForm = ({
           onClick={onNext}
           type="button"
           variant="contained"
-          className="btn-primary-color py-3 px-6"
+          className="ts1-bg py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
           Next

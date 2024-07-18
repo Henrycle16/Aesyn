@@ -32,81 +32,78 @@
 @layer components {
  /* GrayScale */
  /* G1 - Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
- .gc-progress-color {
+ .g1-bg {
   @apply bg-[var(--g1)]
  }
  /* G2 -Footer */
- .gc-footer-color {
+ .g2-bg {
   @apply bg-[var(--g2)]
  }
  /* G3 - Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
- .gc-input-color {
+ .g3-bg {
   @apply bg-[var(--g3)]
  }
- .gc-border-color {
+ .g3-border {
   @apply border-[var(--g3)]
  }
  /* G4 - Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
- .gc-text-color {
+ .g4-text {
   @apply text-[var(--g4)]
  }
  /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
- .gc-label-color {
+ .g5-text {
   @apply text-[var(--g5)]
  }
- .gc-checkbox-outline {
+ .g5-border {
   @apply border-[var(--g5)]
  }
 
  
  /* Tints & Shades */
  /* TS1 - Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
- .btn-primary-color {
+ .ts1-bg {
   @apply bg-[var(--ts1)]
  }
  .ts1-text {
   @apply text-[var(--ts1)]
  }
  /* TS2 - Hover Buttons */
- .hover-btn-color {
-  @apply hover:bg-[var(--ts2)]
+ .ts2-bg {
+  @apply bg-[var(--ts2)]
  }
  /* TS3 - Progress Bar */
- .progress-bar-color {
+ .ts3-bg {
   @apply bg-[var(--ts3)]
  }
  /* TS4 - Background Color; multi-select button */
- .bg-color {
+ .ts4-bg {
   @apply bg-[var(--ts4)]
  }
  /* TS5 - Heading; Sub-heading */
- .heading-text-color {
+ .ts5-text {
   @apply text-[var(--ts5)]
  }
  /* TS6 - Footer */
- .footer-text-color {
+ .ts6-text {
   @apply text-[var(--ts6)]
  }
  /* TS7 - Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
- .text-body-text-color {
+ .ts7-text {
   @apply text-[var(--ts7)]
  }
  /* TS8 - Delete Button/Icon/Text; Error Text  */
- .delete-btn-text-color {
+ .ts8-text {
   @apply text-[var(--ts8)]
  }
- .delete-bg-color {
-  @apply bg-[var(--ts8)]
- }
- .error-text-color {
+ .ts8-bg {
   @apply bg-[var(--ts8)]
  }
  /* TS9 - Delete Button Hover */
- .delete-btn-hover-color {
+ .ts9-bg {
   @apply bg-[var(--ts9)]
  }
  /* TS10 - Success; Linked Icon; linked border */
- .success-color {
+ .ts10-bg {
   @apply bg-[var(--ts10)]
  }
 
@@ -145,17 +142,17 @@
   @apply text-xs font-bold
  }
 
- /* Components */
+  /* Components */
  /* Input fields */
  .input-focus-primary {
-  @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:gc-progress-color gc-border-color
+  @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:bg-[var(--g1)] border-[var(--g3)]
  }
 
  /* Button */
  .primary-btn {
-  @apply inline-flex text-white btn-primary-color border-0 py-2 px-6 focus:outline-none hover-btn-color rounded text-lg
+  @apply inline-flex text-white bg-[var(--ts1)] border-0 py-2 px-6 focus:outline-none hover:bg-[var(--ts2)] rounded text-lg
  }
  .secondary-btn {
-  @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:gc-input-color rounded text-lg
+  @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:bg-[var(--g3)] rounded text-lg
  }
 }

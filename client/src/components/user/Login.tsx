@@ -71,7 +71,7 @@ const LoginComponent = () => {
             autoComplete="email"
             required
           />
-          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">{}</p>
+          <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
         </div>
         <div className="relative">
           <div className="flex flex-row items-center justify-between">
@@ -95,20 +95,20 @@ const LoginComponent = () => {
               className="absolute right-0 pr-3 text-sm leading-5"
             >
               {showPassword ? (
-                <VisibilityOffIcon className="h-5 w-5 gc-label-color" />
+                <VisibilityOffIcon className="h-5 w-5 g5-text" />
               ) : (
-                <VisibilityIcon className="h-5 w-5 gc-label-color" />
+                <VisibilityIcon className="h-5 w-5 g5-text" />
               )}
             </button>
           </div>
-          <p className="mt-1 text-sm min-h-5 delete-btn-text-color">{}</p>
+          <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
         </div>
 
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          className="mt-3 mb-2 btn-primary-color"
+          className="mt-3 mb-2 ts1-bg"
         >
           Login
         </Button>
@@ -124,9 +124,9 @@ const LoginComponent = () => {
         </button>
 
         <div className="flex pt-16 pb-1">
-          <p className="mx-auto text-sm gc-text-color">
+          <p className="mx-auto text-sm g4-text">
             Copyright ©{" "}
-            <Link href={"/"} className="gc-text-color">
+            <Link href={"/"} className="g4-text">
               ShareFluence
             </Link>{" "}
             {new Date().getFullYear()}.
