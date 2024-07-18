@@ -5,31 +5,25 @@ import {
 } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import { addPackage as addPackageStore } from "@/redux/slices/creatorPackages-slice";
 
 import { addPackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
-type Props = {
-  setPackages: any;
-};
-
-const AddPackage =  ({setPackages}: Props) => {
+const AddPackage =  () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
-  // const userId = useAppSelector(
-  //   (state) => state.authReducer.value.userId
-  // );
 
   const session = useSession();
-  const testId = session.data?.user.id;
+  const userId = session.data?.user.id;
 
   const createPackage = async ( userId: string, currentPackage: any) => {
     try {
       const response = await addPackage(userId, currentPackage);
       console.log(response.data);
-      setPackages((prevPackages: any[]) => [...prevPackages, response.data]);
+      dispatch(addPackageStore(response.data));
     } catch (error) {
       console.error(error);
     }
@@ -37,8 +31,8 @@ const AddPackage =  ({setPackages}: Props) => {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("userId: " + testId)
-    createPackage(testId, currentPackage);
+    console.log("userId: " + userId)
+    createPackage(userId, currentPackage);
     (document.getElementById(`add_package_modal`) as HTMLDialogElement).close();
   };
 

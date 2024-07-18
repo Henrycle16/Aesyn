@@ -22,7 +22,7 @@ const PackageCard = (props: Props) => {
 
   return (
     <>
-      <div className="border border-[#D7D7D7] p-4 rounded-2xl w-[17.438rem] flex flex-col">
+      <div className="border border-[#D7D7D7] p-4 rounded-2xl w-[17.438rem] h-[10.688rem] flex flex-col">
         {/* Top Section */}
         <div className="flex">
           <InstagramLogo />

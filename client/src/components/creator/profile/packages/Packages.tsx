@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useAppSelector } from "@/redux/store";
 import "@/styles/packagesScrollbar.css";
+
 import PackageCard from "./PackageCard";
 import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
-import { getCreatorByUsername } from "@/actions/creatorApi";
+import CarouselWrapper from "./CarouselWrapper";
 
-import { useAppSelector } from "@/redux/store";
 
 type Package = {
   _id?: string;
@@ -24,31 +25,25 @@ const getSocialMediaTypes = (packages: Package[]) => Array.from(new Set(packages
 
 const Packages = () => {
   const packagesList = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
-  console.log("Packages Test: ", packagesList);
-
-  const [packages, setPackages] = useState([] as Package[]);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
-  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packages), [packages]);
-
-  useEffect(() => {
-    setPackages(packagesList);
-  }, [[], setPackages]);
+  const socialMediaTypes = useMemo(() => getSocialMediaTypes(packagesList), [packagesList]);
   
+  // TODO: Fix bug where socialMediaTab sets to first tab when a new socialMediaType is created
   useEffect(() => {
     setSocialMediaTab(socialMediaTypes[0]);
   }, [socialMediaTypes]);
 
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[19.75rem] p-10 flex flex-col text-[#184465]">
+    <section className="border border-gray-300 rounded-badge min-h-[19.75rem] px-10 pt-10 pb-4 flex flex-col text-[#184465]">
       {/* Packages Header Container */}
       <div className="flex items-center gap-2.5">
         <h1 className="text-2xl font-semibold self-end">Packages</h1>
         <NewPackageButton />
       </div>
-      {!packages.length && <p className="text-sm font-medium mt-10">
+      {!packagesList.length && <p className="text-sm font-medium mt-10">
         Create our content packages to display for brands to purchase.
       </p>}
-      <div className="my-5 flex gap-6">
+      <div className="my-5 flex gap-6 ml-2">
         {
           socialMediaTypes.map((socialMediaType, index) => (
             <button
@@ -61,20 +56,22 @@ const Packages = () => {
           ))
         }
       </div>
-      {/* Package Cards Container */}
-      <div className="h-[10.688rem] gap-5 flex whitespace-nowrap overflow-x-auto">
+      {/* Package Cards Container ----- gap-5 flex whitespace-nowrap overflow-x-auto */}
+      <div className="relative pb-8 ml-2">
         {/* IG Package */}
-        {packages.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
-          <PackageCard
-            key={packageData._id}
-            {...packageData}
-          />
-        ))}
+        <CarouselWrapper>
+          {packagesList.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
+            <PackageCard
+              key={packageData._id}
+              {...packageData}
+            />
+          ))}
+        </CarouselWrapper>
       </div>
       {/* Package Modals */}
-      <AddPackage setPackages={setPackages} />
-      <EditPackage setPackages={setPackages} />
-      <DeletePackage setPackages={setPackages} />
+      <AddPackage />
+      <EditPackage />
+      <DeletePackage />
     </section>
   );
 };

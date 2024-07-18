@@ -90,7 +90,7 @@
  /* TS7 - Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
  .ts7-text {
   @apply text-[var(--ts7)]
- }
+ } 
  /* TS8 - Delete Button/Icon/Text; Error Text  */
  .ts8-text {
   @apply text-[var(--ts8)]
