@@ -6,7 +6,7 @@ import Badge from "@mui/material/Badge";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
-import { getCreatorSelf } from "@/utils/api/creatorApi";
+import { getCreatorSelf } from "@/actions/creatorApi";
 
 
 const TopComponent = async () => {

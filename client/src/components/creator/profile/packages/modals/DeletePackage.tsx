@@ -2,7 +2,7 @@
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-import { deletePackage } from "@/utils/api/creatorApi";
+import { deletePackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
 type Props = {

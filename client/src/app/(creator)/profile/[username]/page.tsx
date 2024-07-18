@@ -10,7 +10,7 @@ import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { getCreatorByUsername } from "@/utils/api/creatorApi";
+import { getCreatorByUsername } from "@/actions/creatorApi";
 
 type Params = {
   username: string;

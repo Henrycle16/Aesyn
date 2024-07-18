@@ -7,7 +7,7 @@ import NewPackageButton from "./NewPackageButton";
 import AddPackage from "./modals/AddPackage";
 import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
-import { getCreatorByUsername } from "@/utils/api/creatorApi";
+import { getCreatorByUsername } from "@/actions/creatorApi";
 
 import { useAppSelector } from "@/redux/store";
 

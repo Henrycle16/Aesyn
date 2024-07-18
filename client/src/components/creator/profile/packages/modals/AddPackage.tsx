@@ -6,7 +6,7 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-import { addPackage } from "@/utils/api/creatorApi";
+import { addPackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
 type Props = {
