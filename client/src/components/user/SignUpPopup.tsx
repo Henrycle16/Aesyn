@@ -40,14 +40,14 @@ const SignUpPopup = () => {
           <Link
             onClick={onClickBrand}
             href={"/signup"}
-            className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+            className="primary-btn"
           >
             Join as Brand!
           </Link>
           <Link
             onClick={onClickCreator}
             href={"/signup"}
-            className="ml-4 inline-flex text-blue-500 border-solid border-2 border-blue-500 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
+            className="ml-4 secondary-btn"
           >
             Join as Creator!
           </Link>

@@ -109,7 +109,7 @@ const SignUpComponent = () => {
           autoFocus
           autoComplete="given-name"
         />
-        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+        <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.firstName?.message}
         </p>
       </div>
@@ -122,7 +122,7 @@ const SignUpComponent = () => {
           {...register("lastName")}
           autoComplete="family-name"
         />
-        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+        <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.lastName?.message}
         </p>
       </div>
@@ -135,7 +135,7 @@ const SignUpComponent = () => {
           {...register("email")}
           autoComplete="email"
         />
-        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+        <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.email?.message}
         </p>
       </div>
@@ -158,13 +158,13 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityOffIcon className="h-5 w-5 g5-text" />
             ) : (
-              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityIcon className="h-5 w-5 g5-text" />
             )}
           </button>
         </div>
-        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+        <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.password?.message}
         </p>
       </div>
@@ -185,13 +185,13 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showConfirmPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityOffIcon className="h-5 w-5 g5-text" />
             ) : (
-              <VisibilityIcon className="h-5 w-5 text-gray-700" />
+              <VisibilityIcon className="h-5 w-5 g5-text" />
             )}
           </button>
         </div>
-        <p className="mt-1 text-sm min-h-5 delete-btn-text-color">
+        <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.password2?.message}
         </p>
       </div>
@@ -218,7 +218,7 @@ const SignUpComponent = () => {
       </div>
       <div>
         {errors.acceptedTerms?.message && (
-          <p className="mt-1 text-sm delete-btn-text-color">
+          <p className="mt-1 text-sm ts8-text">
             {errors.acceptedTerms.message}
           </p>
         )}
@@ -252,9 +252,9 @@ const SignUpComponent = () => {
       </div>
 
       <div className="flex pt-16 pb-1">
-        <p className="mx-auto text-sm text-gray-500">
+        <p className="mx-auto text-sm g4-text">
           Copyright ©{" "}
-          <Link href={"/"} className="text-gray-500">
+          <Link href={"/"} className="g4-text">
             ShareFluence
           </Link>{" "}
           {new Date().getFullYear()}.

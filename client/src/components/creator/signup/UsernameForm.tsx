@@ -39,7 +39,7 @@ const UsernameForm = ({
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[#3798e3] focus:border-[#3798e3] focus:bg-neutral-100 rounded-md"
+            className="input-md w-full input-focus-primary"
             id="userName"
             name="userName"
             autoComplete="name"
@@ -59,7 +59,7 @@ const UsernameForm = ({
           onClick={onNext}
           type="button"
           variant="contained"
-          className="bg-muiblue py-3 px-6"
+          className="ts1-bg py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
           Next

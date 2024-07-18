@@ -16,7 +16,7 @@ import InterestSelect from "./InterestSelect";
 import GenderForm from "./GenderForm";
 import ConfirmForm from "./ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
-import { creatorSignUp } from "./../../../actions/creator";
+import { creatorSignUp } from "@/actions/creatorApi"
 import ToProfile from "@/components/ui/ToProfile";
 
 import { userInfo } from "@/redux/slices/user-slice";
@@ -104,8 +104,8 @@ const SignUpBox = () => {
     try {
       const creatorSignUpResponse = await creatorSignUp(body);
 
-      if (creatorSignUpResponse && !creatorSignUpResponse.error) {
-        console.log("REGISTERED CREATOR!");
+      if (creatorSignUpResponse && !creatorSignUpResponse.data.error) {
+        console.log("REGISTERED CREATOR!", creatorSignUpResponse.data);
         dispatch(userInfo({ currentStep: currentStep + 1 }));
       }
     } catch {

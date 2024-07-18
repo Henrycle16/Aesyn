@@ -67,7 +67,7 @@ const SocialMediaSelect = ({
                 "text-base h-10 " +
                 `${
                   preferences.includes(data.label)
-                    ? "bg-blue-500 text-white"
+                    ? "ts1-bg text-white"
                     : "bg-white"
                 }`
               }
@@ -83,7 +83,7 @@ const SocialMediaSelect = ({
           onClick={onNext}
           type="button"
           variant="contained"
-          className="bg-muiblue py-3 px-6"
+          className="ts1-bg py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
           Next

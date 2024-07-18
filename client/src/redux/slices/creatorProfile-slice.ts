@@ -6,11 +6,29 @@ type InitialState = {
 
 type creatorProfileInfoReducer = {
   previousModalId: string;
+  userName: string;
+  location: {
+    city: string,
+    state: string,
+    country: string
+  };
+  gender: string;
+  preferences: string[];
+  interests: string[];
 };
 
 const initialState = {
   value: {
     previousModalId: "",
+    userName: "",
+    location: {
+      city: "",
+      state: "",
+      country: ""
+    },
+    gender: "",
+    preferences: [],
+    interests: []
   } as creatorProfileInfoReducer,
 } as InitialState;
 

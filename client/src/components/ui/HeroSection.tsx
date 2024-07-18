@@ -38,7 +38,7 @@ const HeroSection = () => {
           <Link
             onClick={onClickBrand}
             href={"/signup"}
-            className="inline-flex text-white btn-primary-color border-0 py-2 px-6 focus:outline-none hover-btn-color rounded text-lg"
+            className="inline-flex text-white ts1-bg border-0 py-2 px-6 focus:outline-none hover:ts2-bg rounded text-lg"
           >
             Join as Brand!
           </Link>
