@@ -10,7 +10,7 @@ type Package = {
   quantity: number;
 };
 
-// Get Creator Self
+// Get Creator Self *Works
 // Private
 const getCreatorSelf = async (user: string) => {
   const session = await getServerSession(config);
@@ -24,10 +24,36 @@ const getCreatorSelf = async (user: string) => {
   } else {
    // Error, not authenticated
   }
-  
 };
 
-//! Might need to delete this function and use getCreatorByUserId instead
+// Creator Signup *Works
+// Public
+const creatorSignUp = async (body: string) => {
+  return await api().post(`/api/creators`, body, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+// Creator Update 
+// Private
+const creatorUpdate = async (body: string) => {
+  return await api().post(`/api/creators`, body, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+// Get all Creators
+// Public
+const getAllCreators = (userId: string) => {
+  return api().get(`/api/creators`);
+};
+
+// Get Creator by ID *Works
+// Public
 const getCreatorByUserId = (userId: string) => {
   return api().get(`/api/creators/user/${userId}`);
 };
@@ -48,11 +74,24 @@ const deletePackage = (userId: string, packageId: string) => {
   return api().delete(`/api/creators/${userId}/packages/${packageId}`);
 };
 
+// Delete creator
+// Private
+const deleteCreator = (userId: string) => {
+  api().delete(`/api/creators/`, {
+    params: {
+      userId: userId,
+    },
+  });
+};
+
 export {
   getCreatorSelf,
+  creatorSignUp,
+  creatorUpdate,
   getCreatorByUserId,
   getCreatorByUsername,
   addPackage,
   updatePackage,
   deletePackage,
+  deleteCreator
 };
