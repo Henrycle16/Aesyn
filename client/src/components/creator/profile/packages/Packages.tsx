@@ -11,9 +11,6 @@ import EditPackage from "./modals/EditPackage";
 import DeletePackage from "./modals/DeletePackage";
 import CarouselWrapper from "./CarouselWrapper";
 
-
-import { useAppSelector } from "@/redux/store";
-
 type Package = {
   _id?: string;
   socialMedia: string;
