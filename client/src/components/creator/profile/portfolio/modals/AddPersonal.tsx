@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/legacy/image";
-import Image from "next/legacy/image";
 import FileUpload from "../FileUpload";
 import {
   creatorContentInfo,
