@@ -83,7 +83,7 @@ const LocationBox = ({}) => {
           onClick={onNext}
           type="button"
           variant="contained"
-          className="bg-muiblue py-3 px-6"
+          className="ts1-bg py-3 px-6"
           endIcon={<ArrowForwardIcon />}
         >
           Next

@@ -8,7 +8,7 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { editPackage as editPackageStore } from "@/redux/slices/creatorPackages-slice";
 
-import { updatePackage } from "@/utils/api/creatorApi";
+import { updatePackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
 const EditPackage = () => {

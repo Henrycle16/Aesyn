@@ -7,7 +7,7 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { addPackage as addPackageStore } from "@/redux/slices/creatorPackages-slice";
 
-import { addPackage } from "@/utils/api/creatorApi";
+import { addPackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
 const AddPackage =  () => {
