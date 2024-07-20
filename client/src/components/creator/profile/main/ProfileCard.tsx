@@ -119,14 +119,9 @@ const ProfileCard = () => {
           </div>
 
           {/* Upload box */}
-          <form
-            method="dialog"
-            className="flex flex-col flex-1"
-          >
-            <div className="flex flex-1">
-              <div className="pt-6 px-20 w-full">
-                <ImageCropper updateAvatar={updateAvatar} />
-              </div>
+          <form method="dialog">
+            <div className="pt-6">
+              <ImageCropper updateAvatar={updateAvatar} />
             </div>
             <button
               onClick={closeModal}

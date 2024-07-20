@@ -85,9 +85,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   };
 
   return (
-    <div>
+    <>
       {!imgSrc && (
-        <>
+        <div className="px-20">
           <input
             type="file"
             accept="image/*"
@@ -102,30 +102,31 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
             <Upload />
             {error && <p className="text-red-500 text-sm">{error}</p>}
           </div>
-        </>
+        </div>
       )}
       {imgSrc && (
         <div
-          className="modal-content"
           style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}
         >
-          <ReactCrop
-            crop={crop}
-            circularCrop
-            keepSelection
-            aspect={ASPECT_RATIO}
-            minWidth={MIN_DIMENSION}
-            onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
-          >
-            <Image
-              ref={imgRef}
-              src={imgSrc}
-              alt="Upload"
-              width={432}
-              height={284}
-              onLoad={onImageLoad}
-            />
-          </ReactCrop>
+          <div className="px-20">
+            <ReactCrop
+              crop={crop}
+              circularCrop
+              keepSelection
+              aspect={ASPECT_RATIO}
+              minWidth={MIN_DIMENSION}
+              onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
+            >
+              <Image
+                ref={imgRef}
+                src={imgSrc}
+                alt="Upload"
+                width={432}
+                height={284}
+                onLoad={onImageLoad}
+              />
+            </ReactCrop>
+          </div>
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "74px" }}>
             <button
               className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5] text-[#3798E3] font-semibold"
@@ -172,7 +173,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 
