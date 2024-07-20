@@ -27,11 +27,16 @@ const Packages = () => {
   const packagesList = useAppSelector((state) => state.creatorPackagesReducer.value.packages);
   const [socialMediaTab, setSocialMediaTab] = useState(''); 
   const socialMediaTypes = useMemo(() => getSocialMediaTypes(packagesList), [packagesList]);
+
+  const filteredPackages = packagesList.filter((packageData) => packageData.socialMedia.includes(socialMediaTab));
   
-  // TODO: Fix bug where socialMediaTab sets to first tab when a new socialMediaType is created
   useEffect(() => {
-    setSocialMediaTab(socialMediaTypes[0]);
-  }, [socialMediaTypes]);
+    if (!socialMediaTab?.length) {
+      setSocialMediaTab(socialMediaTypes[0])
+    } else if (!socialMediaTypes.includes(socialMediaTab)) {
+      setSocialMediaTab(socialMediaTypes[0])
+    }
+  }, [socialMediaTypes, socialMediaTab]);
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[19.75rem] px-10 pt-10 pb-4 flex flex-col text-[#184465]">
@@ -56,11 +61,11 @@ const Packages = () => {
           ))
         }
       </div>
-      {/* Package Cards Container ----- gap-5 flex whitespace-nowrap overflow-x-auto */}
+      {/* Package Cards Container */}
       <div className="relative pb-8 ml-2">
         {/* IG Package */}
         <CarouselWrapper>
-          {packagesList.filter((packageData) => packageData.socialMedia === socialMediaTab).map((packageData) => (
+          {filteredPackages.map((packageData) => (
             <PackageCard
               key={packageData._id}
               {...packageData}
