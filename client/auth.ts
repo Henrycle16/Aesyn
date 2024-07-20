@@ -3,7 +3,8 @@ import type { NextAuthOptions } from "next-auth"
 import { getServerSession } from "next-auth"
 
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { login, register } from '@/actions/auth'
+import { login } from '@/actions/authApi'
+import { registerUser } from '@/actions/userApi'
 
 // You'll need to import and pass this
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
@@ -75,7 +76,7 @@ export const config = {
         ) {
           return null;
         } else {
-          const res = register(
+          const res = await registerUser(
             credentials.firstName,
             credentials.lastName,
             credentials.email,
@@ -83,7 +84,7 @@ export const config = {
             Boolean(credentials.promotional),
             Boolean(credentials.acceptedTerms)
           );
-          return res;
+          return res.data;
         }
       },
     }),
@@ -95,7 +96,6 @@ export const config = {
         token.id = user._id
       }
 
-      console.log("TOKEN: ",token);
       return token;
     },
     async session({ session, token }) {
@@ -104,7 +104,6 @@ export const config = {
       session.user.id = token.id;
       session.user.token = token.jti;
 
-      console.log("SESSION: ", session);
       return session;
     },
     async redirect({ url, baseUrl }) {

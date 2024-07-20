@@ -1,5 +1,4 @@
 import express from "express";
-import auth from "../middleware/auth";
 import { validationResult } from "express-validator";
 
 import Brand from "../models/Brand";
@@ -10,7 +9,7 @@ const router = express.Router();
 // @route   GET api/brands/me
 // @desc    Get current users profile
 // @access  Private
-router.get("/me", auth, async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     const profile = await Brand.findOne({
       user: req.body.user.id,
@@ -35,7 +34,6 @@ router.post(
   [
     // ** EXPRESS-VALIDATION CHECKS HERE
   ],
-  auth,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -85,7 +83,7 @@ router.post(
 // @route   PUT api/brands/
 // @desc    Update Brand profile
 // @access  Private
-router.put("/", [], auth, async (req, res) => {
+router.put("/", [], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -172,7 +170,7 @@ router.get("/user/:user_id", async (req, res) => {
 // @route   DELETE api/brands
 // @desc    Delete profile, user, & posts
 // @access  Private
-router.delete("/", auth, async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
     // Remove user posts
     //await Post.deleteMany({ user: req.user.id });

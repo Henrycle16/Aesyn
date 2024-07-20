@@ -100,7 +100,7 @@ const SocialMedia = () => {
           <h1 className="text-[#184465] font-semibold text-2xl">
             Social Media
           </h1>
-          <h2 className="py-2 text-[#4A4A4A]">
+          <h2 className="py-2 gc-label-color body1">
             Link your social media pages to display on your profile.
           </h2>
           <form method="dialog">

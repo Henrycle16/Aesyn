@@ -1,37 +1,30 @@
 "use client";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-
 import {
   creatorPackagesInfo,
 } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import { editPackage as editPackageStore } from "@/redux/slices/creatorPackages-slice";
 
-import { updatePackage } from "@/utils/api/creatorApi";
+import { updatePackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
-type Props = {
-  setPackages: any;
-};
-
-const EditPackage = ({setPackages}: Props) => {
+const EditPackage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
   );
 
   const session = useSession();
-  const testId = session.data?.user.id;
+  const userId = session.data?.user.id;
 
   const editPackage = async ( userId: string, currentPackage: any) => {
     try {
       const response = await updatePackage(userId, currentPackage);
       console.log(response.data);
-      setPackages((prevPackages: any[]) => prevPackages.map((packageValue) => 
-          packageValue._id === currentPackage._id ? {...currentPackage} : packageValue
-        )
-      );
+      dispatch(editPackageStore(currentPackage));
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +32,7 @@ const EditPackage = ({setPackages}: Props) => {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    editPackage(testId, currentPackage);
+    editPackage(userId, currentPackage);
     (document.getElementById(`edit_package_modal`) as HTMLDialogElement).close();
   };
 

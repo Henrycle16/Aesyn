@@ -10,7 +10,7 @@ import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { getCreatorByUsername } from "@/utils/api/creatorApi";
+import { getCreatorByUsername } from "@/actions/creatorApi";
 
 type Params = {
   username: string;
@@ -19,7 +19,7 @@ type Params = {
 export default function CreatorProfile({ params }: { params: Params }) {
   const dispatch = useDispatch<AppDispatch>();
 
-  const getPackages = async () => {
+  const getProfileInfo = async () => {
     try {
       const response = await getCreatorByUsername(params.username);
 
@@ -50,7 +50,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
   };
 
   useEffect(() => {
-    getPackages();
+    getProfileInfo();
   }, []);
 
   return (
