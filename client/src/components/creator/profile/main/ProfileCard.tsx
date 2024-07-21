@@ -6,7 +6,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import React, { useRef, useState } from "react";
-import ImageCropper from "@/components/utils/ImageCropper/ImageCropper";
+import ImageCropper from "@/components/creator/profile/main/ImageCropper/ImageCropper";
 
 interface Avatar {
   uri: string;
