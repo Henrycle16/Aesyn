@@ -64,21 +64,34 @@ const AddPersonal = () => {
           {/* Input Fields Container */}
 
           {currentContent.uri ? (
-            <div className="relative w-[100%] h-[400px] bg-gray-50">
-              <Image
-                src={currentContent.uri}
-                alt="content"
-                layout="fill"
-                objectFit="contain"
-              />
+            <>
+              <div className="relative w-[100%] h-[400px] bg-gray-50 my-3">
+                <Image
+                  src={currentContent.uri}
+                  alt="content"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
+              <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center flex-col min-h-28">
+                <ChangeButton
+                  resetTrigger={resetContentButton}
+                  onResetComplete={handleResetComplete}
+                />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex justify-center items-center">
+              <div className="border-dotted border-2 rounded-md border-gray-300 p-8 flex justify-center items-center flex-col w-5/12 h-96">
+                <ContentButton
+                  resetTrigger={resetContentButton}
+                  onResetComplete={handleResetComplete}
+                />
+              </div>
             </div>
-          ) : null}
-          <div className="flex justify-center items-center">
-            <div className="border-dotted border-2 rounded-md border-gray-300 p-8 flex justify-center items-center flex-col w-5/12 h-96">
-              <ContentButton resetTrigger={resetContentButton} onResetComplete={handleResetComplete}/>
-              <ChangeButton resetTrigger={resetContentButton} onResetComplete={handleResetComplete}/>
-            </div>
-          </div>
+          )}
 
           {currentContent.name ? (
             <p className="text-gray-400 text-xs">.../{currentContent.name}</p>
