@@ -12,6 +12,7 @@ import EditCampaign from "./modals/EditCampaign";
 import DeletePortfolioContent from "./modals/DeletePortfolioContent";
 
 import { useAppSelector } from "@/redux/store";
+import LinkVideo from "./modals/LinkVideo";
 
 const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
@@ -73,6 +74,7 @@ const Portfolio = () => {
       <EditPersonal />
       <EditCampaign />
       <DeletePortfolioContent />
+      <LinkVideo />
     </section>
   );
 };

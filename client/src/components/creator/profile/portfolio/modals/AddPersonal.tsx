@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import React, { useState, useRef } from "react";
 import ContentButton from "../ContentButton";
 import ChangeButton from "../ChangeButton";
+import ReactPlayer from "react-player/lazy";
 
 import ReactCrop, {
   centerCrop,
@@ -59,8 +60,6 @@ const AddPersonal = () => {
     setResetContentButton(false);
   };
 
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {};
-
   const handleCloseModal = () => {
     dispatch(resetCurrentContent());
     setResetContentButton(true);
@@ -95,27 +94,44 @@ const AddPersonal = () => {
 
           {currentContent.uri ? (
             <>
-              <div className="flex justify-center items-center h-full">
-                <ReactCrop
-                  crop={crop}
-                  keepSelection
-                  aspect={ASPECT_RATIO}
-                  minWidth={MIN_DIMENSION}
-                  onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
-                >
-                  <Image
-                    src={currentContent.uri}
-                    ref={imgRef}
-                    alt="content"
-                    width={500}
-                    height={450}
-                    onLoad={onImageLoad}
-                    style={{ maxHeight: '450px', objectFit: 'contain', width: 'auto', height: 'auto' }}
-                  />
-                </ReactCrop>
-              </div>
-              {currentContent.name ? (
+              {currentContent.mediaType === "video" ? (
                 <div className="flex justify-center items-center my-1">
+                  <ReactPlayer
+                    url={currentContent.uri}
+                    light={true}
+                    width={854}
+                    height={470}
+                  />
+                </div>
+              ) : (
+                <div className="flex justify-center items-center h-full my-1">
+                  <ReactCrop
+                    crop={crop}
+                    keepSelection
+                    aspect={ASPECT_RATIO}
+                    minWidth={MIN_DIMENSION}
+                    onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
+                  >
+                    <Image
+                      src={currentContent.uri}
+                      ref={imgRef}
+                      alt="content"
+                      width={500}
+                      height={450}
+                      onLoad={onImageLoad}
+                      style={{
+                        maxHeight: "450px",
+                        objectFit: "contain",
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    />
+                  </ReactCrop>
+                </div>
+              )}
+
+              {currentContent.name ? (
+                <div className="flex justify-center items-center">
                   <p className="text-gray-400 text-xs">
                     .../{currentContent.name}
                   </p>
@@ -123,6 +139,7 @@ const AddPersonal = () => {
               ) : (
                 <></>
               )}
+
               <div className="flex justify-center items-center">
                 <div className="flex justify-center items-center flex-col min-h-28">
                   <ChangeButton

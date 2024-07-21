@@ -151,6 +151,7 @@ const ContentButton: React.FC<ContentButtonProps> = ({
           >
             <button
               type="button"
+              onClick={() => (document.getElementById('link_video_modal') as HTMLDialogElement).showModal()}
               onMouseEnter={() => {
                 setHoveredButton("video");
                 setIsPhoto("Link a video (YouTube)");
