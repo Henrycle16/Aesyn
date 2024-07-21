@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/legacy/image";
-import FileUpload from "../FileUpload";
+import Image from "next/image";
 import {
   creatorContentInfo,
   addContent,
@@ -11,11 +10,27 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ContentButton from "../ContentButton";
 import ChangeButton from "../ChangeButton";
 
+import ReactCrop, {
+  centerCrop,
+  convertToPixelCrop,
+  makeAspectCrop,
+  type Crop,
+} from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+import setCanvasPreview from "../PortfolioSetCanvas";
+
+const ASPECT_RATIO = 5 / 4;
+const MIN_DIMENSION = 150;
+
 const AddPersonal = () => {
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
     (state) => state.creatorContentReducer.value.currentContent
@@ -23,13 +38,28 @@ const AddPersonal = () => {
 
   const [resetContentButton, setResetContentButton] = useState(false);
 
+  const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
+    const { width, height } = e.currentTarget;
+    const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
+
+    const crop = makeAspectCrop(
+      {
+        unit: "%",
+        width: cropWidthInPercent,
+      },
+      ASPECT_RATIO,
+      width,
+      height
+    );
+    const centeredCrop = centerCrop(crop, width, height);
+    setCrop(centeredCrop);
+  };
+
   const handleResetComplete = () => {
     setResetContentButton(false);
   };
 
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
-  };
+  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {};
 
   const handleCloseModal = () => {
     dispatch(resetCurrentContent());
@@ -65,20 +95,40 @@ const AddPersonal = () => {
 
           {currentContent.uri ? (
             <>
-              <div className="relative w-[100%] h-[400px] bg-gray-50 my-3">
-                <Image
-                  src={currentContent.uri}
-                  alt="content"
-                  layout="fill"
-                  objectFit="contain"
-                />
+              <div className="flex justify-center items-center h-full">
+                <ReactCrop
+                  crop={crop}
+                  keepSelection
+                  aspect={ASPECT_RATIO}
+                  minWidth={MIN_DIMENSION}
+                  onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
+                >
+                  <Image
+                    src={currentContent.uri}
+                    ref={imgRef}
+                    alt="content"
+                    width={500}
+                    height={450}
+                    onLoad={onImageLoad}
+                    style={{ maxHeight: '450px', objectFit: 'contain', width: 'auto', height: 'auto' }}
+                  />
+                </ReactCrop>
               </div>
+              {currentContent.name ? (
+                <div className="flex justify-center items-center my-1">
+                  <p className="text-gray-400 text-xs">
+                    .../{currentContent.name}
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="flex justify-center items-center">
                 <div className="flex justify-center items-center flex-col min-h-28">
-                <ChangeButton
-                  resetTrigger={resetContentButton}
-                  onResetComplete={handleResetComplete}
-                />
+                  <ChangeButton
+                    resetTrigger={resetContentButton}
+                    onResetComplete={handleResetComplete}
+                  />
                 </div>
               </div>
             </>
@@ -93,17 +143,24 @@ const AddPersonal = () => {
             </div>
           )}
 
-          {currentContent.name ? (
-            <p className="text-gray-400 text-xs">.../{currentContent.name}</p>
-          ) : (
-            <></>
-          )}
-
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-10">
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+              onClick={() => {
+                if (imgRef.current) {
+                  setCanvasPreview(
+                    previewCanvasRef.current as HTMLCanvasElement,
+                    imgRef.current as HTMLImageElement,
+                    convertToPixelCrop(
+                      crop!,
+                      imgRef.current.width,
+                      imgRef.current.height
+                    )
+                  );
+                }
+              }}
             >
               Save
             </button>
@@ -119,6 +176,19 @@ const AddPersonal = () => {
           >
             ✕
           </button>
+          {crop && (
+            <canvas
+              ref={previewCanvasRef}
+              className="mt-4"
+              style={{
+                display: "none",
+                border: "1px solid black",
+                objectFit: "contain",
+                width: 150,
+                height: 150,
+              }}
+            />
+          )}
         </form>
       </div>
     </dialog>
