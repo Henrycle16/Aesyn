@@ -161,6 +161,7 @@ const EditPackage = () => {
                   type="number"
                   id={`qty`}
                   name="qty"
+                  min={1}
                   placeholder="#"
                   value={currentPackage.quantity}
                   onChange={(e) => {
@@ -188,7 +189,9 @@ const EditPackage = () => {
                   type="number"
                   id={`price`}
                   name="price"
-                  value={currentPackage.price}
+                  min={0}
+                  step="0.01"
+                  value={Number(currentPackage.price).toString()}
                   onChange={(e) => {
                     dispatch(
                       creatorPackagesInfo({
