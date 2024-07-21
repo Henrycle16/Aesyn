@@ -61,7 +61,11 @@ const ContentButton: React.FC<ContentButtonProps> = ({
 
       dispatch(
         creatorContentInfo({
-          currentContent: { uri: imageUrl, name: imageName },
+          currentContent: {
+            uri: imageUrl,
+            name: imageName,
+            mediaType: "image",
+          },
         })
       );
     });

@@ -6,9 +6,7 @@ import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
-import {
-  creatorContentInfo,
-} from "@/redux/slices/creatorPortfolio-slice";
+import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -56,8 +54,15 @@ const ContentButton: React.FC<ContentButtonProps> = ({
         }
       });
 
-      dispatch(creatorContentInfo({ currentContent: { uri: imageUrl, name: imageName } }));
-
+      dispatch(
+        creatorContentInfo({
+          currentContent: {
+            uri: imageUrl,
+            name: imageName,
+            mediaType: "image",
+          },
+        })
+      );
     });
     reader.readAsDataURL(file);
   };
