@@ -91,7 +91,6 @@ const AddPersonal = () => {
         {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
-
           {currentContent.uri ? (
             <>
               {currentContent.mediaType === "video" ? (
@@ -129,16 +128,11 @@ const AddPersonal = () => {
                   </ReactCrop>
                 </div>
               )}
-
-              {currentContent.name ? (
-                <div className="flex justify-center items-center">
-                  <p className="text-gray-400 text-xs">
-                    .../{currentContent.name}
-                  </p>
-                </div>
-              ) : (
-                <></>
-              )}
+              <div className="flex flex-col items-center">
+                <p className="text-gray-400 text-xs">
+                  Crop the image for your portfolio thumbnail.
+                </p>
+              </div>
 
               <div className="flex justify-center items-center">
                 <div className="flex justify-center items-center flex-col min-h-28">

@@ -1,6 +1,5 @@
 "use client";
 
-import FileUpload from "../FileUpload";
 import React, { useState, useEffect } from "react";
 import Image from "next/legacy/image";
 
@@ -152,7 +151,6 @@ const EditCampaign = () => {
                 Upload a different photo or video
               </p>
               <div>
-                <FileUpload onFileUpload={handleFileUpload}/>
               </div>
               {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
             </div>

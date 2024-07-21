@@ -1,8 +1,8 @@
 "use client";
 
-import FileUpload from "../FileUpload";
-import { useState } from "react";
-import Image from "next/legacy/image";
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import ChangeButton from "../ChangeButton";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
@@ -14,22 +14,68 @@ import {
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-// TODO: Add logic to reset form fields after successfully submitting form
+import ReactPlayer from "react-player/lazy";
+
+import ReactCrop, {
+  centerCrop,
+  convertToPixelCrop,
+  makeAspectCrop,
+  type Crop,
+} from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+import setCanvasPreview from "../PortfolioSetCanvas";
+
+const ASPECT_RATIO = 5 / 4;
+const MIN_DIMENSION = 150;
 
 const EditPersonal = () => {
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
     (state) => state.creatorContentReducer.value.currentContent
   );
 
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  const [resetContentButton, setResetContentButton] = useState(false);
+
+  const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
+    const { width, height } = e.currentTarget;
+    const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
+
+    const crop = makeAspectCrop(
+      {
+        unit: "%",
+        width: cropWidthInPercent,
+      },
+      ASPECT_RATIO,
+      width,
+      height
+    );
+    const centeredCrop = centerCrop(crop, width, height);
+    setCrop(centeredCrop);
+  };
+
+  const handleResetComplete = () => {
+    setResetContentButton(false);
+  };
+
+  const handleCloseModal = () => {
+    dispatch(resetCurrentContent());
+    setResetContentButton(true);
+    (
+      document.getElementById(`edit_content_modal`) as HTMLDialogElement
+    ).close();
   };
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(editContent({ ...currentContent }));
     dispatch(resetCurrentContent());
+
+    setResetContentButton(true);
+
     (
       document.getElementById(`edit_content_modal`) as HTMLDialogElement
     ).close();
@@ -51,51 +97,62 @@ const EditPersonal = () => {
         {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
-          <div className="w-full flex flex-col">
-            <label
-              htmlFor="url"
-              className="text-[#4A4A4A] block font-bold pr-5"
-            >
-              Paste a link to your social media post or video
-            </label>
-            <input
-              type="url"
-              id="url"
-              name="url"
-              className="mt-1 py-3 px-3 pl-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
-              placeholder="URL Link"
-            />
-          </div>
-
-          <div className="flex justify-center items-center gap-3 mt-10">
-            <span className="border-t border-gray-300 flex-1"></span>
-            <span className="font-bold">OR</span>
-            <span className="border-t border-gray-300 flex-1"></span>
-          </div>
-
-          <div className="flex mt-10">
-            <div className="mt-8">
-              {currentContent.uri ? (
-                <Image
-                  src={currentContent.uri}
-                  alt="image"
-                  width={400}
-                  height={600}
-                  objectFit="cover"
-                  className="rounded"
+          <div className="flex flex-col">
+            {currentContent.uri ? (
+              <>
+                {currentContent.mediaType === "video" ? (
+                  <div className="flex justify-center items-center my-1">
+                    <ReactPlayer
+                      url={currentContent.uri}
+                      light={true}
+                      width={854}
+                      height={470}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <div className="flex justify-center items-center h-full my-1">
+                      <ReactCrop
+                        crop={crop}
+                        keepSelection
+                        aspect={ASPECT_RATIO}
+                        minWidth={MIN_DIMENSION}
+                        onChange={(pixelCrop, percentCrop) =>
+                          setCrop(percentCrop)
+                        }
+                      >
+                        <Image
+                          src={currentContent.uri}
+                          ref={imgRef}
+                          alt="content"
+                          width={500}
+                          height={450}
+                          onLoad={onImageLoad}
+                          style={{
+                            maxHeight: "450px",
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
+                        />
+                      </ReactCrop>
+                    </div>
+                    <p className="text-gray-400 text-xs">
+                      Crop the image for your portfolio thumbnail.
+                    </p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="">Image not available</div>
+            )}
+            <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center flex-col min-h-28">
+                <ChangeButton
+                  resetTrigger={resetContentButton}
+                  onResetComplete={handleResetComplete}
                 />
-              ) : (
-                <div className="">Image not available</div>
-              )}
-            </div>
-            <div className="flex flex-col justify-start ml-10 w-full">
-              <p className="text-[#4A4A4A] block font-bold pr-5">
-                Upload a different photo or video
-              </p>
-              <div>
-                <FileUpload onFileUpload={handleFileUpload}/>
               </div>
-              {currentContent.name ? (<p className="text-gray-400 text-xs">.../{currentContent.name}</p>) : <></>}
             </div>
           </div>
 
@@ -110,12 +167,7 @@ const EditPersonal = () => {
           </div>
           <button
             onClick={() => {
-              (
-                dispatch(resetCurrentContent()),
-                document.getElementById(
-                  `edit_content_modal`
-                ) as HTMLDialogElement
-              ).close();
+              handleCloseModal();
               // TODO: Add logic to show unsaved changes modal if there are any changes
               // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
             }}
