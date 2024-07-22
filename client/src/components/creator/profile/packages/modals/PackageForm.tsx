@@ -82,6 +82,7 @@ function PackageForm({ onFormSubmit, modalId }: Props) {
             disabled={!currentPackage.socialMedia}
             className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
           >
+            {/* TODO: Make package type options dynamic based on social media */}
             <option>[Select]</option>
             {packageTypes[currentPackage.socialMedia]?.map((type, index) => (
               <option key={index} value={type}>
