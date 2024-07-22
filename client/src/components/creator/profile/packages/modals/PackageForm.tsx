@@ -7,7 +7,15 @@ type Props = {
   modalId: string;
 };
 
-function PackageForm({onFormSubmit, modalId}: Props) {
+const packageTypes: { [key: string]: string[] } = {
+  Instagram: ["Reel Post", "Photo Post", "Multi-Photo Post"],
+  Twitter: ["Tweet"],
+  Facebook: ["Post"],
+  TikTok: ["TikTok Post"],
+  Youtube: ["Youtube Video"],
+};
+
+function PackageForm({ onFormSubmit, modalId }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   const currentPackage = useAppSelector(
     (state) => state.creatorPackagesReducer.value.currentPackage
@@ -45,6 +53,8 @@ function PackageForm({onFormSubmit, modalId}: Props) {
             <option value="Instagram">Instagram</option>
             <option value="Twitter">Twitter</option>
             <option value="Facebook">Facebook</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Youtube">Youtube</option>
           </select>
         </div>
         {/* Social Media Select */}
@@ -69,12 +79,19 @@ function PackageForm({onFormSubmit, modalId}: Props) {
                 })
               );
             }}
+            disabled={!currentPackage.socialMedia}
             className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
           >
+            {/* TODO: Make package type options dynamic based on social media */}
             <option>[Select]</option>
-            <option value="Reel Post">Reel Post</option>
+            {/* <option value="Reel Post">Reel Post</option>
             <option value="Photo Post">Photo Post</option>
-            <option value="Multi-Photo Post">Multi-Photo Post</option>
+            <option value="Multi-Photo Post">Multi-Photo Post</option> */}
+            {packageTypes[currentPackage.socialMedia]?.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </div>
         {/* Description */}
@@ -164,17 +181,28 @@ function PackageForm({onFormSubmit, modalId}: Props) {
       </div>
       {/* Action Buttons -- if there is a button in form, it will close the modal */}
       <div className="flex justify-end mt-14">
-        <button
-          type="submit"
-          className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
-        >
-          Save
-        </button>
+        {currentPackage.socialMedia && currentPackage.type ? (
+          <button
+            type="submit"
+            className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            disabled
+            className="bg-[#D7D7D7] text-[#6D6D6D] font-bold py-3 px-6 capitalize rounded-md"
+          >
+            Save
+          </button>
+        )}
       </div>
       <button
         onClick={() => {
           (
-            document.getElementById(`${modalId}_package_modal`) as HTMLDialogElement
+            document.getElementById(
+              `${modalId}_package_modal`
+            ) as HTMLDialogElement
           ).close();
           // TODO: Add logic to show unsaved changes modal if there are any changes
           // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
