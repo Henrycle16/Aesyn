@@ -8,6 +8,7 @@ const contentData = [
     socialMedia: "",
     uri: "/joe-cool.jpg",
     name: "joe.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -18,6 +19,7 @@ const contentData = [
     socialMedia: "",
     uri: "/luka-cool.jpg",
     name: "luka.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -28,6 +30,7 @@ const contentData = [
     socialMedia: "",
     uri: "/s-cool.jpg",
     name: "s.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -38,6 +41,7 @@ const contentData = [
     socialMedia: "",
     uri: "/scott-cool.jpg",
     name: "scott.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -48,6 +52,7 @@ const contentData = [
     socialMedia: "",
     uri: "/calvin-cool.jpg",
     name: "calvin.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -58,6 +63,7 @@ const contentData = [
     socialMedia: "Instagram",
     uri: "/biden.jpg",
     name: "biden.jpg",
+    campaignTitle: "Pic of biden",
     description:
       "Worked with Joe Biden on his presidential campaign. #Biden2020",
     date: "2021-10-10",
@@ -69,6 +75,7 @@ const contentData = [
     socialMedia: "Twitter",
     uri: "/trump.jpg",
     name: "trump.jpg",
+    campaignTitle: "Pic of trump",
     description:
       "Worked with Donald Trump on his presidential campaign. #Trump2020",
     date: "2021-10-10",
@@ -80,6 +87,7 @@ const contentData = [
     socialMedia: "Facebook",
     uri: "/obama.jpg",
     name: "obama.jpg",
+    campaignTitle: "Pic of obama",
     description:
       "Worked with Barack Obama on his presidential campaign. #Obama2020",
     date: "2021-10-10",
@@ -91,6 +99,7 @@ const contentData = [
     socialMedia: "",
     uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
     name: "IU Music Video",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -101,6 +110,7 @@ const contentData = [
     socialMedia: "Facebook",
     uri: "/bush.jpg",
     name: "bush.jpg",
+    campaignTitle: "Pic of bush",
     description:
       "Worked with George Bush on his presidential campaign. #Bush2020",
     date: "2021-10-10",
@@ -112,6 +122,7 @@ const contentData = [
     socialMedia: "",
     uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
     name: "IU Music Video",
+    campaignTitle: "",
     description: "",
     date: "",
   },
@@ -128,6 +139,7 @@ type Content = {
   socialMedia: string;
   uri: string;
   name: string;
+  campaignTitle: string;
   description: string;
   date: string;
 };
@@ -147,6 +159,7 @@ const initialState = {
       socialMedia: "",
       uri: "",
       name: "",
+      campaignTitle: "",
       description: "",
       date: "",
     },
@@ -188,6 +201,7 @@ export const creatorContent = createSlice({
         socialMedia: "",
         uri: "",
         name: "",
+        campaignTitle: "",
         description: "",
         date: "",
       };
