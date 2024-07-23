@@ -13,11 +13,6 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 
-interface Avatar {
-  uri: string;
-  imageName: string;
-}
-
 const ProfileCard = () => {
   const avatarDisplay = useAppSelector((state) => state.profileDataReducer.value.avatar);
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +22,9 @@ const ProfileCard = () => {
   const session = useSession();
   const userId = session.data?.user.id;
 
+  // Function to handle avatar submission
   const onSubmit = async (imgSrc: string, imageName: string) => {
+     // Fetching the image as a blob 
     const blob = await fetch(imgSrc).then((res) => res.blob());
     const file = new File([blob], imageName, { type: "image/jpeg" });
     const formData = new FormData();
@@ -37,6 +34,7 @@ const ProfileCard = () => {
     formData.append("userId", userId);
 
     try {
+      // Attempting to upload the avatar
       const response = await uploadAvatar(userId, formData);
       console.log("Avatar uploaded successfully", response.data);
     } catch (error) {
@@ -44,6 +42,7 @@ const ProfileCard = () => {
     }
   };
 
+  // Function to update the avatar state and close the modal
   const updateAvatar = (imgSrc: string, imageName: string) => {
     dispatch(
       profileDataInfo({
@@ -54,6 +53,7 @@ const ProfileCard = () => {
     onSubmit(imgSrc, imageName);
   };
 
+  // Function to open & close the modal
   const openModal = () => {
     setModalOpen(true);
     (document.getElementById("avatar_modal") as HTMLDialogElement).showModal();

@@ -9,8 +9,8 @@ import ReactCrop, {
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "./SetCanvasPreview";
-import { set } from "lodash";
 
+// Constants for aspect ratio and minimum dimension of the crop area
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
@@ -30,9 +30,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>("");
 
-
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // Handler for selecting a file
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -60,10 +60,12 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     reader.readAsDataURL(file);
   };
 
+   // Function to trigger the file input dialog
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
 
+  // Handler for when the image loads in the cropper
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
     const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
@@ -81,6 +83,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     setCrop(centeredCrop);
   };
 
+  // Handler for changing the image
   const changeImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); 
     setImgSrc(null); 
@@ -109,6 +112,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           </div>
         </>
       )}
+      {/* If an image is selected, show the cropping interface */}
       {imgSrc && (
         <div
           className="modal-content"
@@ -126,8 +130,8 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
               ref={imgRef}
               src={imgSrc}
               alt="Upload"
-              width={432}
-              height={284}
+              width={432.01}
+              height={284.01}
               onLoad={onImageLoad}
             />
           </ReactCrop>
@@ -164,6 +168,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           </div>
         </div>
       )}
+      {/* Hidden canvas for generating the preview of the cropped image */}
       {crop && (
         <canvas
           ref={previewCanvasRef}

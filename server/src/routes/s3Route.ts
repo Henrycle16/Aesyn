@@ -7,13 +7,17 @@ import Creator from "../models/Creator";
 
 dotenv.config();
 
+
+// Function to generate a random image name using crypto for uniqueness
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
+// Retrieve AWS S3 bucket details and credentials from environment variables
 const bucketName = process.env.AWS_BUCKET_NAME;
 const bucketRegion = process.env.AWS_BUCKET_REGION;
 const accessKeyId = process.env.AWS_ACCESS_KEY;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
+// Initialize S3 client with credentials and region
 const s3 = new S3Client({
   credentials: {
     accessKeyId,
@@ -22,11 +26,13 @@ const s3 = new S3Client({
   region: bucketRegion,
 });
 
-const router = express.Router();
 
+// Configure multer for memory storage (files will be stored in memory)
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const router = express.Router();
 
+// Define PUT route for updating user avatar
 router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
   const { userId } = req.body;
 
@@ -36,6 +42,7 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
 
   const imageName = randomImageName();
   const params = {
+    // Set up parameters for S3 upload
     Bucket: bucketName,
     Key: imageName,
     Body: req.file.buffer,
@@ -53,6 +60,7 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
     console.log("Type of userId:", typeof userId);
     console.log("Value of userId:", userId);
   
+    // Update the creator document in the database with the new avatar URL
     const updatedCreator = await Creator.findOneAndUpdate(
       { user: userId },
       { $set: { avatar: imageUrl } },
