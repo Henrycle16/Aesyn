@@ -9,12 +9,13 @@ import ReactCrop, {
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "./SetCanvasPreview";
+import { set } from "lodash";
 
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
 interface ImageCropperProps {
-  updateAvatar: (imgSrc: string) => void;
+  updateAvatar: (imgSrc: string, imageName: string) => void;
   closeModal?: () => void; // Optional prop to handle closing modal
 }
 
@@ -27,6 +28,8 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [error, setError] = useState<string | null>(null);
+  const [imageName, setImageName] = useState<string>("");
+
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,6 +38,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     if (!file) return;
 
     const reader = new FileReader();
+    const fileName = file.name;
+    setImageName(fileName);
+
     reader.addEventListener("load", () => {
       const imageElement = document.createElement("img");
       const imageUrl = reader.result?.toString() || "";
@@ -49,7 +55,6 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           return setImgSrc("");
         }
       });
-
       setImgSrc(imageUrl);
     });
     reader.readAsDataURL(file);
@@ -148,7 +153,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
                   );
                   const dataUrl = previewCanvasRef.current?.toDataURL();
                   if (dataUrl) {
-                    updateAvatar(dataUrl);
+                    updateAvatar(dataUrl, imageName);
                     if (closeModal) closeModal(); 
                   }
                 }
