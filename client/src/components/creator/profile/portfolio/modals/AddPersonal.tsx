@@ -103,36 +103,38 @@ const AddPersonal = () => {
                   />
                 </div>
               ) : (
-                <div className="flex justify-center items-center h-full my-1">
-                  <ReactCrop
-                    crop={crop}
-                    keepSelection
-                    aspect={ASPECT_RATIO}
-                    minWidth={MIN_DIMENSION}
-                    onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
-                  >
-                    <Image
-                      src={currentContent.uri}
-                      ref={imgRef}
-                      alt="content"
-                      width={500}
-                      height={450}
-                      onLoad={onImageLoad}
-                      style={{
-                        maxHeight: "450px",
-                        objectFit: "contain",
-                        width: "auto",
-                        height: "auto",
-                      }}
-                    />
-                  </ReactCrop>
+                <div className="flex flex-col items-center">
+                  <div className="flex justify-center items-center h-full my-1">
+                    <ReactCrop
+                      crop={crop}
+                      keepSelection
+                      aspect={ASPECT_RATIO}
+                      minWidth={MIN_DIMENSION}
+                      onChange={(pixelCrop, percentCrop) =>
+                        setCrop(percentCrop)
+                      }
+                    >
+                      <Image
+                        src={currentContent.uri}
+                        ref={imgRef}
+                        alt="content"
+                        width={500}
+                        height={450}
+                        onLoad={onImageLoad}
+                        style={{
+                          maxHeight: "450px",
+                          objectFit: "contain",
+                          width: "auto",
+                          height: "auto",
+                        }}
+                      />
+                    </ReactCrop>
+                  </div>
+                  <p className="text-gray-400 text-xs">
+                    Crop the image for your portfolio thumbnail.
+                  </p>
                 </div>
               )}
-              <div className="flex flex-col items-center">
-                <p className="text-gray-400 text-xs">
-                  Crop the image for your portfolio thumbnail.
-                </p>
-              </div>
 
               <div className="flex justify-center items-center">
                 <div className="flex justify-center items-center flex-col min-h-28">
