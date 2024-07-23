@@ -14,4 +14,6 @@ const login = async (email: string, password: string) => {
   return res.data;
 };
 
-export { login };
+export {
+  login
+}
