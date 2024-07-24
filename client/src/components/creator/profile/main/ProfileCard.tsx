@@ -5,25 +5,55 @@ import Badge from "@mui/material/Badge";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
-import React, { useRef, useState } from "react";
-import ImageCropper from "@/components/utils/ImageCropper/ImageCropper";
-
-interface Avatar {
-  uri: string;
-  name: string;
-}
+import React, { useState } from "react";
+import ImageCropper from "@/components/creator/profile/main/ImageCropper/ImageCropper";
+import { uploadAvatar } from "@/actions/creators3/avatar";
+import { useSession } from "next-auth/react";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import { useDispatch } from "react-redux";
 
 const ProfileCard = () => {
-  const avatarUrl = useRef(
-    "/static/images/avatar/1.jpg"
-  );
+  const avatarDisplay = useAppSelector((state) => state.profileDataReducer.value.avatar);
+  const dispatch = useDispatch<AppDispatch>();
+  const avatarUrl = "/static/images/avatar/1.jpg";
   const [modalOpen, setModalOpen] = useState(false);
 
-  const updateAvatar = (imgSrc: string) => {
-    avatarUrl.current = imgSrc;
-    setModalOpen(false);
+  const session = useSession();
+  const userId = session.data?.user.id;
+
+  // Function to handle avatar submission
+  const onSubmit = async (imgSrc: string, imageName: string) => {
+     // Fetching the image as a blob 
+    const blob = await fetch(imgSrc).then((res) => res.blob());
+    const file = new File([blob], imageName, { type: "image/jpeg" });
+    const formData = new FormData();
+    console.log("Form Data", formData);
+    console.log("User ID", userId);
+    formData.append("avatar", file);
+    formData.append("userId", userId);
+
+    try {
+      // Attempting to upload the avatar
+      const response = await uploadAvatar(userId, formData);
+      console.log("Avatar uploaded successfully", response.data);
+    } catch (error) {
+      console.error("Error uploading avatar", error);
+    }
   };
 
+  // Function to update the avatar state and close the modal
+  const updateAvatar = (imgSrc: string, imageName: string) => {
+    dispatch(
+      profileDataInfo({
+        avatar: imgSrc,
+      })
+    );
+    setModalOpen(false);
+    onSubmit(imgSrc, imageName);
+  };
+
+  // Function to open & close the modal
   const openModal = () => {
     setModalOpen(true);
     (document.getElementById("avatar_modal") as HTMLDialogElement).showModal();
@@ -54,7 +84,7 @@ const ProfileCard = () => {
               >
                 <Avatar
                   alt="Avatar"
-                  src={avatarUrl.current}
+                  src={avatarDisplay ? avatarDisplay : avatarUrl}
                   sx={{ width: 150, height: 150 }}
                 />
               </Badge>{" "}
@@ -119,10 +149,7 @@ const ProfileCard = () => {
           </div>
 
           {/* Upload box */}
-          <form
-            method="dialog"
-            className="flex flex-col flex-1"
-          >
+          <form method="dialog" className="flex flex-col flex-1">
             <div className="flex flex-1">
               <div className="pt-6 px-20 w-full">
                 <ImageCropper updateAvatar={updateAvatar} />
