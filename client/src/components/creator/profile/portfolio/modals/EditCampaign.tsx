@@ -148,9 +148,10 @@ const EditCampaign = () => {
                   className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
                 >
                   <option value="">[Select]</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="Twitter">Twitter</option>
-                  <option value="Facebook">Facebook</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="twitter">Twitter</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="youtube">YouTube</option>
                 </select>
               </div>
 
