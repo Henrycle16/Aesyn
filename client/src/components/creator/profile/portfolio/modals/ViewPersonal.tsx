@@ -25,7 +25,6 @@ const ViewPersonal = () => {
   return (
     <dialog id="view_content_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
-        <form method="dialog">
           <div className="flex flex-col my-12">
             {currentContent.uri ? (
               <>
@@ -69,7 +68,6 @@ const ViewPersonal = () => {
           >
             ✕
           </button>
-        </form>
       </div>
     </dialog>
   );

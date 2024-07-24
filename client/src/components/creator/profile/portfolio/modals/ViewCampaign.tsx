@@ -1,30 +1,18 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import ChangeButton from "../ChangeButton";
 
-import {
-  creatorContentInfo,
-  resetCurrentContent,
-  editContent,
-} from "@/redux/slices/creatorPortfolio-slice";
+import Youtube from "@/components/ui/svgs/Youtube";
+import Instagram from "@/components/ui/svgs/Instagram";
+import Facebook from "@/components/ui/svgs/Facebook";
+import X from "@/components/ui/svgs/X";
+
+import { resetCurrentContent } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 import ReactPlayer from "react-player/lazy";
-
-import ReactCrop, {
-  centerCrop,
-  convertToPixelCrop,
-  makeAspectCrop,
-  type Crop,
-} from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
-import setCanvasPreview from "../PortfolioSetCanvas";
-
-const ASPECT_RATIO = 5 / 4;
-const MIN_DIMENSION = 150;
 
 const ViewCampaign = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,57 +20,23 @@ const ViewCampaign = () => {
     (state) => state.creatorContentReducer.value.currentContent
   );
 
-  const imgRef = useRef<HTMLImageElement | null>(null);
-  const [crop, setCrop] = useState<Crop>();
-  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [resetContentButton, setResetContentButton] = useState(false);
-
-  const [charCount, setCharCount] = useState(100);
-
-  useEffect(() => {
-    setCharCount(100 - currentContent.description.length);
-  }, [currentContent.description]);
-
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
-  };
-
-  const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
-
-    const crop = makeAspectCrop(
-      {
-        unit: "%",
-        width: cropWidthInPercent,
-      },
-      ASPECT_RATIO,
-      width,
-      height
-    );
-    const centeredCrop = centerCrop(crop, width, height);
-    setCrop(centeredCrop);
-  };
-
-  const handleResetComplete = () => {
-    setResetContentButton(false);
+  const renderSocialMediaContent = (socialMedia: string) => {
+    switch (socialMedia) {
+      case "instagram":
+        return <Instagram />;
+      case "facebook":
+        return <Facebook />;
+      case "twitter":
+        return <X />;
+      case "youtube":
+        return <Youtube />;
+      default:
+        return null;
+    }
   };
 
   const handleCloseModal = () => {
     dispatch(resetCurrentContent());
-    setResetContentButton(true);
-    (
-      document.getElementById(`view_campaign_modal`) as HTMLDialogElement
-    ).close();
-  };
-
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(editContent({ ...currentContent }));
-    dispatch(resetCurrentContent());
-
-    setResetContentButton(true);
-
     (
       document.getElementById(`view_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -90,177 +44,61 @@ const ViewCampaign = () => {
 
   return (
     <dialog id="view_campaign_modal" className="modal">
-      <div className="modal-box bg-white text-[#061119] min-w-[100rem] pt-10 pl-14 pr-10 pb-8">
-        <div className="">
-          <h1 className="text-[#184465] font-semibold text-2xl">
-            VIEW PREVIOUS CAMPAIGN
-          </h1>
-          <p className="pb-4 pt-2 text-sm">
-            Display your past campaign work for brands to see. You can either
-            paste a URl or upload your work.
-          </p>
-        </div>
-        <form method="dialog" onSubmit={onFormSubmit}>
-          <div className="grid grid-cols-2 gap-y-5 items-start grid-rows-1 gap-x-14">
-            <div className="col-start-1 row-start-1">
-              <div className="mb-4">
-                <label
-                  htmlFor="campaignTitle"
-                  className="text-[#4A4A4A] block font-bold pr-5"
-                >
-                  Campaign Title
-                </label>
-                <input
-                  id="campaignTitle"
-                  name="campaignTitle"
-                  maxLength={50}
-                  onChange={(e) => {
-                    dispatch(
-                      creatorContentInfo({
-                        currentContent: { campaignTitle: e.target.value },
-                      })
-                    );
-                  }}
-                  className="w-full h-11 mt-1 px-2 pl-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
-                  placeholder="Enter a brief but descriptive title"
-                  value={currentContent.campaignTitle}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="social_media"
-                  className="text-[#4A4A4A] block font-bold"
-                >
-                  *Social Media
-                </label>
-                <select
-                  id="social_media"
-                  name="social_media"
-                  value={currentContent.socialMedia}
-                  onChange={(e) =>
-                    dispatch(
-                      creatorContentInfo({
-                        currentContent: { socialMedia: e.target.value },
-                      })
-                    )
-                  }
-                  className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
-                >
-                  <option value="">[Select]</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="Twitter">Twitter</option>
-                  <option value="Facebook">Facebook</option>
-                </select>
-              </div>
-
-              <div className="">
-                <label
-                  htmlFor="description"
-                  className="text-[#4A4A4A] block font-bold pr-5"
-                >
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  maxLength={100}
-                  onChange={(e) => {
-                    setCharCount(100 - e.target.value.length);
-                    dispatch(
-                      creatorContentInfo({
-                        currentContent: { description: e.target.value },
-                      })
-                    );
-                  }}
-                  className="pt-3 w-full h-20 mt-1 px-3 pl-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm resize-none"
-                  placeholder="Briefly describe your work on this campaign"
-                  value={currentContent.description}
-                />
-                <p className="flex justify-end">{charCount} characters left</p>
-              </div>
+      <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
+        <div className="grid grid-cols-2">
+          <div className="flex flex-col">
+            <div className="flex gap-5">
+              {renderSocialMediaContent(currentContent.socialMedia)}{" "}
+              <h1 className="text-[#184465] font-semibold text-2xl">
+                {currentContent.campaignTitle}
+              </h1>
             </div>
-
-            <div className="col-start-2 row-start-1">
-              <div className="flex flex-col mt-6">
-                {currentContent.uri ? (
-                  <>
-                    {currentContent.mediaType === "video" ? (
-                      <div className="flex justify-center items-center my-1">
-                        <ReactPlayer
-                          url={currentContent.uri}
-                          light={true}
-                          width={854}
-                          height={470}
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="flex justify-center items-center h-full my-1">
-                          <ReactCrop
-                            crop={crop}
-                            keepSelection
-                            aspect={ASPECT_RATIO}
-                            minWidth={MIN_DIMENSION}
-                            onChange={(pixelCrop, percentCrop) =>
-                              setCrop(percentCrop)
-                            }
-                          >
-                            <Image
-                              src={currentContent.uri}
-                              ref={imgRef}
-                              alt="content"
-                              width={500}
-                              height={450}
-                              onLoad={onImageLoad}
-                              style={{
-                                maxHeight: "450px",
-                                objectFit: "contain",
-                                width: "auto",
-                                height: "auto",
-                              }}
-                            />
-                          </ReactCrop>
-                        </div>
-                        <p className="text-gray-400 text-xs">
-                          Crop the image for your portfolio thumbnail.
-                        </p>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className="">Image not available</div>
-                )}
-                <div className="flex justify-center items-center">
-                  <div className="flex justify-center items-center flex-col min-h-28">
-                    <ChangeButton
-                      resetTrigger={resetContentButton}
-                      onResetComplete={handleResetComplete}
+            <p className="pb-4 pt-2 text-sm mt-5">{currentContent.description}</p>
+          </div>
+          <div className="flex flex-col mt-6">
+            {currentContent.uri ? (
+              <>
+                {currentContent.mediaType === "video" ? (
+                  <div className="flex justify-center items-center">
+                    <ReactPlayer
+                      url={currentContent.uri}
+                      light={true}
+                      width={854}
+                      height={470}
                     />
                   </div>
-                </div>
-              </div>
-            </div>
+                ) : (
+                  <div className="flex justify-center items-center h-full">
+                    <Image
+                      src={currentContent.uri}
+                      alt="content"
+                      width={500}
+                      height={450}
+                      style={{
+                        maxHeight: "450px",
+                        objectFit: "contain",
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="">Image not available</div>
+            )}
           </div>
+        </div>
 
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
-            >
-              Save
-            </button>
-          </div>
-          <button
-            onClick={() => {
-              handleCloseModal();
-            }}
-            type="button"
-            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-          >
-            ✕
-          </button>
-        </form>
+        <button
+          onClick={() => {
+            handleCloseModal();
+          }}
+          type="button"
+          className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
+        >
+          ✕
+        </button>
       </div>
     </dialog>
   );
