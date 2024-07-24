@@ -4,8 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import ChangeButton from "../ChangeButton";
 
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-
 import {
   creatorContentInfo,
   resetCurrentContent,
