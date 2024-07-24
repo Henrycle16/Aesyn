@@ -4,12 +4,25 @@ import {validationResult } from 'express-validator';
 
 import Creator from '../models/Creator';
 import User from '../models/User';
+import Creator from '../models/Creator';
+import User from '../models/User';
 
 const router = express.Router();
 
 // @route   GET api/creators/me
 // @desc    Get current users Creator profile
 // @access  Private
+router.get('/me', async (req, res) => {
+    try {
+        console.log("PARAMS: ", req.query.userId)
+        const profile = await Creator.findOne({
+            user: req.query.userId,
+        }).populate('user', [
+            'username',
+            'firstName', 
+            'lastName',
+            'avatar',
+        ]);
 router.get('/me', async (req, res) => {
     try {
         console.log("PARAMS: ", req.query.userId)
@@ -37,6 +50,15 @@ router.get('/me', async (req, res) => {
 // @desc    Create Creator profile
 // @access  Private
 router.post(
+    '/',
+    [
+        // ** EXPRESS-VALIDATION CHECKS HERE
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
     '/',
     [
         // ** EXPRESS-VALIDATION CHECKS HERE
@@ -92,6 +114,16 @@ router.post(
 // @route   PUT api/creators
 // @desc    Update Creator profile     **GOT TO FLESH OUT LATER**
 // @access  Private
+router.put(
+    '/',
+    [
+
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 router.put(
     '/',
     [
@@ -172,6 +204,17 @@ router.get('/user/:user_id', async (req, res) => {
             'lastName',
             'avatar',
         ]);
+router.get('/user/:user_id', async (req, res) => {
+    try {
+        console.log("here")
+        const profile = await Creator.findOne({
+            user: req.params.user_id,
+        }).populate('user', [
+            'username',
+            'firstName', 
+            'lastName',
+            'avatar',
+        ]);
 
         if (!profile) {
             return res.status(400).json({ msg: 'Profile not found' });
@@ -204,6 +247,14 @@ router.get("/username/:username", async (req, res) => {
 // @route   DELETE api/creators
 // @desc    Delete Creators profile, user, & posts
 // @access  Private
+router.delete('/', async (req, res) => {
+    try {
+        // Remove user posts
+        //await Post.deleteMany({ user: req.body.user.id });
+        // Remove profile
+        await Creator.findOneAndDelete({ user: req.body.user.id });
+        // Remove user
+        await User.findOneAndDelete({ _id: req.body.user.id });
 router.delete('/', async (req, res) => {
     try {
         // Remove user posts

@@ -31,6 +31,15 @@ const CreatorSchema = new mongoose.Schema({
     bio: {
         type: String
     },
+    avatar: {
+        type: String,
+    },
+    personalContent: [{
+        type: String // URL or file path to the personal content (picture or video)
+    }],
+    campaignContent: [{
+        type: String // URL or file path to the campaign content (picture or video)
+    }],
     packages: [
         {
             socialMedia: {

@@ -36,6 +36,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
           country: response.data.location.country,
           preferences: response.data.preferences,
           interests: response.data.interests,
+          avatar: response.data.avatar,
         })
       );
 
