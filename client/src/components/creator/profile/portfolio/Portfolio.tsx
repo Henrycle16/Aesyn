@@ -13,6 +13,8 @@ import DeletePortfolioContent from "./modals/DeletePortfolioContent";
 
 import { useAppSelector } from "@/redux/store";
 import LinkVideo from "./modals/LinkVideo";
+import ViewPersonal from "./modals/ViewPersonal";
+import ViewCampaign from "./modals/ViewCampaign";
 
 const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
@@ -68,11 +70,13 @@ const Portfolio = () => {
           </p>
         )}
       </div>
-      {/* Add Portfolio Modal */}
+
       <AddPersonal />
       <AddCampaign />
       <EditPersonal />
       <EditCampaign />
+      <ViewPersonal />
+      <ViewCampaign />
       <DeletePortfolioContent />
       <LinkVideo />
     </section>
