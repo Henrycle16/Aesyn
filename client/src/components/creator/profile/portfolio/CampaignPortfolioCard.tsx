@@ -14,7 +14,6 @@ type Props = {
   contentId?: number;
   uri: string;
   mediaType: string;
-  //title: string;
   description: string;
 };
 
