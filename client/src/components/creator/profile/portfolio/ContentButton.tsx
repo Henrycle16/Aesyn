@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
 
-const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
 interface ContentButtonProps {

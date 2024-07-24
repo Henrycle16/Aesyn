@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import {
-  creatorContentInfo,
   addContent,
-  editContent,
   resetCurrentContent,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -78,7 +76,6 @@ const AddPersonal = () => {
   return (
     <dialog id="add_content_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
-        {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
             Add New Personal Content
@@ -88,9 +85,7 @@ const AddPersonal = () => {
             paste a URL or upload your content.
           </p>
         </div>
-        {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
-          {/* Input Fields Container */}
           {currentContent.uri ? (
             <>
               {currentContent.mediaType === "video" ? (
@@ -156,7 +151,6 @@ const AddPersonal = () => {
             </div>
           )}
 
-          {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end">
             <button
               type="submit"
@@ -181,8 +175,6 @@ const AddPersonal = () => {
           <button
             onClick={() => {
               handleCloseModal();
-              // TODO: Add logic to show unsaved changes modal if there are any changes
-              // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
             }}
             type="button"
             className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"

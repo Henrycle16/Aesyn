@@ -2,20 +2,14 @@
 
 import React, { useState } from 'react';
 import {
-  creatorContentInfo,
-  resetCurrentContent,
-  editContent,
+  creatorContentInfo
 } from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 const LinkVideo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [imageUrl, setImageUrl] = useState('');
-
-  const currentContent = useAppSelector(
-    (state) => state.creatorContentReducer.value.currentContent
-  );
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +28,7 @@ const LinkVideo = () => {
     ).close();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { // Step 3
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUrl(e.target.value);
   };
 

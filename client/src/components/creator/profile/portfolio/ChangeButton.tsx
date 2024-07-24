@@ -7,17 +7,13 @@ import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
 import {
-  creatorContentInfo,
-  addContent,
-  editContent,
-  resetCurrentContent,
+  creatorContentInfo
 } from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
 
-const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
 interface ContentButtonProps {

@@ -8,7 +8,6 @@ import ContentButton from "../ContentButton";
 import {
   creatorContentInfo,
   addContent,
-  editContent,
   resetCurrentContent,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -43,10 +42,6 @@ const AddCampaign = () => {
   useEffect(() => {
     setCharCount(100 - currentContent.description.length);
   }, [currentContent.description]);
-
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
-  };
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -92,7 +87,6 @@ const AddCampaign = () => {
   return (
     <dialog id="add_campaign_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[100rem] pt-10 pl-14 pr-10 pb-8">
-        {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
             Add New Campaign Project
@@ -102,9 +96,7 @@ const AddCampaign = () => {
             paste a URl or upload your work.
           </p>
         </div>
-        {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
-          {/* Input Fields Container */}
           <div className="grid grid-cols-2 gap-y-5 items-start grid-rows-1 gap-x-14">
             <div className="col-start-1 row-start-1">
               <div className="mb-4">
@@ -255,7 +247,6 @@ const AddCampaign = () => {
             </div>
           </div>
 
-          {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end">
             <button
               type="submit"
@@ -267,8 +258,6 @@ const AddCampaign = () => {
           <button
             onClick={() => {
               handleCloseModal();
-              // TODO: Add logic to show unsaved changes modal if there are any changes
-              // (document.getElementById(`unsaved_modal`) as HTMLDialogElement).showModal();
             }}
             type="button"
             className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
