@@ -157,7 +157,7 @@ const EditPersonal = () => {
           </div>
 
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
-          <div className="flex justify-end mt-10">
+          <div className="flex justify-end">
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"

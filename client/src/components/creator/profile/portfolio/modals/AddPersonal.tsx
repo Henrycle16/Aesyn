@@ -146,7 +146,7 @@ const AddPersonal = () => {
               </div>
             </>
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mb-12 mt-2">
               <div className="border-dotted border-2 rounded-md border-gray-300 p-8 flex justify-center items-center flex-col w-5/12 h-96">
                 <ContentButton
                   resetTrigger={resetContentButton}
@@ -157,7 +157,7 @@ const AddPersonal = () => {
           )}
 
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
-          <div className="flex justify-end mt-10">
+          <div className="flex justify-end">
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"

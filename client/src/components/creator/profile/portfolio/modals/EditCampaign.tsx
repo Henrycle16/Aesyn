@@ -90,7 +90,7 @@ const EditCampaign = () => {
 
   return (
     <dialog id="edit_campaign_modal" className="modal">
-      <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
+      <div className="modal-box bg-white text-[#061119] min-w-[100rem] pt-10 pl-14 pr-10 pb-8">
         {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
@@ -104,7 +104,7 @@ const EditCampaign = () => {
         {/* Form */}
         <form method="dialog" onSubmit={onFormSubmit}>
           {/* Input Fields Container */}
-          <div className="grid grid-cols-2 gap-y-5 items-start grid-rows-1">
+          <div className="grid grid-cols-2 gap-y-5 items-start grid-rows-1 gap-x-14">
             <div className="col-start-1 row-start-1">
               <div className="mb-4">
                 <label
@@ -247,7 +247,7 @@ const EditCampaign = () => {
           </div>
 
           {/* Action Buttons -- if there is a button in form, it will close the modal */}
-          <div className="flex justify-end mt-10">
+          <div className="flex justify-end">
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
