@@ -41,6 +41,14 @@ const PersonalPortfolioCard = (props: Props) => {
             style={imageStyle}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={() => {
+              dispatch(creatorContentInfo({ currentContent: props }));
+              (
+                document.getElementById(
+                  `view_content_modal`
+                ) as HTMLDialogElement
+              ).showModal();
+            }}
           />
         ) : (
           <div className="w-[17.35rem] h-[13.88rem] max-w-full max-h-full rounded overflow-hidden">
@@ -50,6 +58,14 @@ const PersonalPortfolioCard = (props: Props) => {
               width="100%"
               height="100%"
               playIcon={<></>}
+              onClick={() => {
+                dispatch(creatorContentInfo({ currentContent: props }));
+                (
+                  document.getElementById(
+                    `view_content_modal`
+                  ) as HTMLDialogElement
+                ).showModal();
+              }}
             />
           </div>
         )
