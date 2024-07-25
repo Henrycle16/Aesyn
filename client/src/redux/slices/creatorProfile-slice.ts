@@ -15,6 +15,7 @@ type creatorProfileInfoReducer = {
   gender: string;
   preferences: string[];
   interests: string[];
+  avatar: string;
 };
 
 const initialState = {
@@ -28,7 +29,8 @@ const initialState = {
     },
     gender: "",
     preferences: [],
-    interests: []
+    interests: [],
+    avatar: "",
   } as creatorProfileInfoReducer,
 } as InitialState;
 

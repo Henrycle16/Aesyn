@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ReactPlayer from "react-player/lazy";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
@@ -12,30 +13,64 @@ import { useDispatch } from "react-redux";
 type Props = {
   contentId?: number;
   uri: string;
+  mediaType: string;
 };
 
 const PersonalPortfolioCard = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const imageStyle = isHovered ? { filter: "grayscale(1)" } : {};
   const dispatch = useDispatch<AppDispatch>();
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="relative">
-      {props.uri ? (
-        <Image
-          src={props.uri}
-          alt="personal content"
-          width={666}
-          height={1000}
-          objectFit="cover"
-          className="rounded"
-          style={imageStyle}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        />
+      {props.uri && isClient ? (
+        props.mediaType === "image" ? (
+          <Image
+            src={props.uri}
+            alt="personal content"
+            width={500}
+            height={400}
+            objectFit="cover"
+            className="rounded"
+            style={imageStyle}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => {
+              dispatch(creatorContentInfo({ currentContent: props }));
+              (
+                document.getElementById(
+                  `view_content_modal`
+                ) as HTMLDialogElement
+              ).showModal();
+            }}
+          />
+        ) : (
+          <div className="w-[17.35rem] h-[13.88rem] max-w-full max-h-full rounded overflow-hidden">
+            <ReactPlayer
+              url={props.uri}
+              light={true}
+              width="100%"
+              height="100%"
+              playIcon={<></>}
+              onClick={() => {
+                dispatch(creatorContentInfo({ currentContent: props }));
+                (
+                  document.getElementById(
+                    `view_content_modal`
+                  ) as HTMLDialogElement
+                ).showModal();
+              }}
+            />
+          </div>
+        )
       ) : (
-        <div className="">Image not available</div>
+        <div className="">Media not available</div>
       )}
       {isHovered && (
         <>

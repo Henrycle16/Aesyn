@@ -10,11 +10,12 @@ import ReactCrop, {
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "./SetCanvasPreview";
 
+// Constants for aspect ratio and minimum dimension of the crop area
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
 interface ImageCropperProps {
-  updateAvatar: (imgSrc: string) => void;
+  updateAvatar: (imgSrc: string, imageName: string) => void;
   closeModal?: () => void; // Optional prop to handle closing modal
 }
 
@@ -27,14 +28,19 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [error, setError] = useState<string | null>(null);
+  const [imageName, setImageName] = useState<string>("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // Handler for selecting a file
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
+    const fileName = file.name;
+    setImageName(fileName);
+
     reader.addEventListener("load", () => {
       const imageElement = document.createElement("img");
       const imageUrl = reader.result?.toString() || "";
@@ -49,16 +55,17 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           return setImgSrc("");
         }
       });
-
       setImgSrc(imageUrl);
     });
     reader.readAsDataURL(file);
   };
 
+   // Function to trigger the file input dialog
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
 
+  // Handler for when the image loads in the cropper
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
     const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
@@ -76,6 +83,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     setCrop(centeredCrop);
   };
 
+  // Handler for changing the image
   const changeImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); 
     setImgSrc(null); 
@@ -85,9 +93,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   };
 
   return (
-    <>
+    <div>
       {!imgSrc && (
-        <div className="px-20">
+        <>
           <input
             type="file"
             accept="image/*"
@@ -102,31 +110,31 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
             <Upload />
             {error && <p className="text-red-500 text-sm">{error}</p>}
           </div>
-        </div>
+        </>
       )}
+      {/* If an image is selected, show the cropping interface */}
       {imgSrc && (
         <div
+          className="modal-content"
           style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}
         >
-          <div className="px-20">
-            <ReactCrop
-              crop={crop}
-              circularCrop
-              keepSelection
-              aspect={ASPECT_RATIO}
-              minWidth={MIN_DIMENSION}
-              onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
-            >
-              <Image
-                ref={imgRef}
-                src={imgSrc}
-                alt="Upload"
-                width={432}
-                height={284}
-                onLoad={onImageLoad}
-              />
-            </ReactCrop>
-          </div>
+          <ReactCrop
+            crop={crop}
+            circularCrop
+            keepSelection
+            aspect={ASPECT_RATIO}
+            minWidth={MIN_DIMENSION}
+            onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
+          >
+            <Image
+              ref={imgRef}
+              src={imgSrc}
+              alt="Upload"
+              width={432.01}
+              height={284.01}
+              onLoad={onImageLoad}
+            />
+          </ReactCrop>
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "74px" }}>
             <button
               className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5] text-[#3798E3] font-semibold"
@@ -149,7 +157,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
                   );
                   const dataUrl = previewCanvasRef.current?.toDataURL();
                   if (dataUrl) {
-                    updateAvatar(dataUrl);
+                    updateAvatar(dataUrl, imageName);
                     if (closeModal) closeModal(); 
                   }
                 }
@@ -160,6 +168,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           </div>
         </div>
       )}
+      {/* Hidden canvas for generating the preview of the cropped image */}
       {crop && (
         <canvas
           ref={previewCanvasRef}
@@ -173,7 +182,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 

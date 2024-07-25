@@ -3,88 +3,128 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const contentData = [
   {
     contentId: 0,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/joe-cool.jpg",
     name: "joe.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
   {
     contentId: 1,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/luka-cool.jpg",
     name: "luka.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
   {
     contentId: 2,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/s-cool.jpg",
     name: "s.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
   {
     contentId: 3,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/scott-cool.jpg",
     name: "scott.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
   {
     contentId: 4,
-    type: "personal",
+    contentType: "personal",
+    mediaType: "image",
     socialMedia: "",
     uri: "/calvin-cool.jpg",
     name: "calvin.jpg",
+    campaignTitle: "",
     description: "",
     date: "",
   },
   {
     contentId: 5,
-    type: "campaign",
-    socialMedia: "Instagram",
+    contentType: "campaign",
+    mediaType: "image",
+    socialMedia: "instagram",
     uri: "/biden.jpg",
     name: "biden.jpg",
+    campaignTitle: "Pic of biden",
     description:
       "Worked with Joe Biden on his presidential campaign. #Biden2020",
     date: "2021-10-10",
   },
   {
     contentId: 6,
-    type: "campaign",
-    socialMedia: "Twitter",
+    contentType: "campaign",
+    mediaType: "image",
+    socialMedia: "twitter",
     uri: "/trump.jpg",
     name: "trump.jpg",
+    campaignTitle: "Pic of trump",
     description:
       "Worked with Donald Trump on his presidential campaign. #Trump2020",
     date: "2021-10-10",
   },
   {
     contentId: 7,
-    type: "campaign",
-    socialMedia: "Facebook",
+    contentType: "campaign",
+    mediaType: "image",
+    socialMedia: "facebook",
     uri: "/obama.jpg",
     name: "obama.jpg",
+    campaignTitle: "Pic of obama",
     description:
       "Worked with Barack Obama on his presidential campaign. #Obama2020",
     date: "2021-10-10",
   },
   {
     contentId: 8,
-    type: "campaign",
-    socialMedia: "Facebook",
+    contentType: "personal",
+    mediaType: "video",
+    socialMedia: "",
+    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
+    name: "IU Music Video",
+    campaignTitle: "",
+    description: "",
+    date: "",
+  },
+  {
+    contentId: 9,
+    contentType: "campaign",
+    mediaType: "image",
+    socialMedia: "youtube",
     uri: "/bush.jpg",
     name: "bush.jpg",
+    campaignTitle: "Pic of bush",
     description:
       "Worked with George Bush on his presidential campaign. #Bush2020",
     date: "2021-10-10",
+  },
+  {
+    contentId: 10,
+    contentType: "personal",
+    mediaType: "video",
+    socialMedia: "",
+    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
+    name: "IU Music Video",
+    campaignTitle: "",
+    description: "",
+    date: "",
   },
 ];
 
@@ -94,10 +134,12 @@ type InitialState = {
 
 type Content = {
   contentId?: number;
-  type: string;
+  contentType: string;
+  mediaType: string;
   socialMedia: string;
   uri: string;
   name: string;
+  campaignTitle: string;
   description: string;
   date: string;
 };
@@ -112,10 +154,12 @@ const initialState = {
     content: contentData,
     currentContent: {
       contentId: 0,
-      type: "",
+      contentType: "",
+      mediaType: "",
       socialMedia: "",
       uri: "",
       name: "",
+      campaignTitle: "",
       description: "",
       date: "",
     },
@@ -152,10 +196,12 @@ export const creatorContent = createSlice({
     resetCurrentContent: (state) => {
       state.value.currentContent = {
         contentId: state.value.content.length,
-        type: "",
+        contentType: "",
+        mediaType: "",
         socialMedia: "",
         uri: "",
         name: "",
+        campaignTitle: "",
         description: "",
         date: "",
       };
