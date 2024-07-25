@@ -1,3 +1,5 @@
+"use client";
+
 import { deleteContent, resetCurrentContent } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -20,7 +22,6 @@ const DeletePortfolioContent = () => {
   return (
     <dialog id="delete_content_modal" className="modal">
       <div className="modal-box bg-white text-[#4A4A4A] min-w-[38rem] pt-8 pl-8 pr-6 pb-6">
-        {/* Header Text */}
         <div className="">
           <h1 className="text-[#184465] font-semibold text-2xl">
             Delete Content?
@@ -31,7 +32,6 @@ const DeletePortfolioContent = () => {
           </p>
         </div>
         <form method="dialog" onSubmit={onFormSubmit}>
-          {/* Action Buttons -- if there is a button in form, it will close the modal */}
           <div className="flex justify-end mt-14 gap-2">
             <button
               onClick={() => {

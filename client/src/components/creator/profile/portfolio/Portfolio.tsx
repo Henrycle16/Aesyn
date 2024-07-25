@@ -12,12 +12,14 @@ import EditCampaign from "./modals/EditCampaign";
 import DeletePortfolioContent from "./modals/DeletePortfolioContent";
 
 import { useAppSelector } from "@/redux/store";
+import LinkVideo from "./modals/LinkVideo";
+import ViewPersonal from "./modals/ViewPersonal";
+import ViewCampaign from "./modals/ViewCampaign";
 
 const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
 
   let testContent = useAppSelector((state) => state.creatorContentReducer.value.content);
-  const contentType =  Array.from(new Set(testContent.map((contentValue: any) => contentValue.type)));
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
@@ -45,8 +47,8 @@ const Portfolio = () => {
       </div>
       <div className="mt-6 flex flex-wrap -m-2">
         {isPersonalPortfolio ? (
-          testContent.some((contentData) => contentData.type === "personal") ? (
-            testContent.filter((contentData) => contentData.type === "personal").map((contentData) => (
+          testContent.some((contentData) => contentData.contentType === "personal") ? (
+            testContent.filter((contentData) => contentData.contentType === "personal").map((contentData) => (
               <div className="w-1/4 p-2" key={contentData.contentId}>
                 <PersonalPortfolioCard {...contentData} />
               </div>
@@ -56,8 +58,8 @@ const Portfolio = () => {
               Display your content for clients to see your impressive work!
             </p>
           )
-        ) : testContent.some((contentData) => contentData.type === "campaign") ? (
-          testContent.filter((contentData) => contentData.type === "campaign").map((contentData) => (
+        ) : testContent.some((contentData) => contentData.contentType === "campaign") ? (
+          testContent.filter((contentData) => contentData.contentType === "campaign").map((contentData) => (
             <div className="w-1/4 p-2" key={contentData.contentId}>
               <CampaignPortfolioCard {...contentData} />
             </div>
@@ -68,12 +70,15 @@ const Portfolio = () => {
           </p>
         )}
       </div>
-      {/* Add Portfolio Modal */}
+
       <AddPersonal />
       <AddCampaign />
       <EditPersonal />
       <EditCampaign />
+      <ViewPersonal />
+      <ViewCampaign />
       <DeletePortfolioContent />
+      <LinkVideo />
     </section>
   );
 };
