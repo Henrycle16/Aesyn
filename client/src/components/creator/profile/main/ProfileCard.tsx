@@ -18,10 +18,8 @@ const ProfileCard = () => {
   const avatarUrl = "/static/images/avatar/1.jpg";
   const [modalOpen, setModalOpen] = useState(false);
 
-  const avatarDisplay = useAppSelector((state) => state.profileDataReducer.value.avatar);
-  const profileData = useAppSelector((state) => state.profileDataReducer.value);
-
-
+  const { avatar: avatarDisplay, ...profileData } = useAppSelector((state) => state.profileDataReducer.value);
+  
   const session = useSession();
   const userId = session.data?.user.id;
 

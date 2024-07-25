@@ -10,6 +10,10 @@ import Select, {
   GroupBase,
 } from "react-select";
 import "@/styles/interestSelect.css";
+import { useSession } from "next-auth/react";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import { useDispatch } from "react-redux";
 
 type OptionType = {
   value: string;
@@ -17,10 +21,16 @@ type OptionType = {
 };
 
 const Interests = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [displayedInterests, setDisplayedInterests] = useState<Interest[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<Interest[]>([]);
   const [isLimitExceeded, setIsLimitExceeded] = useState(false);
+
+  const interests = useAppSelector((state) => state.profileDataReducer.value.interests);
+
+  const session = useSession();
+  const userId = session.data?.user.id;
 
   // Handles the change in the selected options
   const handleChange = (
