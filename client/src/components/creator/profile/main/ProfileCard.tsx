@@ -14,10 +14,13 @@ import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 
 const ProfileCard = () => {
-  const avatarDisplay = useAppSelector((state) => state.profileDataReducer.value.avatar);
   const dispatch = useDispatch<AppDispatch>();
   const avatarUrl = "/static/images/avatar/1.jpg";
   const [modalOpen, setModalOpen] = useState(false);
+
+  const avatarDisplay = useAppSelector((state) => state.profileDataReducer.value.avatar);
+  const profileData = useAppSelector((state) => state.profileDataReducer.value);
+
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -96,11 +99,11 @@ const ProfileCard = () => {
             <div className="flex items-center">
               <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-semibold text-[#184465]">
-                  Jane Doe{" "}
+                  {profileData.firstName} {profileData.lastName}
                 </h1>
-                <span className="text-sm text-[#061119] flex-grow">
-                  @blahblah
-                </span>
+                <p className="text-sm text-[#061119] flex-grow">
+                  @{profileData.username}
+                </p>
               </div>
 
               <div className="flex flex-col mb-2.5 pl-6">
@@ -120,7 +123,7 @@ const ProfileCard = () => {
             <div className="flex items-center mt-2.5 gap-1 ml-[-0.3rem]">
               <LocationOnOutlinedIcon sx={{ color: "#6D6D6D" }} />
               <span className="text-sm text-[#061119] flex-grow">
-                Narnia, Houston
+                {profileData.city}, {profileData.state}
               </span>
             </div>
           </div>
