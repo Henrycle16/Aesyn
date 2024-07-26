@@ -1,9 +1,9 @@
-"use client";
+
 
 export default function MyAccount() {
   return (
-    <div>
-      <h2 className="text-xl font-semibold text-[#184465]">My Account</h2>
-    </div>
+    <>
+      <h2 className="subheader1 ts5-text"> My Account </h2>
+    </>
   );
 }
