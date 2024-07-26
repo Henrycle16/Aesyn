@@ -92,7 +92,7 @@ const SignUpComponent = () => {
     >
       {/* Form Header */}
       <div className="mx-auto mt-16 flex flex-col items-center">
-        <Avatar className="m-1 bg-blue-500">
+        <Avatar className="m-1 ts1-bg">
           <PersonPinOutlinedIcon />
         </Avatar>
         <h1 className="text-2xl">Sign Up</h1>
@@ -240,7 +240,7 @@ const SignUpComponent = () => {
         type="submit"
         fullWidth
         variant="contained"
-        className="py-2 bg-muiblue mt-5"
+        className="py-2 ts1-bg mt-5"
       >
         Sign Up
       </Button>

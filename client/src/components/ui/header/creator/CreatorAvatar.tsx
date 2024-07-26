@@ -18,7 +18,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { useAppSelector } from "@/redux/store";
 import { resetProfileData } from "@/redux/slices/profileData-slice";
@@ -29,6 +29,7 @@ const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const session = useSession();
+  const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
   const firstName = useAppSelector((state) => state.profileDataReducer.value.firstName);
@@ -58,6 +59,10 @@ const CreatorAvatar: React.FC = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSettings = () => {
+    router.push("/account")
   };
 
   const open = Boolean(anchorEl);
@@ -103,7 +108,7 @@ const CreatorAvatar: React.FC = () => {
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleSettings}>
           <ListItemIcon>
             <SettingsOutlinedIcon fontSize="medium" />
           </ListItemIcon>
