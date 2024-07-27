@@ -71,6 +71,12 @@ Instagram Graph API:
 - `NEXT_PUBLIC_APP_SECRET`
 - `NEXT_PUBLIC_HEADER`
 
+S3Bucket:
+- `AWS_BUCKET_NAME`
+- `AWS_BUCKET_REGION`
+- `AWS_ACCESS_KEY`
+- `AWS_SECERT_ACCESS_KEY`
+
 
 ## API Reference
 
@@ -105,14 +111,20 @@ Instagram Graph API:
   /api/creators
 ```
 
-| Operation | Parameter       | Type     | Description                           |
-| :-------- | :--------       | :------- | :-------------------------            |
-| GET       | `/me`           | N/A      | Get current users creator profile     |
-| POST      | `/`             | N/A      | Check creator profile                 |
-| PUT       | `/`             | N/A      | Update creator profile                |
-| GET       | `/`             | N/A      | Get all creator profiles              |
-| GET       | `/user/:user_id`| String   | Get creator profile by user id        |
-| DELETE    | `/`             | N/A      | Delete creator profile, user, & posts |
+| Operation | Parameter       |       Type     | Description                           |
+| :-------- | :--------             | :------- | :-------------------------            |
+| GET       | `/me`                 | N/A      | Get current users creator profile     |
+| POST      | `/`                   | N/A      | Check creator profile                 |
+| PUT       | `/`                   | N/A      | Update creator profile                |
+| GET       | `/`                   | N/A      | Get all creator profiles              |
+| GET       | `/user/:user_id`      | String   | Get creator profile by user id        |
+| DELETE    | `/`                   | N/A      | Delete creator profile, user, & posts |
+| GET       | `/username/:username` | N/A      | Get creator by username               |
+| PUT       | `/:user_id/interests` | String   | Update creator interests              |
+| PUT       | `/:user_id/bio`       | String   | Update creator bio                    |
+| POST      | `/:user_id/packages`  | S & I    | Create a package to creator           |
+| PUT       | `/:user_id/bio`       | S & I    | Update a package to creator           |
+| DELETE    | `/:user_id/packages/:package_id`| S & I | Delete a package from creator  |
 
 #### BrandRoute
 

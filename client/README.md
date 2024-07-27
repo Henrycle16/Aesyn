@@ -66,6 +66,12 @@ NextAuth:
 - `NEXTAUTH_URL`
 - `NEXTAUTH_SECRET`
 
+S3Bucket:
+- `AWS_BUCKET_NAME`
+- `AWS_BUCKET_REGION`
+- `AWS_ACCESS_KEY`
+- `AWS_SECERT_ACCESS_KEY`
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
