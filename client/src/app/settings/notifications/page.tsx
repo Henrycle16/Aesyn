@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import SettingTabs from "@/components/settings/Tabs"
 import Notifications from "@/components/settings/Notifications";
 

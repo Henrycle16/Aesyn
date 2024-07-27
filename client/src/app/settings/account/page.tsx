@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import SettingTabs from "@/components/settings/Tabs";
 import MyAccount from "@/components/settings/MyAccount";
 
