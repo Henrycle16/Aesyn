@@ -1,6 +1,6 @@
 "use client";
 
-import SettingTabs from "@/components/settings/Tabs"
+import SettingTabs from "@/components/settings/Tabs";
 import Notifications from "@/components/settings/Notifications";
 
 export default function AccountPage() {
@@ -11,7 +11,7 @@ export default function AccountPage() {
         <SettingTabs value={2}></SettingTabs>
       </div>
       {/* Settings Content */}
-      <div className="col-span-2"> 
+      <div className="col-span-2">
         <Notifications></Notifications>
       </div>
     </div>
