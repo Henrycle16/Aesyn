@@ -6,15 +6,29 @@ import { List, ListItemIcon, ListItemButton } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import PaymentIcon from "@mui/icons-material/Payment";
+import { useRouter } from "next/navigation";
 
-export default function SettingTabs() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export default function SettingTabs(props: { value: number; }) {
+  const [selectedIndex, setSelectedIndex] = useState(props.value);
+  console.log("prop: ", props.value)
+  const router = useRouter();
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
   ) => {
-    setSelectedIndex(index);
+    console.log("SWITCH: ", index)
+    switch(index) {
+      case 0:
+        router.push("/settings/account")
+        break;
+      case 1:
+        router.push("/settings/billings")
+        break;
+      case 2:
+        router.push("/settings/notifications")
+        break;
+    }
   };
 
   return (

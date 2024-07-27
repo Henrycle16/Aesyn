@@ -62,7 +62,7 @@ const CreatorAvatar: React.FC = () => {
   };
 
   const handleSettings = () => {
-    router.push("/settings")
+    router.push("/settings/account")
   };
 
   const open = Boolean(anchorEl);
