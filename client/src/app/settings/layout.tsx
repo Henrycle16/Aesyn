@@ -10,12 +10,12 @@ export default function AccountLayout({
   return (
     <>
       <ProfileHeader />
-      <main className="flex-1 mx-auto max-lg:py-5">
+      <main className="flex-1 mx-auto max-lg:py-5 mb-10">
         <div className="w-[77.5rem] mt-20 flex justify-between">
           {/* Settings Tabs */}
           <SettingTabs />
           {/* Settings components */}
-          <div className="w-[57.5rem] flex flex-col border border-red-500">
+          <div className="w-[57.5rem] mt-7 flex flex-col gap-6">
             {children}
           </div>
         </div>
