@@ -1,88 +1,50 @@
 "use client";
 
-import { List, ListItemIcon, ListItemButton } from "@mui/material";
+import Link from "next/link";
+import { usePathname } from 'next/navigation'
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { useRouter } from "next/navigation";
 
-export default function SettingTabs(props: { value: number; }) {
-  const selectedIndex = props.value
-  const router = useRouter();
+export default function SettingTabs() {
+  const pathname = usePathname();
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
-  ) => {
-    switch(index) {
-      case 0:
-        router.push("/settings/account")
-        break;
-      case 1:
-        router.push("/settings/billings")
-        break;
-      case 2:
-        router.push("/settings/notifications")
-        break;
-    }
-  };
+  const activeTabStyles = "ts5-text pl-3 border-l-[3px] border-[#184465]";
+  const inactiveTabStyles = "ts7-text hover:ts5-text pl-[15px] cursor-pointer";
 
   return (
-    <>
-      <h1 className="mb-8 text-3xl font-semibold text-[#184465]"> Settings </h1>
-      <List
-        disablePadding
-        sx={{ p: "8px", "& .MuiMenuItem-root": { borderRadius: 1 } }}
-      >
-        <ListItemButton
-          className="py-3 mb-8 g5-text subheader1"
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-          sx={{
-            "&.Mui-selected": {
-              borderLeft: 4,
-            },
-          }}
-        >
-          <ListItemIcon>
-            <PersonOutlineOutlinedIcon className="g5-text" fontSize="medium" />
-          </ListItemIcon>
-          My Account
-        </ListItemButton>
-        <ListItemButton
-          className="py-3 mb-8 g5-text subheader1"
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-          sx={{
-            "&.Mui-selected": {
-              borderLeft: 4,
-            },
-          }}
-        >
-          <ListItemIcon>
-            <PaymentIcon className="g5-text" fontSize="medium" />
-          </ListItemIcon>
-          Billings & Payments
-        </ListItemButton>
-        <ListItemButton
-          className="py-3 mb-8 g5-text subheader1"
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-          sx={{
-            "&.Mui-selected": {
-              borderLeft: 4,
-            },
-          }}
-        >
-          <ListItemIcon>
-            <NotificationsNoneOutlinedIcon
-              className="g5-text"
-              fontSize="medium"
-            />
-          </ListItemIcon>
-          Notifications
-        </ListItemButton>
-      </List>
-    </>
+    <nav className="w-[19rem]">
+      <h1 className="mb-8 text-[32px] font-semibold"> Settings </h1>
+      {/* Tabs List Container */}
+      <ul className="flex flex-col gap-12">
+        <li>
+          <Link 
+            href="/settings/account"
+            className={`flex h-[3rem] items-center gap-11 ${pathname === "/settings/account" ? activeTabStyles : inactiveTabStyles}`}
+          >
+            <PersonOutlineOutlinedIcon fontSize="medium" />
+            <p className="subheader2">My Account</p>
+          </Link>
+        </li>
+        <li>
+          <Link 
+            href="/settings/billings"
+            className={`flex h-[3rem] items-center gap-11 ${pathname === "/settings/billings" ? activeTabStyles : inactiveTabStyles}`}
+          >
+            <PaymentIcon fontSize="medium" />
+            <p className="subheader2">Billing & Payments</p>
+          </Link>
+        </li>
+        <li>
+          <Link 
+            href="/settings/notifications"
+            className={`flex h-[3rem] items-center gap-11 ${pathname === "/settings/notifications" ? activeTabStyles : inactiveTabStyles}`}
+          >
+            <NotificationsNoneOutlinedIcon fontSize="medium" />
+            <p className="subheader2">Notifications</p>
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 }
