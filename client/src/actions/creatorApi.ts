@@ -52,6 +52,16 @@ const getAllCreators = (userId: string) => {
   return api().get(`/api/creators`);
 };
 
+//Update Creator Interests
+const  updateCreatorInterests = (userId: string, interests: string[]) => { 
+  return api().put(`/api/creators/${userId}/interests`, {interests} );
+};
+
+// Update Creator Bio
+const updateCreatorBio = (userId: string, bio: string) => {
+  return api().put(`/api/creators/${userId}/bio`, { bio });
+}
+
 // Get Creator by ID *Works
 // Public
 const getCreatorByUserId = (userId: string) => {
@@ -88,6 +98,8 @@ export {
   getCreatorSelf,
   creatorSignUp,
   creatorUpdate,
+  updateCreatorBio,
+  updateCreatorInterests,
   getCreatorByUserId,
   getCreatorByUsername,
   addPackage,

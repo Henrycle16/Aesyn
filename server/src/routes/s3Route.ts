@@ -7,7 +7,6 @@ import Creator from "../models/Creator";
 
 dotenv.config();
 
-
 // Function to generate a random image name using crypto for uniqueness
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
@@ -34,41 +33,38 @@ const router = express.Router();
 
 // Define PUT route for updating user avatar
 router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
-  const { userId } = req.body;
+  const file = req.file 
 
-  if (!userId) {
-    return res.status(400).send({ message: "User ID is required" });
+  if (!file) {
+    return res.status(400).send({ message: "No file uploaded" });
   }
 
   const imageName = randomImageName();
+  const folderPath = "creator/avatar/";
+  const fullKey = `${folderPath}${imageName}`;
+
   const params = {
     // Set up parameters for S3 upload
     Bucket: bucketName,
-    Key: imageName,
-    Body: req.file.buffer,
-    ContentType: req.file.mimetype,
+    Key: fullKey,
+    Body: file.buffer,
+    ContentType: file.mimetype,
   };
 
   try {
     const command = new PutObjectCommand(params);
     await s3.send(command);
 
-    const imageUrl = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${imageName}`;
-    console.log("Image URL:", imageUrl);
-    console.log("User ID for update:", userId);
+    const imageUrl = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fullKey}`;
 
-    console.log("Type of userId:", typeof userId);
-    console.log("Value of userId:", userId);
-  
     // Update the creator document in the database with the new avatar URL
     const updatedCreator = await Creator.findOneAndUpdate(
-      { user: userId },
+      { user: req.params.user_id  },
       { $set: { avatar: imageUrl } },
       { new: true }
     );
 
     if (!updatedCreator) {
-      console.error("No creator found with the provided userId:", userId);
       return res.status(404).send({ message: "Creator not found" });
     }
 

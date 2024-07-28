@@ -14,6 +14,7 @@ type profileDataReducer = {
     city: string;
     state: string;
     country: string;
+    bio: string;
     preferences: string[];
     interests: string[];
     avatar: string;
@@ -30,6 +31,7 @@ const initialState = {
         city: "",
         state: "",
         country: "",
+        bio: "",
         preferences: [],
         interests: [],
         avatar: "",
