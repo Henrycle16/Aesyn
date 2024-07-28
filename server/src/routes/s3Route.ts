@@ -2,13 +2,9 @@ import express from "express";
 import multer from "multer";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
-import crypto from "crypto";
 import Creator from "../models/Creator";
 
 dotenv.config();
-
-// Function to generate a random image name using crypto for uniqueness
-const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
 // Retrieve AWS S3 bucket details and credentials from environment variables
 const bucketName = process.env.AWS_BUCKET_NAME;
@@ -25,11 +21,12 @@ const s3 = new S3Client({
   region: bucketRegion,
 });
 
-
 // Configure multer for memory storage (files will be stored in memory)
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const router = express.Router();
+
+
 
 // Define PUT route for updating user avatar
 router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
@@ -39,9 +36,9 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
     return res.status(400).send({ message: "No file uploaded" });
   }
 
-  const imageName = randomImageName();
   const folderPath = "creator/avatar/";
-  const fullKey = `${folderPath}${imageName}`;
+  // using the user ID as the key to replace current avatar
+  const fullKey = `${folderPath}${req.params.user_id}`;
 
   const params = {
     // Set up parameters for S3 upload
@@ -52,6 +49,12 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
   };
 
   try {
+    //Fetch the creator document from the database
+    const creator = await Creator.findOne({ user: req.params.user_id });
+    if (!creator) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
     const command = new PutObjectCommand(params);
     await s3.send(command);
 
@@ -64,15 +67,12 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
       { new: true }
     );
 
-    if (!updatedCreator) {
-      return res.status(404).send({ message: "Creator not found" });
-    }
-
     res.send({ message: "Avatar updated successfully", data: updatedCreator });
   } catch (error) {
     console.error("Error uploading to S3 or updating the database:", error);
     res.status(500).send({ message: "Failed to update avatar", error: error.message });
   }
 });
+
 
 export default router;
