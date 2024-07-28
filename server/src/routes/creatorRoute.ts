@@ -1,26 +1,21 @@
-import express from 'express';
+import express from "express";
 // import { check } from 'express-validator';
-import {validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 
-import Creator from '../models/Creator';
-import User from '../models/User';
+import Creator from "../models/Creator";
+import User from "../models/User";
 
 const router = express.Router();
 
 // @route   GET api/creators/me
 // @desc    Get current users Creator profile
 // @access  Private
-router.get('/me', async (req, res) => {
-    try {
-        console.log("PARAMS: ", req.query.userId)
-        const profile = await Creator.findOne({
-            user: req.query.userId,
-        }).populate('user', [
-            'username',
-            'firstName', 
-            'lastName',
-            'avatar',
-        ]);
+router.get("/me", async (req, res) => {
+  try {
+    console.log("PARAMS: ", req.query.userId);
+    const profile = await Creator.findOne({
+      user: req.query.userId,
+    }).populate("user", ["username", "firstName", "lastName", "avatar"]);
 
     if (!profile) {
       return res.status(400).json({ msg: "There is no profile for this user" });
@@ -37,34 +32,27 @@ router.get('/me', async (req, res) => {
 // @desc    Create Creator profile
 // @access  Private
 router.post(
-    '/',
-    [
-        // ** EXPRESS-VALIDATION CHECKS HERE
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+  "/",
+  [
+    // ** EXPRESS-VALIDATION CHECKS HERE
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-        const {
-            userName,
-            gender,
-            location,
-            preferences,
-            interests
-        } = req.body;
+    const { userName, gender, location, preferences, interests } = req.body;
 
-        
-        //Build profile object
-        const creatorProfileFields = {
-            user: req.body.user.id,
-            userName: userName,
-            gender: gender,
-            location: location,
-            preferences: preferences,
-            interests: interests
-        };
+    //Build profile object
+    const creatorProfileFields = {
+      user: req.body.user.id,
+      userName: userName,
+      gender: gender,
+      location: location,
+      preferences: preferences,
+      interests: interests,
+    };
 
     try {
       let creatorProfile = await Creator.findOne({ user: req.body.user.id });
@@ -92,16 +80,11 @@ router.post(
 // @route   PUT api/creators
 // @desc    Update Creator profile     **GOT TO FLESH OUT LATER**
 // @access  Private
-router.put(
-    '/',
-    [
-
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+router.put("/", [], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   const { socialMedias, category, location, bio } = req.body;
 
@@ -161,29 +144,24 @@ router.get("/", async (req, res) => {
 // @route   GET api/creators/user/:user_id
 // @desc    Get Creator profile by user ID
 // @access  Public
-router.get('/user/:user_id', async (req, res) => {
-    try {
-        console.log("here")
-        const profile = await Creator.findOne({
-            user: req.params.user_id,
-        }).populate('user', [
-            'username',
-            'firstName', 
-            'lastName',
-            'avatar',
-        ]);
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    console.log("here");
+    const profile = await Creator.findOne({
+      user: req.params.user_id,
+    }).populate("user", ["username", "firstName", "lastName", "avatar"]);
 
-        if (!profile) {
-            return res.status(400).json({ msg: 'Profile not found' });
-        }
-        res.json(profile);
-    } catch (err) {
-        //console.error(err.message);
-        //if (err.kind == 'ObjectId') {
-        //    return res.status(400).json({ msg: 'Profile not found' });
-        //}
-        //res.status(500).send('Server Error');
+    if (!profile) {
+      return res.status(400).json({ msg: "Profile not found" });
     }
+    res.json(profile);
+  } catch (err) {
+    //console.error(err.message);
+    //if (err.kind == 'ObjectId') {
+    //    return res.status(400).json({ msg: 'Profile not found' });
+    //}
+    //res.status(500).send('Server Error');
+  }
 });
 
 // @route   Get api/creators
@@ -191,8 +169,8 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Public -> Private
 router.get("/username/:username", async (req, res) => {
   try {
-    const creator = await Creator.findOne({ 
-      userName: req.params.username 
+    const creator = await Creator.findOne({
+      userName: req.params.username,
     }).populate("user", ["firstName", "lastName", "avatar", "email"]);
     console.log(creator);
     res.status(200).json(creator);
@@ -204,16 +182,69 @@ router.get("/username/:username", async (req, res) => {
 // @route   DELETE api/creators
 // @desc    Delete Creators profile, user, & posts
 // @access  Private
-router.delete('/', async (req, res) => {
-    try {
-        // Remove user posts
-        //await Post.deleteMany({ user: req.body.user.id });
-        // Remove profile
-        await Creator.findOneAndDelete({ user: req.body.user.id });
-        // Remove user
-        await User.findOneAndDelete({ _id: req.body.user.id });
+router.delete("/", async (req, res) => {
+  try {
+    // Remove user posts
+    //await Post.deleteMany({ user: req.body.user.id });
+    // Remove profile
+    await Creator.findOneAndDelete({ user: req.body.user.id });
+    // Remove user
+    await User.findOneAndDelete({ _id: req.body.user.id });
 
     res.json({ msg: "User deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+/* =====Profile Card Endpoints===== */
+
+// Update Interests - api/creators/:user_id/interests
+router.put("/:user_id/interests", async (req, res) => {
+  try {
+    const { interests } = req.body;
+
+    // Ensure interests is an array of strings
+    if (!Array.isArray(interests) || !interests.every(interests => typeof interests === 'string')) {
+      return res.status(400).json({ msg: "Interests must be an array of strings" });
+    }
+
+    const updatedCreator = await Creator.findOneAndUpdate(
+      { user: req.params.user_id },
+      { $set: { interests } },
+      { new: true }
+    );
+
+    // Check if the creator was found and updated
+    if (!updatedCreator) {
+      return res.status(404).json({ msg: "Creator not found" });
+    }
+
+    res.status(200).json(updatedCreator.interests);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Update Bio - api/creators/:user_id/bio
+router.put("/:user_id/bio", async (req, res) => {
+  try {
+    const { bio } = req.body;
+
+    const updatedCreator = await Creator.findOneAndUpdate(
+      { user: req.params.user_id },
+      { $set: { bio: bio } },
+      { new: true, runValidators: true }
+    );
+
+    // Check if the creator was found and updated
+    if (!updatedCreator) {
+      return res.status(404).json({ msg: "Creator not found" });
+    }
+
+    res.status(200).json(updatedCreator.bio);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -225,14 +256,16 @@ router.delete('/', async (req, res) => {
 // CREATE package to creator.packages - api/creators/:user_id/packages
 router.post("/:user_id/packages", async (req, res) => {
   try {
-    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id },
+    const creatorProfile = await Creator.findOneAndUpdate(
+      { user: req.params.user_id },
       { $push: { packages: req.body } },
-      { 
+      {
         new: true,
         runValidators: true,
       }
     );
-    const newPackage = creatorProfile.packages[creatorProfile.packages.length - 1];
+    const newPackage =
+      creatorProfile.packages[creatorProfile.packages.length - 1];
     res.status(200).json(newPackage);
   } catch (err) {
     console.error(err.message);
@@ -245,9 +278,10 @@ router.put("/:user_id/packages", async (req, res) => {
   try {
     const updatedPackage = req.body;
 
-    const creatorProfile = await Creator.findOneAndUpdate({ user: req.params.user_id, "packages._id": updatedPackage._id},
-      { $set: { 'packages.$': updatedPackage } },
-      { 
+    const creatorProfile = await Creator.findOneAndUpdate(
+      { user: req.params.user_id, "packages._id": updatedPackage._id },
+      { $set: { "packages.$": updatedPackage } },
+      {
         new: true,
         runValidators: true,
       }
@@ -264,8 +298,8 @@ router.put("/:user_id/packages", async (req, res) => {
 router.delete("/:user_id/packages/:package_id", async (req, res) => {
   try {
     const creatorProfile = await Creator.updateOne(
-      { user: req.params.user_id, "packages._id": req.params.package_id},
-      { $pull: { 'packages': { _id: req.params.package_id} } },
+      { user: req.params.user_id, "packages._id": req.params.package_id },
+      { $pull: { packages: { _id: req.params.package_id } } }
     );
 
     res.status(200).json(creatorProfile);

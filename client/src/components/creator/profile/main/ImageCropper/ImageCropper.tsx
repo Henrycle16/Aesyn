@@ -8,7 +8,7 @@ import ReactCrop, {
   type Crop,
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import setCanvasPreview from "./SetCanvasPreview";
+import setCanvasPreview from "./AvatarCanvas";
 
 // Constants for aspect ratio and minimum dimension of the crop area
 const ASPECT_RATIO = 1;

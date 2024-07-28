@@ -29,8 +29,6 @@ const ProfileCard = () => {
     const blob = await fetch(imgSrc).then((res) => res.blob());
     const file = new File([blob], imageName, { type: "image/jpeg" });
     const formData = new FormData();
-    console.log("Form Data", formData);
-    console.log("User ID", userId);
     formData.append("avatar", file);
     formData.append("userId", userId);
 
