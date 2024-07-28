@@ -50,6 +50,9 @@
  .g4-text {
   @apply text-[var(--g4)]
  }
+ .g4-bg {
+  @apply bg-[var(--g4)]
+ }
  /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
  .g5-text {
   @apply text-[var(--g5)]
@@ -120,7 +123,7 @@
  .subheader1 {
   @apply text-base font-bold
  }
- .subheading2 {
+ .subheader2 {
   @apply text-base font-medium
  }
  .body1 {

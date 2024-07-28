@@ -159,6 +159,7 @@ const SignUpBox = () => {
               onClick={onBack}
               variant="text"
               startIcon={<ArrowBackIcon />}
+              className="ts1-text"
               sx={{ padding: "12px 24px" }}
             >
               back

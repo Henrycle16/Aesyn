@@ -1,7 +1,11 @@
 "use client";
 
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import InstagramLogo from "@/components/ui/svgs/Instagram";
+import Instagram from "@/components/ui/svgs/Instagram";
+import Facebook from "@/components/ui/svgs/Facebook";
+import Twitter from "@/components/ui/svgs/X";
+import TikTok from "@/components/ui/svgs/Tiktok";
+import Youtube from "@/components/ui/svgs/Youtube";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { creatorProfileInfo } from "@/redux/slices/creatorProfile-slice";
@@ -17,15 +21,26 @@ type Props = {
   quantity: number;
 };
 
+const socialMediaIcons: { [key: string]: JSX.Element } = {
+  Instagram: <Instagram />,
+  Facebook: <Facebook />,
+  Twitter: <Twitter />,
+  TikTok: <TikTok />,
+  Youtube: <Youtube />,
+};
+
 const PackageCard = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const socialMediaIcon = socialMediaIcons[props.socialMedia];
 
   return (
     <>
       <div className="border border-[#D7D7D7] p-4 rounded-2xl w-[17.438rem] h-[10.688rem] flex flex-col">
         {/* Top Section */}
         <div className="flex">
-          <InstagramLogo />
+          {/* <Instagram /> */}
+          {socialMediaIcon}
           {/* Text Container */}
           <div className="ml-5">
             <p className="font-medium">{props.socialMedia}</p>

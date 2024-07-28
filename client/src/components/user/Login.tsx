@@ -8,6 +8,7 @@ import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
 import SignUpModal from "../user/SignUpModal";
+import { useRouter } from "next/navigation";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -16,6 +17,7 @@ const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,8 +32,8 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       console.log("LOGIN!");
-
       console.log(loginResponse);
+      router.push("/profile/calvin");
     } else {
       console.log("Error!");
     }
