@@ -131,7 +131,7 @@ function PackageForm({ onFormSubmit, modalId }: Props) {
               name="qty"
               min={1}
               placeholder="#"
-              value={currentPackage.quantity}
+              value={Number(currentPackage.quantity).toString()}
               onChange={(e) => {
                 dispatch(
                   creatorPackagesInfo({
@@ -155,7 +155,6 @@ function PackageForm({ onFormSubmit, modalId }: Props) {
               id="price"
               name="price"
               min={0}
-              step="0.01"
               value={Number(currentPackage.price).toString()}
               onChange={(e) => {
                 dispatch(
