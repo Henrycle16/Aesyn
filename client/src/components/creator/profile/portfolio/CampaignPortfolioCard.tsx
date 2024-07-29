@@ -65,6 +65,9 @@ const CampaignPortfolioCard = (props: Props) => {
               width="100%"
               height="100%"
               playIcon={<></>}
+              style={imageStyle}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               onClick={() => {
                 dispatch(creatorContentInfo({ currentContent: props }));
                 (
