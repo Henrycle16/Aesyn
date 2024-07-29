@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
 import Creator from "../models/Creator";
 
@@ -158,6 +158,58 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
   } catch (error) {
     console.error("Error uploading to S3 or updating the database:", error);
     res.status(500).send({ message: "Failed to update portfolio content", error: error.message });
+  }
+});
+
+// DELETE content from portfolio
+router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
+  try {
+    const { user_id, content_id } = req.params;
+
+    const creator = await Creator.findOne({ user: user_id });
+    if (!creator) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
+    const content = creator.portfolio.id(content_id);
+    if (!content) {
+      return res.status(404).send({ message: "Content not found" });
+    }
+
+    if (req.body.mediaType === "video") {
+      // Remove content from MongoDB
+      await Creator.updateOne(
+        { user: user_id },
+        { $pull: { portfolio: { _id: content_id } } }
+      );
+    } else {
+      // Remove content from MongoDB and AWS S3
+      const deleteParams = {
+        Bucket: bucketName,
+        Key: content.uri.split(`https://${bucketName}.s3.${bucketRegion}.amazonaws.com/`)[1],
+      };
+
+      const deleteThumbnailParams = {
+        Bucket: bucketName,
+        Key: content.thumbnailUri.split(`https://${bucketName}.s3.${bucketRegion}.amazonaws.com/`)[1],
+      };
+
+      const deleteCommand = new DeleteObjectCommand(deleteParams);
+      const deleteThumbnailCommand = new DeleteObjectCommand(deleteThumbnailParams);
+
+      await s3.send(deleteCommand);
+      await s3.send(deleteThumbnailCommand);
+
+      await Creator.updateOne(
+        { user: user_id },
+        { $pull: { portfolio: { _id: content_id } } }
+      );
+    }
+
+    res.status(200).send({ message: "Content deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting content:", error);
+    res.status(500).send({ message: "Failed to delete content", error: error.message });
   }
 });
 

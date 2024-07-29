@@ -1,22 +1,38 @@
 "use client";
 
-import { deleteContent, resetCurrentContent } from "@/redux/slices/creatorPortfolio-slice";
+import { deleteVideo } from "@/actions/creators3/portfolio";
+import {
+  deleteContent,
+  resetCurrentContent,
+} from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
+
+import { useSession } from "next-auth/react";
 
 const DeletePortfolioContent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
-    (state) => state.creatorContentReducer.value.currentContent?.contentId
+    (state) => state.creatorContentReducer.value.currentContent
   );
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const session = useSession();
+  const userId = session.data?.user.id;
+
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (currentContent !== undefined){
+    try {
+      const response = await deleteVideo(userId, currentContent);
       dispatch(deleteContent(currentContent));
-      dispatch(resetCurrentContent());
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
     }
-    (document.getElementById(`delete_content_modal`) as HTMLDialogElement).close();
+
+    dispatch(resetCurrentContent());
+    (
+      document.getElementById(`delete_content_modal`) as HTMLDialogElement
+    ).close();
   };
 
   return (
@@ -27,8 +43,8 @@ const DeletePortfolioContent = () => {
             Delete Content?
           </h1>
           <p className="pb-4 pt-2 text-sm">
-            You are about to delete a content from your portfolio. Are you sure you want to
-            continue?
+            You are about to delete a content from your portfolio. Are you sure
+            you want to continue?
           </p>
         </div>
         <form method="dialog" onSubmit={onFormSubmit}>
@@ -36,7 +52,11 @@ const DeletePortfolioContent = () => {
             <button
               onClick={() => {
                 dispatch(resetCurrentContent()),
-                (document.getElementById("delete_content_modal") as HTMLDialogElement).close();
+                  (
+                    document.getElementById(
+                      "delete_content_modal"
+                    ) as HTMLDialogElement
+                  ).close();
               }}
               type="button"
               className="border-2 border-[#3798E3] text-[#3798E3] py-3 px-6 capitalize font-bold rounded-md hover:bg-[#F5F5F5]"

@@ -14,4 +14,10 @@ const uploadVideo = (userId: string, contentData: any) => {
   return api().post(`/api/s3/${userId}/portfolio`, contentData);
 };
 
-export { uploadImage, uploadVideo };
+//Delete portfolio content
+const deleteVideo = (userId: string, contentData: any) => {
+  return api().delete(`/api/s3/${userId}/portfolio/${contentData._id}`);
+};
+
+
+export { uploadImage, uploadVideo, deleteVideo };
