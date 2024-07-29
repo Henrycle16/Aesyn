@@ -48,6 +48,9 @@ const CreatorSchema = new mongoose.Schema({
           type: String,
           required: true,
         },
+        thumbnailUri: {
+          type: String,
+        },
         // name: {
         //     type: String,
         // },
@@ -75,6 +78,9 @@ const CreatorSchema = new mongoose.Schema({
         uri: {
           type: String,
           required: true,
+        },
+        thumbnailUri: {
+          type: String,
         },
         // name: {
         //     type: String,
