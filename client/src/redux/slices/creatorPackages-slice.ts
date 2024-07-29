@@ -27,7 +27,7 @@ const initialState = {
       type: "",
       description: "",
       price: 0,
-      quantity: 0,
+      quantity: 1,
     },
   } as creatorPackagesInfoReducer,
 } as InitialState;
@@ -65,7 +65,7 @@ export const creatorPackages = createSlice({
         type: "",
         description: "",
         price: 0,
-        quantity: 0,
+        quantity: 1,
       };
     },
   },

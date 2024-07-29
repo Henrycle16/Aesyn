@@ -1,32 +1,49 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import { useAppSelector } from "@/redux/store";
+import { useSession } from "next-auth/react";
+import { updateCreatorBio } from "@/actions/creatorApi";
 
 const Bio: React.FC = () => {
-  const [bioText, setBioText] = useState<string>("");
-  const [tempBioText, setTempBioText] = useState<string>("");
-  const [charCount, setCharCount] = useState(500);
+  const bio = useAppSelector((state) => state.profileDataReducer.value.bio);
+
+  // Temp text state is needed so the text doesn't change until the user clicks save
+  const [bioText, setBioText] = useState<string>(bio || "");
+  const [tempBioText, setTempBioText] = useState(bioText);
+  const [charCount, setCharCount] = useState(500 - (bio?.length || 0));
+
+  const session = useSession();
+  const userId = session.data?.user.id;
+
+  useEffect(() => {
+    setBioText(bio || "");
+    setTempBioText(bio || "");
+    setCharCount(500 - (bio?.length || 0));
+  }, [bio]);
+
+  const onFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await updateCreatorBio(userId, tempBioText);
+      console.log("bio:", response.data);
+      setBioText(tempBioText); // Update the main bio text after saving
+      (document.getElementById("bio_modal") as HTMLDialogElement).close();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleBioChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = event.target.value;
-    setTempBioText(newValue); 
-    setCharCount(500 - newValue.length);
+    const newText = event.target.value;
+    setTempBioText(newText);
+    setCharCount(500 - newText.length);
   };
 
   const openModal = () => {
     setTempBioText(bioText);
     (document.getElementById("bio_modal") as HTMLDialogElement).showModal();
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    setBioText(tempBioText);
-    closeModal();
-  };
-
-  const closeModal = () => {
-    (document.getElementById("bio_modal") as HTMLDialogElement).close();
   };
 
   return (
@@ -42,7 +59,7 @@ const Bio: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-[#4A4A4A] text-md mt-4 mb-10 flex-grow">
-            {bioText || "Write a short bio that best describes who you are!"}
+            {bioText || "Give a brief description for your profile."}
           </p>
         </div>
       </div>
@@ -50,7 +67,7 @@ const Bio: React.FC = () => {
       {/* Modal */}
       <dialog id="bio_modal" className="modal">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={onFormSubmit}
           className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6"
         >
           <h1 className="text-[#184465] font-semibold text-2xl">Bio</h1>
@@ -75,7 +92,6 @@ const Bio: React.FC = () => {
             />
             <p className="flex justify-end">{charCount} characters left</p>
           </div>
-
           <div className="modal-action">
             <button
               type="submit"
@@ -84,7 +100,7 @@ const Bio: React.FC = () => {
               Save
             </button>
             <button
-              onClick={closeModal}
+              onClick={() => (document.getElementById("bio_modal") as HTMLDialogElement).close()}
               type="button"
               className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
             >
