@@ -79,6 +79,7 @@ interface MulterFiles {
   thumbnailUri?: Express.Multer.File[];
 }
 
+// POST route for uploading portfolio content
 router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
   console.log('Request body:', req.body);
   console.log('Request files:', req.files);
@@ -107,14 +108,7 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
   const file = files.uri?.[0];
   const thumbnailFile = files.thumbnailUri?.[0];
 
-  console.log('File:', file);
-  console.log('Thumbnail file:', thumbnailFile);
-
-  let folderPath = "creator/portfolio/personal/";
-
-  if(req.body.contentType === "campaign"){
-    folderPath = "creator/portfolio/campaign/";
-  }
+  const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
 
   const fullKey = `${folderPath}${req.params.user_id}-${req.body.name}`;
   const thumbnailFullKey = `${folderPath}${req.params.user_id}-thumbnail-${req.body.name}`;
@@ -162,6 +156,7 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
   }
 });
 
+// DELETE route for deleting portfolio content
 router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
   try {
     const { user_id, content_id } = req.params;
@@ -211,6 +206,7 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
   }
 });
 
+// PUT route for updating portfolio content
 router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
   try {
     const { user_id, content_id } = req.params;
@@ -231,6 +227,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
     if (req.body.mediaType === "video") {
       content.set(req.body);
     } else {
+      // If a new file is uploaded, delete the old file from S3
       if (file) {
         if (content.uri) {
           const oldUriKey = content.uri.split('.amazonaws.com/')[1];
@@ -257,6 +254,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
         content.uri = imageUri;
       }
 
+      // If a new thumbnail is uploaded, delete the old thumbnail from S3
       if (thumbnailFile) {
         if (content.thumbnailUri) {
           const oldThumbnailKey = content.thumbnailUri.split('.amazonaws.com/')[1];
@@ -293,6 +291,5 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
     res.status(500).send({ message: "Failed to update content", error: error.message });
   }
 });
-
 
 export default router;

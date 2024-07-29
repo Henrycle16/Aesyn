@@ -75,7 +75,6 @@ const AddPersonal = () => {
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Fetching the image as a blob
     if(currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
