@@ -1,21 +1,23 @@
 "use client";
 
-import React, { useState } from 'react';
-import {
-  creatorContentInfo
-} from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch } from "@/redux/store";
+import React, { useState } from "react";
+import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 const LinkVideo = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
       creatorContentInfo({
         currentContent: {
+          ...currentContent,
           uri: imageUrl,
           name: "",
           mediaType: "video",
@@ -23,9 +25,9 @@ const LinkVideo = () => {
       })
     );
     setImageUrl(""),
-    (
-      document.getElementById(`link_video_modal`) as HTMLDialogElement
-    ).close();
+      (
+        document.getElementById(`link_video_modal`) as HTMLDialogElement
+      ).close();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,9 +37,7 @@ const LinkVideo = () => {
   return (
     <dialog id="link_video_modal" className="modal">
       <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
-          <h1 className="text-[#184465] font-semibold text-2xl">
-            Link a video
-          </h1>
+        <h1 className="text-[#184465] font-semibold text-2xl">Link a video</h1>
         <form method="dialog" onSubmit={onFormSubmit}>
           <div className="w-full flex flex-col">
             <label
@@ -67,9 +67,11 @@ const LinkVideo = () => {
           <button
             onClick={() => {
               setImageUrl(""),
-              (document.getElementById(
-                `link_video_modal`
-              ) as HTMLDialogElement).close();
+                (
+                  document.getElementById(
+                    `link_video_modal`
+                  ) as HTMLDialogElement
+                ).close();
             }}
             type="button"
             className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"

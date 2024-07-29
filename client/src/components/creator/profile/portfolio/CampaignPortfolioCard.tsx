@@ -36,7 +36,7 @@ const CampaignPortfolioCard = (props: Props) => {
 
   return (
     <div className="relative">
-      {props.thumbnailUri && isClient ? (
+      {props.uri && isClient ? (
         props.mediaType === "image" ? (
           <Image
             src={props.thumbnailUri}

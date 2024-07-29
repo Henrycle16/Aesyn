@@ -24,7 +24,6 @@ import ReactCrop, {
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
-import { current } from "@reduxjs/toolkit";
 
 import { uploadImage, uploadVideo } from "@/actions/creators3/portfolio";
 

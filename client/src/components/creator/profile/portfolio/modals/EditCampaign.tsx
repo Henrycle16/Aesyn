@@ -23,10 +23,16 @@ import ReactCrop, {
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
 
+import { useSession } from "next-auth/react";
+import { updateImage, updateVideo } from "@/actions/creators3/portfolio";
+
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
 
 const EditCampaign = () => {
+  const session = useSession();
+  const userId = session.data?.user.id;
+
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
     (state) => state.creatorContentReducer.value.currentContent
@@ -42,10 +48,6 @@ const EditCampaign = () => {
   useEffect(() => {
     setCharCount(100 - currentContent.description?.length);
   }, [currentContent.description]);
-
-  // const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-  //   dispatch(creatorContentInfo({ currentContent: { uri, name } }));
-  // };
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -76,11 +78,80 @@ const EditCampaign = () => {
     ).close();
   };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(editContent({ ...currentContent }));
-    dispatch(resetCurrentContent());
 
+    if (currentContent.mediaType === "video") {
+      try {
+        const response = await updateVideo(userId, currentContent);
+        dispatch(editContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      let thumbnailUri = null;
+
+      if (imgRef.current) {
+        setCanvasPreview(
+          previewCanvasRef.current as HTMLCanvasElement,
+          imgRef.current as HTMLImageElement,
+          convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
+        );
+
+        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+      }
+
+      const blob = await fetch(currentContent.uri).then((res) => res.blob());
+      const file = new File([blob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const thumbnailBlob = thumbnailUri
+        ? await fetch(thumbnailUri).then((res) => res.blob())
+        : new Blob();
+      const thumbnailFile = new File([thumbnailBlob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const appendFormData = (
+        formData: FormData,
+        data: Record<string, any>
+      ) => {
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      };
+
+      const data = {
+        contentType: currentContent.contentType,
+        uri: file,
+        userId: userId,
+        thumbnailUri: thumbnailFile,
+        mediaType: currentContent.mediaType,
+        socialMedia: currentContent.socialMedia,
+        name: currentContent.name,
+        campaignTitle: currentContent.campaignTitle,
+        description: currentContent.description,
+      };
+
+      const formData = new FormData();
+      appendFormData(formData, data);
+
+      try {
+        const response = await updateImage(
+          userId,
+          currentContent._id!,
+          formData
+        );
+        dispatch(editContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    dispatch(resetCurrentContent());
     setResetContentButton(true);
 
     (
@@ -117,7 +188,10 @@ const EditCampaign = () => {
                   onChange={(e) => {
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { ...currentContent, campaignTitle: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          campaignTitle: e.target.value,
+                        },
                       })
                     );
                   }}
@@ -141,7 +215,10 @@ const EditCampaign = () => {
                   onChange={(e) =>
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { ...currentContent, socialMedia: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          socialMedia: e.target.value,
+                        },
                       })
                     )
                   }
@@ -170,7 +247,10 @@ const EditCampaign = () => {
                     setCharCount(100 - e.target.value.length);
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { ...currentContent, description: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          description: e.target.value,
+                        },
                       })
                     );
                   }}
@@ -248,6 +328,16 @@ const EditCampaign = () => {
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+              onClick={() => {
+                dispatch(
+                  creatorContentInfo({
+                    currentContent: {
+                      ...currentContent,
+                      contentType: "campaign",
+                    },
+                  })
+                );
+              }}
             >
               Save
             </button>
@@ -261,6 +351,19 @@ const EditCampaign = () => {
           >
             ✕
           </button>
+          {crop && (
+            <canvas
+              ref={previewCanvasRef}
+              className="mt-4"
+              style={{
+                display: "none",
+                border: "1px solid black",
+                objectFit: "contain",
+                width: 150,
+                height: 150,
+              }}
+            />
+          )}
         </form>
       </div>
     </dialog>
