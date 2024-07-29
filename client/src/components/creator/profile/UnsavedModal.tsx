@@ -4,7 +4,7 @@ import { useAppSelector } from "@/redux/store";
 
 const UnsavedModal = () => {
   const previousModalId = useAppSelector(
-    (state) => state.creatorProfileReducer.value.previousModalId
+    (state) => state.profileDataReducer.value.previousModalId
   );
 
   return (

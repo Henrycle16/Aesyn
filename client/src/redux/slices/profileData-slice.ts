@@ -18,6 +18,7 @@ type profileDataReducer = {
     preferences: string[];
     interests: string[];
     avatar: string;
+    previousModalId: string;
 }
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
         preferences: [],
         interests: [],
         avatar: "",
+        previousModalId: "",
     } as profileDataReducer,
 } as InitialState
 
