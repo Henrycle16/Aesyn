@@ -77,16 +77,6 @@ export const creatorContent = createSlice({
         date: "",
       };
     },
-    /* 
-    ! Use this resetcurrentContent instead of the one above once we start pulling data from the backend
-    resetcurrentContent: (state) => {
-      state.value.currentContent = {
-          uri: "",
-          description: "",
-          date: "",
-        };
-        },
-        */
     deleteContent: (state, action: PayloadAction<Content>) => {
       state.value.content = state.value.content.filter(
         (contentData) => contentData._id !== action.payload._id

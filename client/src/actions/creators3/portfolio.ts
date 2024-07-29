@@ -1,6 +1,5 @@
 import api from "../axiosConfig";
 
-//Upload portfolio content image
 const uploadImage = (userId: string, formData: FormData) => {
   return api().post(`/api/s3/${userId}/portfolio`, formData, {
     headers: {
@@ -9,15 +8,25 @@ const uploadImage = (userId: string, formData: FormData) => {
   });
 };
 
-//Upload portfolio content video
 const uploadVideo = (userId: string, contentData: any) => {
   return api().post(`/api/s3/${userId}/portfolio`, contentData);
 };
 
-//Delete portfolio content
 const deleteVideo = (userId: string, contentData: any) => {
   return api().delete(`/api/s3/${userId}/portfolio/${contentData._id}`);
 };
 
+const updateImage = (userId: string, contentId: string, formData: FormData) => {
+  return api().put(`/api/s3/${userId}/portfolio/${contentId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
-export { uploadImage, uploadVideo, deleteVideo };
+const updateVideo = (userId: string, contentData: any) => {
+  return api().put(`/api/s3/${userId}/portfolio/${contentData._id}`, contentData);
+};
+
+
+export { uploadImage, uploadVideo, deleteVideo, updateImage, updateVideo };

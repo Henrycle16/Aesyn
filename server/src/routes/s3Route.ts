@@ -72,12 +72,13 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
   }
 });
 
+
+// PORTFOLIO ROUTES //
 interface MulterFiles {
   uri?: Express.Multer.File[];
   thumbnailUri?: Express.Multer.File[];
 }
 
-// Define POST route for adding user content to portfolio
 router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
   console.log('Request body:', req.body);
   console.log('Request files:', req.files);
@@ -161,7 +162,6 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
   }
 });
 
-// DELETE content from portfolio
 router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
   try {
     const { user_id, content_id } = req.params;
@@ -177,13 +177,11 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
     }
 
     if (req.body.mediaType === "video") {
-      // Remove content from MongoDB
       await Creator.updateOne(
         { user: user_id },
         { $pull: { portfolio: { _id: content_id } } }
       );
     } else {
-      // Remove content from MongoDB and AWS S3
       const deleteParams = {
         Bucket: bucketName,
         Key: content.uri.split(`https://${bucketName}.s3.${bucketRegion}.amazonaws.com/`)[1],
@@ -210,6 +208,89 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting content:", error);
     res.status(500).send({ message: "Failed to delete content", error: error.message });
+  }
+});
+
+router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
+  try {
+    const { user_id, content_id } = req.params;
+    const files = req.files as MulterFiles;
+    const file = files.uri?.[0];
+    const thumbnailFile = files.thumbnailUri?.[0];
+
+    const creator = await Creator.findOne({ user: user_id });
+    if (!creator) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
+    const content = creator.portfolio.id(content_id);
+    if (!content) {
+      return res.status(404).send({ message: "Content not found" });
+    }
+
+    if (req.body.mediaType === "video") {
+      content.set(req.body);
+    } else {
+      if (file) {
+        if (content.uri) {
+          const oldUriKey = content.uri.split('.amazonaws.com/')[1];
+          const deleteOldUriCommand = new DeleteObjectCommand({
+            Bucket: bucketName,
+            Key: oldUriKey,
+          });
+          await s3.send(deleteOldUriCommand);
+        }
+
+        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const fullKey = `${folderPath}${user_id}-${req.body.name}`;
+        const uriParams = {
+          Bucket: bucketName,
+          Key: fullKey,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        };
+
+        const uriCommand = new PutObjectCommand(uriParams);
+        await s3.send(uriCommand);
+
+        const imageUri = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fullKey}`;
+        content.uri = imageUri;
+      }
+
+      if (thumbnailFile) {
+        if (content.thumbnailUri) {
+          const oldThumbnailKey = content.thumbnailUri.split('.amazonaws.com/')[1];
+          const deleteOldThumbnailCommand = new DeleteObjectCommand({
+            Bucket: bucketName,
+            Key: oldThumbnailKey,
+          });
+          await s3.send(deleteOldThumbnailCommand);
+        }
+
+        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const thumbnailFullKey = `${folderPath}${user_id}-thumbnail-${req.body.name}`;
+        const thumbnailParams = {
+          Bucket: bucketName,
+          Key: thumbnailFullKey,
+          Body: thumbnailFile.buffer,
+          ContentType: thumbnailFile.mimetype,
+        };
+
+        const thumbnailUriCommand = new PutObjectCommand(thumbnailParams);
+        await s3.send(thumbnailUriCommand);
+
+        const thumbnailUri = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${thumbnailFullKey}`;
+        content.thumbnailUri = thumbnailUri;
+      }
+
+      content.set(req.body);
+    }
+
+    await creator.save();
+    res.send({ message: "Content updated successfully", data: content });
+  } catch (error) {
+    console.error("Error updating content:", error);
+    res.status(500).send({ message: "Failed to update content", error: error.message });
   }
 });
 
