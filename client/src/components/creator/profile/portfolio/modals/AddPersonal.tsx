@@ -75,6 +75,16 @@ const AddPersonal = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    dispatch(
+      creatorContentInfo({
+        currentContent: {
+          ...currentContent,
+          contentType: "personal",
+        },
+      })
+    );
+
     // Fetching the image as a blob
     if(currentContent.mediaType === "video") {
       try {
@@ -84,10 +94,26 @@ const AddPersonal = () => {
         console.log(error)
       }
     }else{
+      let thumbnailUri = null;
+
+      if (imgRef.current) {
+        setCanvasPreview(
+          previewCanvasRef.current as HTMLCanvasElement,
+          imgRef.current as HTMLImageElement,
+          convertToPixelCrop(
+            crop!,
+            imgRef.current.width,
+            imgRef.current.height
+          )
+        );
+
+        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+      }
+
       const blob = await fetch(currentContent.uri).then((res) => res.blob());
       const file = new File([blob], currentContent.name, { type: "image/jpeg" });
 
-      const thumbnailBlob = await fetch(currentContent.thumbnailUri).then((res) => res.blob());
+      const thumbnailBlob = thumbnailUri ? await fetch(thumbnailUri).then((res) => res.blob()) : new Blob();
       const thumbnailFile = new File([thumbnailBlob], currentContent.name, { type: "image/jpeg" });
 
       const appendFormData = (formData: FormData, data: Record<string, any>) => {
@@ -209,35 +235,6 @@ const AddPersonal = () => {
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
               onClick={() => {
-                if (imgRef.current) {
-                  setCanvasPreview(
-                    previewCanvasRef.current as HTMLCanvasElement,
-                    imgRef.current as HTMLImageElement,
-                    convertToPixelCrop(
-                      crop!,
-                      imgRef.current.width,
-                      imgRef.current.height
-                    )
-                  );
-
-                  dispatch(
-                    creatorContentInfo({
-                      currentContent: {
-                        ...currentContent,
-                        thumbnailUri: previewCanvasRef.current?.toDataURL() ?? "",
-                      },
-                    })
-                  );
-                }
-
-                dispatch(
-                  creatorContentInfo({
-                    currentContent: {
-                      ...currentContent,
-                      contentType: "personal",
-                    },
-                  })
-                );
               }}
             >
               Save
