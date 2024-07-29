@@ -133,11 +133,12 @@ type InitialState = {
 };
 
 type Content = {
-  contentId?: number;
+  _id?: string;
   contentType: string;
   mediaType: string;
   socialMedia: string;
   uri: string;
+  thumbnailUri: string;
   name: string;
   campaignTitle: string;
   description: string;
@@ -151,13 +152,14 @@ type creatorContentInfoReducer = {
 
 const initialState = {
   value: {
-    content: contentData,
+    content: [],
     currentContent: {
-      contentId: 0,
+      _id: "",
       contentType: "",
       mediaType: "",
       socialMedia: "",
       uri: "",
+      thumbnailUri: "",
       name: "",
       campaignTitle: "",
       description: "",
@@ -184,7 +186,7 @@ export const creatorContent = createSlice({
     },
     editContent: (state, action: PayloadAction<Content>) => {
       for (let i = 0; i < state.value.content.length; i++) {
-        if (state.value.content[i].contentId === action.payload.contentId) {
+        if (state.value.content[i]._id === action.payload._id) {
           state.value.content[i] = action.payload;
           console.log(state.value.content[i]);
         }
@@ -195,11 +197,11 @@ export const creatorContent = createSlice({
     },
     resetCurrentContent: (state) => {
       state.value.currentContent = {
-        contentId: state.value.content.length,
         contentType: "",
         mediaType: "",
         socialMedia: "",
         uri: "",
+        thumbnailUri: "",
         name: "",
         campaignTitle: "",
         description: "",
@@ -216,9 +218,9 @@ export const creatorContent = createSlice({
         };
         },
         */
-    deleteContent: (state, action: PayloadAction<number>) => {
+    deleteContent: (state, action: PayloadAction<Content>) => {
       state.value.content = state.value.content.filter(
-        (contentData) => contentData.contentId !== action.payload
+        (contentData) => contentData._id !== action.payload._id
       );
     },
   },
