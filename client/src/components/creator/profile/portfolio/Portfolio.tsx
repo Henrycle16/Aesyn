@@ -47,12 +47,14 @@ const Portfolio = () => {
         (contentValue) => contentValue.contentType === "campaign"
       )
     : [];
+  
+  const portfolioCount = isPersonalPortfolio ? personalContent.length : campaignContent.length;
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       <div className="flex mb-2 space-x-2">
         <h1 className="text-2xl font-semibold self-end">Portfolio</h1>
-        <NewContentButton isPersonalPortfolio={isPersonalPortfolio} />
+        <NewContentButton isPersonalPortfolio={isPersonalPortfolio} portfolioCount={portfolioCount}/>
       </div>
       <div className="my-5 flex gap-12">
         <button

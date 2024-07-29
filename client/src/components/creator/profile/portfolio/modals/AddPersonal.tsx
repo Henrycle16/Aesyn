@@ -75,20 +75,12 @@ const AddPersonal = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    dispatch(
-      creatorContentInfo({
-        currentContent: {
-          ...currentContent,
-          contentType: "personal",
-        },
-      })
-    );
 
     // Fetching the image as a blob
     if(currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
+        dispatch(addContent(response.data));
         console.log(response.data);
       } catch (error) {
         console.log(error)
@@ -139,13 +131,13 @@ const AddPersonal = () => {
       
       try {
         const response = await uploadImage(userId, formData);
+        dispatch(addContent(response.data));
         console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     }
     
-    dispatch(addContent(currentContent));
     dispatch(resetCurrentContent());
 
     setResetContentButton(true);
@@ -235,6 +227,14 @@ const AddPersonal = () => {
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
               onClick={() => {
+                dispatch(
+                  creatorContentInfo({
+                    currentContent: {
+                      ...currentContent,
+                      contentType: "personal",
+                    },
+                  })
+                );
               }}
             >
               Save

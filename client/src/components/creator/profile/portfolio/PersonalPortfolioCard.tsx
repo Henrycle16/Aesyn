@@ -7,7 +7,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
 
 import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 type Props = {
