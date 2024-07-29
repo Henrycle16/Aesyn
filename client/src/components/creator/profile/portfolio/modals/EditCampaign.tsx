@@ -40,12 +40,12 @@ const EditCampaign = () => {
   const [charCount, setCharCount] = useState(100);
 
   useEffect(() => {
-    setCharCount(100 - currentContent.description.length);
+    setCharCount(100 - currentContent.description?.length);
   }, [currentContent.description]);
 
-  const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
-    dispatch(creatorContentInfo({ currentContent: { uri, name } }));
-  };
+  // const handleFileUpload = ({ uri, name }: { uri: string; name: string }) => {
+  //   dispatch(creatorContentInfo({ currentContent: { uri, name } }));
+  // };
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -117,7 +117,7 @@ const EditCampaign = () => {
                   onChange={(e) => {
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { campaignTitle: e.target.value },
+                        currentContent: { ...currentContent, campaignTitle: e.target.value },
                       })
                     );
                   }}
@@ -141,7 +141,7 @@ const EditCampaign = () => {
                   onChange={(e) =>
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { socialMedia: e.target.value },
+                        currentContent: { ...currentContent, socialMedia: e.target.value },
                       })
                     )
                   }
@@ -170,7 +170,7 @@ const EditCampaign = () => {
                     setCharCount(100 - e.target.value.length);
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { description: e.target.value },
+                        currentContent: { ...currentContent, description: e.target.value },
                       })
                     );
                   }}

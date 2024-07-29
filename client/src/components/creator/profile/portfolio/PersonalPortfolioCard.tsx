@@ -11,9 +11,16 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 type Props = {
-  contentId?: number;
-  uri: string;
+  _id?: string;
+  contentType: string;
   mediaType: string;
+  socialMedia: string;
+  uri: string;
+  thumbnailUri: string;
+  name: string;
+  campaignTitle: string;
+  description: string;
+  date: string;
 };
 
 const PersonalPortfolioCard = (props: Props) => {
@@ -32,7 +39,7 @@ const PersonalPortfolioCard = (props: Props) => {
       {props.uri && isClient ? (
         props.mediaType === "image" ? (
           <Image
-            src={props.uri}
+            src={props.thumbnailUri}
             alt="personal content"
             width={500}
             height={400}
@@ -91,13 +98,7 @@ const PersonalPortfolioCard = (props: Props) => {
           <DeleteOutlineIcon
             sx={{ color: "#FF0000" }}
             onClick={() => {
-              dispatch(
-                creatorContentInfo({
-                  currentContent: {
-                    contentId: props.contentId,
-                  },
-                })
-              );
+              dispatch(creatorContentInfo({ currentContent: props }));
               (
                 document.getElementById(
                   "delete_content_modal"

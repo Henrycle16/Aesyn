@@ -26,8 +26,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const router = express.Router();
 
-
-
 // Define PUT route for updating user avatar
 router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
   const file = req.file 
@@ -71,6 +69,95 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
   } catch (error) {
     console.error("Error uploading to S3 or updating the database:", error);
     res.status(500).send({ message: "Failed to update avatar", error: error.message });
+  }
+});
+
+interface MulterFiles {
+  uri?: Express.Multer.File[];
+  thumbnailUri?: Express.Multer.File[];
+}
+
+// Define POST route for adding user content to portfolio
+router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
+  console.log('Request body:', req.body);
+  console.log('Request files:', req.files);
+  
+  if(req.body.mediaType === "video"){
+    try {
+      const creator = await Creator.findOne({ user: req.params.user_id });
+      if (!creator) {
+        return res.status(404).send({ message: "Creator not found" });
+      }
+      const updatedCreator = await Creator.findOneAndUpdate(
+        { user: req.params.user_id  },
+        { $push: { portfolio: { ...req.body } } },
+        { new: true }
+      );
+
+      return res.send({ message: "Content updated successfully", data: updatedCreator });;
+    } catch (error) {
+      console.error("Error uploading to S3 or updating the database:", error);
+      
+      return res.status(500).send({ message: "Failed to update portfolio content", error: error.message });;
+    }
+  }
+
+  const files = req.files as MulterFiles;
+  const file = files.uri?.[0];
+  const thumbnailFile = files.thumbnailUri?.[0];
+
+  console.log('File:', file);
+  console.log('Thumbnail file:', thumbnailFile);
+
+  let folderPath = "creator/portfolio/personal/";
+
+  if(req.body.contentType === "campaign"){
+    folderPath = "creator/portfolio/campaign/";
+  }
+
+  const fullKey = `${folderPath}${req.params.user_id}-${req.body.name}`;
+  const thumbnailFullKey = `${folderPath}${req.params.user_id}-thumbnail-${req.body.name}`;
+
+  const uriParams = {
+    Bucket: bucketName,
+    Key: fullKey,
+    Body: file?.buffer,
+    ContentType: file?.mimetype,
+  };
+
+  const thumbnailParams = {
+    Bucket: bucketName,
+    Key: thumbnailFullKey,
+    Body: thumbnailFile?.buffer,
+    ContentType: thumbnailFile?.mimetype,
+  };
+
+  try {
+    const creator = await Creator.findOne({ user: req.params.user_id });
+    if (!creator) {
+      return res.status(404).send({ message: "Creator not found" });
+    }
+
+    const uriCommand = new PutObjectCommand(uriParams);
+    await s3.send(uriCommand);
+
+    const imageUri = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fullKey}`;
+
+    const thumbnailUriCommand = new PutObjectCommand(thumbnailParams);
+    await s3.send(thumbnailUriCommand);
+
+    const thumbnailUri = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${thumbnailFullKey}`;
+
+    const updatedCreator = await Creator.findOneAndUpdate(
+      { user: req.params.user_id  },
+      { $push: { portfolio: { ...req.body, uri: imageUri, thumbnailUri: thumbnailUri} } },
+      { new: true }
+    );
+
+    res.send({ message: "Content updated successfully", data: updatedCreator });
+  } catch (error) {
+    console.error("Error uploading to S3 or updating the database:", error);
+    res.status(500).send({ message: "Failed to update portfolio content", error: error.message });
   }
 });
 

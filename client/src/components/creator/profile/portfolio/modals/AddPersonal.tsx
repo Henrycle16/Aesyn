@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   addContent,
   resetCurrentContent,
+  creatorContentInfo,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -13,6 +14,8 @@ import ContentButton from "../ContentButton";
 import ChangeButton from "../ChangeButton";
 import ReactPlayer from "react-player/lazy";
 
+import { useSession } from "next-auth/react";
+
 import ReactCrop, {
   centerCrop,
   convertToPixelCrop,
@@ -21,6 +24,9 @@ import ReactCrop, {
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
+import { current } from "@reduxjs/toolkit";
+
+import { uploadImage, uploadVideo } from "@/actions/creators3/portfolio";
 
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
@@ -29,6 +35,9 @@ const AddPersonal = () => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const session = useSession();
+  const userId = session.data?.user.id;
 
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
@@ -64,8 +73,52 @@ const AddPersonal = () => {
     (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
   };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Fetching the image as a blob
+    if(currentContent.mediaType === "video") {
+      try {
+        const response = await uploadVideo(userId, currentContent);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error)
+      }
+    }else{
+      const blob = await fetch(currentContent.uri).then((res) => res.blob());
+      const file = new File([blob], currentContent.name, { type: "image/jpeg" });
+
+      const thumbnailBlob = await fetch(currentContent.thumbnailUri).then((res) => res.blob());
+      const thumbnailFile = new File([thumbnailBlob], currentContent.name, { type: "image/jpeg" });
+
+      const appendFormData = (formData: FormData, data: Record<string, any>) => {
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      };
+
+      const data = {
+        contentType: currentContent.contentType,
+        uri: file,
+        userId: userId,
+        thumbnailUri: thumbnailFile,
+        mediaType: currentContent.mediaType,
+        socialMedia: currentContent.socialMedia,
+        name: currentContent.name,
+        campaignTitle: currentContent.campaignTitle,
+        description: currentContent.description,
+      };
+      
+      const formData = new FormData();
+      appendFormData(formData, data);
+      
+      try {
+        const response = await uploadImage(userId, formData);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
     dispatch(addContent(currentContent));
     dispatch(resetCurrentContent());
 
@@ -136,7 +189,7 @@ const AddPersonal = () => {
                   <ChangeButton
                     resetTrigger={resetContentButton}
                     onResetComplete={handleResetComplete}
-                  />
+                  />                
                 </div>
               </div>
             </>
@@ -166,7 +219,25 @@ const AddPersonal = () => {
                       imgRef.current.height
                     )
                   );
+
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: {
+                        ...currentContent,
+                        thumbnailUri: previewCanvasRef.current?.toDataURL() ?? "",
+                      },
+                    })
+                  );
                 }
+
+                dispatch(
+                  creatorContentInfo({
+                    currentContent: {
+                      ...currentContent,
+                      contentType: "personal",
+                    },
+                  })
+                );
               }}
             >
               Save

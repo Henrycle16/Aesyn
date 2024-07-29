@@ -23,6 +23,7 @@ import ReactCrop, {
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
+import { current } from "@reduxjs/toolkit";
 
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
@@ -40,7 +41,7 @@ const AddCampaign = () => {
   const [resetContentButton, setResetContentButton] = useState(false);
 
   useEffect(() => {
-    setCharCount(100 - currentContent.description.length);
+    setCharCount(100 - currentContent.description?.length);
   }, [currentContent.description]);
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
@@ -113,7 +114,9 @@ const AddCampaign = () => {
                   onChange={(e) => {
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { campaignTitle: e.target.value },
+                        currentContent: { 
+                          ...currentContent,
+                          campaignTitle: e.target.value },
                       })
                     );
                   }}
@@ -137,7 +140,9 @@ const AddCampaign = () => {
                   onChange={(e) =>
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { socialMedia: e.target.value },
+                        currentContent: { 
+                          ...currentContent,
+                          socialMedia: e.target.value },
                       })
                     )
                   }
@@ -166,7 +171,9 @@ const AddCampaign = () => {
                     setCharCount(100 - e.target.value.length);
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { description: e.target.value },
+                        currentContent: { 
+                          ...currentContent,
+                          description: e.target.value },
                       })
                     );
                   }}

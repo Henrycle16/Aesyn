@@ -34,70 +34,38 @@ const CreatorSchema = new mongoose.Schema({
   avatar: {
     type: String,
   },
-  portfolio: {
-    personalContent: [
-      {
-        mediaType: {
-          type: String,
-          required: true,
-        },
-        socialMedia: {
-          type: String,
-        },
-        uri: {
-          type: String,
-          required: true,
-        },
-        thumbnailUri: {
-          type: String,
-        },
-        // name: {
-        //     type: String,
-        // },
-        campaignTitle: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        date: {
-          type: Date,
-          default: Date.now,
-        },
+  portfolio: [
+    {
+      contentType: {
+        type: String,
       },
-    ],
-    campaignContent: [
-      {
-        mediaType: {
-          type: String,
-          required: true,
-        },
-        socialMedia: {
-          type: String,
-        },
-        uri: {
-          type: String,
-          required: true,
-        },
-        thumbnailUri: {
-          type: String,
-        },
-        // name: {
-        //     type: String,
-        // },
-        campaignTitle: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        date: {
-          type: Date,
-          default: Date.now,
-        },
+      mediaType: {
+        type: String,
       },
-    ],
-  },
+      socialMedia: {
+        type: String,
+      },
+      uri: {
+        type: String,
+      },
+      thumbnailUri: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+      campaignTitle: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   packages: [
     {
       socialMedia: {

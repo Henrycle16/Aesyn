@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {
   creatorContentInfo
 } from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
@@ -25,6 +25,9 @@ const ContentButton: React.FC<ContentButtonProps> = ({
   resetTrigger,
   onResetComplete,
 }) => {
+  const currentContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.currentContent
+  );
   const [isActive, setIsActive] = useState(false);
   const [isPhoto, setIsPhoto] = useState("Change content");
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -58,6 +61,7 @@ const ContentButton: React.FC<ContentButtonProps> = ({
       dispatch(
         creatorContentInfo({
           currentContent: {
+            ...currentContent,
             uri: imageUrl,
             name: imageName,
             mediaType: "image",

@@ -6,15 +6,21 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
 
-import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
+import { creatorContentInfo, editContent } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 type Props = {
-  contentId?: number;
-  uri: string;
+  _id?: string;
+  contentType: string;
   mediaType: string;
+  socialMedia: string;
+  uri: string;
+  thumbnailUri: string;
+  name: string;
+  campaignTitle: string;
   description: string;
+  date: string;
 };
 
 const CampaignPortfolioCard = (props: Props) => {
@@ -30,10 +36,10 @@ const CampaignPortfolioCard = (props: Props) => {
 
   return (
     <div className="relative">
-      {props.uri && isClient ? (
+      {props.thumbnailUri && isClient ? (
         props.mediaType === "image" ? (
           <Image
-            src={props.uri}
+            src={props.thumbnailUri}
             alt="personal content"
             width={500}
             height={400}
@@ -93,11 +99,7 @@ const CampaignPortfolioCard = (props: Props) => {
             sx={{ color: "#FF0000" }}
             onClick={() => {
               dispatch(
-                creatorContentInfo({
-                  currentContent: {
-                    contentId: props.contentId,
-                  },
-                })
+                creatorContentInfo({ currentContent: props })
               );
               (
                 document.getElementById(
