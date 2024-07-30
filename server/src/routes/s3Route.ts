@@ -89,7 +89,7 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
       }
       const updatedCreator = await Creator.findOneAndUpdate(
         { user: req.params.user_id  },
-        { $push: { portfolio: { ...req.body } } },
+        { $push: { portfolio: { ...req.body, date: new Date() } } },
         { new: true }
       );
 
@@ -218,10 +218,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
       return res.status(404).send({ message: "Content not found" });
     }
 
-    console.log("Request body:", req.body);
-
     if (req.body.mediaType === "video") {
-      console.log("Updating video content");
       content.set(req.body.data);
     } else {
       const files = req.files as MulterFiles;
@@ -284,7 +281,8 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
 
       content.set(req.body.data);
     }
-
+    
+    content.set({ date: new Date() });
     await creator.save();
     res.send({ message: "Content updated successfully", data: content });
   } catch (error) {
