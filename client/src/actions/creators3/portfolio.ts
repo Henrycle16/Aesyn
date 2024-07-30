@@ -13,7 +13,6 @@ const uploadVideo = (userId: string, contentData: any) => {
 };
 
 const deleteAnyContent = (userId: string, contentData: any) => {
-  console.log("Deleting content with data:", contentData); // Log the content data
   return api().delete(`/api/s3/${userId}/portfolio/${contentData._id}`, {data: contentData});
 };
 
