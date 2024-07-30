@@ -19,6 +19,7 @@ const LinkVideo = () => {
         currentContent: {
           ...currentContent,
           uri: imageUrl,
+          thumbnailUri: "",
           name: "",
           mediaType: "video",
         },

@@ -218,7 +218,25 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
       return res.status(404).send({ message: "Content not found" });
     }
 
-    if (req.body.mediaType === "video") {
+    if (req.body.data && req.body.data.mediaType === "video") {
+      if (content.uri.includes("amazonaws.com")) {
+        const oldUriKey = content.uri.split('.amazonaws.com/')[1];
+        const deleteOldUriCommand = new DeleteObjectCommand({
+          Bucket: bucketName,
+          Key: oldUriKey,
+        });
+        await s3.send(deleteOldUriCommand);
+      }
+
+      if (content.thumbnailUri.includes("amazonaws.com")) {
+        const oldThumbnailKey = content.thumbnailUri.split('.amazonaws.com/')[1];
+        const deleteOldThumbnailCommand = new DeleteObjectCommand({
+          Bucket: bucketName,
+          Key: oldThumbnailKey,
+        });
+        await s3.send(deleteOldThumbnailCommand);
+      }
+
       content.set(req.body.data);
     } else {
       const files = req.files as MulterFiles;
@@ -227,7 +245,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
 
       // If a new file is uploaded, delete the old file from S3
       if (file) {
-        if (content.uri) {
+        if (content.uri.includes("amazonaws.com")) {
           const oldUriKey = content.uri.split('.amazonaws.com/')[1];
           const deleteOldUriCommand = new DeleteObjectCommand({
             Bucket: bucketName,
@@ -238,6 +256,11 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
 
         const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
         const fullKey = `${folderPath}${user_id}-${req.body.name}`;
+
+        if (!fullKey) {
+          throw new Error("Full key is not defined");
+        }
+
         const uriParams = {
           Bucket: bucketName,
           Key: fullKey,
@@ -254,7 +277,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
 
       // If a new thumbnail is uploaded, delete the old thumbnail from S3
       if (thumbnailFile) {
-        if (content.thumbnailUri) {
+        if (content.thumbnailUri.includes("amazonaws.com")) {
           const oldThumbnailKey = content.thumbnailUri.split('.amazonaws.com/')[1];
           const deleteOldThumbnailCommand = new DeleteObjectCommand({
             Bucket: bucketName,
@@ -265,6 +288,11 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
 
         const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
         const thumbnailFullKey = `${folderPath}${user_id}-thumbnail-${req.body.name}`;
+
+        if (!thumbnailFullKey) {
+          throw new Error("Thumbnail full key is not defined");
+        }
+
         const thumbnailParams = {
           Bucket: bucketName,
           Key: thumbnailFullKey,
@@ -279,7 +307,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
         content.thumbnailUri = thumbnailUri;
       }
 
-      content.set(req.body.data);
+      content.set(req.body);
     }
     
     content.set({ date: new Date() });
