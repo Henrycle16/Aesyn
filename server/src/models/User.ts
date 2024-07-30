@@ -39,6 +39,18 @@ const UserSchema = new mongoose.Schema({
         //required: true,
     },
     promotional: {
+        communicationEmail: {
+            type: Boolean,
+        },
+        marketingEmail: {
+            type: Boolean,
+        },
+    },
+
+    messageEmail: {
+        type: Boolean,
+    },
+    securityEmail: {
         type: Boolean,
     },
     acceptedTerms: {
