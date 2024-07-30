@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteVideo } from "@/actions/creators3/portfolio";
+import { deleteAnyContent } from "@/actions/creators3/portfolio";
 import {
   deleteContent,
   resetCurrentContent,
@@ -22,7 +22,7 @@ const DeletePortfolioContent = () => {
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await deleteVideo(userId, currentContent);
+      const response = await deleteAnyContent(userId, currentContent);
       dispatch(deleteContent(currentContent));
       console.log(response.data);
     } catch (error) {

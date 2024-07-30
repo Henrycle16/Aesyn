@@ -81,9 +81,6 @@ interface MulterFiles {
 
 // POST route for uploading portfolio content
 router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
-  console.log('Request body:', req.body);
-  console.log('Request files:', req.files);
-  
   if(req.body.mediaType === "video"){
     try {
       const creator = await Creator.findOne({ user: req.params.user_id });
@@ -171,7 +168,10 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
       return res.status(404).send({ message: "Content not found" });
     }
 
+    console.log("Request body:", req.body);
+
     if (req.body.mediaType === "video") {
+      console.log("Deleting video content");
       await Creator.updateOne(
         { user: user_id },
         { $pull: { portfolio: { _id: content_id } } }

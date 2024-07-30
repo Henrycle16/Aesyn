@@ -12,8 +12,9 @@ const uploadVideo = (userId: string, contentData: any) => {
   return api().post(`/api/s3/${userId}/portfolio`, contentData);
 };
 
-const deleteVideo = (userId: string, contentData: any) => {
-  return api().delete(`/api/s3/${userId}/portfolio/${contentData._id}`);
+const deleteAnyContent = (userId: string, contentData: any) => {
+  console.log("Deleting content with data:", contentData); // Log the content data
+  return api().delete(`/api/s3/${userId}/portfolio/${contentData._id}`, {data: contentData});
 };
 
 const updateImage = (userId: string, contentId: string, formData: FormData) => {
@@ -29,4 +30,4 @@ const updateVideo = (userId: string, contentData: any) => {
 };
 
 
-export { uploadImage, uploadVideo, deleteVideo, updateImage, updateVideo };
+export { uploadImage, uploadVideo, deleteAnyContent, updateImage, updateVideo };
