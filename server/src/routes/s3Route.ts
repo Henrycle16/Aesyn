@@ -146,10 +146,10 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
       { new: true }
     );
 
-    res.send({ message: "Content updated successfully", data: updatedCreator });
+    res.send({ message: "Content uploaded successfully", data: updatedCreator });
   } catch (error) {
     console.error("Error uploading to S3 or updating the database:", error);
-    res.status(500).send({ message: "Failed to update portfolio content", error: error.message });
+    res.status(500).send({ message: "Failed to upload portfolio content", error: error.message });
   }
 });
 
@@ -167,8 +167,6 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
     if (!content) {
       return res.status(404).send({ message: "Content not found" });
     }
-
-    console.log("Request body:", req.body);
 
     if (req.body.mediaType === "video") {
       await Creator.updateOne(
@@ -209,9 +207,6 @@ router.delete("/:user_id/portfolio/:content_id", async (req, res) => {
 router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { name: 'thumbnailUri' }]), async (req, res) => {
   try {
     const { user_id, content_id } = req.params;
-    const files = req.files as MulterFiles;
-    const file = files.uri?.[0];
-    const thumbnailFile = files.thumbnailUri?.[0];
 
     const creator = await Creator.findOne({ user: user_id });
     if (!creator) {
@@ -223,9 +218,16 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
       return res.status(404).send({ message: "Content not found" });
     }
 
+    console.log("Request body:", req.body);
+
     if (req.body.mediaType === "video") {
-      content.set(req.body);
+      console.log("Updating video content");
+      content.set(req.body.data);
     } else {
+      const files = req.files as MulterFiles;
+      const file = files?.uri?.[0];
+      const thumbnailFile = files?.thumbnailUri?.[0];
+
       // If a new file is uploaded, delete the old file from S3
       if (file) {
         if (content.uri) {
@@ -280,7 +282,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
         content.thumbnailUri = thumbnailUri;
       }
 
-      content.set(req.body);
+      content.set(req.body.data);
     }
 
     await creator.save();

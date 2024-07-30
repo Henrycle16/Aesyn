@@ -25,7 +25,7 @@ const updateImage = (userId: string, contentId: string, formData: FormData) => {
 };
 
 const updateVideo = (userId: string, contentData: any) => {
-  return api().put(`/api/s3/${userId}/portfolio/${contentData._id}`, contentData);
+  return api().put(`/api/s3/${userId}/portfolio/${contentData._id}`, {data: contentData});
 };
 
 
