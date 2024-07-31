@@ -45,7 +45,7 @@ const CampaignPortfolioCard = (props: Props) => {
             height={400}
             objectFit="cover"
             className="rounded"
-            style={imageStyle}
+            style={{ ...imageStyle, cursor: 'pointer' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
