@@ -93,11 +93,11 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
         { new: true }
       );
 
-      return res.send({ message: "Content updated successfully", data: updatedCreator });;
+      return res.send({ message: "Content updated successfully", data: updatedCreator });
     } catch (error) {
       console.error("Error uploading to S3 or updating the database:", error);
       
-      return res.status(500).send({ message: "Failed to update portfolio content", error: error.message });;
+      return res.status(500).send({ message: "Failed to update portfolio content", error: error.message });
     }
   }
 
