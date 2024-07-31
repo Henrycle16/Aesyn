@@ -59,7 +59,8 @@ const SignUpComponent = () => {
         lastName: data.lastName,
         email: data.email,
         password: data.password,
-        promotional: data.promotional,
+        communicationEmail: data.communicationEmail,
+        marketingEmail: data.marketingEmail,
         acceptedTerms: data.acceptedTerms,
         redirect: false,
       });
@@ -227,8 +228,9 @@ const SignUpComponent = () => {
         <input
           type="checkbox"
           className="mt-1"
-          id="promotional"
-          {...register("promotional")}
+          id="communicationEmail & marketingEmail"
+          {...register("communicationEmail")}
+          {...register("marketingEmail")}
         />
         <p className="text-sm">
           I want to receive inspiration, marketing promotions and updates via
