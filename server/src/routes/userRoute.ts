@@ -71,8 +71,7 @@ router.post(
       avatar,
       userType,
       description,
-      communicationEmail,
-      marketingEmail,
+      promotional,
       acceptedTerms,
     } = req.body;
 
@@ -95,8 +94,7 @@ router.post(
         avatar,
         userType,
         description,
-        communicationEmail,
-        marketingEmail,
+        promotional,
         acceptedTerms,
       });
 

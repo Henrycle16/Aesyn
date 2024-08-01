@@ -38,11 +38,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     //required: true,
   },
-  communicationEmail: {
-    type: Boolean,
-  },
-  marketingEmail: {
-    type: Boolean,
+  promotional: {
+    communicationEmail: {
+      type: Boolean,
+    },
+    marketingEmail: {
+      type: Boolean,
+    },
   },
   messageEmail: {
     type: Boolean,
@@ -55,6 +57,7 @@ const UserSchema = new mongoose.Schema({
     //required: true,
   },
 });
+
 
 const User = mongoose.model("User", UserSchema);
 

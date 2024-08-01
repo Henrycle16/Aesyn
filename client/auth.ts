@@ -60,12 +60,8 @@ export const config = {
           label: "Password",
           type: "password",
         },
-        communicationEmail: {
-          label: "communicationEmail",
-          type: "checkbox",
-        },
-        marketingEmail: {
-          label: "marketingEmail",
+        promotional: {
+          label: "promotional",
           type: "checkbox",
         },
         acceptedTerms: {
@@ -80,8 +76,7 @@ export const config = {
           !credentials.password ||
           !credentials.firstName ||
           !credentials.lastName ||
-          !credentials.communicationEmail ||
-          !credentials.marketingEmail ||
+          !credentials.promotional ||
           !credentials.acceptedTerms
         ) {
           return null;
@@ -91,8 +86,7 @@ export const config = {
             credentials.lastName,
             credentials.email,
             credentials.password,
-            Boolean(credentials.communicationEmail),
-            Boolean(credentials.marketingEmail),
+            Boolean(credentials.promotional),
             Boolean(credentials.acceptedTerms)
           );
           return res.data;

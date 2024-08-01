@@ -19,8 +19,7 @@ const registerUser = (
   lastName: string,
   email: string,
   password: string,
-  communicationEmail: boolean,
-  marketingEmail: boolean,
+  promotional: boolean,
   acceptedTerms: boolean
 ) => {
   const body = JSON.stringify({
@@ -28,8 +27,7 @@ const registerUser = (
     lastName,
     email,
     password,
-    communicationEmail,
-    marketingEmail,
+    promotional,
     acceptedTerms,
   });
   return api().post(`/api/users`, body, {
