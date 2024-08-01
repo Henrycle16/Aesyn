@@ -8,6 +8,7 @@ import X from "@/components/ui/svgs/X";
 import Tiktok from "@/components/ui/svgs/Tiktok";
 import Facebook from "@/components/ui/svgs/Facebook";
 import SocialMediaCard from "./SocialMediaCard";
+import Twitch from "@/components/ui/svgs/Twitch";
 
 const socialMediaData = [
   {
@@ -111,6 +112,7 @@ const SocialMedia = () => {
               <SocialTiles icon={<X />} text="Twitter/X" />
               <SocialTiles icon={<Tiktok />} text="Tiktok" />
               <SocialTiles icon={<Facebook />} text="Facebook" />
+              <SocialTiles icon={<Twitch />} text="Twitch" />
             </div>
 
             <div className="flex justify-end mt-10">
