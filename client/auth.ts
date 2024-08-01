@@ -81,14 +81,18 @@ export const config = {
         ) {
           return null;
         } else {
+          const promotional = credentials.promotional === 'true';
+          const acceptedTerms = credentials.acceptedTerms === 'true';
+
           const res = await registerUser(
             credentials.firstName,
             credentials.lastName,
             credentials.email,
             credentials.password,
-            Boolean(credentials.promotional),
-            Boolean(credentials.acceptedTerms)
+            promotional,
+            acceptedTerms
           );
+
           return res.data;
         }
       },

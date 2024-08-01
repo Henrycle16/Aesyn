@@ -7,11 +7,14 @@ import ChangeButton from "../ChangeButton";
 import {
   resetCurrentContent,
   editContent,
+  creatorContentInfo,
 } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 import ReactPlayer from "react-player/lazy";
+
+import { useSession } from "next-auth/react";
 
 import ReactCrop, {
   centerCrop,
@@ -22,6 +25,8 @@ import ReactCrop, {
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
 
+import { updateImage, updateVideo } from "@/actions/creators3/portfolio";
+
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
 
@@ -29,6 +34,9 @@ const EditPersonal = () => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const session = useSession();
+  const userId = session.data?.user.id;
 
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
@@ -66,9 +74,79 @@ const EditPersonal = () => {
     ).close();
   };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(editContent({ ...currentContent }));
+
+    if (currentContent.mediaType === "video") {
+      try {
+        const response = await updateVideo(userId, currentContent);
+        dispatch(editContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      let thumbnailUri = null;
+
+      if (imgRef.current) {
+        setCanvasPreview(
+          previewCanvasRef.current as HTMLCanvasElement,
+          imgRef.current as HTMLImageElement,
+          convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
+        );
+
+        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+      }
+
+      const blob = await fetch(currentContent.uri).then((res) => res.blob());
+      const file = new File([blob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const thumbnailBlob = thumbnailUri
+        ? await fetch(thumbnailUri).then((res) => res.blob())
+        : new Blob();
+      const thumbnailFile = new File([thumbnailBlob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const appendFormData = (
+        formData: FormData,
+        data: Record<string, any>
+      ) => {
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      };
+
+      const data = {
+        contentType: currentContent.contentType,
+        uri: file,
+        userId: userId,
+        thumbnailUri: thumbnailFile,
+        mediaType: currentContent.mediaType,
+        socialMedia: currentContent.socialMedia,
+        name: currentContent.name,
+        campaignTitle: currentContent.campaignTitle,
+        description: currentContent.description,
+      };
+
+      const formData = new FormData();
+      appendFormData(formData, data);
+
+      try {
+        const response = await updateImage(
+          userId,
+          currentContent._id!,
+          formData
+        );
+        dispatch(editContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     dispatch(resetCurrentContent());
 
     setResetContentButton(true);
@@ -154,6 +232,16 @@ const EditPersonal = () => {
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+              onClick={() => {
+                dispatch(
+                  creatorContentInfo({
+                    currentContent: {
+                      ...currentContent,
+                      contentType: "personal",
+                    },
+                  })
+                );
+              }}
             >
               Save
             </button>
@@ -167,6 +255,19 @@ const EditPersonal = () => {
           >
             ✕
           </button>
+          {crop && (
+            <canvas
+              ref={previewCanvasRef}
+              className="mt-4"
+              style={{
+                display: "none",
+                border: "1px solid black",
+                objectFit: "contain",
+                width: 150,
+                height: 150,
+              }}
+            />
+          )}
         </form>
       </div>
     </dialog>

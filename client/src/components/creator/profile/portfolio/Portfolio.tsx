@@ -16,21 +16,52 @@ import LinkVideo from "./modals/LinkVideo";
 import ViewPersonal from "./modals/ViewPersonal";
 import ViewCampaign from "./modals/ViewCampaign";
 
+type Content = {
+  _id?: string;
+  contentType: string;
+  mediaType: string;
+  socialMedia: string;
+  uri: string;
+  thumbnailUri: string;
+  name: string;
+  campaignTitle: string;
+  description: string;
+  date: string;
+};
+
 const Portfolio = () => {
   const [isPersonalPortfolio, setisPersonalPortfolio] = useState(true);
 
-  let testContent = useAppSelector((state) => state.creatorContentReducer.value.content);
+  const portfolioContent = useAppSelector(
+    (state) => state.creatorContentReducer.value.content
+  );
+
+  const personalContent = Array.isArray(portfolioContent)
+    ? portfolioContent.filter(
+        (contentValue) => contentValue.contentType === "personal"
+      )
+    : [];
+
+  const campaignContent = Array.isArray(portfolioContent)
+    ? portfolioContent.filter(
+        (contentValue) => contentValue.contentType === "campaign"
+      )
+    : [];
+  
+  const portfolioCount = isPersonalPortfolio ? personalContent.length : campaignContent.length;
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[22rem] px-10 pb-10 pt-8 flex flex-col text-[#184465]">
       <div className="flex mb-2 space-x-2">
         <h1 className="text-2xl font-semibold self-end">Portfolio</h1>
-        <NewContentButton isPersonalPortfolio={isPersonalPortfolio} />
+        <NewContentButton isPersonalPortfolio={isPersonalPortfolio} portfolioCount={portfolioCount}/>
       </div>
       <div className="my-5 flex gap-12">
         <button
           className={`text-md mb-2 ${
-            isPersonalPortfolio ? "underline decoration-2 underline-offset-8 font-semibold" : "none"
+            isPersonalPortfolio
+              ? "underline decoration-2 underline-offset-8 font-semibold"
+              : "none"
           }`}
           onClick={() => setisPersonalPortfolio(true)}
         >
@@ -38,7 +69,9 @@ const Portfolio = () => {
         </button>
         <button
           className={`text-md mb-2 ${
-            isPersonalPortfolio ? "none" : "underline decoration-2 underline-offset-8 font-semibold"
+            isPersonalPortfolio
+              ? "none"
+              : "underline decoration-2 underline-offset-8 font-semibold"
           }`}
           onClick={() => setisPersonalPortfolio(false)}
         >
@@ -47,10 +80,14 @@ const Portfolio = () => {
       </div>
       <div className="mt-6 flex flex-wrap -m-2">
         {isPersonalPortfolio ? (
-          testContent.some((contentData) => contentData.contentType === "personal") ? (
-            testContent.filter((contentData) => contentData.contentType === "personal").map((contentData) => (
-              <div className="w-1/4 p-2" key={contentData.contentId}>
-                <PersonalPortfolioCard {...contentData} />
+          personalContent.length > 0 ? (
+            personalContent.map((contentData) => (
+              <div className="w-1/4 p-2" key={contentData._id}>
+                <PersonalPortfolioCard
+                  {...contentData}
+                  thumbnailUri={contentData.thumbnailUri || ""}
+                  mediaType={contentData.mediaType || ""}
+                />
               </div>
             ))
           ) : (
@@ -58,10 +95,15 @@ const Portfolio = () => {
               Display your content for clients to see your impressive work!
             </p>
           )
-        ) : testContent.some((contentData) => contentData.contentType === "campaign") ? (
-          testContent.filter((contentData) => contentData.contentType === "campaign").map((contentData) => (
-            <div className="w-1/4 p-2" key={contentData.contentId}>
-              <CampaignPortfolioCard {...contentData} />
+        ) : campaignContent.length > 0 ? (
+          campaignContent.map((contentData) => (
+            <div className="w-1/4 p-2" key={contentData._id}>
+              <CampaignPortfolioCard
+                {...contentData}
+                thumbnailUri={contentData.thumbnailUri || ""}
+                mediaType={contentData.mediaType || ""}
+                description={contentData.description || ""}
+              />
             </div>
           ))
         ) : (

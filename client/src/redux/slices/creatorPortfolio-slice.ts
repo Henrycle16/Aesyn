@@ -1,143 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const contentData = [
-  {
-    contentId: 0,
-    contentType: "personal",
-    mediaType: "image",
-    socialMedia: "",
-    uri: "/joe-cool.jpg",
-    name: "joe.jpg",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 1,
-    contentType: "personal",
-    mediaType: "image",
-    socialMedia: "",
-    uri: "/luka-cool.jpg",
-    name: "luka.jpg",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 2,
-    contentType: "personal",
-    mediaType: "image",
-    socialMedia: "",
-    uri: "/s-cool.jpg",
-    name: "s.jpg",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 3,
-    contentType: "personal",
-    mediaType: "image",
-    socialMedia: "",
-    uri: "/scott-cool.jpg",
-    name: "scott.jpg",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 4,
-    contentType: "personal",
-    mediaType: "image",
-    socialMedia: "",
-    uri: "/calvin-cool.jpg",
-    name: "calvin.jpg",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 5,
-    contentType: "campaign",
-    mediaType: "image",
-    socialMedia: "instagram",
-    uri: "/biden.jpg",
-    name: "biden.jpg",
-    campaignTitle: "Pic of biden",
-    description:
-      "Worked with Joe Biden on his presidential campaign. #Biden2020",
-    date: "2021-10-10",
-  },
-  {
-    contentId: 6,
-    contentType: "campaign",
-    mediaType: "image",
-    socialMedia: "twitter",
-    uri: "/trump.jpg",
-    name: "trump.jpg",
-    campaignTitle: "Pic of trump",
-    description:
-      "Worked with Donald Trump on his presidential campaign. #Trump2020",
-    date: "2021-10-10",
-  },
-  {
-    contentId: 7,
-    contentType: "campaign",
-    mediaType: "image",
-    socialMedia: "facebook",
-    uri: "/obama.jpg",
-    name: "obama.jpg",
-    campaignTitle: "Pic of obama",
-    description:
-      "Worked with Barack Obama on his presidential campaign. #Obama2020",
-    date: "2021-10-10",
-  },
-  {
-    contentId: 8,
-    contentType: "personal",
-    mediaType: "video",
-    socialMedia: "",
-    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
-    name: "IU Music Video",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-  {
-    contentId: 9,
-    contentType: "campaign",
-    mediaType: "image",
-    socialMedia: "youtube",
-    uri: "/bush.jpg",
-    name: "bush.jpg",
-    campaignTitle: "Pic of bush",
-    description:
-      "Worked with George Bush on his presidential campaign. #Bush2020",
-    date: "2021-10-10",
-  },
-  {
-    contentId: 10,
-    contentType: "personal",
-    mediaType: "video",
-    socialMedia: "",
-    uri: "https://www.youtube.com/watch?v=nM0xDI5R50E&list=RDnM0xDI5R50E&start_radio=1&ab_channel=iKON",
-    name: "IU Music Video",
-    campaignTitle: "",
-    description: "",
-    date: "",
-  },
-];
-
 type InitialState = {
   value: creatorContentInfoReducer;
 };
 
 type Content = {
-  contentId?: number;
+  _id?: string;
   contentType: string;
   mediaType: string;
   socialMedia: string;
   uri: string;
+  thumbnailUri: string;
   name: string;
   campaignTitle: string;
   description: string;
@@ -151,13 +24,14 @@ type creatorContentInfoReducer = {
 
 const initialState = {
   value: {
-    content: contentData,
+    content: [],
     currentContent: {
-      contentId: 0,
+      _id: "",
       contentType: "",
       mediaType: "",
       socialMedia: "",
       uri: "",
+      thumbnailUri: "",
       name: "",
       campaignTitle: "",
       description: "",
@@ -172,19 +46,16 @@ export const creatorContent = createSlice({
   reducers: {
     creatorContentInfo: (
       state,
-      action: PayloadAction<{ currentContent: Partial<Content> }>
+      action: PayloadAction<Partial<creatorContentInfoReducer>>
     ) => {
       state.value = {
         ...state.value,
-        currentContent: {
-          ...state.value.currentContent,
-          ...action.payload.currentContent,
-        },
+        ...action.payload,
       };
     },
     editContent: (state, action: PayloadAction<Content>) => {
       for (let i = 0; i < state.value.content.length; i++) {
-        if (state.value.content[i].contentId === action.payload.contentId) {
+        if (state.value.content[i]._id === action.payload._id) {
           state.value.content[i] = action.payload;
           console.log(state.value.content[i]);
         }
@@ -195,30 +66,20 @@ export const creatorContent = createSlice({
     },
     resetCurrentContent: (state) => {
       state.value.currentContent = {
-        contentId: state.value.content.length,
         contentType: "",
         mediaType: "",
         socialMedia: "",
         uri: "",
+        thumbnailUri: "",
         name: "",
         campaignTitle: "",
         description: "",
         date: "",
       };
     },
-    /* 
-    ! Use this resetcurrentContent instead of the one above once we start pulling data from the backend
-    resetcurrentContent: (state) => {
-      state.value.currentContent = {
-          uri: "",
-          description: "",
-          date: "",
-        };
-        },
-        */
-    deleteContent: (state, action: PayloadAction<number>) => {
+    deleteContent: (state, action: PayloadAction<Content>) => {
       state.value.content = state.value.content.filter(
-        (contentData) => contentData.contentId !== action.payload
+        (contentData) => contentData._id !== action.payload._id
       );
     },
   },

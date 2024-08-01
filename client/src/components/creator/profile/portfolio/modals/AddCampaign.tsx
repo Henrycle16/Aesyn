@@ -24,10 +24,16 @@ import ReactCrop, {
 import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
 
+import { uploadImage, uploadVideo } from "@/actions/creators3/portfolio";
+import { useSession } from "next-auth/react";
+
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
 
 const AddCampaign = () => {
+  const session = useSession();
+  const userId = session.data?.user.id;
+
   const [charCount, setCharCount] = useState(100);
   const dispatch = useDispatch<AppDispatch>();
   const currentContent = useAppSelector(
@@ -40,7 +46,7 @@ const AddCampaign = () => {
   const [resetContentButton, setResetContentButton] = useState(false);
 
   useEffect(() => {
-    setCharCount(100 - currentContent.description.length);
+    setCharCount(100 - currentContent.description?.length);
   }, [currentContent.description]);
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
@@ -72,13 +78,78 @@ const AddCampaign = () => {
     ).close();
   };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addContent(currentContent));
+
+    if (currentContent.mediaType === "video") {
+      try {
+        const response = await uploadVideo(userId, currentContent);
+        dispatch(addContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      let thumbnailUri = null;
+
+      if (imgRef.current) {
+        setCanvasPreview(
+          previewCanvasRef.current as HTMLCanvasElement,
+          imgRef.current as HTMLImageElement,
+          convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
+        );
+
+        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+      }
+
+      const blob = await fetch(currentContent.uri).then((res) => res.blob());
+      const file = new File([blob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const thumbnailBlob = thumbnailUri
+        ? await fetch(thumbnailUri).then((res) => res.blob())
+        : new Blob();
+      const thumbnailFile = new File([thumbnailBlob], currentContent.name, {
+        type: "image/jpeg",
+      });
+
+      const appendFormData = (
+        formData: FormData,
+        data: Record<string, any>
+      ) => {
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      };
+
+      const data = {
+        contentType: currentContent.contentType,
+        uri: file,
+        userId: userId,
+        thumbnailUri: thumbnailFile,
+        mediaType: currentContent.mediaType,
+        socialMedia: currentContent.socialMedia,
+        name: currentContent.name,
+        campaignTitle: currentContent.campaignTitle,
+        description: currentContent.description,
+      };
+
+      const formData = new FormData();
+      appendFormData(formData, data);
+
+      try {
+        const response = await uploadImage(userId, formData);
+        dispatch(addContent(response.data));
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     dispatch(resetCurrentContent());
 
     setResetContentButton(true);
-
     (
       document.getElementById(`add_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -113,7 +184,10 @@ const AddCampaign = () => {
                   onChange={(e) => {
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { campaignTitle: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          campaignTitle: e.target.value,
+                        },
                       })
                     );
                   }}
@@ -137,7 +211,10 @@ const AddCampaign = () => {
                   onChange={(e) =>
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { socialMedia: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          socialMedia: e.target.value,
+                        },
                       })
                     )
                   }
@@ -166,7 +243,10 @@ const AddCampaign = () => {
                     setCharCount(100 - e.target.value.length);
                     dispatch(
                       creatorContentInfo({
-                        currentContent: { description: e.target.value },
+                        currentContent: {
+                          ...currentContent,
+                          description: e.target.value,
+                        },
                       })
                     );
                   }}
@@ -252,6 +332,16 @@ const AddCampaign = () => {
             <button
               type="submit"
               className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+              onClick={() => {
+                dispatch(
+                  creatorContentInfo({
+                    currentContent: {
+                      ...currentContent,
+                      contentType: "campaign",
+                    },
+                  })
+                );
+              }}
             >
               Save
             </button>
@@ -265,6 +355,19 @@ const AddCampaign = () => {
           >
             ✕
           </button>
+          {crop && (
+            <canvas
+              ref={previewCanvasRef}
+              className="mt-4"
+              style={{
+                display: "none",
+                border: "1px solid black",
+                objectFit: "contain",
+                width: 150,
+                height: 150,
+              }}
+            />
+          )}
         </form>
       </div>
     </dialog>

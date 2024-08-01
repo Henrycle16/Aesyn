@@ -7,13 +7,20 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Image from "next/legacy/image";
 
 import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 type Props = {
-  contentId?: number;
-  uri: string;
+  _id?: string;
+  contentType: string;
   mediaType: string;
+  socialMedia: string;
+  uri: string;
+  thumbnailUri: string;
+  name: string;
+  campaignTitle: string;
+  description: string;
+  date: string;
 };
 
 const PersonalPortfolioCard = (props: Props) => {
@@ -32,13 +39,13 @@ const PersonalPortfolioCard = (props: Props) => {
       {props.uri && isClient ? (
         props.mediaType === "image" ? (
           <Image
-            src={props.uri}
+            src={props.thumbnailUri}
             alt="personal content"
             width={500}
             height={400}
             objectFit="cover"
             className="rounded"
-            style={imageStyle}
+            style={{ ...imageStyle, cursor: 'pointer' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
@@ -58,6 +65,9 @@ const PersonalPortfolioCard = (props: Props) => {
               width="100%"
               height="100%"
               playIcon={<></>}
+              style={imageStyle}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               onClick={() => {
                 dispatch(creatorContentInfo({ currentContent: props }));
                 (
@@ -91,13 +101,7 @@ const PersonalPortfolioCard = (props: Props) => {
           <DeleteOutlineIcon
             sx={{ color: "#FF0000" }}
             onClick={() => {
-              dispatch(
-                creatorContentInfo({
-                  currentContent: {
-                    contentId: props.contentId,
-                  },
-                })
-              );
+              dispatch(creatorContentInfo({ currentContent: props }));
               (
                 document.getElementById(
                   "delete_content_modal"
