@@ -39,12 +39,13 @@ const UserSchema = new mongoose.Schema({
     //required: true,
   },
   promotional: {
-    communicationEmail: {
-      type: Boolean,
-    },
-    marketingEmail: {
-      type: Boolean,
-    },
+    type: Boolean,
+  },
+  communicationEmail: {
+    type: Boolean,
+  },
+  marketingEmail: {
+    type: Boolean,
   },
   messageEmail: {
     type: Boolean,
@@ -56,6 +57,19 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     //required: true,
   },
+});
+
+UserSchema.pre('save', function (next) {
+  if (this.isModified('promotional')) {
+    if (this.promotional) {
+      this.communicationEmail = true;
+      this.marketingEmail = true;
+    } else {
+      this.communicationEmail = false;
+      this.marketingEmail = false;
+    }
+  }
+  next();
 });
 
 
