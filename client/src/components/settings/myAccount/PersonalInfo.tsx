@@ -12,7 +12,7 @@ export default function PersonalInfo() {
     e.preventDefault();
   }
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[28rem] grid grid-rows-[12.75rem,1fr] grid-cols-2 mb-5">
+    <section className="border border-gray-300 rounded-badge min-h-[28rem] grid grid-rows-[12.75rem,1fr] grid-cols-2">
       <div className="col-span-1 p-8">
         <h2 className="subheader2 ts5-text pb-4"> Personal Information </h2>
         <h2 className="body2 ts5-text"> Name </h2>
