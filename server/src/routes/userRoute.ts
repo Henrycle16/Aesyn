@@ -114,18 +114,21 @@ router.post(
 // @route   PUT api/users
 // @desc    Update self user
 // @access  Private
-router.put("/", async (req: Request, res: Response) => {
+router.put("/:user_id", async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   try {
-    await User.findByIdAndUpdate(req.body.user.id, {
-      $set: req.body,
+    const userId = req.params.user_id;
+    const updateData = req.body; 
+
+    await User.findByIdAndUpdate(userId, {
+      $set: updateData,
     });
 
-    const userUpdated = await User.findById(req.body.user.id);
+    const userUpdated = await User.findById(userId);
 
     res.status(201).json(userUpdated);
   } catch (error) {

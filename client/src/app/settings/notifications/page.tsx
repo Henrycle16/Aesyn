@@ -1,18 +1,44 @@
 'use client'
 
+import { updateUserSelf } from "@/actions/userApi";
+import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
 import Switch from "@mui/material/Switch";
+import { useSession } from "next-auth/react";
 import React, { ChangeEvent, useState } from "react";
 
 export default function NotificationPage() {
-  const [checked, setChecked] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const emailSettings = useAppSelector((state) => ({
+    communicationEmail: state.profileDataReducer.value.communicationEmail,
+    marketingEmail: state.profileDataReducer.value.marketingEmail,
+    messageEmail: state.profileDataReducer.value.messageEmail,
+    securityEmail: state.profileDataReducer.value.securityEmail,
+  }));
 
+  const [localEmail, setLocalEmail] = useState(emailSettings);
 
+  const session = useSession();
+  const userId = session.data?.user.id;
 
+  const handleChange = (key: keyof typeof emailSettings) => (event: ChangeEvent<HTMLInputElement>) => {
+    setLocalEmail({ ...localEmail, [key]: event.target.checked });
+  };
 
+  const handleSubmit = async () => {
+    try {
+      if (!userId) {
+        throw new Error("User ID is not available");
+      }
+      const response = await updateUserSelf(userId, localEmail);
+      console.log("Email settings updated:", response.data);
+      dispatch(profileDataInfo(localEmail));
+    } catch (error) {
+      console.error("Failed to update user settings:", error);
+    }
+  };
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>, checked: boolean): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
@@ -30,8 +56,8 @@ export default function NotificationPage() {
               </p>
             </div>
             <Switch
-              checked={checked}
-              onChange={handleChange}
+              checked={localEmail.communicationEmail}
+              onChange={handleChange("communicationEmail")}
               inputProps={{ "aria-label": "controlled" }}
             />
           </div>
@@ -44,8 +70,8 @@ export default function NotificationPage() {
               </p>
             </div>
             <Switch
-              checked={checked}
-              onChange={handleChange}
+              checked={localEmail.marketingEmail}
+              onChange={handleChange("marketingEmail")}
               inputProps={{ "aria-label": "controlled" }}
             />
           </div>
@@ -57,8 +83,8 @@ export default function NotificationPage() {
               </p>
             </div>
             <Switch
-              checked={checked}
-              onChange={handleChange}
+              checked={localEmail.messageEmail}
+              onChange={handleChange("messageEmail")}
               inputProps={{ "aria-label": "controlled" }}
             />
           </div>
@@ -70,13 +96,13 @@ export default function NotificationPage() {
               </p>
             </div>
             <Switch
-              checked={checked}
-              onChange={handleChange}
+              checked={localEmail.securityEmail}
+              onChange={handleChange("securityEmail")}
               inputProps={{ "aria-label": "controlled" }}
             />
           </div>
         </div>
-        <button type="submit" className="primary-btn mr-auto mt-auto">
+        <button className="primary-btn mr-auto mt-auto" onClick={handleSubmit}>
           Update
         </button>
       </section>

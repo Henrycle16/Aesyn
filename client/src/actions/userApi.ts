@@ -40,8 +40,16 @@ const registerUser = (
 // **WORK IN PROGRESS
 // Update self user
 // Private
-const updateUserSelf = (userId: string) => {
-  return api().put(`/api/users/`, {
+const updateUserSelf = (
+  userId: string,
+  localEmail?: {
+    communicationEmail: boolean;
+    marketingEmail: boolean;
+    messageEmail: boolean;
+    securityEmail: boolean;
+  }
+) => {
+  return api().put(`/api/users/${userId}`, localEmail, {
     params: {
       userId: userId,
     },

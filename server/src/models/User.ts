@@ -49,9 +49,11 @@ const UserSchema = new mongoose.Schema({
   },
   messageEmail: {
     type: Boolean,
+    default: false
   },
   securityEmail: {
     type: Boolean,
+    default: false
   },
   acceptedTerms: {
     type: Boolean,
