@@ -8,6 +8,7 @@ import UnsavedModal from "@/components/creator/profile/UnsavedModal";
 
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
+import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { getCreatorByUsername } from "@/actions/creatorApi";
@@ -34,6 +35,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
           city: response.data.location.city,
           state: response.data.location.state,
           country: response.data.location.country,
+          bio: response.data.bio,
           preferences: response.data.preferences,
           interests: response.data.interests,
           avatar: response.data.avatar,
@@ -43,6 +45,12 @@ export default function CreatorProfile({ params }: { params: Params }) {
       dispatch(
         creatorPackagesInfo({
           packages: response.data.packages,
+        })
+      );
+
+      dispatch(
+        creatorContentInfo({
+          content: response.data.portfolio,
         })
       );
     } catch (error) {
