@@ -32,9 +32,7 @@ const CreatorAvatar: React.FC = () => {
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
-  const firstName = useAppSelector((state) => state.profileDataReducer.value.firstName);
-  const lastName = useAppSelector((state) => state.profileDataReducer.value.lastName);
-  const email = useAppSelector((state) => state.profileDataReducer.value.email);
+  const { ...profileData } = useAppSelector((state) => state.profileDataReducer.value);
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -95,28 +93,28 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography variant="subtitle1">{authStore.name}</Typography>
-          <Typography color="text.secondary" variant="body2">
-            {authStore.email}
+          <Typography className="ts5-text subheader1">{profileData.firstName } {profileData.lastName}</Typography>
+          <Typography className="">
+            {profileData.email}
           </Typography>
         </Box>
         <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem onClick={handleClose}>
+        <MenuItem className="g5-text" onClick={handleClose}>
           <ListItemIcon>
-            <PersonOutlineOutlinedIcon fontSize="medium" />
+            <PersonOutlineOutlinedIcon className="g5-text" fontSize="medium" />
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem onClick={handleSettings}>
+        <MenuItem className="g5-text" onClick={handleSettings}>
           <ListItemIcon>
-            <SettingsOutlinedIcon fontSize="medium" />
+            <SettingsOutlinedIcon className="g5-text" fontSize="medium" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleSignOut}>
+        <MenuItem className="g5-text" onClick={handleSignOut}>
           <ListItemIcon>
-            <LogoutOutlinedIcon fontSize="medium" />
+            <LogoutOutlinedIcon className="g5-text" fontSize="medium" />
           </ListItemIcon>
           Sign out
         </MenuItem>
