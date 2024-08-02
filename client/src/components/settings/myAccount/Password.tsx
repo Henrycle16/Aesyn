@@ -47,7 +47,7 @@ const PasswordInfo = () => {
   };
 
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[27rem] grid grid-cols-2">
+    <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
       <div className="col-span-1 p-8">
         <h2 className="subheader2 ts5-text"> Password </h2>
         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col">
@@ -143,17 +143,12 @@ const PasswordInfo = () => {
           </div>
         </form>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className="mt-3 mb-2 ts1-bg"
-        >
+        <Button type="submit" variant="contained" className="ts1-bg w-24">
           Save
         </Button>
       </div>
     </section>
   );
-}
+};
 
 export default PasswordInfo;

@@ -1,4 +1,4 @@
-"use clients"
+"use clients";
 
 import { useState } from "react";
 import Button from "@mui/material/Button";
@@ -10,10 +10,10 @@ export default function PersonalInfo() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  }
+  };
   return (
-    <section className="border border-gray-300 rounded-badge min-h-[28rem] grid grid-rows-[12.75rem,1fr] grid-cols-2">
-      <div className="col-span-1 p-8">
+    <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
+      <div className="col-span-1 p-6">
         <h2 className="subheader2 ts5-text pb-4"> Personal Information </h2>
         <h2 className="body2 ts5-text"> Name </h2>
 
@@ -36,7 +36,6 @@ export default function PersonalInfo() {
           <h2 className="body2 ts5-text"> Contact email </h2>
           <div className="relative">
             <div className="flex flex-row items-center justify-between">
-              
               <input
                 className="input-md w-full input-focus-primary"
                 type="email"
@@ -54,7 +53,6 @@ export default function PersonalInfo() {
           <h2 className="body2 ts5-text"> Location </h2>
           <div className="relative">
             <div className="flex flex-row items-center justify-between">
-              
               <input
                 className="input-md w-full input-focus-primary"
                 type="text"
@@ -71,12 +69,7 @@ export default function PersonalInfo() {
           </div>
         </form>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className="mt-3 mb-2 ts1-bg"
-        >
+        <Button type="submit" variant="contained" className="ts1-bg w-24">
           Save
         </Button>
       </div>
