@@ -17,6 +17,7 @@ const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,13 +28,17 @@ const LoginComponent = () => {
       email: email,
       password: password,
       redirect: false,
+      callbackUrl: "/creator/profile",
     });
 
     if (loginResponse && !loginResponse.error) {
-      console.log("Authenticated!");
-      // Function to call post to replace password
+      setErrors("");
+      console.log("Successful login!");
+      console.log(loginResponse);
+      router.push("/profile/calvin");
     } else {
       console.log("Error!");
+      setErrors("Incorrect email or password");
     }
   };
 
@@ -101,7 +106,9 @@ const LoginComponent = () => {
               )}
             </button>
           </div>
-          <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+          <p className="mt-1 text-sm min-h-5 ts8-text">
+            {errors}
+            </p>
         </div>
 
         <Button
