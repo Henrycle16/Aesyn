@@ -1,12 +1,13 @@
-import { useState } from "react";
+"use client";
 
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Button from "@mui/material/Button";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-export default function PasswordInfo() {
+const PasswordInfo = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -49,7 +50,7 @@ export default function PasswordInfo() {
     <section className="border border-gray-300 rounded-badge min-h-[27rem] grid grid-rows-[12.75rem,1fr] grid-cols-2 mb-5">
       <div className="col-span-1 p-8">
         <h2 className="subheader2 ts5-text"> Password </h2>
-        <form onSubmit={handleSubmit} className="flex flex-col">
+        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col">
           <div className="mt-5">
             <h2 className="body2 ts5-text"> Current Password </h2>
 
@@ -154,3 +155,5 @@ export default function PasswordInfo() {
     </section>
   );
 }
+
+export default PasswordInfo;

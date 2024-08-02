@@ -1,10 +1,7 @@
 import Button from "@mui/material/Button";
 
 export default function AccountManagement() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
+  
   return (
     <section className="border border-gray-300 rounded-badge min-h-[16rem] grid grid-rows-[12.75rem,1fr]">
       <div className="p-8">

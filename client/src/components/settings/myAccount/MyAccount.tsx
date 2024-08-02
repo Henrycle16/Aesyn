@@ -3,11 +3,7 @@ import PersonalInfo from "./PersonalInfo";
 import PasswordInfo from "./Password";
 import AccountManagement from "./AccountManagement";
 
-export default function MyAccount() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
+const MyAccount = () => {
   return (
     <>
       <h2 className="subheader1 ts5-text"> My Account </h2>
@@ -17,3 +13,5 @@ export default function MyAccount() {
     </>
   );
 }
+
+export default MyAccount;
