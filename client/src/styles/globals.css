@@ -153,9 +153,12 @@
 
  /* Button */
  .primary-btn {
-  @apply inline-flex text-white bg-[var(--ts1)] border-0 py-2 px-6 focus:outline-none hover:bg-[var(--ts2)] rounded text-lg
+  @apply inline-flex text-white bg-[var(--ts1)] border-0 focus:outline-none hover:bg-[var(--ts2)] rounded
  }
  .secondary-btn {
-  @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:bg-[var(--g3)] rounded text-lg
+  @apply inline-flex text-[var(--ts1)] bg-white border-solid border-2 border-[var(--ts1)] focus:outline-none hover:bg-[var(--g3)] rounded
+ }
+ .delete-btn {
+  @apply inline-flex text-white bg-[var(--ts8)] focus:outline-none hover:bg-[var(--ts9)] rounded
  }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import SettingTabs from "@/components/settings/Tabs";
-import MyAccount from "@/components/settings/MyAccount";
+import MyAccount from "@/components/settings/myAccount/MyAccount";
 
 export default function AccountPage() {
   return (

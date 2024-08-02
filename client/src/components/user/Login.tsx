@@ -27,13 +27,11 @@ const LoginComponent = () => {
       email: email,
       password: password,
       redirect: false,
-      callbackUrl: "/creator/profile",
     });
 
     if (loginResponse && !loginResponse.error) {
-      console.log("LOGIN!");
-      console.log(loginResponse);
-      router.push("/profile/calvin");
+      console.log("Authenticated!");
+      // Function to call post to replace password
     } else {
       console.log("Error!");
     }
