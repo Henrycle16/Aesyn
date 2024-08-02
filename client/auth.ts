@@ -1,10 +1,14 @@
-import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next"
-import type { NextAuthOptions } from "next-auth"
-import { getServerSession } from "next-auth"
+import type {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
+import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth";
 
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { login } from '@/actions/authApi'
-import { registerUser } from '@/actions/userApi'
+import CredentialsProvider from "next-auth/providers/credentials";
+import { login } from "@/actions/authApi";
+import { registerUser } from "@/actions/userApi";
 
 // You'll need to import and pass this
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
@@ -57,7 +61,7 @@ export const config = {
           type: "password",
         },
         promotional: {
-          label: "Promotional",
+          label: "promotional",
           type: "checkbox",
         },
         acceptedTerms: {
@@ -72,6 +76,7 @@ export const config = {
           !credentials.password ||
           !credentials.firstName ||
           !credentials.lastName ||
+          !credentials.promotional ||
           !credentials.acceptedTerms
         ) {
           return null;
@@ -96,8 +101,8 @@ export const config = {
   callbacks: {
     async jwt({ token, account, user }) {
       if (account) {
-        token.name = user.firstName + " " + user.lastName
-        token.id = user._id
+        token.name = user.firstName + " " + user.lastName;
+        token.id = user._id;
       }
 
       return token;
@@ -112,11 +117,11 @@ export const config = {
     },
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    }
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
   session: {
     strategy: "jwt",
@@ -124,6 +129,11 @@ export const config = {
 } satisfies NextAuthOptions;
 
 // Use it in server contexts
-export function auth(...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse] | []) {
-  return getServerSession(...args, config)
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, config);
 }

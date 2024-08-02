@@ -1,14 +1,14 @@
-import express, { Request, Response } from 'express';
-import { check, validationResult } from 'express-validator';
-import bcrypt from 'bcryptjs';
-import User from '../models/User';
+import express, { Request, Response } from "express";
+import { check, validationResult } from "express-validator";
+import bcrypt from "bcryptjs";
+import User from "../models/User";
 
 const router = express.Router();
 
 // @route   GET api/users/
 // @desc    Get all users
 // @access  Public -> Private
-router.get('/', async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const allUsers = await User.find({});
     res.status(200).json(allUsers);
@@ -20,7 +20,7 @@ router.get('/', async (req: Request, res: Response) => {
 // @route   Get api/email
 // @desc    check if email exist
 // @access  Public -> Private
-router.get('/email/:email', async (req: Request, res: Response) => {
+router.get("/email/:email", async (req: Request, res: Response) => {
   try {
     const email = await User.findOne({ email: req.params.email });
     console.log(email);
@@ -33,7 +33,7 @@ router.get('/email/:email', async (req: Request, res: Response) => {
 // @route   Get api/users/:id
 // @desc    Get user by ID
 // @access  Public -> Private
-router.get('/:id', async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -46,31 +46,42 @@ router.get('/:id', async (req: Request, res: Response) => {
 // @desc    Register user
 // @access  Public
 router.post(
-  '/', 
+  "/",
   [
-    check('firstName', 'firstName is required').not().isEmpty(),
-    check('lastName', 'lastName is required').not().isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
+    check("firstName", "firstName is required").not().isEmpty(),
+    check("lastName", "lastName is required").not().isEmpty(),
+    check("email", "Please include a valid email").isEmail(),
     check(
-      'password',
-      'Please enter a password with 6 or more characters'
+      "password",
+      "Please enter a password with 6 or more characters"
     ).isLength({ min: 6 }),
-  ], 
+  ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, username, email, password, avatar, userType, description, promotional, acceptedTerms} = req.body;
-    
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      avatar,
+      userType,
+      description,
+      promotional,
+      acceptedTerms,
+    } = req.body;
+
     try {
       // Check to see if user exists
       const user = await User.findOne({ email });
 
       if (user) {
         return res.status(400).json({
-          errors: [{ msg: 'User already exists' }],
+          errors: [{ msg: "User already exists" }],
         });
       }
 
@@ -84,7 +95,7 @@ router.post(
         userType,
         description,
         promotional,
-        acceptedTerms
+        acceptedTerms,
       });
 
       // Encrypt password
@@ -92,28 +103,32 @@ router.post(
       newUser.password = await bcrypt.hash(password, salt);
 
       const savedUser = await newUser.save();
-      
+
       res.status(201).json(savedUser);
     } catch (error) {
       res.status(500).json(error);
     }
-});
+  }
+);
 
 // @route   PUT api/users
 // @desc    Update self user
 // @access  Private
-router.put('/', async (req: Request, res: Response) => {
+router.put("/:user_id", async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ errors: errors.array() });
   }
 
   try {
-    await User.findByIdAndUpdate(req.body.user.id, {
-      $set: req.body,
+    const userId = req.params.user_id;
+    const updateData = req.body; 
+
+    await User.findByIdAndUpdate(userId, {
+      $set: updateData,
     });
 
-    const userUpdated = await User.findById(req.body.user.id);
+    const userUpdated = await User.findById(userId);
 
     res.status(201).json(userUpdated);
   } catch (error) {
@@ -124,11 +139,11 @@ router.put('/', async (req: Request, res: Response) => {
 // @route   DELETE api/users
 // @desc    Delete user from database.
 // @access  Private
-router.delete('/', async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
     await User.findOneAndDelete({ _id: req.body.user.id });
 
-    res.status(200).json('Account has been deleted');
+    res.status(200).json("Account has been deleted");
   } catch (error) {
     res.status(500).json(error);
   }
