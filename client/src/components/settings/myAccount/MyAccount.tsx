@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
-import PersonalInfo from "./PersonalInfo";
-import PasswordInfo from "./Password";
-import AccountManagement from "./AccountManagement";
+import PersonalInfo from "../../../app/settings/account/_components/PersonalInfo";
+import PasswordInfo from "../../../app/settings/account/_components/Password";
+import AccountManagement from "../../../app/settings/account/_components/AccountManagement";
 
 const MyAccount = () => {
   return (

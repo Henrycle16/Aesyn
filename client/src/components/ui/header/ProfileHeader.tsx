@@ -28,7 +28,6 @@ const ProfileHeader = () => {
   };
 
   useEffect(() => {
-    console.log("SESSION DATA: ", session.data)
     getUserInfo();
   }, [session.data])
 

@@ -1,9 +1,8 @@
 "use client"
 
-import PersonalInformation from "./_components/PersonalInfo";
-import PersonalInfo from "@/components/settings/myAccount/PersonalInfo";
-import AccountManagement from "@/components/settings/myAccount/AccountManagement"
-import Password from "@/components/settings/myAccount/Password";
+import PersonalInfo from "@/app/settings/account/_components/PersonalInfo";
+import AccountManagement from "@/app/settings/account/_components/AccountManagement"
+import Password from "@/app/settings/account/_components/Password";
 
 export default function AccountPage() {
   return (
