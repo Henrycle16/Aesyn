@@ -7,9 +7,9 @@ type MsgProps = {
 
 const Msg = ({ title, text }: MsgProps) => {
   return (
-    <div className="msg-container">
-      <p className="msg-title">{title}</p>
-      <p className="msg-description">{text}</p>
+    <div className="">
+      <p className="font-bold">{title}</p>
+      <p className="text-sm g5-text">{text}</p>
     </div>
   );
 };
@@ -20,7 +20,7 @@ export const showSuccessToast = () => {
     text: "Your changes have been successfully saved.",
   };
   return toast.success(<Msg {...msgProps} />, {
-    containerId: "success",
+    className: "border border-[#1d8133]",
   });
 };
 
@@ -30,7 +30,7 @@ export const showDiscardedToast = () => {
     text: "Your changes have been discarded.",
   };
   return toast.info(<Msg {...msgProps} />, {
-    containerId: "discarded",
+    className: "border border-[#184465]",
   });
 };
 
@@ -40,7 +40,7 @@ export const showDeletedToast = () => {
     text: "Your package has been deleted.",
   };
   return toast.error(<Msg {...msgProps} />, {
-    containerId: "deleted",
+    className: "border border-[#B21717]",
   });
 };
 
@@ -50,6 +50,6 @@ export const showWarningToast = () => {
     text: "Warning message here.",
   };
   return toast.warn(<Msg {...msgProps} />, {
-    containerId: "warning",
+    className: "border border-[#E1651F]",
   });
 };

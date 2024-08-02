@@ -1,4 +1,8 @@
-import { ToastContainer, Bounce, ToastContainerProps } from "react-toastify";
+import {
+  ToastContainer,
+  Bounce,
+  ToastContainerProps,
+} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Toasts = () => {
@@ -17,10 +21,7 @@ const Toasts = () => {
 
   return (
     <>
-      <ToastContainer containerId="success" {...toastConfig} />
-      <ToastContainer containerId="discarded" {...toastConfig} />
-      <ToastContainer containerId="deleted" {...toastConfig} />
-      <ToastContainer containerId="warning" {...toastConfig} />
+      <ToastContainer {...toastConfig} />
     </>
   );
 };
