@@ -54,10 +54,10 @@ router.post(
             }
 
             console.log('Authenticated User');
-            res.status(201).json(user);
+            return res.status(201).json(user);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send('Server error');
+            return res.status(500).send('Server error');
         }
     }
 );

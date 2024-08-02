@@ -32,7 +32,6 @@ const CreatorAvatar: React.FC = () => {
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { ...profileData } = useAppSelector((state) => state.profileDataReducer.value);
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -93,9 +92,9 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography className="ts5-text subheader1">{profileData.firstName } {profileData.lastName}</Typography>
+          <Typography className="ts5-text subheader1">{authStore.name}</Typography>
           <Typography className="">
-            {profileData.email}
+            {authStore.email}
           </Typography>
         </Box>
         <Divider />

@@ -20,18 +20,18 @@ const PasswordInfo = () => {
     e.preventDefault();
 
     // callbackURL placeholder for now
-    const loginResponse = await signIn("login", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
+    // const loginResponse = await signIn("login", {
+    //   email: email,
+    //   password: password,
+    //   redirect: false,
+    // });
 
-    if (loginResponse && !loginResponse.error) {
-      console.log("Authenticated!");
-      // Function to call post to replace password
-    } else {
-      console.log("Error!");
-    }
+    // if (loginResponse && !loginResponse.error) {
+    //   console.log("Authenticated!");
+    //   // Function to call post to replace password
+    // } else {
+    //   console.log("Error!");
+    // }
   };
 
   const togglePasswordVisibility = () => {
