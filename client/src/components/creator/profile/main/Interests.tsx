@@ -193,7 +193,7 @@ const Interests = () => {
             </div>
           </div>
 
-          <form onClick={onFormSubmit} method="dialog">
+          <form onSubmit={onFormSubmit} method="dialog">
             <div className="flex justify-end mt-10">
               <button
                 type="submit"
