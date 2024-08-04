@@ -18,6 +18,7 @@ type profileDataReducer = {
   preferences: string[];
   interests: string[];
   avatar: string;
+  previousModalId: string;
   communicationEmail: boolean;
   marketingEmail: boolean;
   messageEmail: boolean;
@@ -43,6 +44,7 @@ const initialState = {
     marketingEmail: false,
     messageEmail: false,
     securityEmail: false,
+    previousModalId: "",
   } as profileDataReducer,
 } as InitialState;
 

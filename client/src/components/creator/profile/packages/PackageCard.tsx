@@ -8,7 +8,7 @@ import TikTok from "@/components/ui/svgs/Tiktok";
 import Youtube from "@/components/ui/svgs/Youtube";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
-import { creatorProfileInfo } from "@/redux/slices/creatorProfile-slice";
+import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -51,7 +51,7 @@ const PackageCard = (props: Props) => {
             sx={{ color: "#3798E3", fontSize: 25 }}
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
             onClick={() => {
-              dispatch(creatorProfileInfo({ previousModalId: "edit_package_modal" }));
+              dispatch(profileDataInfo({ previousModalId: "edit_package_modal" }));
               dispatch(creatorPackagesInfo({ currentPackage: props }));
               (document.getElementById(`edit_package_modal`) as HTMLDialogElement).showModal();
             }}

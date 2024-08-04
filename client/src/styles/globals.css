@@ -3,159 +3,191 @@
 @tailwind utilities;
 
 :root {
- /* GrayScale */
- --g1: #F5F5F5; /* Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
- --g2: #E5E7EB; /* Footer */
- --g3: #D7D7D7; /* Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
- --g4: #6D6D6D; /* Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
- --g5: #4A4A4A; /* Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
+  /* GrayScale */
+  --g1: #f5f5f5; /* Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
+  --g2: #e5e7eb; /* Footer */
+  --g3: #d7d7d7; /* Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
+  --g4: #6d6d6d; /* Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
+  --g5: #4a4a4a; /* Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
 
- /* Tints & Shades */
- --ts1: #3798e3; /*Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
- --ts2: #2c7ab6; /* Hover Buttons */
- --ts3: #9ed4fe; /* Progress Bar */
- --ts4: #d8eefe; /* Background Color; multi-select button */
- --ts5: #184465; /* Heading; Sub-heading */
- --ts6: #0c2232; /* Footer */
- --ts7: #061119; /* Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
- --ts8: #b21717; /* Delete Button/Icon/Text; Error Text  */
- --ts9: #8e1212; /* Delete Button Hover */
- --ts10: #1d8133; /* Success; Linked Icon; linked border */
+  /* Tints & Shades */
+  --ts1: #3798e3; /*Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
+  --ts2: #2c7ab6; /* Hover Buttons */
+  --ts3: #9ed4fe; /* Progress Bar */
+  --ts4: #d8eefe; /* Background Color; multi-select button */
+  --ts5: #184465; /* Heading; Sub-heading */
+  --ts6: #0c2232; /* Footer */
+  --ts7: #061119; /* Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
+  --ts8: #b21717; /* Delete Button/Icon/Text; Error Text  */
+  --ts9: #8e1212; /* Delete Button Hover */
+  --ts10: #1d8133; /* Success; Linked Icon; linked border */
+
+  /* React-Toastify css variables */
+  --toastify-toast-width: 387px;
+  --toastify-toast-max-height: 93px;
+
+  --toastify-color-success: #E9F3EB;
+  --toastify-color-info: #E8EDF0;
+  --toastify-color-error: #F8E8E8;
+  --toastify-color-warning: #ffe1d0;
+
+  --toastify-text-color-success: #1d8133;
+  --toastify-text-color-info: #184465;
+  --toastify-text-color-error: #B21717;
+  --toastify-text-color-warning: #061119;
 }
 
 @layer base {
- input {
-  @apply border rounded-md 
- }
+  input {
+    @apply border rounded-md;
+  }
 }
 
 @layer components {
- /* GrayScale */
- /* G1 - Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
- .g1-bg {
-  @apply bg-[var(--g1)]
- }
- /* G2 -Footer */
- .g2-bg {
-  @apply bg-[var(--g2)]
- }
- /* G3 - Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
- .g3-bg {
-  @apply bg-[var(--g3)]
- }
- .g3-border {
-  @apply border-[var(--g3)]
- }
- /* G4 - Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
- .g4-text {
-  @apply text-[var(--g4)]
- }
- .g4-bg {
-  @apply bg-[var(--g4)]
- }
- /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
- .g5-text {
-  @apply text-[var(--g5)]
- }
- .g5-border {
-  @apply border-[var(--g5)]
- }
+  /* GrayScale */
+  /* G1 - Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
+  .g1-bg {
+    @apply bg-[var(--g1)];
+  }
+  /* G2 -Footer */
+  .g2-bg {
+    @apply bg-[var(--g2)];
+  }
+  /* G3 - Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
+  .g3-bg {
+    @apply bg-[var(--g3)];
+  }
+  .g3-border {
+    @apply border-[var(--g3)];
+  }
+  /* G4 - Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
+  .g4-text {
+    @apply text-[var(--g4)];
+  }
+  .g4-bg {
+    @apply bg-[var(--g4)];
+  }
+  /* G5 - Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
+  .g5-text {
+    @apply text-[var(--g5)];
+  }
+  .g5-border {
+    @apply border-[var(--g5)];
+  }
 
- 
- /* Tints & Shades */
- /* TS1 - Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
- .ts1-bg {
-  @apply bg-[var(--ts1)]
- }
- .ts1-text {
-  @apply text-[var(--ts1)]
- }
- /* TS2 - Hover Buttons */
- .ts2-bg {
-  @apply bg-[var(--ts2)]
- }
- /* TS3 - Progress Bar */
- .ts3-bg {
-  @apply bg-[var(--ts3)]
- }
- /* TS4 - Background Color; multi-select button */
- .ts4-bg {
-  @apply bg-[var(--ts4)]
- }
- /* TS5 - Heading; Sub-heading */
- .ts5-text {
-  @apply text-[var(--ts5)]
- }
- /* TS6 - Footer */
- .ts6-text {
-  @apply text-[var(--ts6)]
- }
- /* TS7 - Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
- .ts7-text {
-  @apply text-[var(--ts7)]
- } 
- /* TS8 - Delete Button/Icon/Text; Error Text  */
- .ts8-text {
-  @apply text-[var(--ts8)]
- }
- .ts8-bg {
-  @apply bg-[var(--ts8)]
- }
- /* TS9 - Delete Button Hover */
- .ts9-bg {
-  @apply bg-[var(--ts9)]
- }
- /* TS10 - Success; Linked Icon; linked border */
- .ts10-bg {
-  @apply bg-[var(--ts10)]
- }
+  /* Tints & Shades */
+  /* TS1 - Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
+  .ts1-bg {
+    @apply bg-[var(--ts1)];
+  }
+  .ts1-text {
+    @apply text-[var(--ts1)];
+  }
+  /* TS2 - Hover Buttons */
+  .ts2-bg {
+    @apply bg-[var(--ts2)];
+  }
+  /* TS3 - Progress Bar */
+  .ts3-bg {
+    @apply bg-[var(--ts3)];
+  }
+  /* TS4 - Background Color; multi-select button */
+  .ts4-bg {
+    @apply bg-[var(--ts4)];
+  }
+  /* TS5 - Heading; Sub-heading */
+  .ts5-text {
+    @apply text-[var(--ts5)];
+  }
+  /* TS6 - Footer */
+  .ts6-text {
+    @apply text-[var(--ts6)];
+  }
+  /* TS7 - Body; caption; Text Input; DDL - Selected/Expanded Text;  header tabs; Header Options; Icons */
+  .ts7-text {
+    @apply text-[var(--ts7)];
+  }
+  /* TS8 - Delete Button/Icon/Text; Error Text  */
+  .ts8-text {
+    @apply text-[var(--ts8)];
+  }
+  .ts8-bg {
+    @apply bg-[var(--ts8)];
+  }
+  /* TS9 - Delete Button Hover */
+  .ts9-bg {
+    @apply bg-[var(--ts9)];
+  }
+  /* TS10 - Success; Linked Icon; linked border */
+  .ts10-bg {
+    @apply bg-[var(--ts10)];
+  }
 
- /* Typography */
- .heading1 {
-  @apply text-2xl font-semibold
- }
- .heading2 {
-  @apply text-xl
- }
- .heading3 {
-  @apply text-base
- }
- .subheader1 {
-  @apply text-base font-bold
- }
- .subheader2 {
-  @apply text-base font-medium
- }
- .body1 {
-  @apply text-sm
- }
- .body2 {
-  @apply text-sm font-semibold
- }
- .body3 {
-  @apply text-xs font-medium
- }
- .caption1 {
-  @apply text-[11px] font-bold
- }
- .caption2 {
-  @apply text-[11px]
- }
- .button {
-  @apply text-xs font-bold
- }
+  /* Typography */
+  .heading1 {
+    @apply text-2xl font-semibold;
+  }
+  .heading2 {
+    @apply text-xl;
+  }
+  .heading3 {
+    @apply text-base;
+  }
+  .subheader1 {
+    @apply text-base font-bold;
+  }
+  .subheader2 {
+    @apply text-base font-medium;
+  }
+  .body1 {
+    @apply text-sm;
+  }
+  .body2 {
+    @apply text-sm font-semibold;
+  }
+  .body3 {
+    @apply text-xs font-medium;
+  }
+  .caption1 {
+    @apply text-[11px] font-bold;
+  }
+  .caption2 {
+    @apply text-[11px];
+  }
+  .button {
+    @apply text-xs font-bold;
+  }
 
   /* Components */
- /* Input fields */
- .input-focus-primary {
-  @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:bg-[var(--g1)] border-[var(--g3)]
- }
+  /* Input fields */
+  .input-focus-primary {
+    @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:bg-[var(--g1)] border-[var(--g3)];
+  }
 
- /* Button */
- .primary-btn {
-  @apply inline-flex text-white bg-[var(--ts1)] border-0 py-2 px-6 focus:outline-none hover:bg-[var(--ts2)] rounded text-sm font-bold
- }
- .secondary-btn {
-  @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:bg-[var(--g3)] rounded text-lg
- }
+  /* Button */
+  .primary-btn {
+    @apply inline-flex text-white bg-[var(--ts1)] border-0 py-2 px-6 focus:outline-none hover:bg-[var(--ts2)] rounded text-sm font-bold;
+  }
+  .secondary-btn {
+    @apply inline-flex ts1-text border-solid border-2 border-[var(--ts1)] py-2 px-6 focus:outline-none hover:bg-[var(--g3)] rounded text-lg;
+  }
+}
+
+/** Toast Classes **/
+.Toastify__close-button {
+  color: #6D6D6D;
+}
+
+/* sample that will change the styling just for this toast id in the icon area. This css class is imported in the file where the custom toast is used. */
+#success-toast {
+  @apply border border-[#1D8133]
+}
+#info-toast {
+  @apply border border-[#184465]
+}
+#delete-toast {
+  @apply border border-[#B21717]
+}
+#warn-toast {
+  @apply border border-[#E1651F]
 }
