@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { RootState } from "../store";
 
 type InitialState = {
   value: profileDataReducer;
@@ -66,4 +68,15 @@ export const profileData = createSlice({
 });
 
 export const { profileDataInfo, resetProfileData } = profileData.actions;
+
+export const selectEmailSettings = createSelector(
+  (state: RootState) => state.profileDataReducer.value,
+  (profileData) => ({
+    communicationEmail: profileData.communicationEmail,
+    marketingEmail: profileData.marketingEmail,
+    messageEmail: profileData.messageEmail,
+    securityEmail: profileData.securityEmail,
+  })
+);
+
 export default profileData.reducer;

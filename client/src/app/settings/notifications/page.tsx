@@ -1,30 +1,35 @@
-'use client'
+"use client";
 
 import { updateUserSelf } from "@/actions/userApi";
-import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import {
+  profileDataInfo,
+  selectEmailSettings,
+} from "@/redux/slices/profileData-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import Switch from "@mui/material/Switch";
 import { useSession } from "next-auth/react";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 export default function NotificationPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const emailSettings = useAppSelector((state) => ({
-    communicationEmail: state.profileDataReducer.value.communicationEmail,
-    marketingEmail: state.profileDataReducer.value.marketingEmail,
-    messageEmail: state.profileDataReducer.value.messageEmail,
-    securityEmail: state.profileDataReducer.value.securityEmail,
-  }));
+  const emailSettings = useAppSelector(selectEmailSettings);
 
   const [localEmail, setLocalEmail] = useState(emailSettings);
+  const [isChanged, setIsChanged] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
 
-  const handleChange = (key: keyof typeof emailSettings) => (event: ChangeEvent<HTMLInputElement>) => {
-    setLocalEmail({ ...localEmail, [key]: event.target.checked });
-  };
+  useEffect(() => {
+    setIsChanged(JSON.stringify(localEmail) !== JSON.stringify(emailSettings));
+  }, [localEmail, emailSettings]);
+
+  const handleChange =
+    (key: keyof typeof emailSettings) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setLocalEmail({ ...localEmail, [key]: event.target.checked });
+    };
 
   const handleSubmit = async () => {
     try {
@@ -38,7 +43,6 @@ export default function NotificationPage() {
       console.error("Failed to update user settings:", error);
     }
   };
-
 
   return (
     <>
@@ -102,7 +106,13 @@ export default function NotificationPage() {
             />
           </div>
         </div>
-        <button className="primary-btn mr-auto mt-auto" onClick={handleSubmit}>
+        <button
+        className={`mr-auto mt-auto ${
+          isChanged ? "primary-btn" : "primary-btn-disabled"
+        }`}
+          onClick={handleSubmit}
+          disabled={!isChanged}
+        >
           Update
         </button>
       </section>
