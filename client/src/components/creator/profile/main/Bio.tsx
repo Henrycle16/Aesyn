@@ -13,6 +13,7 @@ const Bio: React.FC = () => {
   const [bioText, setBioText] = useState<string>(bio || "");
   const [tempBioText, setTempBioText] = useState(bioText);
   const [charCount, setCharCount] = useState(500 - (bio?.length || 0));
+  const [isHovered, setIsHovered] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -28,7 +29,7 @@ const Bio: React.FC = () => {
     try {
       const response = await updateCreatorBio(userId, tempBioText);
       console.log("bio:", response.data);
-      setBioText(tempBioText); // Update the main bio text after saving
+      setBioText(tempBioText);
       (document.getElementById("bio_modal") as HTMLDialogElement).close();
     } catch (error) {
       console.error(error);
@@ -52,9 +53,19 @@ const Bio: React.FC = () => {
         <div className="flex justify-start">
           <h1 className="text-2xl font-semibold text-[#184465]">Bio</h1>
           <ModeEditOutlineOutlinedIcon
-            sx={{ color: "#3798E3", fontSize: 25 }}
-            className="border-2 border-[#3798E3] rounded-full p-[.12rem] cursor-pointer ml-3 mt-1"
+            sx={{ fontSize: 25 }}
+            className={`border-2 rounded-full p-[.12rem] cursor-pointer ml-3 mt-1 ${
+              isHovered
+                ? "text-white border-[#3798E3] bg-[#3798E3]"
+                : "text-[#3798E3] border-[#D7D7D7] bg-white"
+            }`}
             onClick={openModal}
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
           />
         </div>
         <div className="flex flex-col">
@@ -100,7 +111,11 @@ const Bio: React.FC = () => {
               Save
             </button>
             <button
-              onClick={() => (document.getElementById("bio_modal") as HTMLDialogElement).close()}
+              onClick={() =>
+                (
+                  document.getElementById("bio_modal") as HTMLDialogElement
+                ).close()
+              }
               type="button"
               className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
             >

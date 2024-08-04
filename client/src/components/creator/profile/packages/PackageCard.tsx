@@ -51,7 +51,7 @@ const PackageCard = (props: Props) => {
           </div>
           <ModeEditOutlineOutlinedIcon
             sx={{ fontSize: 25 }}
-            className={`border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer ${
+            className={`border-2 rounded-full p-[.12rem] ml-auto cursor-pointer ${
               isHovered
                 ? "text-white border-[#3798E3] bg-[#3798E3]"
                 : "text-[#3798E3] border-[#D7D7D7] bg-white"

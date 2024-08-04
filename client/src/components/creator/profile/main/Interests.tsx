@@ -30,6 +30,7 @@ const Interests = () => {
   const [isLimitExceeded, setIsLimitExceeded] = useState(
     6 - interests.length < 0
   );
+  const [isHovered, setIsHovered] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -125,9 +126,19 @@ const Interests = () => {
       <div className="flex justify-start">
         <h1 className="text-2xl font-semibold text-[#184465]">Interests </h1>
         <ModeEditOutlineOutlinedIcon
-          sx={{ color: "#3798E3", fontSize: 25 }}
-          className="border-2 border-[#3798E3] rounded-full p-[.12rem] cursor-pointer ml-3 mt-1"
+          sx={{ fontSize: 25 }}
+          className={`border-2 rounded-full p-[.12rem] cursor-pointer ml-3 mt-1 ${
+            isHovered
+              ? "text-white border-[#3798E3] bg-[#3798E3]"
+              : "text-[#3798E3] border-[#D7D7D7] bg-white"
+          }`}
           onClick={openModal}
+          onMouseEnter={() => {
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+          }}
         />
       </div>
       <div className="flex flex-wrap pt-8 gap-x-2 gap-y-3">
