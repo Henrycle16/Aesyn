@@ -177,3 +177,17 @@
 .Toastify__close-button {
   color: #6D6D6D;
 }
+
+/* sample that will change the styling just for this toast id in the icon area. This css class is imported in the file where the custom toast is used. */
+#success-toast {
+  @apply border border-[#1D8133]
+}
+#info-toast {
+  @apply border border-[#184465]
+}
+#delete-toast {
+  @apply border border-[#B21717]
+}
+#warn-toast {
+  @apply border border-[#E1651F]
+}

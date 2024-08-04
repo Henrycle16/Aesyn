@@ -7,10 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Toasts = () => {
   const toastConfig: ToastContainerProps = {
-    position: "top-right",
+    position: "bottom-right",
     autoClose: false,
     newestOnTop: true,
-    hideProgressBar: false,
+    hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,
     pauseOnFocusLoss: true,
