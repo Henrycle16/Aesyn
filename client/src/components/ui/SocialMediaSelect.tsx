@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import {
+  FaFacebook,
   FaInstagram,
   FaSquareXTwitter,
   FaTiktok,
@@ -22,6 +23,7 @@ const socialMediasArray = [
   { key: 2, label: "Youtube", icon: <FaYoutube /> },
   { key: 3, label: "Twitch", icon: <FaTwitch /> },
   { key: 4, label: "Twitter/X", icon: <FaSquareXTwitter /> },
+  { key: 5, label: "Facebook", icon: <FaFacebook /> },
 ];
 
 const SocialMediaSelect = ({

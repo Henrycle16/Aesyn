@@ -1,50 +1,61 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type InitialState = {
-    value: profileDataReducer;
-}
+  value: profileDataReducer;
+};
 
 type profileDataReducer = {
-    userId: string;
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    gender: string;
-    city: string;
-    state: string;
-    country: string;
-    bio: string;
-    preferences: string[];
-    interests: string[];
-    avatar: string;
-    previousModalId: string;
-}
+  userId: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  gender: string;
+  city: string;
+  state: string;
+  country: string;
+  bio: string;
+  preferences: string[];
+  interests: string[];
+  avatar: string;
+  previousModalId: string;
+  communicationEmail: boolean;
+  marketingEmail: boolean;
+  messageEmail: boolean;
+  securityEmail: boolean;
+};
 
 const initialState = {
-    value: {
-        userId: "",
-        firstName: "",
-        lastName: "",
-        username: "",
-        email: "",
-        gender: "",
-        city: "",
-        state: "",
-        country: "",
-        bio: "",
-        preferences: [],
-        interests: [],
-        avatar: "",
-        previousModalId: "",
-    } as profileDataReducer,
-} as InitialState
+  value: {
+    userId: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    gender: "",
+    city: "",
+    state: "",
+    country: "",
+    bio: "",
+    preferences: [],
+    interests: [],
+    avatar: "",
+    communicationEmail: false,
+    marketingEmail: false,
+    messageEmail: false,
+    securityEmail: false,
+    previousModalId: "",
+  } as profileDataReducer,
+} as InitialState;
 
 export const profileData = createSlice({
   name: "profileData",
   initialState,
   reducers: {
-    profileDataInfo: (state, action: PayloadAction<Partial<profileDataReducer>>) => {
+    profileDataInfo: (
+      state,
+      action: PayloadAction<Partial<profileDataReducer>>
+    ) => {
       state.value = {
         ...state.value,
         ...action.payload,
@@ -56,5 +67,5 @@ export const profileData = createSlice({
   },
 });
 
-export const {profileDataInfo, resetProfileData} = profileData.actions
-export default profileData.reducer
+export const { profileDataInfo, resetProfileData } = profileData.actions;
+export default profileData.reducer;
