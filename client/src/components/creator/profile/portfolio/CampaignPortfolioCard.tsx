@@ -25,6 +25,7 @@ type Props = {
 
 const CampaignPortfolioCard = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isReverse, setIsReverse] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   const imageStyle = isHovered ? { filter: "grayscale(1)" } : {};
@@ -85,21 +86,31 @@ const CampaignPortfolioCard = (props: Props) => {
       {isHovered && (
         <>
           <ModeEditOutlineOutlinedIcon
-            sx={{ color: "#3798E3", fontSize: 25 }}
-            className="border-2 border-[#3798E3] rounded-full p-[.12rem] absolute top-2 right-2 cursor-pointer"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            sx={{ fontSize: 25 }}
+            className={`border-2 rounded-full p-[.12rem] absolute top-2 right-2 cursor-pointer ${
+              isReverse
+                ? "text-white border-[#3798E3] bg-[#3798E3]"
+                : "text-[#3798E3] border-[#D7D7D7] bg-white"
+            }`}
+            onMouseEnter={() => {
+              setIsHovered(true);
+              setIsReverse(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+              setIsReverse(false);
+            }}
             onClick={() => {
               dispatch(creatorContentInfo({ currentContent: props }));
               (
                 document.getElementById(
-                  `edit_campaign_modal`
+                  `edit_content_modal`
                 ) as HTMLDialogElement
               ).showModal();
             }}
           />
           <DeleteOutlineIcon
-            sx={{ color: "#FF0000" }}
+            sx={{ color: "#B21717", fontSize: 25 }}
             onClick={() => {
               dispatch(
                 creatorContentInfo({ currentContent: props })
