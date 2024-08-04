@@ -1,6 +1,7 @@
 "use client";
 
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddIcon from '@mui/icons-material/Add';
+import React, { useState } from "react";
 
 import { resetCurrentPackage } from "@/redux/slices/creatorPackages-slice";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
@@ -9,6 +10,8 @@ import { useDispatch } from "react-redux";
 
 const NewPackageButton = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <button
       type="button"
@@ -19,9 +22,14 @@ const NewPackageButton = () => {
       }
       className=""
     >
-      <AddCircleOutlineIcon
-        sx={{ color: "#3798E3", fontSize: "29px"}}
-        className="cursor-pointer"
+      <AddIcon
+        className={`cursor-pointer rounded-full border-2 ${isHovered ? "text-[#F5F5F5] border-[#3798E3] bg-[#3798E3]" : "text-[#3798E3] border-[#D7D7D7]"}`}
+        onMouseEnter={() => {
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+        }}
       />
     </button>
   );
