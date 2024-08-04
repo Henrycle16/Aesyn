@@ -9,6 +9,12 @@
   --g3: #d7d7d7; /* Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
   --g4: #6d6d6d; /* Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
   --g5: #4a4a4a; /* Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
+  /* GrayScale */
+  --g1: #f5f5f5; /* Progress Bar; header tab options (hover); DDL (disabled) ; Input Field (disabled) */
+  --g2: #e5e7eb; /* Footer */
+  --g3: #d7d7d7; /* Input field border; DDL borders; all lines ; disabled button; multi-select border; drop shadow (85%) */
+  --g4: #6d6d6d; /* Input field text (placeholder); disabled text; multi-select text; DDL - [Select]; Icons  */
+  --g5: #4a4a4a; /* Input Field Label; Multi-select button text; body (instructions); checkbox outline (uncheck) */
 
   /* Tints & Shades */
   --ts1: #3798e3; /*Buttons; Input field (Selected); Multi-select border & text; header tabs (selected); icons; icons (hover) */
@@ -29,7 +35,7 @@
   --toastify-color-success: #E9F3EB;
   --toastify-color-info: #E8EDF0;
   --toastify-color-error: #F8E8E8;
-  --toastify-color-warning: #ffe1d0;
+  --toastify-color-warning: #FCF0E9;
 
   --toastify-text-color-success: #1d8133;
   --toastify-text-color-info: #184465;
