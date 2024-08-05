@@ -3,13 +3,13 @@ import api from "./axiosConfig";
 // Get all users
 // Public
 const getAllUsers = (userId: string) => {
- return api().get(`/api/users`);
+  return api().get(`/api/users`);
 };
 
 // Get User by id
 // Public
 const getUserById = (userId: string) => {
- return api().get(`/api/users/${userId}`);
+  return api().get(`/api/users/${userId}`);
 };
 
 // Register User *Works
@@ -40,28 +40,30 @@ const registerUser = (
 // **WORK IN PROGRESS
 // Update self user
 // Private
-const updateUserSelf = (userId: string) => {
- return api().put(`/api/users/`, {
-  params: {
-    userId: userId,
-  },
-});
+const updateUserSelf = (
+  userId: string,
+  localEmail?: {
+    communicationEmail: boolean;
+    marketingEmail: boolean;
+    messageEmail: boolean;
+    securityEmail: boolean;
+  }
+) => {
+  return api().put(`/api/users/${userId}`, localEmail, {
+    params: {
+      userId: userId,
+    },
+  });
 };
 
 // Delete user
 // Private
 const deleteUser = (userId: string) => {
   api().delete(`/api/users/`, {
-  params: {
-    userId: userId,
-  },
-});
+    params: {
+      userId: userId,
+    },
+  });
 };
 
-export {
-  getAllUsers,
-  getUserById,
-  registerUser,
-  updateUserSelf,
-  deleteUser
-};
+export { getAllUsers, getUserById, registerUser, updateUserSelf, deleteUser };
