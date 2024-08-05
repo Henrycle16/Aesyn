@@ -1,7 +1,6 @@
 "use clients";
 
 import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
 import { useAppSelector } from "@/redux/store";
 import { getCreatorByUsername } from "@/actions/creatorApi";
 
@@ -76,9 +75,9 @@ export default function PersonalInfo() {
           </div>
         </form>
 
-        <Button type="submit" variant="contained" className="ts1-bg w-24">
+        <button type="submit" className="primary-btn button w-24">
           Save
-        </Button>
+        </button>
       </div>
     </section>
   );

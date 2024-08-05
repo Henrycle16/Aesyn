@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PersonalInfo from "@/app/settings/account/_components/PersonalInfo";
-import AccountManagement from "@/app/settings/account/_components/AccountManagement"
+import AccountManagement from "@/app/settings/account/_components/AccountManagement";
 import Password from "@/app/settings/account/_components/Password";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";

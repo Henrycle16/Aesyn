@@ -15,14 +15,12 @@ export default function AccountManagement() {
             your profile. Your account will reactivate when you sign in again.{" "}
           </p>
           <div className="self-end">
-            <Button
+            <button
             type="submit"
-            fullWidth
-            variant="contained"
-            className="secondary-btn button px-6"
+            className="secondary-btn button"
           >
             Deactivate
-          </Button></div>
+          </button></div>
           
         </div>
         <h2 className="body2 ts5-text"> Delete Account </h2>
@@ -33,14 +31,12 @@ export default function AccountManagement() {
             This will permanently delete your account from ShareFluence.{" "}
           </p>
           <div className="self-end">
-            <Button
+            <button
             type="submit"
-            fullWidth
-            variant="contained"
-            className="delete-btn px-5 py-2 button"
+            className="delete-btn button"
           >
             Delete
-          </Button></div>
+          </button></div>
         </div>
       </div>
     </section>
