@@ -1,11 +1,11 @@
 "use client";
 
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import Instagram from "@/components/ui/svgs/Instagram";
-import Facebook from "@/components/ui/svgs/Facebook";
-import Twitter from "@/components/ui/svgs/X";
-import TikTok from "@/components/ui/svgs/Tiktok";
-import Youtube from "@/components/ui/svgs/Youtube";
+import Instagram from "@/components/svgs/Instagram";
+import Facebook from "@/components/svgs/Facebook";
+import Twitter from "@/components/svgs/X";
+import TikTok from "@/components/svgs/Tiktok";
+import Youtube from "@/components/svgs/Youtube";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
@@ -51,14 +51,22 @@ const PackageCard = (props: Props) => {
             sx={{ color: "#3798E3", fontSize: 25 }}
             className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
             onClick={() => {
-              dispatch(profileDataInfo({ previousModalId: "edit_package_modal" }));
+              dispatch(
+                profileDataInfo({ previousModalId: "edit_package_modal" })
+              );
               dispatch(creatorPackagesInfo({ currentPackage: props }));
-              (document.getElementById(`edit_package_modal`) as HTMLDialogElement).showModal();
+              (
+                document.getElementById(
+                  `edit_package_modal`
+                ) as HTMLDialogElement
+              ).showModal();
             }}
           />
         </div>
         {/* Bottom Section */}
-        <p className="self-end mt-auto text-xl font-normal">{"$" + props.price}</p>
+        <p className="self-end mt-auto text-xl font-normal">
+          {"$" + props.price}
+        </p>
       </div>
     </>
   );

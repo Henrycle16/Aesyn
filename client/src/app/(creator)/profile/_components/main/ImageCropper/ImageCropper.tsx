@@ -1,4 +1,4 @@
-import Upload from "@/components/ui/svgs/Upload";
+import Upload from "@/components/svgs/Upload";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import ReactCrop, {
@@ -32,7 +32,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Handler for selecting a file
+  // Handler for selecting a file
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -60,7 +60,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     reader.readAsDataURL(file);
   };
 
-   // Function to trigger the file input dialog
+  // Function to trigger the file input dialog
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
@@ -85,11 +85,11 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
 
   // Handler for changing the image
   const changeImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation(); 
-    setImgSrc(null); 
-    setCrop(undefined); 
+    e.stopPropagation();
+    setImgSrc(null);
+    setCrop(undefined);
     setError(null);
-    fileInputRef.current?.click(); 
+    fileInputRef.current?.click();
   };
 
   return (
@@ -116,7 +116,12 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
       {imgSrc && (
         <div
           className="modal-content"
-          style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            justifyContent: "center",
+          }}
         >
           <div className="px-20">
             <ReactCrop
@@ -137,10 +142,16 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
               />
             </ReactCrop>
           </div>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "74px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "74px",
+            }}
+          >
             <button
               className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5] text-[#3798E3] font-semibold"
-              onClick={changeImage} 
+              onClick={changeImage}
             >
               Change Image
             </button>
@@ -160,7 +171,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
                   const dataUrl = previewCanvasRef.current?.toDataURL();
                   if (dataUrl) {
                     updateAvatar(dataUrl, imageName);
-                    if (closeModal) closeModal(); 
+                    if (closeModal) closeModal();
                   }
                 }
               }}

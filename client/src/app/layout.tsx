@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/utils/SessionProvider";
 import { ReduxProvider } from "@/redux/provider";
 
-import Toasts from "@/components/ui/toast/Toasts";
+import Toasts from "@/components/toast/Toasts";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

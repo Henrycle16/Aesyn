@@ -3,10 +3,10 @@
 import React from "react";
 import Image from "next/image";
 
-import Youtube from "@/components/ui/svgs/Youtube";
-import Instagram from "@/components/ui/svgs/Instagram";
-import Facebook from "@/components/ui/svgs/Facebook";
-import X from "@/components/ui/svgs/X";
+import Youtube from "@/components/svgs/Youtube";
+import Instagram from "@/components/svgs/Instagram";
+import Facebook from "@/components/svgs/Facebook";
+import X from "@/components/svgs/X";
 
 import { resetCurrentContent } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -53,7 +53,9 @@ const ViewCampaign = () => {
                 {currentContent.campaignTitle}
               </h1>
             </div>
-            <p className="pb-4 pt-2 text-sm mt-5">{currentContent.description}</p>
+            <p className="pb-4 pt-2 text-sm mt-5">
+              {currentContent.description}
+            </p>
           </div>
           <div className="flex flex-col mt-6">
             {currentContent.uri ? (

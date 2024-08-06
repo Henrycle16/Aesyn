@@ -9,13 +9,13 @@ import { z } from "zod";
 import { FormDataSchema } from "@/lib/zod-schemas/brandSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import CompanyForm from "./CompanyForm";
-import SocialMediaSelect from "../../ui/SocialMediaSelect";
-import ConfirmForm from "./ConfirmForm";
-import ToDashboard from "../../ui/ToDashboard";
-import LocationBox from "../../ui/mapbox/LocationBox";
+import CompanyForm from "./BrandSignup/CompanyForm";
+import SocialMediaSelect from "../../_components/SocialMediaSelect";
+import ConfirmForm from "./BrandSignup/ConfirmForm";
+import ToDashboard from "./BrandSignup/ToDashboard";
+import LocationBox from "../../_components/mapbox/LocationBox";
 import ProgressBar from "@/components/ui/ProgressBar";
-import { brandSignUp } from "./../../../actions/brand";
+import { brandSignUp } from "../../../../actions/brand";
 import { userInfo } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -43,7 +43,9 @@ const SignUpBox = () => {
   const session = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector(
+    (state) => state.userInfoReducer.value.currentStep
+  );
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -62,17 +64,25 @@ const SignUpBox = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   const onBack = () => {
     dispatch(userInfo({ currentStep: currentStep - 1 }));
-  }
+  };
 
-  const reduxLocation = useAppSelector((state) => state.userInfoReducer.value.location);
-  const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
-  const companyName = useAppSelector((state) => state.userInfoReducer.value.companyName);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  const reduxLocation = useAppSelector(
+    (state) => state.userInfoReducer.value.location
+  );
+  const industry = useAppSelector(
+    (state) => state.userInfoReducer.value.industry
+  );
+  const companyName = useAppSelector(
+    (state) => state.userInfoReducer.value.companyName
+  );
+  const preferences = useAppSelector(
+    (state) => state.userInfoReducer.value.preferences
+  );
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -117,12 +127,8 @@ const SignUpBox = () => {
       errors={errors}
       getValues={getValues}
     />,
-    <LocationBox
-      key="LocationBox"
-    />,
-    <SocialMediaSelect
-      key="SocialMediaSelect"
-    />,
+    <LocationBox key="LocationBox" />,
+    <SocialMediaSelect key="SocialMediaSelect" />,
     <ConfirmForm key="ConfirmForm" getValues={getValues} />,
     <ToDashboard key="ToDashboard" />,
   ];
@@ -134,13 +140,17 @@ const SignUpBox = () => {
     setProgress(val);
   }, [currentStep, steps.length]);
 
-  const borderStyle = currentStep !== steps.length - 1 ? "border-b-0 " : "rounded-b-md ";
+  const borderStyle =
+    currentStep !== steps.length - 1 ? "border-b-0 " : "rounded-b-md ";
 
   return (
     <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className={borderStyle + "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"}
+        className={
+          borderStyle +
+          "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+        }
       >
         {/* Back Button */}
         <div className="flex">
