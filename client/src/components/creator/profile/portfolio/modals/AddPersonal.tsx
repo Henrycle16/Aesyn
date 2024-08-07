@@ -26,6 +26,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "../PortfolioSetCanvas";
 
 import { uploadImage, uploadVideo } from "@/actions/creators3/portfolio";
+import { current } from "@reduxjs/toolkit";
 
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
@@ -75,38 +76,42 @@ const AddPersonal = () => {
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(currentContent.mediaType === "video") {
+    if (currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+        dispatch(addContent(currentContent));
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }else{
-      let thumbnailUri = null;
+    } else {
+      let thumbnailUri = "";
 
       if (imgRef.current) {
         setCanvasPreview(
           previewCanvasRef.current as HTMLCanvasElement,
           imgRef.current as HTMLImageElement,
-          convertToPixelCrop(
-            crop!,
-            imgRef.current.width,
-            imgRef.current.height
-          )
+          convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
         );
 
-        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+        thumbnailUri = previewCanvasRef.current!.toDataURL("image/jpeg");
       }
 
       const blob = await fetch(currentContent.uri).then((res) => res.blob());
-      const file = new File([blob], currentContent.name, { type: "image/jpeg" });
+      const file = new File([blob], currentContent.name, {
+        type: "image/jpeg",
+      });
 
-      const thumbnailBlob = thumbnailUri ? await fetch(thumbnailUri).then((res) => res.blob()) : new Blob();
-      const thumbnailFile = new File([thumbnailBlob], currentContent.name, { type: "image/jpeg" });
+      const thumbnailBlob = thumbnailUri
+        ? await fetch(thumbnailUri).then((res) => res.blob())
+        : new Blob();
+      const thumbnailFile = new File([thumbnailBlob], currentContent.name, {
+        type: "image/jpeg",
+      });
 
-      const appendFormData = (formData: FormData, data: Record<string, any>) => {
+      const appendFormData = (
+        formData: FormData,
+        data: Record<string, any>
+      ) => {
         Object.entries(data).forEach(([key, value]) => {
           formData.append(key, value);
         });
@@ -123,19 +128,23 @@ const AddPersonal = () => {
         campaignTitle: currentContent.campaignTitle,
         description: currentContent.description,
       };
-      
+
       const formData = new FormData();
       appendFormData(formData, data);
-      
+
       try {
         const response = await uploadImage(userId, formData);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+        dispatch(
+          addContent({
+            ...currentContent,
+            thumbnailUri: thumbnailUri,
+          })
+        );
       } catch (error) {
         console.error(error);
       }
     }
-    
+
     dispatch(resetCurrentContent());
 
     setResetContentButton(true);
@@ -205,7 +214,7 @@ const AddPersonal = () => {
                   <ChangeButton
                     resetTrigger={resetContentButton}
                     onResetComplete={handleResetComplete}
-                  />                
+                  />
                 </div>
               </div>
             </>
