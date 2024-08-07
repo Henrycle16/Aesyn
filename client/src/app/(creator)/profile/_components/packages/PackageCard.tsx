@@ -11,6 +11,7 @@ import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 
 type Props = {
   _id?: string;
@@ -33,6 +34,7 @@ const PackageCard = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const socialMediaIcon = socialMediaIcons[props.socialMedia];
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <>
@@ -48,8 +50,12 @@ const PackageCard = (props: Props) => {
             <p className="mt-1 text-[#061119]">{props.description}</p>
           </div>
           <ModeEditOutlineOutlinedIcon
-            sx={{ color: "#3798E3", fontSize: 25 }}
-            className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer"
+            sx={{ fontSize: 25 }}
+            className={`border-2 rounded-full p-[.12rem] ml-auto cursor-pointer ${
+              isHovered
+                ? "text-white border-[#3798E3] bg-[#3798E3]"
+                : "text-[#3798E3] border-[#D7D7D7] bg-white"
+            }`}
             onClick={() => {
               dispatch(
                 profileDataInfo({ previousModalId: "edit_package_modal" })
@@ -60,6 +66,12 @@ const PackageCard = (props: Props) => {
                   `edit_package_modal`
                 ) as HTMLDialogElement
               ).showModal();
+            }}
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
             }}
           />
         </div>

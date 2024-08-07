@@ -84,13 +84,23 @@ const AddCampaign = () => {
     if (currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+
+        const portfolio = response.data.data.portfolio;
+        const newestPortfolioContent = portfolio[portfolio.length - 1];
+        const newestPortfolioId = newestPortfolioContent._id;
+
+        dispatch(
+          addContent({
+            ...currentContent,
+            _id: newestPortfolioId,
+          })
+        );
+
       } catch (error) {
         console.log(error);
       }
     } else {
-      let thumbnailUri = null;
+      let thumbnailUri = "";
 
       if (imgRef.current) {
         setCanvasPreview(
@@ -99,7 +109,7 @@ const AddCampaign = () => {
           convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
         );
 
-        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+        thumbnailUri = previewCanvasRef.current!.toDataURL("image/jpeg");
       }
 
       const blob = await fetch(currentContent.uri).then((res) => res.blob());
@@ -140,8 +150,18 @@ const AddCampaign = () => {
 
       try {
         const response = await uploadImage(userId, formData);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+
+        const portfolio = response.data.data.portfolio;
+        const newestPortfolioContent = portfolio[portfolio.length - 1];
+        const newestPortfolioId = newestPortfolioContent._id;
+
+        dispatch(
+          addContent({
+            ...currentContent,
+            _id: newestPortfolioId,
+            thumbnailUri: thumbnailUri,
+          })
+        );
       } catch (error) {
         console.error(error);
       }

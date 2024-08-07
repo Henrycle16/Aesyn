@@ -37,7 +37,7 @@ const LinkVideo = () => {
 
   return (
     <dialog id="link_video_modal" className="modal">
-      <div className="modal-box bg-white text-[#061119] min-w-[60rem] pt-10 pl-14 pr-10 pb-8">
+      <div className="modal-box bg-white text-[#061119] min-w-[55rem] pt-10 pl-14 pr-10 pb-8">
         <h1 className="text-[#184465] font-semibold text-2xl">Link a video</h1>
         <form method="dialog" onSubmit={onFormSubmit}>
           <div className="w-full flex flex-col">

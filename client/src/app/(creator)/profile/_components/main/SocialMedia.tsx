@@ -61,6 +61,8 @@ const SocialMedia = () => {
     (document.getElementById(`social_modal`) as HTMLDialogElement).close();
   };
 
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <>
       <div className="flex-1">
@@ -69,13 +71,23 @@ const SocialMedia = () => {
             Social Media{" "}
           </h1>
           <ModeEditOutlineOutlinedIcon
-            sx={{ color: "#3798E3", fontSize: 25 }}
-            className="border-2 border-[#3798E3] rounded-full p-[.12rem] cursor-pointer ml-3 mt-1"
+            sx={{ fontSize: 25 }}
+            className={`border-2 rounded-full p-[.12rem] cursor-pointer ml-3 mt-1 ${
+              isHovered
+                ? "text-white border-[#3798E3] bg-[#3798E3]"
+                : "text-[#3798E3] border-[#D7D7D7] bg-white"
+            }`}
             onClick={() =>
               (
                 document.getElementById(`social_modal`) as HTMLDialogElement
               ).showModal()
             }
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
           />
         </div>
         <div className="flex flex-col">
