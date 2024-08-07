@@ -1,11 +1,11 @@
 "use client";
 
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import Instagram from "@/components/ui/svgs/Instagram";
-import Facebook from "@/components/ui/svgs/Facebook";
-import Twitter from "@/components/ui/svgs/X";
-import TikTok from "@/components/ui/svgs/Tiktok";
-import Youtube from "@/components/ui/svgs/Youtube";
+import Instagram from "@/components/svgs/Instagram";
+import Facebook from "@/components/svgs/Facebook";
+import Twitter from "@/components/svgs/X";
+import TikTok from "@/components/svgs/Tiktok";
+import Youtube from "@/components/svgs/Youtube";
 
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";

@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import { signIn } from "next-auth/react";
-import SignUpPopup from "./SignUpPopup";
-import SignUpModal from "../user/SignUpModal";
+import SignUpPopup from "./Login/SignUpPopup";
+import SignUpModal from "./Login/SignUpModal";
 import { useRouter } from "next/navigation";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";

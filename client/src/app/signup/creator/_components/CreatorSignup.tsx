@@ -4,20 +4,20 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"; 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { z } from "zod";
 import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import UsernameForm from "./UsernameForm";
-import LocationBox from "../../ui/mapbox/LocationBox";
-import SocialMediaSelect from "../../ui/SocialMediaSelect";
-import InterestSelect from "./InterestSelect";
-import GenderForm from "./GenderForm";
-import ConfirmForm from "./ConfirmForm";
+import UsernameForm from "./CreatorSignup/UsernameForm";
+import LocationBox from "../../_components/mapbox/LocationBox";
+import SocialMediaSelect from "../../_components/SocialMediaSelect";
+import InterestSelect from "./CreatorSignup/InterestSelect";
+import GenderForm from "./CreatorSignup/GenderForm";
+import ConfirmForm from "./CreatorSignup/ConfirmForm";
 import ProgressBar from "@/components/ui/ProgressBar";
-import { creatorSignUp } from "@/actions/creatorApi"
-import ToProfile from "@/components/ui/ToProfile";
+import { creatorSignUp } from "@/actions/creatorApi";
+import ToProfile from "@/app/signup/creator/_components/CreatorSignup/ToProfile";
 
 import { userInfo } from "@/redux/slices/user-slice";
 import { AppDispatch } from "@/redux/store";
@@ -48,7 +48,9 @@ const SignUpBox = () => {
   const session = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector(
+    (state) => state.userInfoReducer.value.currentStep
+  );
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -72,13 +74,21 @@ const SignUpBox = () => {
 
   const onBack = () => {
     dispatch(userInfo({ currentStep: currentStep - 1 }));
-  }
+  };
 
-  const reduxLocation = useAppSelector((state) => state.userInfoReducer.value.location);
-  const userName = useAppSelector((state) => state.userInfoReducer.value.username);
+  const reduxLocation = useAppSelector(
+    (state) => state.userInfoReducer.value.location
+  );
+  const userName = useAppSelector(
+    (state) => state.userInfoReducer.value.username
+  );
   const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
-  const interests = useAppSelector((state) => state.userInfoReducer.value.interests);
+  const preferences = useAppSelector(
+    (state) => state.userInfoReducer.value.preferences
+  );
+  const interests = useAppSelector(
+    (state) => state.userInfoReducer.value.interests
+  );
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -121,18 +131,10 @@ const SignUpBox = () => {
       errors={errors}
       getValues={getValues}
     />,
-    <GenderForm
-      key="GenderForm"
-    />,
-    <LocationBox
-    key="LocationBox"
-    />,
-    <SocialMediaSelect
-      key="SocialMediaSelect"
-    />,
-    <InterestSelect
-      key="InterestSelect"
-    />,
+    <GenderForm key="GenderForm" />,
+    <LocationBox key="LocationBox" />,
+    <SocialMediaSelect key="SocialMediaSelect" />,
+    <InterestSelect key="InterestSelect" />,
     <ConfirmForm key="ConfirmForm" />,
     <ToProfile key="ToProfile" />,
   ];
@@ -144,13 +146,17 @@ const SignUpBox = () => {
     setProgress(val);
   }, [currentStep, steps.length]);
 
-  const borderStyle = currentStep !== steps.length - 1 ? "border-b-0 " : "rounded-b-md ";
+  const borderStyle =
+    currentStep !== steps.length - 1 ? "border-b-0 " : "rounded-b-md ";
 
   return (
     <div className="mx-auto max-w-3xl">
       <form
         onSubmit={(e) => handleSubmitForm(e)}
-        className={borderStyle + "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"}
+        className={
+          borderStyle +
+          "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+        }
       >
         {/* Back Button */}
         <div className="flex">

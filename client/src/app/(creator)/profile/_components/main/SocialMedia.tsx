@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import Youtube from "@/components/ui/svgs/Youtube";
-import Instagram from "@/components/ui/svgs/Instagram";
-import X from "@/components/ui/svgs/X";
-import Tiktok from "@/components/ui/svgs/Tiktok";
-import Facebook from "@/components/ui/svgs/Facebook";
+import Youtube from "@/components/svgs/Youtube";
+import Instagram from "@/components/svgs/Instagram";
+import X from "@/components/svgs/X";
+import Tiktok from "@/components/svgs/Tiktok";
+import Facebook from "@/components/svgs/Facebook";
 import SocialMediaCard from "./SocialMediaCard";
-import Twitch from "@/components/ui/svgs/Twitch";
+import Twitch from "@/components/svgs/Twitch";
 
 const socialMediaData = [
   {

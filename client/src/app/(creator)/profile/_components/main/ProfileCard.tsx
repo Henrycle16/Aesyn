@@ -6,7 +6,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import React, { useState } from "react";
-import ImageCropper from "@/components/creator/profile/main/ImageCropper/ImageCropper";
+import ImageCropper from "./ImageCropper/ImageCropper";
 import { uploadAvatar } from "@/actions/creators3/avatar";
 import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";

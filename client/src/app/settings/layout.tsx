@@ -1,5 +1,5 @@
-import SmallFooter from "@/components/ui/footer/SmallFooter";
-import ProfileHeader from "@/components/ui/header/ProfileHeader";
+import SmallFooter from "@/components/footer/SmallFooter";
+import ProfileHeader from "@/components/header/ProfileHeader";
 import SettingTabs from "./_components/SettingsTab";
 
 export default function AccountLayout({
@@ -15,9 +15,7 @@ export default function AccountLayout({
           {/* Settings Tabs */}
           <SettingTabs />
           {/* Settings components */}
-          <div className="w-[57.5rem] mt-7 flex flex-col gap-6">
-            {children}
-          </div>
+          <div className="w-[57.5rem] mt-7 flex flex-col gap-6">{children}</div>
         </div>
       </main>
       <SmallFooter />
