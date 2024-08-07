@@ -254,7 +254,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
           await s3.send(deleteOldUriCommand);
         }
 
-        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const folderPath = req.body.contentType === "campaign" ? `creator/${req.params.user_id}/portfolio/campaign/` : `creator/${req.params.user_id}/portfolio/personal/`;
         const fullKey = `${folderPath}${user_id}-${req.body.name}`;
 
         if (!fullKey) {
@@ -286,7 +286,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
           await s3.send(deleteOldThumbnailCommand);
         }
 
-        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const folderPath = req.body.contentType === "campaign" ? `creator/${req.params.user_id}/portfolio/campaign/` : `creator/${req.params.user_id}/portfolio/personal/`;
         const thumbnailFullKey = `${folderPath}${user_id}-thumbnail-${req.body.name}`;
 
         if (!thumbnailFullKey) {
