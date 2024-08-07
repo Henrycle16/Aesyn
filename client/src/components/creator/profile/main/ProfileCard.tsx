@@ -17,15 +17,18 @@ const ProfileCard = () => {
   const dispatch = useDispatch<AppDispatch>();
   const avatarUrl = "/static/images/avatar/1.jpg";
   const [modalOpen, setModalOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const { avatar: avatarDisplay, ...profileData } = useAppSelector((state) => state.profileDataReducer.value);
-  
+  const { avatar: avatarDisplay, ...profileData } = useAppSelector(
+    (state) => state.profileDataReducer.value
+  );
+
   const session = useSession();
   const userId = session.data?.user.id;
 
   // Function to handle avatar submission
   const onSubmit = async (imgSrc: string, imageName: string) => {
-     // Fetching the image as a blob 
+    // Fetching the image as a blob
     const blob = await fetch(imgSrc).then((res) => res.blob());
     const file = new File([blob], imageName, { type: "image/jpeg" });
     const formData = new FormData();
@@ -75,9 +78,19 @@ const ProfileCard = () => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 badgeContent={
                   <ModeEditOutlineOutlinedIcon
-                    sx={{ color: "#3798E3", fontSize: 25 }}
-                    className="border-2 border-[#3798E3] rounded-full p-[.12rem] ml-auto cursor-pointer bg-white"
+                    sx={{ fontSize: 25 }}
+                    className={`border-2 rounded-full p-[.12rem] ml-auto cursor-pointer ${
+                      isHovered
+                        ? "text-white border-[#3798E3] bg-[#3798E3]"
+                        : "text-[#3798E3] border-[#D7D7D7] bg-white"
+                    }`}
                     onClick={openModal}
+                    onMouseEnter={() => {
+                      setIsHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                      setIsHovered(false);
+                    }}
                   />
                 }
               >

@@ -22,7 +22,10 @@ const DeletePortfolioContent = () => {
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await deleteAnyContent(userId, currentContent);
+      const { uri, thumbnailUri, ...contentWithoutUris } = currentContent;
+
+      const response = await deleteAnyContent(userId, contentWithoutUris);
+      
       dispatch(deleteContent(currentContent));
       console.log(response.data);
     } catch (error) {

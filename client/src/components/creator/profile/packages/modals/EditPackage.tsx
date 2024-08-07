@@ -43,7 +43,7 @@ const EditPackage = () => {
               Edit Package
             </h1>
             <DeleteOutlineIcon
-              sx={{ color: "#FF0000" }}
+              sx={{ color: "#B21717", fontSize: 25 }}
               className="cursor-pointer"
               onClick={() => {
                 (document.getElementById("edit_package_modal") as HTMLDialogElement).close();
