@@ -79,7 +79,17 @@ const AddPersonal = () => {
     if (currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
-        dispatch(addContent(currentContent));
+
+        const portfolio = response.data.data.portfolio;
+        const newestPortfolioContent = portfolio[portfolio.length - 1];
+        const newestPortfolioId = newestPortfolioContent._id;
+
+        dispatch(
+          addContent({
+            ...currentContent,
+            _id: newestPortfolioId,
+          })
+        );
       } catch (error) {
         console.log(error);
       }
@@ -134,9 +144,15 @@ const AddPersonal = () => {
 
       try {
         const response = await uploadImage(userId, formData);
+        
+        const portfolio = response.data.data.portfolio;
+        const newestPortfolioContent = portfolio[portfolio.length - 1];
+        const newestPortfolioId = newestPortfolioContent._id;
+
         dispatch(
           addContent({
             ...currentContent,
+            _id: newestPortfolioId,
             thumbnailUri: thumbnailUri,
           })
         );
