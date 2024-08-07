@@ -84,13 +84,12 @@ const AddCampaign = () => {
     if (currentContent.mediaType === "video") {
       try {
         const response = await uploadVideo(userId, currentContent);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+        dispatch(addContent(currentContent));
       } catch (error) {
         console.log(error);
       }
     } else {
-      let thumbnailUri = null;
+      let thumbnailUri = "";
 
       if (imgRef.current) {
         setCanvasPreview(
@@ -99,7 +98,7 @@ const AddCampaign = () => {
           convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
         );
 
-        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+        thumbnailUri = previewCanvasRef.current!.toDataURL("image/jpeg");
       }
 
       const blob = await fetch(currentContent.uri).then((res) => res.blob());
@@ -140,8 +139,12 @@ const AddCampaign = () => {
 
       try {
         const response = await uploadImage(userId, formData);
-        dispatch(addContent(response.data));
-        console.log(response.data);
+        dispatch(
+          addContent({
+            ...currentContent,
+            thumbnailUri: thumbnailUri,
+          })
+        );
       } catch (error) {
         console.error(error);
       }

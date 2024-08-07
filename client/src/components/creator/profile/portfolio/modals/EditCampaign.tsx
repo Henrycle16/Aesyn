@@ -84,13 +84,12 @@ const EditCampaign = () => {
     if (currentContent.mediaType === "video") {
       try {
         const response = await updateVideo(userId, currentContent);
-        dispatch(editContent(response.data));
-        console.log(response.data);
+        dispatch(editContent(currentContent));
       } catch (error) {
         console.log(error);
       }
     } else {
-      let thumbnailUri = null;
+      let thumbnailUri = "";
 
       if (imgRef.current) {
         setCanvasPreview(
@@ -99,7 +98,7 @@ const EditCampaign = () => {
           convertToPixelCrop(crop!, imgRef.current.width, imgRef.current.height)
         );
 
-        thumbnailUri = previewCanvasRef.current?.toDataURL("image/jpeg");
+        thumbnailUri = previewCanvasRef.current!.toDataURL("image/jpeg");
       }
 
       const blob = await fetch(currentContent.uri).then((res) => res.blob());
@@ -144,8 +143,12 @@ const EditCampaign = () => {
           currentContent._id!,
           formData
         );
-        dispatch(editContent(response.data));
-        console.log(response.data);
+        dispatch(
+          editContent({
+            ...currentContent,
+            thumbnailUri: thumbnailUri,
+          })
+        );
       } catch (error) {
         console.error(error);
       }
