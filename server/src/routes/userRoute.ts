@@ -175,12 +175,20 @@ router.patch("/password/:user_id", async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
+  const { password } = req.body
+
   try {
     const userId = req.params.user_id;
 
+    // Encrypt password
+    const salt = await bcrypt.genSalt(10);
+    const value = await bcrypt.hash(password, salt);
+
+    const obj = { password: value }
+
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
-      { $set: req.body },
+      { $set: obj },
       { new: true }
     );
 
