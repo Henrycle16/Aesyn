@@ -56,10 +56,10 @@ const updateUserSelf = (
   });
 };
 
-// Update User myAccount username
+// Creator myAccount Update
 // Private
-const creatorMyAccountUpdate = (userId: string, body: object) => {
-  return api().patch(`/api/user/myaccount/${userId}`, body);
+const userMyAccountUpdate = (userId: string, body: object) => {
+  return api().patch(`/api/users/${userId}`, body);
 };
 
 // Delete user
@@ -72,4 +72,4 @@ const deleteUser = (userId: string) => {
   });
 };
 
-export { getAllUsers, getUserById, registerUser, updateUserSelf, deleteUser };
+export { getAllUsers, getUserById, registerUser, updateUserSelf, userMyAccountUpdate, deleteUser };

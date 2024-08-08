@@ -14,14 +14,12 @@ import { getCreatorByUserId } from "@/actions/creatorApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { FaLessThan } from "react-icons/fa6";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState("");
-  const [dataLoading, setDataLoading] = useState(true);
   const router = useRouter();
   const session = useSession();
 
@@ -50,7 +48,6 @@ const LoginComponent = () => {
       email: email,
       password: password,
       redirect: false,
-      callbackUrl: "/creator/profile",
     });
 
     if (loginResponse && !loginResponse.error) {

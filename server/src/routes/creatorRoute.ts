@@ -127,25 +127,13 @@ router.patch("/myaccount/:user_id", [], async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  interface LooseObject {
-    [key: string]: any
-  }
-
-  const personalInformationFields: LooseObject = {}
-  //Build profile object
-  for (const [key, value] of Object.entries(req.body)) {
-    if(value !== '') {
-      personalInformationFields[key] = value
-    }
-  }
   
   try {
     const userId = req.params.user_id;
     //Update if found
     const updatedCreator = await Creator.findOneAndUpdate(
       { user: userId },
-      { $set: personalInformationFields },
+      { $set: req.body },
       { new: true }
     );
 

@@ -5,17 +5,16 @@ import { useAppSelector } from "@/redux/store";
 import { getCreatorByUsername } from "@/actions/creatorApi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AccountSchema } from "@/lib/zod-schemas/accountSchema";
+import { PersonalInfoSchema } from "@/lib/zod-schemas/personalInfoSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { creatorMyAccountUpdate } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { userMyAccountUpdate } from "@/actions/userApi";
 
-type Inputs = z.infer<typeof AccountSchema>;
+type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const session = useSession();
 
@@ -34,12 +33,11 @@ export default function PersonalInfo() {
     getValues,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: zodResolver(AccountSchema),
+    resolver: zodResolver(PersonalInfoSchema),
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-
     interface LooseObject {
       [key: string]: any
     }
@@ -47,8 +45,11 @@ export default function PersonalInfo() {
     // Parses out the empty values
     const result: LooseObject = {}
     for (const [key, value] of Object.entries(data)) {
-      if(value !== '' && key !== 'email') {
+      if(key !== 'email' && value !== '') {
         result[key] = value
+      } else if(key === 'email' && value !== ''){
+        const temp = {email: value}
+        userMyAccountUpdate(session.data?.user.id, temp);
       }
     }
     if(Object.keys(result).length == 0){

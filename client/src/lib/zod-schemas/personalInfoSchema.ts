@@ -2,7 +2,7 @@ import { z } from "zod";
 import validator from "validator";
 import axios from "axios";
 
-export const AccountSchema = z
+export const PersonalInfoSchema = z
   .object({
     userName: z
       .string()

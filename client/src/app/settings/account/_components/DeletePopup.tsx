@@ -39,7 +39,7 @@ const DeletePopup = () => {
         <Grid>
           <button
             onClick={handleDelete}
-            className="ml-4 primary-btn"
+            className="ml-4 delete-btn button"
           >
             Yes, I'm sure
           </button>

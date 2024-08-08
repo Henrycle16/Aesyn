@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import Button from "@mui/material/Button";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PasswordResetSchema } from "@/lib/zod-schemas/passwordResetSchema";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
+type Inputs = z.infer<typeof PasswordResetSchema>;
 
 const PasswordInfo = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,16 +21,23 @@ const PasswordInfo = () => {
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(PasswordResetSchema),
+    mode: "onChange",
+  });
 
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // callbackURL placeholder for now
     // const loginResponse = await signIn("login", {
     //   email: email,
     //   password: password,
     //   redirect: false,
     // });
-
     // if (loginResponse && !loginResponse.error) {
     //   console.log("Authenticated!");
     //   // Function to call post to replace password
@@ -50,7 +62,7 @@ const PasswordInfo = () => {
     <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
       <div className="col-span-1 p-6">
         <h2 className="subheader2 ts5-text"> Password </h2>
-        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <div className="mt-5">
             <h2 className="body2 ts5-text"> Current Password </h2>
 
@@ -88,16 +100,13 @@ const PasswordInfo = () => {
             <h2 className="body2 ts5-text"> New Password </h2>
             <div className="flex flex-row items-center justify-between">
               <input
-                className="input-md w-full input-focus-primary"
                 type={showPassword1 ? "text" : "password"}
+                className="input-md w-full input-focus-primary pr-10"
+                placeholder="Password*"
                 id="password"
-                value={newPassword}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setNewPassword(e.target.value)
-                }
-                autoFocus
+                {...register("password")}
                 autoComplete="new-password"
-                required
+                maxLength={50}
               />
               <button
                 type="button"
@@ -111,22 +120,21 @@ const PasswordInfo = () => {
                 )}
               </button>
             </div>
-            <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+            <p className="mt-1 text-sm min-h-5 ts8-text">
+              {errors.password?.message}
+            </p>
           </div>
           <div className="relative">
             <h2 className="body2 ts5-text"> Confirm Password </h2>
             <div className="flex flex-row items-center justify-between">
               <input
-                className="input-md w-full input-focus-primary"
                 type={showPassword2 ? "text" : "password"}
+                className="input-md w-full input-focus-primary"
+                placeholder="Confirm Password*"
                 id="password2"
-                value={newPassword2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setNewPassword2(e.target.value)
-                }
-                autoFocus
+                {...register("password2")}
                 autoComplete="new-password"
-                required
+                maxLength={50}
               />
               <button
                 type="button"
@@ -140,11 +148,13 @@ const PasswordInfo = () => {
                 )}
               </button>
             </div>
-            <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+            <p className="mt-1 text-sm min-h-5 ts8-text">
+              {errors.password2?.message}
+            </p>
           </div>
         </form>
 
-        <button type="submit" className="primary-btn button w-24">
+        <button disabled={(!getValues("password") || !getValues("password2")) || !!errors.password || !!errors.password2} type="submit" className="primary-btn button w-24">
           Save
         </button>
       </div>
