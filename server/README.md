@@ -174,6 +174,7 @@ S3Bucket:
 | PUT       | `/:user_id/avatar`    | String   | Update User Avatar           |
 | POST      | `/:user_id/portfolio` | String   | Uploading portfolio content  |
 | DELETE    | `/:user_id/portfolio/:content_id` | String   | Deleting portfolio content  |
+| PUT       | `/:user_id/portfolio/:content_id` | String   | Update portfolio content    |
 
 ## License
 
