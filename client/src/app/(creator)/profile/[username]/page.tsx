@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Main from "@/components/creator/profile/main/Main";
-import Packages from "@/components/creator/profile/packages/Packages";
-import Portfolio from "@/components/creator/profile/portfolio/Portfolio";
-import UnsavedModal from "@/components/creator/profile/UnsavedModal";
+import Main from "../_components/main/Main";
+import Packages from "../_components/packages/Packages";
+import Portfolio from "../_components/portfolio/Portfolio";
+import UnsavedModal from "@/components/modals/UnsavedModal";
 
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";

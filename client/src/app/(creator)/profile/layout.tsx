@@ -1,5 +1,5 @@
-import SmallFooter from "@/components/ui/footer/SmallFooter";
-import ProfileHeader from "@/components/ui/header/ProfileHeader";
+import SmallFooter from "@/components/footer/SmallFooter";
+import ProfileHeader from "@/components/header/ProfileHeader";
 
 export default function ProfileLayout({
   children, // will be a page or nested layout
@@ -9,9 +9,7 @@ export default function ProfileLayout({
   return (
     <>
       <ProfileHeader />
-      <main className="flex-1 mx-auto max-lg:py-5">
-        {children}
-      </main>
+      <main className="flex-1 mx-auto max-lg:py-5">{children}</main>
       <SmallFooter />
     </>
   );
