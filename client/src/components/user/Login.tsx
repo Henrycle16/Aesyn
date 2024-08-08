@@ -30,7 +30,6 @@ const LoginComponent = () => {
       //const brand = await getBrandByUserId(userId)
       if(creator)
       {
-        console.log("CREATOR DATA: ", creator.data.userName)
         router.push(`/profile/${creator.data.userName}`)
       }
       // else if(brand) {
@@ -39,7 +38,6 @@ const LoginComponent = () => {
   }
 
   useEffect(() => {
-    console.log("SESSION: ",session)
     if(session.data?.user.id != null){
       redirecting(session.data?.user.id)
     }
