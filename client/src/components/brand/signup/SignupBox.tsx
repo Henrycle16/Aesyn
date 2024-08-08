@@ -16,7 +16,7 @@ import ToDashboard from "../../ui/ToDashboard";
 import LocationBox from "../../ui/mapbox/LocationBox";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { brandSignUp } from "./../../../actions/brand";
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -43,7 +43,7 @@ const SignUpBox = () => {
   const session = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -69,10 +69,10 @@ const SignUpBox = () => {
     dispatch(userInfo({ currentStep: currentStep - 1 }));
   }
 
-  const reduxLocation = useAppSelector((state) => state.userInfoReducer.value.location);
-  const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
-  const companyName = useAppSelector((state) => state.userInfoReducer.value.companyName);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  const reduxLocation = useAppSelector((state) => state.signUpReducer.value.location);
+  const industry = useAppSelector((state) => state.signUpReducer.value.industry);
+  const companyName = useAppSelector((state) => state.signUpReducer.value.companyName);
+  const preferences = useAppSelector((state) => state.signUpReducer.value.preferences);
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -7,10 +7,10 @@ interface ConfirmFormProps {
 }
 
 const ConfirmForm = ({ getValues }: ConfirmFormProps) => {
-  const companyName = useAppSelector((state) => state.userInfoReducer.value.companyName);
-  const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
-  const location = useAppSelector((state) => state.userInfoReducer.value.location);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  const companyName = useAppSelector((state) => state.signUpReducer.value.companyName);
+  const industry = useAppSelector((state) => state.signUpReducer.value.industry);
+  const location = useAppSelector((state) => state.signUpReducer.value.location);
+  const preferences = useAppSelector((state) => state.signUpReducer.value.preferences);
 
   return (
     <div className="flex flex-col w-full mt-5 ml-20">

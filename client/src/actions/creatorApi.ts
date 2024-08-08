@@ -39,7 +39,7 @@ const creatorSignUp = async (body: string) => {
 // Creator Update 
 // Private
 const creatorUpdate = async (body: string) => {
-  return await api().post(`/api/creators`, body, {
+  return await api().put(`/api/creators`, body, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -53,7 +53,7 @@ const getAllCreators = (userId: string) => {
 };
 
 //Update Creator Interests
-const  updateCreatorInterests = (userId: string, interests: string[]) => { 
+const updateCreatorInterests = (userId: string, interests: string[]) => { 
   return api().put(`/api/creators/${userId}/interests`, {interests} );
 };
 

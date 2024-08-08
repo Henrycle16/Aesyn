@@ -3,7 +3,7 @@
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ const UsernameForm = ({
 }: UsernameFormProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
 
   const onNext = () => {
     dispatch(userInfo({ username: getValues('userName') }));

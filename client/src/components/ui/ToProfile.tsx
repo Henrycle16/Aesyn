@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { clearPersistedState } from "@/redux/store";
 
 const ToProfile = () => {
   return (
@@ -19,6 +20,9 @@ const ToProfile = () => {
             variant="contained"
             endIcon={<ArrowForwardIcon />}
             className="bg-muiblue py-3 px-6"
+            onClick = {() => {
+              clearPersistedState();
+             }}
           >
             Profile!
           </Button>

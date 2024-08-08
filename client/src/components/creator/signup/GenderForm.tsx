@@ -10,7 +10,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -19,9 +19,9 @@ const GenderForm = ({
 }) => {
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
 
-  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
+  const gender = useAppSelector((state) => state.signUpReducer.value.gender);
 
   const onNext = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));

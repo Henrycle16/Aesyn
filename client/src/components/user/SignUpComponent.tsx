@@ -12,7 +12,7 @@ import { FormDataSchema } from "@/lib/zod-schemas/userSignupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { resetSignUp, userInfo } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -38,7 +38,7 @@ const SignUpComponent = () => {
   });
 
   const isBrand = useAppSelector(
-    (state) => state.userInfoReducer.value.isBrand
+    (state) => state.signUpReducer.value.isBrand
   );
 
   // Toggle function for the first password input
@@ -67,7 +67,7 @@ const SignUpComponent = () => {
       dispatch(userInfo({ email: data.email }));
 
       if (signUpResponse && !signUpResponse.error) {
-        console.log("User succesfully signed up");
+        console.log("User successfully signed up");
         console.log(signUpResponse);
         console.log("isBrand: ", isBrand);
 
@@ -82,6 +82,8 @@ const SignUpComponent = () => {
     } catch (err) {
       console.log(err);
     }
+    //to reset the form so that users will register a new
+    dispatch(resetSignUp());
     reset();
   };
 

@@ -3,7 +3,7 @@ import Chip from "@mui/material/Chip";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "../../../styles/interestSelect.css";
 
-import { userInfo, removeInterest, addInterest } from "@/redux/slices/user-slice";
+import { userInfo, removeInterest, addInterest } from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -13,8 +13,8 @@ import { interestsArray } from "@/lib/user/interestsLib";
 const InterestForm = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
-  let interests = useAppSelector((state) => state.userInfoReducer.value.interests);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
+  let interests = useAppSelector((state) => state.signUpReducer.value.interests);
 
   const handleInterestChanges = (selected: string) => {
     if (interests.includes(selected)) {

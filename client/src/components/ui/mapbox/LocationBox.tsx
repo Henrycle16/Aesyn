@@ -10,7 +10,7 @@ import {
   setZoom,
   setMarkerLocation,
   setIsLocationSelected,
-} from "@/redux/slices/user-slice";
+} from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -19,19 +19,19 @@ const LocationBox = ({}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const currentStep = useAppSelector(
-    (state) => state.userInfoReducer.value.currentStep
+    (state) => state.signUpReducer.value.currentStep
   );
   const location = useAppSelector(
-    (state) => state.userInfoReducer.value.location
+    (state) => state.signUpReducer.value.location
   );
-  const lng = useAppSelector((state) => state.userInfoReducer.value.lng);
-  const lat = useAppSelector((state) => state.userInfoReducer.value.lat);
-  const zoom = useAppSelector((state) => state.userInfoReducer.value.zoom);
+  const lng = useAppSelector((state) => state.signUpReducer.value.lng);
+  const lat = useAppSelector((state) => state.signUpReducer.value.lat);
+  const zoom = useAppSelector((state) => state.signUpReducer.value.zoom);
   const markerLocation = useAppSelector(
-    (state) => state.userInfoReducer.value.markerLocation
+    (state) => state.signUpReducer.value.markerLocation
   );
   const isLocationSelected = useAppSelector(
-    (state) => state.userInfoReducer.value.isLocationSelected
+    (state) => state.signUpReducer.value.isLocationSelected
   );
 
   const onNext = () => {

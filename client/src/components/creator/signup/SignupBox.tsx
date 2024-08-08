@@ -19,7 +19,7 @@ import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "@/actions/creatorApi"
 import ToProfile from "@/components/ui/ToProfile";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -48,7 +48,7 @@ const SignUpBox = () => {
   const session = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
 
   useEffect(() => {
     if (session.data && session.status === "authenticated") {
@@ -74,11 +74,11 @@ const SignUpBox = () => {
     dispatch(userInfo({ currentStep: currentStep - 1 }));
   }
 
-  const reduxLocation = useAppSelector((state) => state.userInfoReducer.value.location);
-  const userName = useAppSelector((state) => state.userInfoReducer.value.username);
-  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
-  const interests = useAppSelector((state) => state.userInfoReducer.value.interests);
+  const reduxLocation = useAppSelector((state) => state.signUpReducer.value.location);
+  const userName = useAppSelector((state) => state.signUpReducer.value.username);
+  const gender = useAppSelector((state) => state.signUpReducer.value.gender);
+  const preferences = useAppSelector((state) => state.signUpReducer.value.preferences);
+  const interests = useAppSelector((state) => state.signUpReducer.value.interests);
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {

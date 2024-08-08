@@ -11,7 +11,7 @@ import {
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo, removePref, addPref } from "@/redux/slices/user-slice";
+import { userInfo, removePref, addPref } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -29,8 +29,8 @@ const socialMediasArray = [
 const SocialMediaSelect = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
-  let preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
+  let preferences = useAppSelector((state) => state.signUpReducer.value.preferences);
 
   const handlePreferencesChanges = (selected: string) => {
     if (preferences.includes(selected)) {

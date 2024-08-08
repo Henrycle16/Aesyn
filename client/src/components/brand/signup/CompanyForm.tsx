@@ -4,7 +4,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -23,7 +23,7 @@ const CompanyForm = ({
   getValues,
 }: CompanyFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const industry = useAppSelector((state) => state.userInfoReducer.value.industry);
+  const industry = useAppSelector((state) => state.signUpReducer.value.industry);
   
 
   const toggleSelectClick = () => {
@@ -37,7 +37,7 @@ const CompanyForm = ({
   };
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
 
   const onNext = () => {
     dispatch(userInfo({ companyName: getValues("companyName")}));
