@@ -216,17 +216,17 @@ router.get("/username/:username", async (req, res) => {
   }
 });
 
-// @route   DELETE api/creators
+// @route   DELETE api/creators/:user_id
 // @desc    Delete Creators profile, user, & posts
 // @access  Private
-router.delete("/", async (req, res) => {
+router.delete("/:user_id", async (req, res) => {
   try {
-    // Remove user posts
-    //await Post.deleteMany({ user: req.body.user.id });
     // Remove profile
-    await Creator.findOneAndDelete({ user: req.body.user.id });
+    await Creator.findOneAndDelete({ user: req.params.user_id });
     // Remove user
-    await User.findOneAndDelete({ _id: req.body.user.id });
+    await User.findOneAndDelete({ _id: req.params.user_id });
+    // Remove user posts
+    //await Post.deleteMany({ user: req.params.user_id });
 
     res.json({ msg: "User deleted" });
   } catch (err) {

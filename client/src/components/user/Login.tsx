@@ -9,6 +9,8 @@ import { signIn } from "next-auth/react";
 import SignUpPopup from "./SignUpPopup";
 import SignUpModal from "../user/SignUpModal";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { getCreatorByUserId } from "@/actions/creatorApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -19,6 +21,7 @@ const LoginComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState("");
   const router = useRouter();
+  const session = useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +38,16 @@ const LoginComponent = () => {
       setErrors("");
       console.log("Successful login!");
       console.log(loginResponse);
-      router.push("/profile/calvin");
+      const creator = await getCreatorByUserId(session.data?.user.id)
+      //const brand = await getBrandByUserId(session.data?.user.id)
+      if(creator)
+      {
+        router.push(`/profile/${creator.data.userName}`)
+      }
+      // else if(brand) {
+      //   router.push(DASHBOARD)
+      // }
+      
     } else {
       console.log("Error!");
       setErrors("Incorrect email or password");

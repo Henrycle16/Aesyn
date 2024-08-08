@@ -1,4 +1,5 @@
-import Button from "@mui/material/Button";
+import Modal from "@/app/settings/account/_components/Modal"
+import DeletePopup from "./DeletePopup";
 
 export default function AccountManagement() {
   
@@ -34,11 +35,19 @@ export default function AccountManagement() {
             <button
             type="submit"
             className="delete-btn button"
+            onClick={() =>
+              (
+                document.getElementById("modal") as HTMLDialogElement
+              ).showModal()
+            }
           >
             Delete
           </button></div>
         </div>
       </div>
+      <Modal>
+        <DeletePopup />
+      </Modal>
     </section>
   );
 }

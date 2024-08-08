@@ -43,7 +43,6 @@ export default function PersonalInfo() {
     interface LooseObject {
       [key: string]: any
     }
-    console.log("DATA: ", data);
 
     // Parses out the empty values
     const result: LooseObject = {}
@@ -51,14 +50,12 @@ export default function PersonalInfo() {
       if(value !== '' && key !== 'email') {
         result[key] = value
       }
-      console.log("OBJECT RESULT: ", result);
     }
     if(Object.keys(result).length == 0){
       return;
     }
 
     try {
-      console.log("user id: ", session.data?.user.id, " + param: ", result)
       creatorMyAccountUpdate(session.data?.user.id, result);
     } catch (error) {
       console.log(error);

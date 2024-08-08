@@ -89,11 +89,7 @@ const deletePackage = (userId: string, packageId: string) => {
 // Delete creator
 // Private
 const deleteCreator = (userId: string) => {
-  api().delete(`/api/creators/`, {
-    params: {
-      userId: userId,
-    },
-  });
+  api().delete(`/api/creators/${userId}`);
 };
 
 export {

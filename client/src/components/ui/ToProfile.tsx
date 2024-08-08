@@ -6,7 +6,6 @@ import { useAppSelector } from "@/redux/store";
 const ToProfile = () => {
 
   const username = useAppSelector((state) => state.userInfoReducer.value.username);
-  console.log("PROFILE BITCH: ", username);
 
   return (
     <div className="flex flex-col w-full">
