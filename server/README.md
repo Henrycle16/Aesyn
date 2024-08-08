@@ -114,17 +114,17 @@ S3Bucket:
 | Operation | Parameter       |       Type     | Description                           |
 | :-------- | :--------             | :------- | :-------------------------            |
 | GET       | `/me`                 | N/A      | Get current users creator profile     |
-| POST      | `/`                   | N/A      | Check creator profile                 |
-| PUT       | `/`                   | N/A      | Update creator profile                |
+| POST      | `/`                   | N/A      | Creator Sign Up                       |
+| POST      | `/`                   | N/A      | Update creator profile                |
 | GET       | `/`                   | N/A      | Get all creator profiles              |
 | GET       | `/user/:user_id`      | String   | Get creator profile by user id        |
-| DELETE    | `/`                   | N/A      | Delete creator profile, user, & posts |
 | GET       | `/username/:username` | N/A      | Get creator by username               |
 | PUT       | `/:user_id/interests` | String   | Update creator interests              |
 | PUT       | `/:user_id/bio`       | String   | Update creator bio                    |
-| POST      | `/:user_id/packages`  | S & I    | Create a package to creator           |
-| PUT       | `/:user_id/bio`       | S & I    | Update a package to creator           |
-| DELETE    | `/:user_id/packages/:package_id`| S & I | Delete a package from creator  |
+| POST      | `/:user_id/packages`  | Array    | Create a package to creator           |
+| PUT       | `/:user_id/packages`  | Array    | Update a package to creator           |
+| DELETE    | `/:user_id/packages/:package_id`| Array | Delete a package from creator  |
+| DELETE    | `/`                   | N/A      | Delete creator profile, user, & posts |
 
 #### BrandRoute
 
@@ -162,6 +162,18 @@ S3Bucket:
 | POST      | `/`             | N/A      | N/A      |
 | POST      | `/check`        | String   | Check if instagram user exists from access token in req body      |
 | POST      | `/insights`     | String   | Get insights from user business id      |
+
+#### S3Route
+
+```http
+  /api/s3
+```
+
+| Operation | Parameter             | Type     | Description                  |
+| :-------- | :--------             | :------- | :-------------------------   |
+| PUT       | `/:user_id/avatar`    | String   | Update User Avatar           |
+| POST      | `/:user_id/portfolio` | String   | Uploading portfolio content  |
+| DELETE    | `/:user_id/portfolio/:content_id` | String   | Deleting portfolio content  |
 
 ## License
 
