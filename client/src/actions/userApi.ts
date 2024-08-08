@@ -56,6 +56,12 @@ const updateUserSelf = (
   });
 };
 
+// Update User myAccount username
+// Private
+const creatorMyAccountUpdate = (userId: string, body: object) => {
+  return api().patch(`/api/user/myaccount/${userId}`, body);
+};
+
 // Delete user
 // Private
 const deleteUser = (userId: string) => {

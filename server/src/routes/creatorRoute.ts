@@ -77,46 +77,83 @@ router.post(
   }
 );
 
-// @route   PUT api/creators
-// @desc    Update Creator profile     **GOT TO FLESH OUT LATER**
+// @route   PUT api/creators/:user_id
+// @desc    Update Creator profile     **GOT TO FLESH OUT**
 // @access  Private
-router.put("/", [], async (req, res) => {
+router.put("/:user_id", [], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { socialMedias, category, location, bio } = req.body;
+  const { userName, preferences, interests, location, bio } = req.body;
 
   //Build profile object
   const creatorProfileFields = {
-    user: req.body.user.id,
-    socialMedias: socialMedias,
-    category: category,
+    user: req.params.user_id,
+    userName: userName,
+    preferences: preferences,
+    interests: interests,
+    bio: bio,
     location: {
       city: location.city,
       country: location.country,
     },
-    bio: bio,
   };
 
   try {
-    let creatorProfile = await Creator.findOne({ user: req.body.user.id });
-
     //Update if found
-    if (creatorProfile) {
-      creatorProfile = await Creator.findOneAndUpdate(
-        { user: req.body.user.id },
-        { $set: creatorProfileFields },
-        { new: true }
-      );
+    const updatedCreator = await Creator.findOneAndUpdate(
+      { user: req.params.user_id },
+      { $set: { creatorProfileFields } },
+      { new: true, runValidators: true }
+    );
 
-      return res.json(creatorProfile);
-    } else {
-      return res.status(400).json({
-        errors: [{ msg: "No Creator profile found" }],
-      });
+    // Check if the creator was found and updated
+    if (!updatedCreator) {
+      return res.status(404).json({ msg: "Creator not found" });
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PATCH api/creators/myaccount/:user_id
+// @desc    Update Creator profile
+// @access  Private
+router.patch("/myaccount/:user_id", [], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  interface LooseObject {
+    [key: string]: any
+  }
+
+  const personalInformationFields: LooseObject = {}
+  //Build profile object
+  for (const [key, value] of Object.entries(req.body)) {
+    if(value !== '') {
+      personalInformationFields[key] = value
+    }
+  }
+  
+  try {
+    const userId = req.params.user_id;
+    //Update if found
+    const updatedCreator = await Creator.findOneAndUpdate(
+      { user: userId },
+      { $set: personalInformationFields },
+      { new: true }
+    );
+
+    // Check if the creator was found and updated
+    if (!updatedCreator) {
+      return res.status(404).json({ msg: "Creator not found" });
+    }
+    res.json(updatedCreator)
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
