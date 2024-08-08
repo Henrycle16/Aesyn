@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordResetSchema } from "@/lib/zod-schemas/passwordResetSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { userPasswordUpdate } from "@/actions/userApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -18,8 +20,10 @@ const PasswordInfo = () => {
   const [showPassword2, setShowPassword2] = useState(false);
 
   const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPassword2, setNewPassword2] = useState("");
+  const session = useSession();
+
+  useEffect(() => {
+  }, [session.data, session.status]);
 
   const {
     register,
@@ -32,18 +36,30 @@ const PasswordInfo = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // callbackURL placeholder for now
-    // const loginResponse = await signIn("login", {
-    //   email: email,
-    //   password: password,
-    //   redirect: false,
-    // });
-    // if (loginResponse && !loginResponse.error) {
-    //   console.log("Authenticated!");
-    //   // Function to call post to replace password
-    // } else {
-    //   console.log("Error!");
-    // }
+    console.log("SESSION: ", session.data?.user.email)
+
+    const loginResponse = await signIn("login", {
+      email: session.data?.user.email,
+      password: password,
+      redirect: false,
+    });
+    
+    if (loginResponse && !loginResponse.error) {
+      console.log("Authenticated!");
+      interface LooseObject {
+        [key: string]: any
+      }
+      const result: LooseObject = {}
+      // Function to call post to replace password
+      for (const [key, value] of Object.entries(data)) {
+        if(key === 'password' && value !== '') {
+          result[key] = value
+        }
+      }
+      userPasswordUpdate(session.data?.user.id, result)
+    } else {
+      console.log("Error!");
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -152,11 +168,12 @@ const PasswordInfo = () => {
               {errors.password2?.message}
             </p>
           </div>
+          <button disabled={(!getValues("password") || !getValues("password2")) || !!errors.password || !!errors.password2} type="submit" className="primary-btn button w-24">
+            Save
+          </button>
         </form>
 
-        <button disabled={(!getValues("password") || !getValues("password2")) || !!errors.password || !!errors.password2} type="submit" className="primary-btn button w-24">
-          Save
-        </button>
+        
       </div>
     </section>
   );

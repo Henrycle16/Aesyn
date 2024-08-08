@@ -1,3 +1,4 @@
+import { user } from "@/redux/slices/user-slice";
 import api from "./axiosConfig";
 
 // Get all users
@@ -59,7 +60,13 @@ const updateUserSelf = (
 // Creator myAccount Update
 // Private
 const userMyAccountUpdate = (userId: string, body: object) => {
-  return api().patch(`/api/users/${userId}`, body);
+  return api().patch(`/api/users/email/${userId}`, body);
+};
+
+// Creator myAccount Update
+// Private
+const userPasswordUpdate = (userId: string, body: object) => {
+  return api().patch(`/api/users/password/${userId}`, body);
 };
 
 // Delete user
@@ -72,4 +79,4 @@ const deleteUser = (userId: string) => {
   });
 };
 
-export { getAllUsers, getUserById, registerUser, updateUserSelf, userMyAccountUpdate, deleteUser };
+export { getAllUsers, getUserById, registerUser, updateUserSelf, userMyAccountUpdate, userPasswordUpdate, deleteUser };

@@ -136,10 +136,10 @@ router.put("/:user_id", async (req: Request, res: Response) => {
   }
 });
 
-// @route   PATCH api/users/:user_id
+// @route   PATCH api/users/email/:user_id
 // @desc    Update self user email
 // @access  Private
-router.patch("/:user_id", async (req: Request, res: Response) => {
+router.patch("/email/:user_id", async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -154,7 +154,35 @@ router.patch("/:user_id", async (req: Request, res: Response) => {
       { new: true }
     );
 
-    console.log("UPDATED USER: ", updatedUser)
+    // Check if the user was found and updated
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.status(201).json(updatedUser);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PATCH api/users/password/:user_id
+// @desc    Update self user password
+// @access  Private
+router.patch("/password/:user_id", async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const userId = req.params.user_id;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: req.body },
+      { new: true }
+    );
 
     // Check if the user was found and updated
     if (!updatedUser) {
