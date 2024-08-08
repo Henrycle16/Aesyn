@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -14,19 +14,40 @@ import { getCreatorByUserId } from "@/actions/creatorApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { FaLessThan } from "react-icons/fa6";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState("");
+  const [dataLoading, setDataLoading] = useState(true);
   const router = useRouter();
   const session = useSession();
+
+  const redirecting = async (userId: string) => {
+      const creator = await getCreatorByUserId(userId)
+      //const brand = await getBrandByUserId(userId)
+      if(creator)
+      {
+        console.log("CREATOR DATA: ", creator.data.userName)
+        router.push(`/profile/${creator.data.userName}`)
+      }
+      // else if(brand) {
+      //   router.push(DASHBOARD)
+      // }
+  }
+
+  useEffect(() => {
+    console.log("SESSION: ",session)
+    if(session.data?.user.id != null){
+      redirecting(session.data?.user.id)
+    }
+  }, [session.data, session.status]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // callbackURL placeholder for now
     const loginResponse = await signIn("login", {
       email: email,
       password: password,
@@ -38,16 +59,6 @@ const LoginComponent = () => {
       setErrors("");
       console.log("Successful login!");
       console.log(loginResponse);
-      const creator = await getCreatorByUserId(session.data?.user.id)
-      //const brand = await getBrandByUserId(session.data?.user.id)
-      if(creator)
-      {
-        router.push(`/profile/${creator.data.userName}`)
-      }
-      // else if(brand) {
-      //   router.push(DASHBOARD)
-      // }
-      
     } else {
       console.log("Error!");
       setErrors("Incorrect email or password");
