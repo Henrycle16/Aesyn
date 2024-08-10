@@ -52,7 +52,6 @@ const SignUpComponent = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     try {
       const signUpResponse = await signIn("sign-up", {
         firstName: data.firstName,

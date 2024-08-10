@@ -24,7 +24,7 @@ const UsernameForm = ({
   let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
 
   const onNext = () => {
-    dispatch(userInfo({ username: getValues('userName') }));
+    dispatch(userInfo({ username: getValues('userName').toLowerCase() }));
     dispatch(userInfo({ currentStep: currentStep + 1 }));
   }
 

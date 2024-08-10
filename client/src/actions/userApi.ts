@@ -23,6 +23,9 @@ const registerUser = (
   promotional: boolean,
   acceptedTerms: boolean
 ) => {
+  // Lowercases email for uniqueness
+  email = email.toLowerCase();
+
   const body = JSON.stringify({
     firstName,
     lastName,
@@ -31,6 +34,7 @@ const registerUser = (
     promotional,
     acceptedTerms,
   });
+
   return api().post(`/api/users`, body, {
     headers: {
       "Content-Type": "application/json",
