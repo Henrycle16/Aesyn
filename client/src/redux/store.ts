@@ -3,9 +3,8 @@ import authReducer from "./slices/auth-slice";
 import profileDataReducer from "./slices/profileData-slice";
 import signUpReducer from "./slices/signUp-slice";
 import creatorPackagesReducer from "./slices/creatorPackages-slice";
-import creatorProfileReducer from "./slices/creatorProfile-slice";
 import creatorContentReducer from "./slices/creatorPortfolio-slice";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
@@ -39,7 +38,6 @@ const rootReducer = combineReducers({
   profileDataReducer,
   signUpReducer,
   creatorPackagesReducer,
-  creatorProfileReducer,
   creatorContentReducer,
 });
 
@@ -56,6 +54,7 @@ export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const clearPersistedState = () => {

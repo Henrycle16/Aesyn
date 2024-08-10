@@ -15,17 +15,19 @@ import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-const GenderForm = ({
-}) => {
-
+const GenderForm = ({}) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.signUpReducer.value.currentStep);
+  let currentStep = useAppSelector(
+    (state) => state.signUpReducer.value.currentStep
+  );
 
   const gender = useAppSelector((state) => state.signUpReducer.value.gender);
 
   const onNext = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
-  }
+  };
+
+  const isDisabled = gender === "";
 
   return (
     <div className="flex flex-col w-full">
@@ -38,8 +40,7 @@ const GenderForm = ({
               <Tooltip
                 disableFocusListener
                 placement="top"
-                title="Brands sometimes look for specific gender(s) when searching. This is how they can filter for it."
-              >
+                title="Brands sometimes look for specific gender(s) when searching. This is how they can filter for it.">
                 <IconButton style={{ padding: "5px" }}>
                   <HelpOutlineIcon style={{ fontSize: "14px" }} />
                 </IconButton>
@@ -53,8 +54,7 @@ const GenderForm = ({
               value={gender}
               onChange={(e) => {
                 dispatch(userInfo({ gender: e.target.value }));
-              }}
-            >
+              }}>
               <FormControlLabel
                 value="Female"
                 control={<Radio />}
@@ -80,16 +80,17 @@ const GenderForm = ({
 
       {/* Next Button */}
       <div className="self-end">
-        <Button
-          disabled={gender === ""}
+        <div
           onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          className={`ts1-bg py-3 px-6 flex items-center justify-center ${
+            isDisabled ? "primary-btn-disabled" : "primary-btn"
+          }`}
+          style={{
+            pointerEvents: isDisabled ? "none" : "auto",
+          }}>
           Next
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </div>
       </div>
     </div>
   );

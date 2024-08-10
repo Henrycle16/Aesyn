@@ -72,16 +72,18 @@ const InterestForm = ({
 
       {/* Next Button */}
       <div className="self-end">
-        <Button
-          disabled={!interests.length}
-          onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
-          Next
-        </Button>
+      <div
+        onClick={onNext}
+        className={`ts1-bg py-3 px-6 flex items-center justify-center ${
+          !interests.length ? "primary-btn-disabled" : "primary-btn"
+        }`}
+        style={{
+          pointerEvents: !interests.length ? "none" : "auto",
+        }}
+      >
+        Next
+        <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+      </div>
       </div>
     </div>
   );

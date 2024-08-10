@@ -38,6 +38,8 @@ const LocationBox = ({}) => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
   };
 
+  const isDisabled = !isLocationSelected;
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-4/6 mx-auto my-auto">
@@ -78,16 +80,17 @@ const LocationBox = ({}) => {
 
       {/* Next Button */}
       <div className="self-end mt-auto">
-        <Button
-          disabled={!isLocationSelected}
+        <div
           onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          className={`ts1-bg py-3 px-6 flex items-center justify-center ${
+            isDisabled ? "primary-btn-disabled" : "primary-btn"
+          }`}
+          style={{
+            pointerEvents: isDisabled ? "none" : "auto",
+          }}>
           Next
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </div>
       </div>
     </div>
   );
