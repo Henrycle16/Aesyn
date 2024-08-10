@@ -34,7 +34,7 @@ router.put("/:user_id/avatar", upload.single("avatar"), async (req, res) => {
     return res.status(400).send({ message: "No file uploaded" });
   }
 
-  const folderPath = "creator/avatar/";
+  const folderPath = `creator/${req.params.user_id}/avatar/`;
   // using the user ID as the key to replace current avatar
   const fullKey = `${folderPath}${req.params.user_id}`;
 
@@ -88,7 +88,7 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
         return res.status(404).send({ message: "Creator not found" });
       }
       const updatedCreator = await Creator.findOneAndUpdate(
-        { user: req.params.user_id  },
+        { user: req.params.user_id },
         { $push: { portfolio: { ...req.body, date: new Date() } } },
         { new: true }
       );
@@ -105,7 +105,7 @@ router.post("/:user_id/portfolio", upload.fields([{ name: 'uri' }, { name: 'thum
   const file = files.uri?.[0];
   const thumbnailFile = files.thumbnailUri?.[0];
 
-  const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+  const folderPath = req.body.contentType === "campaign" ? `creator/${req.params.user_id}/portfolio/campaign/` : `creator/${req.params.user_id}/portfolio/personal/`;
 
   const fullKey = `${folderPath}${req.params.user_id}-${req.body.name}`;
   const thumbnailFullKey = `${folderPath}${req.params.user_id}-thumbnail-${req.body.name}`;
@@ -254,7 +254,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
           await s3.send(deleteOldUriCommand);
         }
 
-        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const folderPath = req.body.contentType === "campaign" ? `creator/${req.params.user_id}/portfolio/campaign/` : `creator/${req.params.user_id}/portfolio/personal/`;
         const fullKey = `${folderPath}${user_id}-${req.body.name}`;
 
         if (!fullKey) {
@@ -286,7 +286,7 @@ router.put("/:user_id/portfolio/:content_id", upload.fields([{ name: 'uri' }, { 
           await s3.send(deleteOldThumbnailCommand);
         }
 
-        const folderPath = req.body.contentType === "campaign" ? "creator/portfolio/campaign/" : "creator/portfolio/personal/";
+        const folderPath = req.body.contentType === "campaign" ? `creator/${req.params.user_id}/portfolio/campaign/` : `creator/${req.params.user_id}/portfolio/personal/`;
         const thumbnailFullKey = `${folderPath}${user_id}-thumbnail-${req.body.name}`;
 
         if (!thumbnailFullKey) {

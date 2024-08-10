@@ -1,5 +1,5 @@
-import Header from "@/components/ui/header/Header";
-import SmallFooter from "@/components/ui/footer/SmallFooter";
+import Header from "@/components/header/Header";
+import SmallFooter from "@/components/footer/SmallFooter";
 
 export default function SignupLayout({
   children, // will be a page or nested layout

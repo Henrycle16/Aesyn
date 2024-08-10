@@ -7,6 +7,8 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/utils/SessionProvider";
 import { ReduxProvider } from "@/redux/provider";
 
+import Toasts from "@/components/toast/Toasts";
+
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
@@ -26,7 +28,10 @@ export default async function RootLayout({
       <body className={montserrat.className}>
         <ReduxProvider>
           <SessionProvider session={session}>
-            <div className="flex flex-col min-h-screen">{children}</div>
+            <div className="flex flex-col min-h-screen">
+              {children}
+              <Toasts />
+            </div>
           </SessionProvider>
         </ReduxProvider>
       </body>

@@ -1,6 +1,6 @@
 import HeroSection from "@/components/ui/HeroSection";
-import LandingHeader from "@/components/ui/header/LandingHeader";
-import LargeFooter from "@/components/ui/footer/LargeFooter";
+import LandingHeader from "@/components/header/LandingHeader";
+import LargeFooter from "@/components/footer/LargeFooter";
 
 export default function Home() {
   return (
