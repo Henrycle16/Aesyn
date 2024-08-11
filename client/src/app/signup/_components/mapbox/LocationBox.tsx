@@ -80,17 +80,14 @@ const LocationBox = ({}) => {
 
       {/* Next Button */}
       <div className="self-end mt-auto">
-        <div
+        <button
           onClick={onNext}
-          className={`ts1-bg py-3 px-6 flex items-center justify-center ${
-            isDisabled ? "primary-btn-disabled" : "primary-btn"
-          }`}
-          style={{
-            pointerEvents: isDisabled ? "none" : "auto",
-          }}>
+          disabled={isDisabled}
+          className="ts1-bg py-3 px-6 flex items-center justify-center primary-btn"
+          style={{ pointerEvents: isDisabled ? "none" : "auto" }}>
           Next
           <ArrowForwardIcon style={{ marginLeft: "8px" }} />
-        </div>
+        </button>
       </div>
     </div>
   );
