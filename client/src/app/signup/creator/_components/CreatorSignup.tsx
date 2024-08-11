@@ -107,8 +107,6 @@ const SignUpBox = () => {
 
     try {
       const creatorSignUpResponse = await creatorSignUp(body);
-      console.log("API Response:", creatorSignUpResponse);
-
       if (creatorSignUpResponse && !creatorSignUpResponse.data.error) {
         console.log("REGISTERED CREATOR!", creatorSignUpResponse.data);
         dispatch(userInfo({ currentStep: currentStep + 1 }));
