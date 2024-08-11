@@ -47,13 +47,13 @@ const SignUpBox = () => {
   const { data: session, status } = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector(
+  const currentStep = useAppSelector(
     (state) => state.signUpReducer.value.currentStep
   );
 
   // Fetch user data from session once authenticated
   useEffect(() => {
-    if (status === "authenticated" && session && !formData.user) {
+    if (session && status === "authenticated") {
       setFormData((prevData) => ({
         ...prevData,
         user: session.user,
@@ -61,13 +61,9 @@ const SignUpBox = () => {
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
-  }, [session, status, formData.user]);
+  }, [session, status, currentStep]);
 
-  const {
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { register, getValues, formState: { errors } } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
     mode: "onChange",
   });
@@ -94,7 +90,6 @@ const SignUpBox = () => {
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     dispatch(userInfo({ currentStep: currentStep + 1 }));
 
     // Process the location and prepare the payload
@@ -112,14 +107,17 @@ const SignUpBox = () => {
 
     try {
       const creatorSignUpResponse = await creatorSignUp(body);
+      console.log("API Response:", creatorSignUpResponse);
+
       if (creatorSignUpResponse && !creatorSignUpResponse.data.error) {
         console.log("REGISTERED CREATOR!", creatorSignUpResponse.data);
         dispatch(userInfo({ currentStep: currentStep + 1 }));
+      } else {
+        console.log("API Error:", creatorSignUpResponse.data.error);
       }
-    } catch {
-      console.log("Error!");
+    } catch (error) {
+      console.log("Error during submission:", error);
     }
-    return;
   };
 
   // Render the current step based on the step number
@@ -128,23 +126,24 @@ const SignUpBox = () => {
       case 0:
         return (
           <UsernameForm
+            key="userName"
             register={register}
             errors={errors}
             getValues={getValues}
           />
         );
       case 1:
-        return <GenderForm />;
+        return <GenderForm key="GenderForm"  />;
       case 2:
-        return <LocationBox />;
+        return <LocationBox  key="LocationBox" />;
       case 3:
-        return <SocialMediaSelect />;
+        return <SocialMediaSelect  key="SocialMediaSelect" />;
       case 4:
-        return <InterestSelect />;
+        return <InterestSelect  key="InterestSelect" />;
       case 5:
-        return <ConfirmForm />;
+        return <ConfirmForm  key="ConfirmForm" />;
       case 6:
-        return <ToProfile />;
+        return <ToProfile key="ToProfile"/>;
       default:
         return null;
     }
@@ -161,14 +160,14 @@ const SignUpBox = () => {
 
   // Render component conditionally based on session status
   if (status === "loading") {
-    return <div>Loading...</div>; // or a loading spinner
+    return <div>Loading...</div>;
   }
 
   if (status === "authenticated") {
     return (
       <div className="mx-auto max-w-3xl">
         <form
-          onSubmit={(e) => handleSubmitForm(e)}
+          onSubmit={handleSubmitForm}
           className={
             borderStyle +
             "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"

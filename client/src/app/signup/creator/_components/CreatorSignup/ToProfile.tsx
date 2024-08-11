@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { clearPersistedState } from "@/redux/store";
+import { clearPersistedState, useAppSelector } from "@/redux/store";
 
 const ToProfile = () => {
 
-  const username = useAppSelector((state) => state.userInfoReducer.value.username);
+  const username = useAppSelector((state) => state.signUpReducer.value.username);
 
   return (
     <div className="flex flex-col w-full">

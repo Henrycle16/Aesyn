@@ -108,7 +108,7 @@ export default function NotificationPage() {
         </div>
         <button
         className={`mr-auto mt-auto ${
-          isChanged ? "primary-btn" : "primary-btn-disabled"
+          isChanged ? "primary-btn" : "primary-btn"
         }`}
           onClick={handleSubmit}
           disabled={!isChanged}
