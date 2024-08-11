@@ -59,7 +59,7 @@ const updateUserSelf = (
 
 // Creator myAccount Update
 // Private
-const userMyAccountUpdate = (userId: string, body: object) => {
+const userEmailUpdate = (userId: string, body: object) => {
   return api().patch(`/api/users/email/${userId}`, body);
 };
 
@@ -79,4 +79,4 @@ const deleteUser = (userId: string) => {
   });
 };
 
-export { getAllUsers, getUserById, registerUser, updateUserSelf, userMyAccountUpdate, userPasswordUpdate, deleteUser };
+export { getAllUsers, getUserById, registerUser, updateUserSelf, userEmailUpdate, userPasswordUpdate, deleteUser };
