@@ -36,14 +36,16 @@ const creatorSignUp = async (body: string) => {
   });
 };
 
-// Creator Update 
+// Creator Update **IRON OUT OR DELETE**
 // Private
-const creatorUpdate = async (body: string) => {
-  return await api().put(`/api/creators`, body, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+const creatorUpdate = (userId: string, body: string) => {
+  return api().put(`/api/creators/${userId}`, body);
+};
+
+// Creator myAccount Update
+// Private
+const creatorMyAccountUpdate = (userId: string, body: object) => {
+  return api().patch(`/api/creators/myaccount/${userId}`, body);
 };
 
 // Get all Creators
@@ -87,17 +89,14 @@ const deletePackage = (userId: string, packageId: string) => {
 // Delete creator
 // Private
 const deleteCreator = (userId: string) => {
-  api().delete(`/api/creators/`, {
-    params: {
-      userId: userId,
-    },
-  });
+  api().delete(`/api/creators/${userId}`);
 };
 
 export {
   getCreatorSelf,
   creatorSignUp,
   creatorUpdate,
+  creatorMyAccountUpdate,
   updateCreatorBio,
   updateCreatorInterests,
   getCreatorByUserId,

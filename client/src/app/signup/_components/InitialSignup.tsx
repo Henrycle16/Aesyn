@@ -160,9 +160,9 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 g5-text" />
-            ) : (
               <VisibilityIcon className="h-5 w-5 g5-text" />
+            ) : (
+              <VisibilityOffIcon className="h-5 w-5 g5-text" />
             )}
           </button>
         </div>
@@ -187,9 +187,9 @@ const SignUpComponent = () => {
             className="absolute right-0 pr-3 text-sm leading-5"
           >
             {showConfirmPassword ? (
-              <VisibilityOffIcon className="h-5 w-5 g5-text" />
-            ) : (
               <VisibilityIcon className="h-5 w-5 g5-text" />
+            ) : (
+              <VisibilityOffIcon className="h-5 w-5 g5-text" />
             )}
           </button>
         </div>
