@@ -26,7 +26,8 @@ export default function CreatorProfile({ params }: { params: Params }) {
 
       dispatch(
         profileDataInfo({
-          userId: response.data._id,
+          userId: response.data.user._id,
+          creatorId: response.data._id,
           firstName: response.data.user.firstName,
           lastName: response.data.user.lastName,
           username: response.data.userName,

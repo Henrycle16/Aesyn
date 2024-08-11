@@ -10,6 +10,8 @@ import Facebook from "@/components/svgs/Facebook";
 import SocialMediaCard from "./SocialMediaCard";
 import Twitch from "@/components/svgs/Twitch";
 
+import InstagramTile from "@/components/buttons/InstagramTile";
+
 const socialMediaData = [
   {
     id: 0,
@@ -48,7 +50,7 @@ const SocialMedia = () => {
     icon: React.ReactNode;
     text: string;
   }) => (
-    <button type="button" className="border border-gray-300 rounded-lg p-4">
+    <button type="button" className="border border-gray-300 rounded-[15px] py-4 px-7">
       <div className="flex items-center text-[#184465] font-semibold space-x-4">
         <div>{icon}</div>
         <div>{text}</div>
@@ -109,7 +111,7 @@ const SocialMedia = () => {
       </div>
 
       <dialog id="social_modal" className="modal">
-        <div className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6">
+        <div className="modal-box bg-white text-[#061119] min-w-[58.875rem] min-h-[23.125rem] pr-8 pt-10 pl-14">
           <h1 className="text-[#184465] font-semibold text-2xl">
             Social Media
           </h1>
@@ -117,27 +119,28 @@ const SocialMedia = () => {
             Link your social media pages to display on your profile.
           </h2>
           <form method="dialog">
-            <div className="grid grid-cols-3 gap-5 mt-6">
+            <div className="grid grid-cols-[repeat(3,_minmax(0,_16.188rem))] gap-7 mt-4">
               {/* Social Media Tiles */}
               <SocialTiles icon={<Youtube />} text="Youtube" />
-              <SocialTiles icon={<Instagram />} text="Instagram" />
+              {/* <SocialTiles icon={<Instagram />} text="Instagram" /> */}
+              <InstagramTile />
               <SocialTiles icon={<X />} text="Twitter/X" />
               <SocialTiles icon={<Tiktok />} text="Tiktok" />
               <SocialTiles icon={<Facebook />} text="Facebook" />
               <SocialTiles icon={<Twitch />} text="Twitch" />
             </div>
 
-            <div className="flex justify-end mt-10">
+            <div className="flex justify-end mt-7">
               {/* if there is a button, it will close the modal */}
               <button
                 onClick={closeModal}
                 // type="submit"
-                className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-lg hover:bg-[#2C7AB6]"
+                className="bg-[#3798E3] text-white ml-auto py-[10px] px-[25px] text-sm font-bold rounded-lg hover:bg-[#2C7AB6]"
               >
                 Save
               </button>
             </div>
-            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
+            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-3 top-2 text-lg">
               ✕
             </button>
           </form>

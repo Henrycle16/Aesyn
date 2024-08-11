@@ -4,22 +4,25 @@ import { instagramUserCheck, getInsights } from '../lib/instagram/instagramCheck
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.get('/creator/:creatorId', async (req, res) => {
         try {
-
-            return;
+            const creatorId = req.params.creatorId;
+            const creator = await InstagramData.findOne({ creatorID: creatorId });
+            console.log(creator);
+            return res.status(200).json(creator);
         } catch (error) {
-            console.error(error.message);
-            return res.status(500).send('Server Error');
+            console.log(error);
+            return res.status(500).json(error);
         }
     }
 );
 
 
-router.post('/check', async (req, res) => {
+router.post('/check/:creatorId', async (req, res) => {
+    const { creatorId } = req.params;
     const { accessToken } = req.body;
     try {
-        const userPayload = await instagramUserCheck(accessToken);
+        const userPayload = await instagramUserCheck(accessToken, creatorId);
 
         if (userPayload) {
             const basicUser = new InstagramData(userPayload);
