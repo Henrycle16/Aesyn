@@ -17,9 +17,14 @@ export default function NotificationPage() {
 
   const [localEmail, setLocalEmail] = useState(emailSettings);
   const [isChanged, setIsChanged] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
+
+  useEffect(() => {
+    setHydrated(true); // Set hydration to true after the component mounts
+  }, []);
 
   useEffect(() => {
     setIsChanged(JSON.stringify(localEmail) !== JSON.stringify(emailSettings));
@@ -59,11 +64,13 @@ export default function NotificationPage() {
                 Receive emails about your account activity.
               </p>
             </div>
-            <Switch
-              checked={localEmail.communicationEmail}
-              onChange={handleChange("communicationEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.communicationEmail}
+                onChange={handleChange("communicationEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -73,11 +80,13 @@ export default function NotificationPage() {
                 ShareFluence.
               </p>
             </div>
-            <Switch
-              checked={localEmail.marketingEmail}
-              onChange={handleChange("marketingEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.marketingEmail}
+                onChange={handleChange("marketingEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -86,11 +95,13 @@ export default function NotificationPage() {
                 Receive emails when you receive messages.
               </p>
             </div>
-            <Switch
-              checked={localEmail.messageEmail}
-              onChange={handleChange("messageEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.messageEmail}
+                onChange={handleChange("messageEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -99,20 +110,21 @@ export default function NotificationPage() {
                 Receive emails about your account security.
               </p>
             </div>
-            <Switch
-              checked={localEmail.securityEmail}
-              onChange={handleChange("securityEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.securityEmail}
+                onChange={handleChange("securityEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
         </div>
         <button
-        className={`mr-auto mt-auto ${
-          isChanged ? "primary-btn" : "primary-btn"
-        }`}
+          className={`mr-auto mt-auto ${
+            isChanged ? "primary-btn" : "primary-btn"
+          }`}
           onClick={handleSubmit}
-          disabled={!isChanged}
-        >
+          disabled={!isChanged}>
           Update
         </button>
       </section>

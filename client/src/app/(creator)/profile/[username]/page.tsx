@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Main from "../_components/main/Main";
 import Packages from "../_components/packages/Packages";
 import Portfolio from "../_components/portfolio/Portfolio";
@@ -19,6 +19,7 @@ type Params = {
 
 export default function CreatorProfile({ params }: { params: Params }) {
   const dispatch = useDispatch<AppDispatch>();
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const getProfileInfo = async () => {
     try {
@@ -53,6 +54,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
           content: response.data.portfolio,
         })
       );
+      setIsDataLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +63,10 @@ export default function CreatorProfile({ params }: { params: Params }) {
   useEffect(() => {
     getProfileInfo();
   }, []);
+
+  if (!isDataLoaded) {
+    return <div>Loading...</div>; // Placeholder while data is loading
+  }
 
   return (
     <div className="my-10 flex flex-col gap-10 w-[77.5rem]">

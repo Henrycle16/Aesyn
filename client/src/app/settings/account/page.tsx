@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/settings/account/_components/PersonalInfo";
 import AccountManagement from "@/app/settings/account/_components/AccountManagement";
 import Password from "@/app/settings/account/_components/Password";
@@ -12,6 +12,8 @@ import { useSession } from "next-auth/react";
 
 export default function AccountPage() {
   const dispatch = useDispatch<AppDispatch>();
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const session = useSession();
   const userId = session.data?.user.id;
 
@@ -29,6 +31,7 @@ export default function AccountPage() {
               securityEmail: response.data.securityEmail,
             })
           );
+          setIsDataLoaded(true);
         } catch (error) {
           console.error(error);
         }
@@ -37,6 +40,10 @@ export default function AccountPage() {
       getProfileInfo();
     }
   }, [userId, dispatch]);
+
+  if (!isDataLoaded) {
+    return <div>Loading...</div>; // Placeholder while data is loading
+  }
 
   return (
     <>

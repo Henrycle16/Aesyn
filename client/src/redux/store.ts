@@ -31,6 +31,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whitelist: ["authReducer", "profileDataReducer", "signUpReducer"],
 };
 
 const rootReducer = combineReducers({
