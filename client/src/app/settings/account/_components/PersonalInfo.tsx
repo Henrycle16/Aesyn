@@ -10,7 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { creatorMyAccountUpdate } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { userMyAccountUpdate } from "@/actions/userApi";
+import { userEmailUpdate } from "@/actions/userApi";
 
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
@@ -49,7 +49,7 @@ export default function PersonalInfo() {
         result[key] = value
       } else if(key === 'email' && value !== ''){
         const temp = {email: value}
-        userMyAccountUpdate(session.data?.user.id, temp);
+        userEmailUpdate(session.data?.user.id, temp);
       }
     }
     if(Object.keys(result).length == 0){
