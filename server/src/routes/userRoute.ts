@@ -136,6 +136,74 @@ router.put("/:user_id", async (req: Request, res: Response) => {
   }
 });
 
+// @route   PATCH api/users/email/:user_id
+// @desc    Update self user email
+// @access  Private
+router.patch("/email/:user_id", async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const userId = req.params.user_id;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: req.body },
+      { new: true }
+    );
+
+    // Check if the user was found and updated
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.status(201).json(updatedUser);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PATCH api/users/password/:user_id
+// @desc    Update self user password
+// @access  Private
+router.patch("/password/:user_id", async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { password } = req.body
+
+  try {
+    const userId = req.params.user_id;
+
+    // Encrypt password
+    const salt = await bcrypt.genSalt(10);
+    const value = await bcrypt.hash(password, salt);
+
+    const obj = { password: value }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: obj },
+      { new: true }
+    );
+
+    // Check if the user was found and updated
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.status(201).json(updatedUser);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   DELETE api/users
 // @desc    Delete user from database.
 // @access  Private

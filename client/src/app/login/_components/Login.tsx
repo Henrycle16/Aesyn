@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -9,6 +9,8 @@ import { signIn } from "next-auth/react";
 import SignUpPopup from "./Login/SignUpPopup";
 import SignUpModal from "./Login/SignUpModal";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { getCreatorByUserId } from "@/actions/creatorApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -17,25 +19,44 @@ const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState("");
   const router = useRouter();
+  const session = useSession();
+
+  const redirecting = async (userId: string) => {
+      const creator = await getCreatorByUserId(userId)
+      //const brand = await getBrandByUserId(userId)
+      if(creator)
+      {
+        router.push(`/profile/${creator.data.userName}`)
+      }
+      // else if(brand) {
+      //   router.push(DASHBOARD)
+      // }
+  }
+
+  useEffect(() => {
+    if(session.data?.user.id != null){
+      redirecting(session.data?.user.id)
+    }
+  }, [session.data, session.status]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // callbackURL placeholder for now
     const loginResponse = await signIn("login", {
       email: email,
       password: password,
       redirect: false,
-      callbackUrl: "/creator/profile",
     });
 
     if (loginResponse && !loginResponse.error) {
-      console.log("LOGIN!");
+      setErrors("");
+      console.log("Successful login!");
       console.log(loginResponse);
-      router.push("/profile/calvin");
     } else {
       console.log("Error!");
+      setErrors("Incorrect email or password");
     }
   };
 
@@ -97,13 +118,15 @@ const LoginComponent = () => {
               className="absolute right-0 pr-3 text-sm leading-5"
             >
               {showPassword ? (
-                <VisibilityOffIcon className="h-5 w-5 g5-text" />
-              ) : (
                 <VisibilityIcon className="h-5 w-5 g5-text" />
+              ) : (
+                <VisibilityOffIcon className="h-5 w-5 g5-text" />
               )}
             </button>
           </div>
-          <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+          <p className="mt-1 text-sm min-h-5 ts8-text">
+            {errors}
+            </p>
         </div>
 
         <Button

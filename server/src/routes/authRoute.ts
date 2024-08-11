@@ -5,19 +5,6 @@ import User from '../models/User';
 
 const router = express.Router();
 
-// @route   GET api/auth
-// @desc    Test route
-// @access  Private
-router.get('/', async (req, res) => {
-    try {
-        const user = await User.findById(req.body.user.id).select('-password');
-        res.json(user);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
 // @route   POST api/auth
 // @desc    Authenticate user. User Login
 // @access  Public
@@ -54,10 +41,10 @@ router.post(
             }
 
             console.log('Authenticated User');
-            res.status(201).json(user);
+            return res.status(201).json(user);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send('Server error');
+            return res.status(500).send('Server error');
         }
     }
 );

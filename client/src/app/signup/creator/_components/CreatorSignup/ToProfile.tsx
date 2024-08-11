@@ -1,8 +1,12 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useAppSelector } from "@/redux/store";
 
 const ToProfile = () => {
+
+  const username = useAppSelector((state) => state.userInfoReducer.value.username);
+
   return (
     <div className="flex flex-col w-full">
       {/* Profile Header */}
@@ -14,7 +18,8 @@ const ToProfile = () => {
 
       {/* Next Step Button */}
       <div className="self-end mt-auto">
-        <Link href="/creator/profile">
+        {/* This uses the development URL and will need to be changed */}
+        <Link href={`https://localhost:3000/profile/${username}`}>
           <Button
             variant="contained"
             endIcon={<ArrowForwardIcon />}

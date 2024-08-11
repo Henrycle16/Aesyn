@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import PersonalInformation from "./_components/PersonalInfo";
-import Password from "./_components/Password";
-import AccountManagement from "./_components/AccountManagement";
+import PersonalInfo from "@/app/settings/account/_components/PersonalInfo";
+import AccountManagement from "@/app/settings/account/_components/AccountManagement";
+import Password from "@/app/settings/account/_components/Password";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { getUserById } from "@/actions/userApi";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useSession } from "next-auth/react";
-
 
 export default function AccountPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +42,7 @@ export default function AccountPage() {
     <>
       <h1 className="heading1 ts5-text">My Account</h1>
       {/* Personal Information Section */}
-      <PersonalInformation />
+      <PersonalInfo />
       {/* Password Section */}
       <Password />
       {/* Account Management Section */}
