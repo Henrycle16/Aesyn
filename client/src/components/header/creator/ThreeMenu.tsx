@@ -17,10 +17,10 @@ const ThreeMenu = () => {
     <div className="flex space-x-10">
       <div className="relative">
         <Link
-          href={"#"}
+          href={"/analytics"}
           className="text-sm font-semibold text-gray-700 hover:text-[#3798E3]"
         >
-          Dashboard
+          My Analytics
         </Link>
       </div>
 
@@ -32,7 +32,7 @@ const ThreeMenu = () => {
           onMouseLeave={() => setIsReportsOpen(false)}
           onClick={() => setIsReportsOpen(!isReportsOpen)}
         >
-          Reports
+          My Campaigns
           <span className="text-gray-700">
             <ArrowDropDownIcon
               className={`h-5 w-5 transform transition-transform ${
