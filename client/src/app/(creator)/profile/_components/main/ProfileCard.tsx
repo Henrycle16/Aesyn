@@ -137,13 +137,13 @@ const ProfileCard = () => {
             </div>
           </div>
 
-          {/* Public View Button */}
+          {/* Analytics View Button */}
           <div className="flex flex-col ml-auto mb-24">
             {" "}
             <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]">
               <span className="text-[#3798E3] font-semibold">
                 {" "}
-                See Public View
+                See Analytics View
               </span>
             </button>{" "}
           </div>
