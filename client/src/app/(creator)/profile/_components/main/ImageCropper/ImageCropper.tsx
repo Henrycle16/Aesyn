@@ -108,7 +108,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
             onClick={triggerFileInput}
           >
             <Upload />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="error-text">{error}</p>}
           </div>
         </div>
       )}
@@ -150,13 +150,13 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
             }}
           >
             <button
-              className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5] text-[#3798E3] font-semibold"
+              className="secondary-btn font-semibold"
               onClick={changeImage}
             >
               Change Image
             </button>
             <button
-              className="bg-[#3798E3] text-white font-bold py-3 px-7 capitalize rounded-md hover:bg-[#2C7AB6] ml-3"
+              className="save-btn px-7 ml-3"
               onClick={() => {
                 if (imgRef.current) {
                   setCanvasPreview(
