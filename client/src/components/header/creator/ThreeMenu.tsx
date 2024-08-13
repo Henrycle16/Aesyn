@@ -9,15 +9,17 @@ import {
 } from "@headlessui/react";
 import Link from "next/link";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useAppSelector } from "@/redux/store";
 
 const ThreeMenu = () => {
   const [isReportsOpen, setIsReportsOpen] = useState(false);
+  const username = useAppSelector((state) => state.profileDataReducer.value.username);
 
   return (
     <div className="flex space-x-10">
       <div className="relative">
         <Link
-          href={"/analytics"}
+          href={`/analytics/${username}`}
           className="text-sm font-semibold text-gray-700 hover:text-[#3798E3]"
         >
           My Analytics
