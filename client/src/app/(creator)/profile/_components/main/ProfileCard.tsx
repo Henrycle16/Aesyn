@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 const ProfileCard = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -140,12 +141,15 @@ const ProfileCard = () => {
           {/* Analytics View Button */}
           <div className="flex flex-col ml-auto mb-24">
             {" "}
-            <button className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]">
+            <Link 
+              href={`/analytics/${profileData.username}`}
+              className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]"
+            >
               <span className="text-[#3798E3] font-semibold">
                 {" "}
                 See Analytics View
               </span>
-            </button>{" "}
+            </Link>{" "}
           </div>
         </div>
       </div>
