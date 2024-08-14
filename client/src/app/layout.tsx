@@ -5,9 +5,8 @@ import React from "react";
 // Next-Auth
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/utils/SessionProvider";
-import { ReduxProvider } from "@/redux/provider";
-
 import Toasts from "@/components/toast/Toasts";
+import ReduxProvider from "@/redux/provider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

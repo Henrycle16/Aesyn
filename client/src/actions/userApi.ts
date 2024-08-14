@@ -1,4 +1,3 @@
-import { user } from "@/redux/slices/user-slice";
 import api from "./axiosConfig";
 
 // Get all users

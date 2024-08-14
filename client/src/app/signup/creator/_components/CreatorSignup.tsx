@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { z } from "zod";
 import { FormDataSchema } from "@/lib/zod-schemas/creatorSchema";
@@ -19,7 +18,7 @@ import ProgressBar from "@/components/ui/ProgressBar";
 import { creatorSignUp } from "@/actions/creatorApi";
 import ToProfile from "@/app/signup/creator/_components/CreatorSignup/ToProfile";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -45,62 +44,57 @@ const creatorFormData: CreatorForm = {
 const SignUpBox = () => {
   const [formData, setFormData] = useState<CreatorForm>(creatorFormData);
   const [progress, setProgress] = useState<number>(20);
-  const session = useSession();
+  const { data: session, status } = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector(
-    (state) => state.userInfoReducer.value.currentStep
+  const currentStep = useAppSelector(
+    (state) => state.signUpReducer.value.currentStep
   );
 
+  // Fetch user data from session once authenticated
   useEffect(() => {
-    if (session.data && session.status === "authenticated") {
+    if (session && status === "authenticated") {
       setFormData((prevData) => ({
         ...prevData,
-        user: session.data.user,
+        user: session.user,
       }));
-    } else {
+    } else if (status === "unauthenticated") {
       redirect("/login");
     }
-  }, [currentStep, session.data, session.status]);
+  }, [session, status, currentStep]);
 
-  const {
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { register, getValues, formState: { errors } } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
     mode: "onChange",
   });
 
+  // Handle going back to the previous step
   const onBack = () => {
     dispatch(userInfo({ currentStep: currentStep - 1 }));
   };
 
   const reduxLocation = useAppSelector(
-    (state) => state.userInfoReducer.value.location
+    (state) => state.signUpReducer.value.location
   );
   const userName = useAppSelector(
-    (state) => state.userInfoReducer.value.username
+    (state) => state.signUpReducer.value.username
   );
-  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
+  const gender = useAppSelector((state) => state.signUpReducer.value.gender);
   const preferences = useAppSelector(
-    (state) => state.userInfoReducer.value.preferences
+    (state) => state.signUpReducer.value.preferences
   );
   const interests = useAppSelector(
-    (state) => state.userInfoReducer.value.interests
+    (state) => state.signUpReducer.value.interests
   );
 
   // Method to submit form
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     dispatch(userInfo({ currentStep: currentStep + 1 }));
 
-    // Split the location string and create the location object
+    // Process the location and prepare the payload
     const [city, state, country] = reduxLocation.split(", ");
     const location = { city, state, country };
-
-    // Create the location object and encapsulate it with the form data
     const { user } = formData;
     const body = JSON.stringify({
       user,
@@ -113,74 +107,95 @@ const SignUpBox = () => {
 
     try {
       const creatorSignUpResponse = await creatorSignUp(body);
-
       if (creatorSignUpResponse && !creatorSignUpResponse.data.error) {
         console.log("REGISTERED CREATOR!", creatorSignUpResponse.data);
         dispatch(userInfo({ currentStep: currentStep + 1 }));
+      } else {
+        console.log("API Error:", creatorSignUpResponse.data.error);
       }
-    } catch {
-      console.log("Error!");
+    } catch (error) {
+      console.log("Error during submission:", error);
     }
-    return;
   };
 
-  const steps = [
-    <UsernameForm
-      key="userName"
-      register={register}
-      errors={errors}
-      getValues={getValues}
-    />,
-    <GenderForm key="GenderForm" />,
-    <LocationBox key="LocationBox" />,
-    <SocialMediaSelect key="SocialMediaSelect" />,
-    <InterestSelect key="InterestSelect" />,
-    <ConfirmForm key="ConfirmForm" />,
-    <ToProfile key="ToProfile" />,
-  ];
+  // Render the current step based on the step number
+  const renderStep = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <UsernameForm
+            key="userName"
+            register={register}
+            errors={errors}
+            getValues={getValues}
+          />
+        );
+      case 1:
+        return <GenderForm key="GenderForm"  />;
+      case 2:
+        return <LocationBox  key="LocationBox" />;
+      case 3:
+        return <SocialMediaSelect  key="SocialMediaSelect" />;
+      case 4:
+        return <InterestSelect  key="InterestSelect" />;
+      case 5:
+        return <ConfirmForm  key="ConfirmForm" />;
+      case 6:
+        return <ToProfile key="ToProfile"/>;
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
-    if (currentStep == steps.length - 1) return;
-    const totalSteps = steps.length - 1;
+    if (currentStep == 6) return;
+    const totalSteps = 6;
     const val = ((currentStep + 1) / totalSteps) * 100;
     setProgress(val);
-  }, [currentStep, steps.length]);
+  }, [currentStep]);
 
-  const borderStyle =
-    currentStep !== steps.length - 1 ? "border-b-0 " : "rounded-b-md ";
+  const borderStyle = currentStep !== 6 ? "border-b-0 " : "rounded-b-md ";
 
-  return (
-    <div className="mx-auto max-w-3xl">
-      <form
-        onSubmit={(e) => handleSubmitForm(e)}
-        className={
-          borderStyle +
-          "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
-        }
-      >
-        {/* Back Button */}
-        <div className="flex">
-          {currentStep !== 0 && currentStep !== steps.length - 1 && (
-            <Button
-              onClick={onBack}
-              variant="text"
-              startIcon={<ArrowBackIcon />}
-              className="ts1-text"
-              sx={{ padding: "12px 24px" }}
-            >
-              back
-            </Button>
-          )}
-        </div>
+  // Render component conditionally based on session status
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
-        {/* Render Form Parts Here */}
-        <div className="flex-1 flex justify-center">{steps[currentStep]}</div>
-      </form>
+  if (status === "authenticated") {
+    return (
+      <div className="mx-auto max-w-3xl">
+        <form
+          onSubmit={handleSubmitForm}
+          className={
+            borderStyle +
+            "min-h-[32rem] flex flex-col p-7 border border-gray-300 rounded-t-md"
+          }>
+          {/* Back Button */}
+          <div className="flex">
+            {currentStep !== 0 && currentStep !== 6 && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onBack();
+                }}
+                className="back-btn flex items-center"
+                style={{ padding: "12px 24px", cursor: "pointer" }}>
+                <ArrowBackIcon style={{ marginRight: "8px" }} />
+                Back
+              </button>
+            )}
+          </div>
 
-      {/* Progress Bar */}
-      {currentStep !== steps.length - 1 && <ProgressBar progress={progress} />}
-    </div>
-  );
+          {/* Render Form Parts Here */}
+          <div className="flex-1 flex justify-center">{renderStep()}</div>
+        </form>
+
+        {/* Progress Bar */}
+        {currentStep !== 6 && <ProgressBar progress={progress} />}
+      </div>
+    );
+  }
+  return <div>You need to be logged in to access this page.</div>;
 };
 
 export default SignUpBox;

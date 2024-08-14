@@ -20,8 +20,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { signOut } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
-import { useAppSelector } from "@/redux/store";
-import { resetProfileData } from "@/redux/slices/profileData-slice";
+import { clearPersistedState, useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -46,7 +45,7 @@ const CreatorAvatar: React.FC = () => {
   );
 
   const handleSignOut = () => {
-    dispatch(resetProfileData());
+    clearPersistedState();
     signOut({ redirect: true, callbackUrl: "/" });
   }
 

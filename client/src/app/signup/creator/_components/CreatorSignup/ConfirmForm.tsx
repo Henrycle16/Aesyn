@@ -3,11 +3,19 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useAppSelector } from "@/redux/store";
 
 const ConfirmForm = () => {
-  const username = useAppSelector((state) => state.userInfoReducer.value.username);
-  const gender = useAppSelector((state) => state.userInfoReducer.value.gender);
-  const location = useAppSelector((state) => state.userInfoReducer.value.location);
-  const preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
-  const interests = useAppSelector((state) => state.userInfoReducer.value.interests);
+  const username = useAppSelector(
+    (state) => state.signUpReducer.value.username
+  );
+  const gender = useAppSelector((state) => state.signUpReducer.value.gender);
+  const location = useAppSelector(
+    (state) => state.signUpReducer.value.location
+  );
+  const preferences = useAppSelector(
+    (state) => state.signUpReducer.value.preferences
+  );
+  const interests = useAppSelector(
+    (state) => state.signUpReducer.value.interests
+  );
 
   return (
     <div className="flex flex-col w-full mt-5 ml-20">
@@ -41,9 +49,7 @@ const ConfirmForm = () => {
           <div className="label-text font-semibold text-base ">
             Social Media Preference
           </div>
-          <div className="pt-1 font-light">
-            {preferences.join(", ")}
-          </div>
+          <div className="pt-1 font-light">{preferences.join(", ")}</div>
         </div>
 
         {/* This block is for populating the Interest Selection  */}
@@ -55,14 +61,13 @@ const ConfirmForm = () => {
 
       {/* Next Button */}
       <div className="self-end mt-auto">
-        <Button
+        <button
           type="submit"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          className={`ts1-bg py-3 px-6 flex items-center primary-btn`}
+          style={{ cursor: "pointer" }}>
           Looks Good!
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </button>
       </div>
     </div>
   );

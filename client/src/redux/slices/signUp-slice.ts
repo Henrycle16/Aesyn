@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
-    value: userInfoReducer;
+    value: signUpReducer;
 }
 
-type userInfoReducer = {
+type signUpReducer = {
     isCreator: boolean;
     isBrand: boolean;
     email: string;
@@ -41,14 +41,14 @@ const initialState = {
         preferences: [],
         interests: [],
         currentStep: 0,
-    } as userInfoReducer,
+    } as signUpReducer,
 } as InitialState
 
 export const user = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        userInfo: (state, action: PayloadAction<Partial<userInfoReducer>>) => {
+        userInfo: (state, action: PayloadAction<Partial<signUpReducer>>) => {
             state.value = {
                 ...state.value,
                 ...action.payload,
@@ -86,8 +86,28 @@ export const user = createSlice({
         removePref: (state, action: PayloadAction<string>) => {
             state.value.preferences = state.value.preferences.filter(preferences => preferences !== action.payload);
         },
+        resetSignUp: (state) => {
+            state.value = {
+                isCreator: false,
+                isBrand: false,
+                email: "",
+                companyName: "",
+                industry: "",
+                username: "",
+                gender: "",
+                location: "",
+                lng: -98.5795,
+                lat: 37.8283,
+                zoom: 2.4,
+                markerLocation: null,
+                isLocationSelected: false,
+                preferences: [],
+                interests: [],
+                currentStep: 0,
+            }
+        },
     },
 })
 
-export const {userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addInterest, removeInterest, addPref, removePref} = user.actions
+export const {userInfo, setLocation, setLng, setLat, setZoom, setMarkerLocation, setIsLocationSelected, addInterest, removeInterest, addPref, removePref, resetSignUp} = user.actions
 export default user.reducer
