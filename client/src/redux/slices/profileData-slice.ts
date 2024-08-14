@@ -7,6 +7,7 @@ type InitialState = {
 
 type profileDataReducer = {
   userId: string;
+  creatorId: string;
   firstName: string;
   lastName: string;
   username: string;
@@ -29,6 +30,7 @@ type profileDataReducer = {
 const initialState = {
   value: {
     userId: "",
+    creatorId: "",
     firstName: "",
     lastName: "",
     username: "",

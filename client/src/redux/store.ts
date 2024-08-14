@@ -4,6 +4,7 @@ import profileDataReducer from "./slices/profileData-slice";
 import signUpReducer from "./slices/signUp-slice";
 import creatorPackagesReducer from "./slices/creatorPackages-slice";
 import creatorContentReducer from "./slices/creatorPortfolio-slice";
+import instagramDataReducer from './slices/instagramData-slice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   signUpReducer,
   creatorPackagesReducer,
   creatorContentReducer,
+        instagramDataReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
