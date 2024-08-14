@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Youtube from "@/components/svgs/Youtube";
 import Instagram from "@/components/svgs/Instagram";
@@ -11,36 +11,64 @@ import SocialMediaCard from "./SocialMediaCard";
 import Twitch from "@/components/svgs/Twitch";
 
 import InstagramTile from "@/components/buttons/InstagramTile";
+import { useAppSelector } from "@/redux/store";
 
-const socialMediaData = [
+const testData = [
   {
-    id: 0,
-    socialMedia: "Instagram",
-    username: "Jane Doe",
-    followers: "150k",
-    avgPosts: 150,
-    component: <Instagram />,
-  },
-  {
-    id: 1,
+    _id: "1",
     socialMedia: "Tiktok",
     username: "Henrayleeee",
-    followers: "50M",
-    avgPosts: 1,
+    followersCount: 50,
+    profilePictureURL: "",
     component: <Tiktok />,
   },
   {
-    id: 2,
+    _id: "2",
     socialMedia: "Youtube",
     username: "Henrie",
-    followers: "100",
-    avgPosts: 200,
+    followersCount: 100,
+    profilePictureURL: "",
     component: <Youtube />,
   },
 ];
 
+type SocialMediaData = {
+  _id: string;
+  username: string;
+  followersCount: number;
+  profilePictureURL: string;
+  socialMedia: string;
+  component: React.JSX.Element;
+};
+
 const SocialMedia = () => {
   const [isModalClosed, setIsModalClosed] = useState(false);
+  const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);;
+
+  const { _id, username, followersCount, profilePictureURL} = useAppSelector(
+    (state) => state.instagramDataReducer.value
+  );
+
+  // This useEffect is temporary to display testData
+  useEffect(() => {
+    setSocialMediaData(testData);
+  }, []);
+
+  useEffect(() => {
+    const instagramData = { 
+      _id, 
+      username, 
+      followersCount, 
+      profilePictureURL, 
+      socialMedia: "Instagram", 
+      component: <Instagram /> 
+    };
+
+    setSocialMediaData((prevData) => [
+      ...prevData.filter(data => data.socialMedia !== "Instagram"),
+      instagramData
+    ]);
+  }, [_id, username, followersCount, profilePictureURL]);
 
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
   const SocialTiles = ({
@@ -93,11 +121,11 @@ const SocialMedia = () => {
           />
         </div>
         <div className="flex flex-col">
-          {isModalClosed ? (
+          {socialMediaData.length > 0 ? (
             <div className="grid grid-cols-2 grid-rows-2 gap-x-8 gap-y-9">
               {socialMediaData.map((socialMediaData) => (
                 <SocialMediaCard
-                  key={socialMediaData.id}
+                  key={socialMediaData._id}
                   {...socialMediaData}
                 />
               ))}
