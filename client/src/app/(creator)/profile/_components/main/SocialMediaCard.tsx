@@ -5,7 +5,6 @@ type Props = {
   socialMedia: string;
   username: string;
   followersCount: number;
-  avgPosts?: number;
   profilePictureURL?: string;
   component: React.ReactNode;
 };
