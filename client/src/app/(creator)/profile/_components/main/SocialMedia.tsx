@@ -64,10 +64,12 @@ const SocialMedia = () => {
       component: <Instagram /> 
     };
 
-    setSocialMediaData((prevData) => [
-      ...prevData.filter(data => data.socialMedia !== "Instagram"),
-      instagramData
-    ]);
+    if(_id !== "" && _id !== null){
+      setSocialMediaData((prevData) => [
+        ...prevData.filter(data => data.socialMedia !== "Instagram"),
+        instagramData
+      ]);
+    }
   }, [_id, username, followersCount, profilePictureURL]);
 
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
