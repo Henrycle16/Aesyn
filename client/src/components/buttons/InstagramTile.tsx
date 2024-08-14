@@ -20,9 +20,7 @@ const InstagramTile = () => {
 
   const getIGData = async (creatorId: string) => {
     try {
-      console.log("Creator Id: " + creatorId);
       const response = await getInstagramDataById(creatorId);
-      console.log(response.data);
       if (response.data) setIsSocialLinked(true);
 
     } catch (error) {
@@ -33,14 +31,12 @@ const InstagramTile = () => {
   const sendAccessTokenToBackend = async (accessToken: String) => {
     try {
       if (!creatorId) {
-        console.log("Creator ID not found");
         return;
       }
       const response = await axios.post(
         `http://localhost:5000/api/instagram/check/${creatorId}`,
         { accessToken }
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
