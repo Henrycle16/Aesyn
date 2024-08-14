@@ -23,7 +23,7 @@ const ToProfile = () => {
           <Button
             variant="contained"
             endIcon={<ArrowForwardIcon />}
-            className="bg-muiblue py-3 px-6"
+            className="primary-btn py-3 px-6"
             onClick = {() => {
               clearPersistedState();
              }}
