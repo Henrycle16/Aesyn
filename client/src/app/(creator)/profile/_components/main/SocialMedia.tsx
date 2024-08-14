@@ -13,25 +13,6 @@ import Twitch from "@/components/svgs/Twitch";
 import InstagramTile from "@/components/buttons/InstagramTile";
 import { useAppSelector } from "@/redux/store";
 
-const testData = [
-  {
-    _id: "1",
-    socialMedia: "Tiktok",
-    username: "Henrayleeee",
-    followersCount: 50,
-    profilePictureURL: "",
-    component: <Tiktok />,
-  },
-  {
-    _id: "2",
-    socialMedia: "Youtube",
-    username: "Henrie",
-    followersCount: 100,
-    profilePictureURL: "",
-    component: <Youtube />,
-  },
-];
-
 type SocialMediaData = {
   _id: string;
   username: string;
@@ -48,11 +29,6 @@ const SocialMedia = () => {
   const { _id, username, followersCount, profilePictureURL} = useAppSelector(
     (state) => state.instagramDataReducer.value
   );
-
-  // This useEffect is temporary to display testData
-  useEffect(() => {
-    setSocialMediaData(testData);
-  }, []);
 
   useEffect(() => {
     const instagramData = { 
