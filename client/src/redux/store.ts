@@ -4,6 +4,7 @@ import profileDataReducer from './slices/profileData-slice'
 import userInfoReducer from './slices/user-slice'
 import creatorPackagesReducer from './slices/creatorPackages-slice'
 import creatorContentReducer from './slices/creatorPortfolio-slice'
+import instagramDataReducer from './slices/instagramData-slice'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         userInfoReducer,
         creatorPackagesReducer,
         creatorContentReducer,
+        instagramDataReducer,
     },
 })
 
