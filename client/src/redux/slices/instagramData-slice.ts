@@ -5,6 +5,7 @@ type InitialState = {
 };
 
 type instagramDataReducer = {
+  _id: string;
   creatorId: string;
   pageId: string;
   businessId: string;
@@ -21,6 +22,7 @@ type instagramDataReducer = {
 
 const initialState = {
   value: {
+    _id: "",
     creatorId: "",
     pageId: "",
     businessId: "",

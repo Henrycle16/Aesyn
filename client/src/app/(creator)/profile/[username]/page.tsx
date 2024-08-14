@@ -98,6 +98,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
         // Dispatching creator instagram data to redux store
         dispatch(
           instagramDataInfo({
+            _id: instagramData.data._id,
             creatorId: instagramData.data.creatorID,
             pageId: instagramData.data.pageID,
             businessId: instagramData.data.businessID,
