@@ -36,18 +36,22 @@ const Interests = () => {
   const userId = session.data?.user.id;
 
   useEffect(() => {
-    const initialSelectedInterests = interests.map((interest) => {
-      const interestObject = interestsArray.find(
-        (item) => item.label === interest
-      );
-      return interestObject
-        ? { value: interestObject.key.toString(), label: interestObject.label }
-        : null;
-    }).filter(Boolean) as OptionType[];
+    const initialSelectedInterests = interests
+      .map((interest) => {
+        const interestObject = interestsArray.find(
+          (item) => item.label === interest
+        );
+        return interestObject
+          ? {
+              value: interestObject.key.toString(),
+              label: interestObject.label,
+            }
+          : null;
+      })
+      .filter(Boolean) as OptionType[];
     setSelectedInterests(initialSelectedInterests);
     setIsLimitExceeded(6 - interests.length < 0);
   }, [interests]);
-
 
   // Handles the form submission
   const onFormSubmit = async () => {
@@ -109,14 +113,19 @@ const Interests = () => {
 
   const closeModal = () => {
     setSelectedInterests(
-      interests.map((interest) => {
-        const interestObject = interestsArray.find(
-          (item) => item.label === interest
-        );
-        return interestObject
-          ? { value: interestObject.key.toString(), label: interestObject.label }
-          : { value: "", label: "" };
-      }).filter(interest => interest.value !== "")
+      interests
+        .map((interest) => {
+          const interestObject = interestsArray.find(
+            (item) => item.label === interest
+          );
+          return interestObject
+            ? {
+                value: interestObject.key.toString(),
+                label: interestObject.label,
+              }
+            : { value: "", label: "" };
+        })
+        .filter((interest) => interest.value !== "")
     );
     (document.getElementById(`interests_modal`) as HTMLDialogElement).close();
   };
@@ -124,13 +133,11 @@ const Interests = () => {
   return (
     <div className="border-r border-gray-300 py-8 px-10">
       <div className="flex justify-start">
-        <h1 className="text-2xl font-semibold text-[#184465]">Interests </h1>
+        <h1 className="heading1 text-ts5">Interests </h1>
         <ModeEditOutlineOutlinedIcon
           sx={{ fontSize: 25 }}
-          className={`border-2 rounded-full p-[.12rem] cursor-pointer ml-3 mt-1 ${
-            isHovered
-              ? "text-white border-[#3798E3] bg-[#3798E3]"
-              : "text-[#3798E3] border-[#D7D7D7] bg-white"
+          className={`mode-edit-icon ml-3 mt-1 ${
+            isHovered ? "mode-edit-icon-hovered" : "mode-edit-icon-default"
           }`}
           onClick={openModal}
           onMouseEnter={() => {
@@ -145,22 +152,21 @@ const Interests = () => {
         {interests.map((data, index) => (
           <div
             key={index}
-            className="rounded-3xl text-base font-semibold w-auto py-2 px-6 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
-          >
+            className="rounded-3xl text-base font-semibold w-auto py-2 px-6 ts4-bg ts1-text border-[1.5px] border-[#3798E3] inline-flex items-center justify-center">
             {data}
           </div>
         ))}
       </div>
 
       <dialog id="interests_modal" className="modal">
-        <div className="modal-box bg-white text-[#061119] min-w-[60.625rem] min-h-[27.938rem] pt-8 px-10 pb-6 overflow-y-hidden">
+        <div className="modal-box bg-white ts7-text min-w-[60.625rem] min-h-[27.938rem] pt-8 px-10 pb-6 overflow-y-hidden">
           <h1 className="text-[#184465] font-semibold text-2xl">Interests</h1>
           <h2 className="py-2 gc-label-color body1">
             Add or remove interests that best match your content for brands to
             see. You can choose up to 6.
           </h2>
 
-          <div className="font-bold py-2 text-[#4A4A4A]">Add Interests</div>
+          <div className="font-bold py-2 g5-text">Add Interests</div>
 
           <div className="flex flex-row min-h-56">
             <div className="sm:text-sm w-80">
@@ -170,32 +176,32 @@ const Interests = () => {
                 instanceId="interests-select"
                 closeMenuOnSelect={selectedInterests.length === 5}
                 options={options}
-                onChange={(newValue, actionMeta) => handleInterestChange(newValue as OptionType[])}
+                onChange={(newValue, actionMeta) =>
+                  handleInterestChange(newValue as OptionType[])
+                }
                 value={selectedInterests}
                 components={{ ValueContainer }}
                 placeholder="[Select]"
                 isDisabled={selectedInterests.length >= 6}
               />
               {selectedInterests.length === 6 && (
-                <div className="text-[#B21717] mt-2">
+                <div className="error-text mt-2">
                   You can select a maximum of 6 interests. Please deselect one
                   before adding another.
                 </div>
               )}
             </div>
 
-            <div className="flex-grow border border-gray-300 rounded-md max-w-[31.063rem] ml-6 py-3 px-4 overflow-auto">
+            <div className="flex-grow border g3-border rounded-md max-w-[31.063rem] ml-6 py-3 px-4 overflow-auto">
               <div className="flex flex-wrap gap-x-2 gap-y-3">
                 {selectedInterests.map((interest) => (
                   <div
                     key={interest.value}
-                    className="rounded-3xl text-base font-semibold w-auto py-2 px-4 bg-[#D8EEFE] text-[#3798E3] border-[1.5px] border-[#3798E3] inline-flex items-center justify-center"
-                  >
+                    className="rounded-3xl text-base font-semibold w-auto py-2 px-4 ts4-bg ts1-text border-[1.5px] ts1-border inline-flex items-center justify-center">
                     {interest.label}
                     <button
-                      className="ml-3 text-[#6D6D6D] font-semibold"
-                      onClick={() => removeInterest(interest)}
-                    >
+                      className="ml-3 g4-text font-semibold"
+                      onClick={() => removeInterest(interest)}>
                       X
                     </button>
                   </div>
@@ -209,20 +215,18 @@ const Interests = () => {
               <button
                 type="submit"
                 disabled={selectedInterests.length === 0}
-                className={`ml-auto py-3 px-6 capitalize font-bold rounded-lg text-white ${
+                className={`save-btn ml-auto ${
                   selectedInterests.length === 0
-                    ? "bg-gray-400 hover:bg-gray-400"
-                    : "bg-[#3798E3] hover:bg-[#2C7AB6]"
-                }`}
-              >
+                    ? "bg-g3 hover:bg-g3"
+                    : "bg-ts1 hover:bg-ts2"
+                }`}>
                 Save
               </button>
             </div>
             <button
               type="button"
               onClick={closeModal}
-              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-            >
+              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
               ✕
             </button>
           </form>

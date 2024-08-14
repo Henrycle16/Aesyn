@@ -89,6 +89,9 @@
   .ts1-text {
     @apply text-[var(--ts1)];
   }
+  .ts1-border {
+    @apply border-[var(--ts1)];
+  }
   /* TS2 - Hover Buttons */
   .ts2-bg {
     @apply bg-[var(--ts2)];
@@ -127,6 +130,10 @@
   /* TS10 - Success; Linked Icon; linked border */
   .ts10-bg {
     @apply bg-[var(--ts10)];
+  }
+
+  .error-text {
+    @apply text-[var(--ts8)] text-sm;
   }
 
   /* Typography */
@@ -169,16 +176,29 @@
   .input-focus-primary {
     @apply focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[var(--ts1)] focus:border-[var(--ts1)] focus:bg-[var(--g1)] border-[var(--g3)];
   }
-
   /* Button */
   .primary-btn {
     @apply inline-flex text-white bg-[var(--ts1)] border-0 focus:outline-none hover:bg-[var(--ts2)] rounded items-center justify-center py-2 px-6 disabled:text-[var(--g4)] disabled:bg-[var(--g3)];
   }
   .secondary-btn {
-    @apply inline-flex text-[var(--ts1)] border-solid border-2 border-[var(--ts1)] focus:outline-none hover:bg-[var(--g3)] rounded items-center justify-center py-2 px-6 disabled:text-[var(--g4)] disabled:bg-[var(--g3)];
+    @apply inline-flex text-[var(--ts1)] border-solid border-2 border-[var(--ts1)] focus:outline-none hover:bg-[var(--g1)] rounded flex items-center justify-center py-2 px-6 disabled:text-[var(--g4)] disabled:bg-[var(--g3)];
   }
   .delete-btn {
     @apply inline-flex text-white bg-[var(--ts8)] focus:outline-none hover:bg-[var(--ts9)] rounded items-center justify-center py-2 px-6;
+  }
+  .save-btn {
+    @apply bg-[var(--ts1)] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[var(--ts2)] disabled:text-[var(--g4)] disabled:bg-[var(--g3)];
+  }
+
+   /* Mode Edit Outline Icon */
+   .mode-edit-icon {
+    @apply border-2 rounded-full p-[.12rem] ml-auto cursor-pointer;
+  }
+  .mode-edit-icon-hovered {
+    @apply text-white border-[var(--ts1)] bg-[var(--ts1)];
+  }
+  .mode-edit-icon-default {
+    @apply text-[var(--ts1)] border-[var(--g3)] bg-white;
   }
 }
 
