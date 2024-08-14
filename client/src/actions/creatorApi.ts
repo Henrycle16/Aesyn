@@ -55,7 +55,7 @@ const getAllCreators = (userId: string) => {
 };
 
 //Update Creator Interests
-const  updateCreatorInterests = (userId: string, interests: string[]) => { 
+const updateCreatorInterests = (userId: string, interests: string[]) => { 
   return api().put(`/api/creators/${userId}/interests`, {interests} );
 };
 

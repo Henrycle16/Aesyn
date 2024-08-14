@@ -146,7 +146,7 @@ const ProfileCard = () => {
           <div className="flex flex-col ml-auto mb-24">
             {" "}
             <button className="border-solid border-2 ts1-border py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]">
-              <span className="ts1-border font-semibold">
+              <span className="text-[#3798E3] font-semibold">
                 {" "}
                 See Public View
               </span>

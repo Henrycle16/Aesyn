@@ -1,30 +1,40 @@
-'use client'
+"use client";
 
 import { updateUserSelf } from "@/actions/userApi";
-import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import {
+  profileDataInfo,
+  selectEmailSettings,
+} from "@/redux/slices/profileData-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import Switch from "@mui/material/Switch";
 import { useSession } from "next-auth/react";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 export default function NotificationPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const emailSettings = useAppSelector((state) => ({
-    communicationEmail: state.profileDataReducer.value.communicationEmail,
-    marketingEmail: state.profileDataReducer.value.marketingEmail,
-    messageEmail: state.profileDataReducer.value.messageEmail,
-    securityEmail: state.profileDataReducer.value.securityEmail,
-  }));
+  const emailSettings = useAppSelector(selectEmailSettings);
 
   const [localEmail, setLocalEmail] = useState(emailSettings);
+  const [isChanged, setIsChanged] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
 
-  const handleChange = (key: keyof typeof emailSettings) => (event: ChangeEvent<HTMLInputElement>) => {
-    setLocalEmail({ ...localEmail, [key]: event.target.checked });
-  };
+  useEffect(() => {
+    setHydrated(true); // Set hydration to true after the component mounts
+  }, []);
+
+  useEffect(() => {
+    setIsChanged(JSON.stringify(localEmail) !== JSON.stringify(emailSettings));
+  }, [localEmail, emailSettings]);
+
+  const handleChange =
+    (key: keyof typeof emailSettings) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setLocalEmail({ ...localEmail, [key]: event.target.checked });
+    };
 
   const handleSubmit = async () => {
     try {
@@ -38,7 +48,6 @@ export default function NotificationPage() {
       console.error("Failed to update user settings:", error);
     }
   };
-
 
   return (
     <>
@@ -55,11 +64,13 @@ export default function NotificationPage() {
                 Receive emails about your account activity.
               </p>
             </div>
-            <Switch
-              checked={localEmail.communicationEmail}
-              onChange={handleChange("communicationEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.communicationEmail}
+                onChange={handleChange("communicationEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -69,11 +80,13 @@ export default function NotificationPage() {
                 ShareFluence.
               </p>
             </div>
-            <Switch
-              checked={localEmail.marketingEmail}
-              onChange={handleChange("marketingEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.marketingEmail}
+                onChange={handleChange("marketingEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -82,11 +95,13 @@ export default function NotificationPage() {
                 Receive emails when you receive messages.
               </p>
             </div>
-            <Switch
-              checked={localEmail.messageEmail}
-              onChange={handleChange("messageEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.messageEmail}
+                onChange={handleChange("messageEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
           <div className="flex justify-between">
             <div>
@@ -95,14 +110,21 @@ export default function NotificationPage() {
                 Receive emails about your account security.
               </p>
             </div>
-            <Switch
-              checked={localEmail.securityEmail}
-              onChange={handleChange("securityEmail")}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+            {hydrated && (
+              <Switch
+                checked={localEmail.securityEmail}
+                onChange={handleChange("securityEmail")}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            )}
           </div>
         </div>
-        <button className="primary-btn mr-auto mt-auto" onClick={handleSubmit}>
+        <button
+          className={`mr-auto mt-auto ${
+            isChanged ? "primary-btn" : "primary-btn"
+          }`}
+          onClick={handleSubmit}
+          disabled={!isChanged}>
           Update
         </button>
       </section>

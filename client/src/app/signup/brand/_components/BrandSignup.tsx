@@ -16,7 +16,7 @@ import ToDashboard from "./BrandSignup/ToDashboard";
 import LocationBox from "../../_components/mapbox/LocationBox";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { brandSignUp } from "../../../../actions/brand";
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -44,7 +44,7 @@ const SignUpBox = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   let currentStep = useAppSelector(
-    (state) => state.userInfoReducer.value.currentStep
+    (state) => state.signUpReducer.value.currentStep
   );
 
   useEffect(() => {
@@ -72,16 +72,16 @@ const SignUpBox = () => {
   };
 
   const reduxLocation = useAppSelector(
-    (state) => state.userInfoReducer.value.location
+    (state) => state.signUpReducer.value.location
   );
   const industry = useAppSelector(
-    (state) => state.userInfoReducer.value.industry
+    (state) => state.signUpReducer.value.industry
   );
   const companyName = useAppSelector(
-    (state) => state.userInfoReducer.value.companyName
+    (state) => state.signUpReducer.value.companyName
   );
   const preferences = useAppSelector(
-    (state) => state.userInfoReducer.value.preferences
+    (state) => state.signUpReducer.value.preferences
   );
 
   // Method to submit form
