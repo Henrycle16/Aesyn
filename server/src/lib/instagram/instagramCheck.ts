@@ -9,7 +9,7 @@ interface BasicUserInfo {
     followers_count: string;
 }
 
-const instagramUserCheck = async (accessToken: String) => {
+const instagramUserCheck = async (accessToken: string, creatorId: string) => {
     try {
 
         // Get pageID of user
@@ -27,12 +27,12 @@ const instagramUserCheck = async (accessToken: String) => {
             const basicUserInfo = await getBasicUserInfo(businessID, accessToken) as BasicUserInfo;
             const { name, userName, profilePicURL, followers_count } = basicUserInfo;
 
-            const testCreatorID = '65de95dc2c98cba944efb3ab';
+            // const testCreatorID = '667cd4f6436c83a8503fec68';
 
             const longtoken = await getLongLivedAccessToken(accessToken);
 
             const userPayload = {
-                creatorID: testCreatorID,
+                creatorID: creatorId,
                 pageID: pageID,
                 businessID: businessID,
                 longLivedAccessToken: longtoken,
@@ -56,7 +56,7 @@ const instagramUserCheck = async (accessToken: String) => {
     
 }
 
-const instagramInsights = async (businessID: String, accessToken: String) => {
+const instagramInsights = async (businessID: string, accessToken: string) => {
     try {
 
         const monthylyImpressionsAndReach = await getMonthlyUserImpressionsAndReach(businessID, accessToken)
@@ -72,7 +72,7 @@ const instagramInsights = async (businessID: String, accessToken: String) => {
     
 }
 
-const getInsights = async (businessID: String) => {
+const getInsights = async (businessID: string) => {
     // Find the user with the given businessId
     const user = await InstagramData.findOne({ businessID: businessID });
 

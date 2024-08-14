@@ -212,7 +212,7 @@ const EditPersonal = () => {
                         />
                       </ReactCrop>
                     </div>
-                    <p className="text-gray-400 text-xs">
+                    <p className="g5-text text-sm">
                       Crop the image for your portfolio thumbnail.
                     </p>
                   </div>
