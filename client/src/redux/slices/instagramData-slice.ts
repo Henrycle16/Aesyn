@@ -22,6 +22,17 @@ type instagramDataReducer = {
 const initialState = {
   value: {
     creatorId: "",
+    pageId: "",
+    businessId: "",
+    longLivedAccessToken: "",
+    username: "",
+    profilePictureURL: "",
+    followersCount: 0,
+    followersTopCities: {},
+    followersAge: {},
+    followersGender: {},
+    monthlyImpressions: 0,
+    monthlyReach: 0,
   } as instagramDataReducer,
 } as InitialState;
 
