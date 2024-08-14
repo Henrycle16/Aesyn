@@ -28,7 +28,7 @@
     "@types/react-easy-crop": "^2.0.0",
     "@types/validator": "^13.11.10",
     "apexcharts": "^3.49.0",
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "dayjs": "^1.11.10",
     "follow-redirects": "1.15.6",
     "framer-motion": "^11.3.8",
