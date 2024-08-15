@@ -1,6 +1,7 @@
 "use clients";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import { getCreatorByUsername } from "@/actions/creatorApi";
 import { z } from "zod";
@@ -11,12 +12,14 @@ import { creatorMyAccountUpdate } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { userEmailUpdate } from "@/actions/userApi";
+import { showSuccessToast } from "@/utils/toast/toastEmitters";
 
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
   const [location, setLocation] = useState("");
   const session = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (!session.data && session.status === "unauthenticated") {
@@ -58,6 +61,8 @@ export default function PersonalInfo() {
 
     try {
       creatorMyAccountUpdate(session.data?.user.id, result);
+      showSuccessToast();
+      setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
       console.log(error);
     }

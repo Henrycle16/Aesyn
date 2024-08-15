@@ -8,6 +8,7 @@ import { PasswordResetSchema } from "@/lib/zod-schemas/passwordResetSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { userPasswordUpdate } from "@/actions/userApi";
+import { showSuccessToast } from "@/utils/toast/toastEmitters";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -22,8 +23,7 @@ const PasswordInfo = () => {
   const [password, setPassword] = useState("");
   const session = useSession();
 
-  useEffect(() => {
-  }, [session.data, session.status]);
+  useEffect(() => {}, [session.data, session.status]);
 
   const {
     register,
@@ -36,29 +36,35 @@ const PasswordInfo = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("SESSION: ", session.data?.user.email)
+    console.log("SESSION: ", session.data?.user.email);
 
     const loginResponse = await signIn("login", {
       email: session.data?.user.email,
       password: password,
       redirect: false,
     });
-    
+
     if (loginResponse && !loginResponse.error) {
-      console.log("Authenticated!");
-      interface LooseObject {
-        [key: string]: any
-      }
-      const result: LooseObject = {}
-      // Function to call post to replace password
-      for (const [key, value] of Object.entries(data)) {
-        if(key === 'password' && value !== '') {
-          result[key] = value
+      try {
+        console.log("Authenticated!");
+        interface LooseObject {
+          [key: string]: any;
         }
+        const result: LooseObject = {};
+        // Function to call post to replace password
+        for (const [key, value] of Object.entries(data)) {
+          if (key === "password" && value !== "") {
+            result[key] = value;
+          }
+        }
+        userPasswordUpdate(session.data?.user.id, result);
+        showSuccessToast();
+        setTimeout(() => window.location.reload(), 3000);
+      } catch (error) {
+        console.log(error);
       }
-      userPasswordUpdate(session.data?.user.id, result)
     } else {
-      console.log("Error!");
+      console.log("Wrong Password!");
     }
   };
 
@@ -100,8 +106,7 @@ const PasswordInfo = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-0 pr-3 text-sm leading-5"
-                >
+                  className="absolute right-0 pr-3 text-sm leading-5">
                   {showPassword ? (
                     <VisibilityIcon className="h-5 w-5 g5-text" />
                   ) : (
@@ -127,8 +132,7 @@ const PasswordInfo = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility1}
-                className="absolute right-0 pr-3 text-sm leading-5"
-              >
+                className="absolute right-0 pr-3 text-sm leading-5">
                 {showPassword1 ? (
                   <VisibilityIcon className="h-5 w-5 g5-text" />
                 ) : (
@@ -155,8 +159,7 @@ const PasswordInfo = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility2}
-                className="absolute right-0 pr-3 text-sm leading-5"
-              >
+                className="absolute right-0 pr-3 text-sm leading-5">
                 {showPassword2 ? (
                   <VisibilityIcon className="h-5 w-5 g5-text" />
                 ) : (
@@ -168,12 +171,18 @@ const PasswordInfo = () => {
               {errors.password2?.message}
             </p>
           </div>
-          <button disabled={(!getValues("password") || !getValues("password2")) || !!errors.password || !!errors.password2} type="submit" className="primary-btn button w-24">
+          <button
+            disabled={
+              !getValues("password") ||
+              !getValues("password2") ||
+              !!errors.password ||
+              !!errors.password2
+            }
+            type="submit"
+            className="primary-btn button w-24">
             Save
           </button>
         </form>
-
-        
       </div>
     </section>
   );
