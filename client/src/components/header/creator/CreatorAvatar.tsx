@@ -23,6 +23,7 @@ import { redirect, useRouter } from "next/navigation";
 import { clearPersistedState, useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
+import { profile } from "console";
 
 const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
@@ -40,9 +41,7 @@ const CreatorAvatar: React.FC = () => {
   }, [dispatch, session.data, session.status]);
 
   // redux store
-  const authStore = useAppSelector(
-    (state) => state.authReducer.value
-  );
+  const profileStore = useAppSelector((state) => state.profileDataReducer.value)
 
   const handleSignOut = () => {
     clearPersistedState();
@@ -60,6 +59,10 @@ const CreatorAvatar: React.FC = () => {
   const handleSettings = () => {
     router.push("/settings/account")
   };
+
+  const handleProfile = () => {
+    router.push(`/profile/${profileStore.username}`)
+  }
 
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
@@ -91,14 +94,14 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography className="ts5-text subheader1">{authStore.name}</Typography>
+          <Typography className="ts5-text subheader1">{profileStore.firstName} {profileStore.lastName}</Typography>
           <Typography className="">
-            {authStore.email}
+            {profileStore.email}
           </Typography>
         </Box>
         <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem className="g5-text" onClick={handleClose}>
+        <MenuItem className="g5-text" onClick={handleProfile}>
           <ListItemIcon>
             <PersonOutlineOutlinedIcon className="g5-text" fontSize="medium" />
           </ListItemIcon>

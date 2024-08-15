@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
-import { getCreatorByUsername } from "@/actions/creatorApi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfoSchema } from "@/lib/zod-schemas/personalInfoSchema";
@@ -19,9 +18,8 @@ type Inputs = z.infer<typeof PersonalInfoSchema>;
 export default function PersonalInfo() {
   const [location, setLocation] = useState("");
   const { data: session, status } = useSession();
-  const router = useRouter();
 
-  const authStore = useAppSelector((state) => state.authReducer.value);
+  const profileStore = useAppSelector((state) => state.profileDataReducer.value)
 
   const { register, handleSubmit, getValues, formState: { errors } } = useForm<Inputs>({
     resolver: zodResolver(PersonalInfoSchema),
@@ -32,6 +30,7 @@ export default function PersonalInfo() {
     if (status === "authenticated") {
       // You can now safely interact with session data
       // For example, set any default form values or states based on session.user
+      console.log("P STROE: ",profileStore);
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
@@ -68,12 +67,14 @@ export default function PersonalInfo() {
     return <div>Loading...</div>; // or a loading spinner
   }
 
+  const reduxLocation = profileStore.city + ", " + profileStore.state + ", " + profileStore.country
+
   return (
     <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
       <div className="col-span-1 p-6">
         <h2 className="subheader2 ts5-text pb-4"> Personal Information </h2>
         <h2 className="body2 ts5-text"> Name </h2>
-        <p>{authStore.name}</p>
+        <p>{profileStore.firstName} {profileStore.lastName}</p>
         <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <h2 className="body2 ts5-text"> Username </h2>
@@ -82,7 +83,7 @@ export default function PersonalInfo() {
               className="input-md w-full input-focus-primary"
               type="text"
               id="userName"
-              placeholder="Type here"
+              placeholder={profileStore.username}
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault();
               }}
@@ -99,7 +100,7 @@ export default function PersonalInfo() {
                 className="input-md w-full input-focus-primary"
                 type="email"
                 id="email"
-                placeholder={authStore.email}
+                placeholder={profileStore.email}
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
@@ -118,6 +119,7 @@ export default function PersonalInfo() {
                 className="input-md w-full input-focus-primary"
                 type="text"
                 id="location"
+                placeholder={reduxLocation}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setLocation(e.target.value)
                 }
