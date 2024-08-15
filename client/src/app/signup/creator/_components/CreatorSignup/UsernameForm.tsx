@@ -3,7 +3,7 @@
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo } from "@/redux/slices/user-slice";
+import { userInfo } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -14,19 +14,18 @@ interface UsernameFormProps {
   getValues: any;
 }
 
-const UsernameForm = ({
-  register,
-  errors,
-  getValues,
-}: UsernameFormProps) => {
-
+const UsernameForm = ({ register, errors, getValues }: UsernameFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
+  let currentStep = useAppSelector(
+    (state) => state.signUpReducer.value.currentStep
+  );
 
   const onNext = () => {
     dispatch(userInfo({ username: getValues('userName').toLowerCase() }));
     dispatch(userInfo({ currentStep: currentStep + 1 }));
-  }
+  };
+
+  const isDisabled = !getValues("userName") || !!errors.userName;
 
   return (
     <div className="flex flex-col w-full">
@@ -43,7 +42,9 @@ const UsernameForm = ({
             id="userName"
             name="userName"
             autoComplete="name"
-            onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+            onKeyDown={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             {...register("userName")}
           />
           <p className="mt-1 text-sm text-red-400 min-h-5">
@@ -54,16 +55,14 @@ const UsernameForm = ({
 
       {/* Next Button */}
       <div className="self-end">
-        <Button
-          disabled={!getValues('userName') || !!errors.userName}
+        <button
           onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          disabled={isDisabled}
+          className="ts1-bg py-3 px-6 flex items-center justify-center primary-btn"
+          style={{ pointerEvents: isDisabled ? "none" : "auto" }}>
           Next
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </button>
       </div>
     </div>
   );

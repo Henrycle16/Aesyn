@@ -10,7 +10,7 @@ import {
   setZoom,
   setMarkerLocation,
   setIsLocationSelected,
-} from "@/redux/slices/user-slice";
+} from "@/redux/slices/signUp-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/redux/store";
@@ -19,24 +19,26 @@ const LocationBox = ({}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const currentStep = useAppSelector(
-    (state) => state.userInfoReducer.value.currentStep
+    (state) => state.signUpReducer.value.currentStep
   );
   const location = useAppSelector(
-    (state) => state.userInfoReducer.value.location
+    (state) => state.signUpReducer.value.location
   );
-  const lng = useAppSelector((state) => state.userInfoReducer.value.lng);
-  const lat = useAppSelector((state) => state.userInfoReducer.value.lat);
-  const zoom = useAppSelector((state) => state.userInfoReducer.value.zoom);
+  const lng = useAppSelector((state) => state.signUpReducer.value.lng);
+  const lat = useAppSelector((state) => state.signUpReducer.value.lat);
+  const zoom = useAppSelector((state) => state.signUpReducer.value.zoom);
   const markerLocation = useAppSelector(
-    (state) => state.userInfoReducer.value.markerLocation
+    (state) => state.signUpReducer.value.markerLocation
   );
   const isLocationSelected = useAppSelector(
-    (state) => state.userInfoReducer.value.isLocationSelected
+    (state) => state.signUpReducer.value.isLocationSelected
   );
 
   const onNext = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
   };
+
+  const isDisabled = !isLocationSelected;
 
   return (
     <div className="flex flex-col w-full">
@@ -78,16 +80,14 @@ const LocationBox = ({}) => {
 
       {/* Next Button */}
       <div className="self-end mt-auto">
-        <Button
-          disabled={!isLocationSelected}
+        <button
           onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          disabled={isDisabled}
+          className="ts1-bg py-3 px-6 flex items-center justify-center primary-btn"
+          style={{ pointerEvents: isDisabled ? "none" : "auto" }}>
           Next
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </button>
       </div>
     </div>
   );

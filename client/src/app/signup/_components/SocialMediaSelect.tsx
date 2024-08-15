@@ -11,7 +11,7 @@ import {
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import { userInfo, removePref, addPref } from "@/redux/slices/user-slice";
+import { userInfo, removePref, addPref } from "@/redux/slices/signUp-slice";
 import { useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
@@ -26,11 +26,14 @@ const socialMediasArray = [
   { key: 5, label: "Facebook", icon: <FaFacebook /> },
 ];
 
-const SocialMediaSelect = ({
-}) => {
+const SocialMediaSelect = ({}) => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentStep = useAppSelector((state) => state.userInfoReducer.value.currentStep);
-  let preferences = useAppSelector((state) => state.userInfoReducer.value.preferences);
+  let currentStep = useAppSelector(
+    (state) => state.signUpReducer.value.currentStep
+  );
+  let preferences = useAppSelector(
+    (state) => state.signUpReducer.value.preferences
+  );
 
   const handlePreferencesChanges = (selected: string) => {
     if (preferences.includes(selected)) {
@@ -38,11 +41,11 @@ const SocialMediaSelect = ({
     } else {
       dispatch(addPref(selected));
     }
-  }
+  };
 
   const onNext = () => {
     dispatch(userInfo({ currentStep: currentStep + 1 }));
-  }
+  };
 
   return (
     <div className="flex flex-col w-full">
@@ -50,7 +53,7 @@ const SocialMediaSelect = ({
       <Box className="w-4/6 mx-auto my-auto">
         <div className="label">
           <span className="label-text font-bold text-lg">
-            Select your platform(s). 
+            Select your platform(s).
           </span>
         </div>
         <Box className="grid grid-cols-3 grid-rows-3 gap-5 w-full pt-4">
@@ -58,11 +61,7 @@ const SocialMediaSelect = ({
             <Chip
               key={data.key}
               onClick={() => handlePreferencesChanges(data.label)}
-              variant={
-                preferences.includes(data.label)
-                  ? "filled"
-                  : "outlined"
-              }
+              variant={preferences.includes(data.label) ? "filled" : "outlined"}
               icon={data.icon}
               label={data.label}
               className={
@@ -80,16 +79,17 @@ const SocialMediaSelect = ({
 
       {/* Next Button */}
       <div className="self-end">
-        <Button
-          disabled={!preferences.length}
+        <div
           onClick={onNext}
-          type="button"
-          variant="contained"
-          className="ts1-bg py-3 px-6"
-          endIcon={<ArrowForwardIcon />}
-        >
+          className={`ts1-bg py-3 px-6 flex items-center justify-center ${
+            !preferences.length ? "primary-btn-disabled" : "primary-btn"
+          }`}
+          style={{
+            pointerEvents: !preferences.length ? "none" : "auto",
+          }}>
           Next
-        </Button>
+          <ArrowForwardIcon style={{ marginLeft: "8px" }} />
+        </div>
       </div>
     </div>
   );

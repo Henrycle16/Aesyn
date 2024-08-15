@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useAppSelector } from "@/redux/store";
+import { clearPersistedState, useAppSelector } from "@/redux/store";
 
 const ToProfile = () => {
 
-  const username = useAppSelector((state) => state.userInfoReducer.value.username);
+  const username = useAppSelector((state) => state.signUpReducer.value.username);
 
   return (
     <div className="flex flex-col w-full">
@@ -23,7 +23,10 @@ const ToProfile = () => {
           <Button
             variant="contained"
             endIcon={<ArrowForwardIcon />}
-            className="bg-muiblue py-3 px-6"
+            className="primary-btn py-3 px-6"
+            onClick = {() => {
+              clearPersistedState();
+             }}
           >
             Profile!
           </Button>

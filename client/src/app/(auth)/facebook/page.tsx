@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Script from "next/script";
 import axios from 'axios';
+import { useAppSelector } from "@/redux/store";
 
 interface BasicUserInfo {
   name: string;
@@ -14,9 +15,11 @@ const FacebookLogin = () => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
 
+  const creatorId = useAppSelector((state) => state.profileDataReducer.value.creatorId);
+
   const sendAccessTokenToBackend = async (accessToken: String) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/instagram/check', { accessToken });
+      const response = await axios.post(`http://localhost:5000/api/instagram/check/${creatorId}`, { accessToken });
       console.log(response.data);
     } catch (error) {
       console.error(error);
