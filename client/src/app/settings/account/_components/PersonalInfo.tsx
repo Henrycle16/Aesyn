@@ -30,7 +30,6 @@ export default function PersonalInfo() {
     if (status === "authenticated") {
       // You can now safely interact with session data
       // For example, set any default form values or states based on session.user
-      console.log("P STROE: ",profileStore);
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
@@ -67,7 +66,7 @@ export default function PersonalInfo() {
     return <div>Loading...</div>; // or a loading spinner
   }
 
-  const reduxLocation = profileStore.city + ", " + profileStore.state + ", " + profileStore.country
+  const storeLocation = profileStore.city + ", " + profileStore.state + ", " + profileStore.country
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
@@ -119,7 +118,7 @@ export default function PersonalInfo() {
                 className="input-md w-full input-focus-primary"
                 type="text"
                 id="location"
-                placeholder={reduxLocation}
+                placeholder={storeLocation}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setLocation(e.target.value)
                 }

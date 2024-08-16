@@ -14,6 +14,7 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import { updateCreatorInterests } from "@/actions/creatorApi";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 type OptionType = {
   value: string;
@@ -64,6 +65,7 @@ const Interests = () => {
         await updateCreatorInterests(userId, selectedInterestLabels);
         dispatch(profileDataInfo({ interests: selectedInterestLabels }));
       }
+      showSuccessToast();
       closeModal();
     } catch (error) {
       console.error("Failed to update interests:", error);

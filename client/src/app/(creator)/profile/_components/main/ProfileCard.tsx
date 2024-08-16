@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 const getInitials = (firstName: string, lastName: string) => {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -57,6 +58,7 @@ const ProfileCard = () => {
       })
     );
     setModalOpen(false);
+    showSuccessToast();
     onSubmit(imgSrc, imageName);
   };
 

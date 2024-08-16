@@ -5,6 +5,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import { useAppSelector } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { updateCreatorBio } from "@/actions/creatorApi";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 const Bio: React.FC = () => {
   const bio = useAppSelector((state) => state.profileDataReducer.value.bio);
@@ -30,6 +31,7 @@ const Bio: React.FC = () => {
       const response = await updateCreatorBio(userId, tempBioText);
       console.log("bio:", response.data);
       setBioText(tempBioText);
+      showSuccessToast();
       (document.getElementById("bio_modal") as HTMLDialogElement).close();
     } catch (error) {
       console.error(error);
