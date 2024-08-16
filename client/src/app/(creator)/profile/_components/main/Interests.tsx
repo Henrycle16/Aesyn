@@ -15,6 +15,7 @@ import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import { updateCreatorInterests } from "@/actions/creatorApi";
 import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
+import { object } from "zod";
 
 type OptionType = {
   value: string;
@@ -28,6 +29,8 @@ const Interests = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedInterests, setSelectedInterests] = useState<OptionType[]>([]);
+  const [initialSelected, setInitialSelected] = useState<OptionType[]>([]);
+  const [submitted, setSubmitted] = useState(false);
   const [isLimitExceeded, setIsLimitExceeded] = useState(
     6 - interests.length < 0
   );
@@ -37,6 +40,7 @@ const Interests = () => {
   const userId = session.data?.user.id;
 
   useEffect(() => {
+    console.log("INTERESTS: ", selectedInterests);
     const initialSelectedInterests = interests
       .map((interest) => {
         const interestObject = interestsArray.find(
@@ -51,8 +55,13 @@ const Interests = () => {
       })
       .filter(Boolean) as OptionType[];
     setSelectedInterests(initialSelectedInterests);
+    setInitialSelected(initialSelectedInterests);
     setIsLimitExceeded(6 - interests.length < 0);
   }, [interests]);
+
+  const objectsEqual = (o1:any, o2:any) =>
+    Object.keys(o1).length === Object.keys(o2).length 
+        && Object.keys(o1).every(p => o1[p] === o2[p]);
 
   // Handles the form submission
   const onFormSubmit = async () => {
@@ -65,6 +74,7 @@ const Interests = () => {
         await updateCreatorInterests(userId, selectedInterestLabels);
         dispatch(profileDataInfo({ interests: selectedInterestLabels }));
       }
+      setSubmitted(true);
       showSuccessToast();
       closeModal();
     } catch (error) {
@@ -114,6 +124,9 @@ const Interests = () => {
   };
 
   const closeModal = () => {
+    if (!objectsEqual(initialSelected, selectedInterests) && !submitted) {
+      showDiscardedToast();
+    }
     setSelectedInterests(
       interests
         .map((interest) => {

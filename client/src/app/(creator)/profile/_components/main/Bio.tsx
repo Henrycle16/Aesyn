@@ -109,10 +109,15 @@ const Bio: React.FC = () => {
               Save
             </button>
             <button
-              onClick={() =>
+              onClick={() => {
+                if(tempBioText !== bioText) {
+                  showDiscardedToast();
+                }
                 (
                   document.getElementById("bio_modal") as HTMLDialogElement
                 ).close()
+              }
+                
               }
               type="button"
               className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
