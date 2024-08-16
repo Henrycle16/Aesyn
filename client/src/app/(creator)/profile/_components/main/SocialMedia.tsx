@@ -12,6 +12,7 @@ import Twitch from "@/components/svgs/Twitch";
 
 import InstagramTile from "@/components/buttons/InstagramTile";
 import { useAppSelector } from "@/redux/store";
+import { showSuccessToast } from "@/utils/toast/toastEmitters";
 
 type SocialMediaData = {
   _id: string;
@@ -65,6 +66,7 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
+    showSuccessToast();
     setIsModalClosed(true);
     (document.getElementById(`social_modal`) as HTMLDialogElement).close();
   };
