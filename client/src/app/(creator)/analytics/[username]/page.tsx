@@ -4,6 +4,7 @@ import { useAppSelector } from "@/redux/store";
 import Avatar from "@mui/material/Avatar";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
+import Link from "next/link";
 
 type Params = {
   username: string;
@@ -47,6 +48,14 @@ export default function Page({ params }: { params: Params }) {
               {profileData.city}, {profileData.state}
             </p>
           </div>
+        </div>
+        {/* See Profile View Button */}
+        <div className="ml-auto mt-[1.375rem]">
+          <Link
+            href={`/profile/${profileData.username}`}
+            className="border-2 border-[#3798E3] py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
+              See Profile View
+          </Link>
         </div>
       </section>
       {/* Analytics Section */}

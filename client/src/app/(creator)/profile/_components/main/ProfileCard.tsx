@@ -93,8 +93,7 @@ const ProfileCard = () => {
                       setIsHovered(false);
                     }}
                   />
-                }
-              >
+                }>
                 <Avatar
                   alt="Avatar"
                   src={avatarDisplay ? avatarDisplay : avatarUrl}
@@ -139,17 +138,12 @@ const ProfileCard = () => {
           </div>
 
           {/* Analytics View Button */}
-          <div className="flex flex-col ml-auto mb-24">
-            {" "}
-            <Link 
+          <div className="ml-auto mb-24">
+            <Link
               href={`/analytics/${profileData.username}`}
-              className="border-solid border-2 border-[#3798E3] py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]"
-            >
-              <span className="text-[#3798E3] font-semibold">
-                {" "}
-                See Analytics View
-              </span>
-            </Link>{" "}
+              className="border-2 border-[#3798E3] py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
+              See Analytics View
+            </Link>
           </div>
         </div>
       </div>
@@ -172,8 +166,7 @@ const ProfileCard = () => {
             <button
               onClick={closeModal}
               type="button"
-              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-            >
+              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
               ✕
             </button>
           </form>
