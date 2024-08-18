@@ -22,7 +22,7 @@ const ThreeMenu = () => {
           href={`/analytics/${username}`}
           className="text-sm font-semibold text-gray-700 hover:text-[#3798E3]"
         >
-          My Analytics
+          Analytics
         </Link>
       </div>
 
@@ -34,7 +34,7 @@ const ThreeMenu = () => {
           onMouseLeave={() => setIsReportsOpen(false)}
           onClick={() => setIsReportsOpen(!isReportsOpen)}
         >
-          My Campaigns
+          Campaigns
           <span className="text-gray-700">
             <ArrowDropDownIcon
               className={`h-5 w-5 transform transition-transform ${
