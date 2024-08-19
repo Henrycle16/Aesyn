@@ -51,13 +51,11 @@ const Bio: React.FC = () => {
     <>
       <div className="min-h-[13rem]">
         <div className="flex justify-start">
-          <h1 className="text-2xl font-semibold text-[#184465]">Bio</h1>
+          <h1 className="heading1 ts5-text">Bio</h1>
           <ModeEditOutlineOutlinedIcon
             sx={{ fontSize: 25 }}
-            className={`border-2 rounded-full p-[.12rem] cursor-pointer ml-3 mt-1 ${
-              isHovered
-                ? "text-white border-[#3798E3] bg-[#3798E3]"
-                : "text-[#3798E3] border-[#D7D7D7] bg-white"
+            className={`mode-edit-icon ml-3 mt-1 ${
+              isHovered ? "mode-edit-icon-hovered" : "mode-edit-icon-default"
             }`}
             onClick={openModal}
             onMouseEnter={() => {
@@ -69,7 +67,7 @@ const Bio: React.FC = () => {
           />
         </div>
         <div className="flex flex-col">
-          <p className="text-[#4A4A4A] text-md mt-4 mb-10 flex-grow">
+          <p className="g5-text text-md mt-4 mb-10 flex-grow">
             {bioText || "Give a brief description for your profile."}
           </p>
         </div>
@@ -79,9 +77,8 @@ const Bio: React.FC = () => {
       <dialog id="bio_modal" className="modal">
         <form
           onSubmit={onFormSubmit}
-          className="modal-box bg-white text-[#061119] min-w-[58.75rem] pt-8 px-10 pb-6"
-        >
-          <h1 className="text-[#184465] font-semibold text-2xl">Bio</h1>
+          className="modal-box bg-white ts7-text min-w-[58.75rem] pt-8 px-10 pb-6">
+          <h1 className="heading1 ts5-text">Bio</h1>
           <h2 className="py-2 gc-label-color body1">
             Give a brief description for your profile.
           </h2>
@@ -93,7 +90,7 @@ const Bio: React.FC = () => {
               rows={7}
               value={tempBioText}
               onChange={handleBioChange}
-              className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
+              className="mt-1 block w-full border g3-border bg-white rounded-md shadow-sm focus:outline-none focus:border-[#3798E3] sm:text-sm"
               style={{
                 paddingLeft: "1%",
                 paddingTop: "1%",
@@ -106,8 +103,7 @@ const Bio: React.FC = () => {
           <div className="modal-action">
             <button
               type="submit"
-              className="bg-[#3798E3] text-white ml-auto py-3 px-6 capitalize font-bold rounded-md hover:bg-[#2C7AB6]"
-            >
+              className="save-btn ml-auto">
               Save
             </button>
             <button
@@ -117,8 +113,7 @@ const Bio: React.FC = () => {
                 ).close()
               }
               type="button"
-              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-            >
+              className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
               X
             </button>
           </div>

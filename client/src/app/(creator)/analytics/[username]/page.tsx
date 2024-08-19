@@ -53,7 +53,7 @@ export default function Page({ params }: { params: Params }) {
         <div className="ml-auto mt-[1.375rem]">
           <Link
             href={`/profile/${profileData.username}`}
-            className="border-2 border-[#3798E3] py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
+            className="border-2 ts1-border py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
               See Profile View
           </Link>
         </div>

@@ -1,4 +1,4 @@
-"use clients";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/store";
@@ -16,53 +16,52 @@ type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
   const [location, setLocation] = useState("");
-  const session = useSession();
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (!session.data && session.status === "unauthenticated") {
-      redirect("/login");
-    }
-  }, [session.data, session.status]);
-
-  // redux store
   const authStore = useAppSelector((state) => state.authReducer.value);
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<Inputs>({
     resolver: zodResolver(PersonalInfoSchema),
     mode: "onChange",
   });
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      // You can now safely interact with session data
+      // For example, set any default form values or states based on session.user
+    } else if (status === "unauthenticated") {
+      redirect("/login");
+    }
+  }, [status]);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     interface LooseObject {
-      [key: string]: any
+      [key: string]: any;
     }
 
-    // Parses out the empty values
-    const result: LooseObject = {}
+    const result: LooseObject = {};
     for (const [key, value] of Object.entries(data)) {
-      if(key !== 'email' && value !== '') {
-        result[key] = value
-      } else if(key === 'email' && value !== ''){
-        const temp = {email: value}
-        userEmailUpdate(session.data?.user.id, temp);
+      if (key !== "email" && value !== "") {
+        result[key] = value;
+      } else if (key === "email" && value !== "") {
+        const temp = { email: value };
+        userEmailUpdate(session?.user.id, temp);
       }
     }
-    if(Object.keys(result).length == 0){
+    if (Object.keys(result).length === 0) {
       return;
     }
 
     try {
-      creatorMyAccountUpdate(session.data?.user.id, result);
+      await creatorMyAccountUpdate(session?.user.id, result);
     } catch (error) {
       console.log(error);
     }
-    
   };
+
+  if (status === "loading") {
+    return <div>Loading...</div>; // or a loading spinner
+  }
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
@@ -122,7 +121,15 @@ export default function PersonalInfo() {
             </div>
             <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
           </div>
-          <button disabled={(!getValues("userName") && !getValues("email")) || !!errors.userName || !!errors.email} type="submit" className="primary-btn button w-24">
+          <button
+            disabled={
+              (!getValues("userName") && !getValues("email")) ||
+              !!errors.userName ||
+              !!errors.email
+            }
+            type="submit"
+            className="primary-btn button w-24"
+          >
             Save
           </button>
         </form>

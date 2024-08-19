@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getPageId = async (ACCESS_TOKEN: String) => {
+const getPageId = async (ACCESS_TOKEN: string) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/me/accounts?access_token=${ACCESS_TOKEN}`
@@ -15,7 +15,7 @@ const getPageId = async (ACCESS_TOKEN: String) => {
   }
 };
 
-const getBusinessId = async (PAGE_ID: String, ACCESS_TOKEN: String) => {
+const getBusinessId = async (PAGE_ID: string, ACCESS_TOKEN: string) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/${PAGE_ID}?fields=instagram_business_account&access_token=${ACCESS_TOKEN}`
@@ -30,7 +30,7 @@ const getBusinessId = async (PAGE_ID: String, ACCESS_TOKEN: String) => {
   }
 };
 
-const getBasicUserInfo = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
+const getBasicUserInfo = async (BUSINESS_ID: string, ACCESS_TOKEN: string) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=name,username,profile_picture_url,followers_count&access_token=${ACCESS_TOKEN}`
@@ -48,7 +48,7 @@ const getBasicUserInfo = async (BUSINESS_ID: String, ACCESS_TOKEN: String) => {
   }
 };
 
-const getLongLivedAccessToken = async (ACCESS_TOKEN: String) => {
+const getLongLivedAccessToken = async (ACCESS_TOKEN: string) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/oauth/access_token?grant_type=fb_exchange_token&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&fb_exchange_token=${ACCESS_TOKEN}`
@@ -63,8 +63,8 @@ const getLongLivedAccessToken = async (ACCESS_TOKEN: String) => {
 };
 
 const getMonthlyUserImpressionsAndReach = async (
-  BUSINESS_ID: String,
-  ACCESS_TOKEN: String
+  BUSINESS_ID: string,
+  ACCESS_TOKEN: string
 ) => {
   try {
     // Get monhtly impressions & reach
@@ -83,8 +83,8 @@ const getMonthlyUserImpressionsAndReach = async (
 };
 
 const getFollowerDemographics_Gender = async (
-  BUSINESS_ID: String,
-  ACCESS_TOKEN: String
+  BUSINESS_ID: string,
+  ACCESS_TOKEN: string
 ) => {
   try {
     // Get last 90 days follower demographics - gender
@@ -102,8 +102,8 @@ const getFollowerDemographics_Gender = async (
 };
 
 const getFollowerDemographics_Age = async (
-  BUSINESS_ID: String,
-  ACCESS_TOKEN: String
+  BUSINESS_ID: string,
+  ACCESS_TOKEN: string
 ) => {
   try {
     // Get last 90 days follower demographics - age
@@ -121,8 +121,8 @@ const getFollowerDemographics_Age = async (
 };
 
 const getFollowerDemographics_TopCities = async (
-  BUSINESS_ID: String,
-  ACCESS_TOKEN: String
+  BUSINESS_ID: string,
+  ACCESS_TOKEN: string
 ) => {
   try {
     // Get last 90 days follower demographics - city
@@ -143,9 +143,9 @@ const getFollowerDemographics_TopCities = async (
 };
 
 const getOnlineFollowers = async (
-  BUSINESS_ID: String,
-  ACCESS_TOKEN: String,
-  TIMESTAMP: String
+  BUSINESS_ID: string,
+  ACCESS_TOKEN: string,
+  TIMESTAMP: string
 ) => {
   try {
     // Get online followers per hour per day
@@ -163,8 +163,8 @@ const getOnlineFollowers = async (
 };
 
 const getReachedDemographic_Gender = async (
-    BUSINESS_ID: String,
-    ACCESS_TOKEN: String,
+    BUSINESS_ID: string,
+    ACCESS_TOKEN: string,
   ) => {
     try {
       // Get reached audience demographics last 90 days - gender
@@ -182,8 +182,8 @@ const getReachedDemographic_Gender = async (
   };
 
   const getReachedDemographic_Age = async (
-    BUSINESS_ID: String,
-    ACCESS_TOKEN: String,
+    BUSINESS_ID: string,
+    ACCESS_TOKEN: string,
   ) => {
     try {
       // Get reached audience demographics last 90 days - age
@@ -201,8 +201,8 @@ const getReachedDemographic_Gender = async (
   };
 
   const getReachedDemographic_TopCities = async (
-    BUSINESS_ID: String,
-    ACCESS_TOKEN: String,
+    BUSINESS_ID: string,
+    ACCESS_TOKEN: string,
   ) => {
     try {
       // Get reached audience demographics last 90 days - age

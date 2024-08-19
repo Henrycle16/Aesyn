@@ -14,15 +14,20 @@ import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 
+const getInitials = (firstName: string, lastName: string) => {
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+};
+
 const ProfileCard = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const avatarUrl = "/static/images/avatar/1.jpg";
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const { avatar: avatarDisplay, ...profileData } = useAppSelector(
     (state) => state.profileDataReducer.value
   );
+
+  const initials = getInitials(profileData.firstName, profileData.lastName);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -80,10 +85,10 @@ const ProfileCard = () => {
                 badgeContent={
                   <ModeEditOutlineOutlinedIcon
                     sx={{ fontSize: 25 }}
-                    className={`border-2 rounded-full p-[.12rem] ml-auto cursor-pointer ${
+                    className={`mode-edit-icon ${
                       isHovered
-                        ? "text-white border-[#3798E3] bg-[#3798E3]"
-                        : "text-[#3798E3] border-[#D7D7D7] bg-white"
+                        ? "mode-edit-icon-hovered"
+                        : "mode-edit-icon-default"
                     }`}
                     onClick={openModal}
                     onMouseEnter={() => {
@@ -96,9 +101,10 @@ const ProfileCard = () => {
                 }>
                 <Avatar
                   alt="Avatar"
-                  src={avatarDisplay ? avatarDisplay : avatarUrl}
-                  sx={{ width: 150, height: 150 }}
-                />
+                  src={avatarDisplay || ""}
+                  sx={{ width: 150, height: 150 }}>
+                  {!avatarDisplay && initials}
+                </Avatar>
               </Badge>{" "}
             </div>
           </div>
@@ -107,7 +113,7 @@ const ProfileCard = () => {
           <div className="flex flex-col justify-items-start flex-1 mb-12 pl-10">
             <div className="flex items-center">
               <div className="flex flex-col gap-1">
-                <h1 className="text-2xl font-semibold text-[#184465]">
+                <h1 className="text-2xl font-semibold ts5-text">
                   {profileData.firstName} {profileData.lastName}
                 </h1>
                 <p className="text-sm text-[#061119] flex-grow">
@@ -116,22 +122,22 @@ const ProfileCard = () => {
               </div>
 
               <div className="flex flex-col mb-2.5 pl-6">
-                <button className="border-dashed border-2 border-[#3798E3] py-2 px-5 rounded-md flex items-center justify-center">
-                  <span className="text-[#3798E3] font-semibold">
+                <button className="border-dashed border-2 ts1-border py-2 px-5 rounded-md flex items-center justify-center">
+                  <span className="ts1-text font-semibold">
                     {" "}
                     Verify Now
                   </span>
                   <VerifiedUserOutlinedIcon
-                    sx={{ color: "#3798E3", fontSize: 22 }}
-                    className="ml-3"
+                    sx={{ fontSize: 22 }}
+                    className="ml-3 ts1-text"
                   />
                 </button>{" "}
               </div>
             </div>
 
             <div className="flex items-center mt-2.5 gap-1 ml-[-0.3rem]">
-              <LocationOnOutlinedIcon sx={{ color: "#6D6D6D" }} />
-              <span className="text-sm text-[#061119] flex-grow">
+              <LocationOnOutlinedIcon sx={{ color: "var(--g4)" }} />
+              <span className="text-sm ts7-text flex-grow">
                 {profileData.city}, {profileData.state}
               </span>
             </div>
@@ -141,7 +147,7 @@ const ProfileCard = () => {
           <div className="ml-auto mb-24">
             <Link
               href={`/analytics/${profileData.username}`}
-              className="border-2 border-[#3798E3] py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
+              className="border-2 ts1-border py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
               See Analytics View
             </Link>
           </div>
@@ -150,7 +156,7 @@ const ProfileCard = () => {
 
       {/* Modal */}
       <dialog id="avatar_modal" className="modal">
-        <div className="modal-box bg-white text-[#061119] min-w-[42rem] min-h-[32.1rem] pt-8 px-10 pb-6 flex flex-col">
+        <div className="modal-box bg-white ts7-text min-w-[42rem] min-h-[32.1rem] pt-8 px-10 pb-6 flex flex-col">
           <div className="flex flex-col mr-auto">
             <h1 className="heading-text-color heading1">Profile</h1>
             <h2 className="py-2 gc-label-color body1">
