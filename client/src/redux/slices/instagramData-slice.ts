@@ -18,6 +18,7 @@ type instagramDataReducer = {
   followersGender: { [gender: string]: number };
   monthlyImpressions: number;
   monthlyReach: number;
+  socialMedia: string;
 };
 
 const initialState = {
@@ -53,7 +54,7 @@ export const instagramData = createSlice({
       };
     },
     resetInstagramData: (state) => {
-      state.value = { ...initialState.value }; // Ensure a new object is created
+      state.value = { ...initialState.value };
     },
   },
 });
