@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import Link from "next/link";
@@ -22,14 +22,14 @@ const ProfileHeader = () => {
           name: session.data.user.name,
           email: session.data.user.email,
           userId: session.data.user.id,
-        })
+        }),
       );
     }
   };
 
   useEffect(() => {
     getUserInfo();
-  }, [session.data])
+  }, [session.data]);
 
   return (
     <header className="flex flex-wrap px-16 pt-4 flex-col md:flex-row items-center">
