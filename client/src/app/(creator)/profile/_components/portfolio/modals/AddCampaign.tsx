@@ -43,7 +43,9 @@ const AddCampaign = () => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
   const [resetContentButton, setResetContentButton] = useState(false);
+  const [disableSaveButton, setDisableSaveButton] = useState(false);
 
   useEffect(() => {
     setCharCount(100 - currentContent.description?.length);
@@ -80,6 +82,7 @@ const AddCampaign = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setDisableSaveButton(true);
 
     if (currentContent.mediaType === "video") {
       try {
@@ -95,7 +98,6 @@ const AddCampaign = () => {
             _id: newestPortfolioId,
           })
         );
-
       } catch (error) {
         console.log(error);
       }
@@ -169,7 +171,9 @@ const AddCampaign = () => {
 
     dispatch(resetCurrentContent());
 
+    setDisableSaveButton(false);
     setResetContentButton(true);
+
     (
       document.getElementById(`add_campaign_modal`) as HTMLDialogElement
     ).close();
@@ -193,8 +197,7 @@ const AddCampaign = () => {
               <div className="mb-4">
                 <label
                   htmlFor="campaignTitle"
-                  className="text-[#4A4A4A] block font-bold pr-5"
-                >
+                  className="text-[#4A4A4A] block font-bold pr-5">
                   Campaign Title
                 </label>
                 <input
@@ -220,8 +223,7 @@ const AddCampaign = () => {
               <div className="mb-4">
                 <label
                   htmlFor="social_media"
-                  className="text-[#4A4A4A] block font-bold"
-                >
+                  className="text-[#4A4A4A] block font-bold">
                   *Social Media
                 </label>
                 <select
@@ -238,8 +240,7 @@ const AddCampaign = () => {
                       })
                     )
                   }
-                  className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm"
-                >
+                  className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:border-[#3798E3] sm:text-sm">
                   <option value="">[Select]</option>
                   <option value="instagram">Instagram</option>
                   <option value="twitter">Twitter</option>
@@ -251,8 +252,7 @@ const AddCampaign = () => {
               <div className="">
                 <label
                   htmlFor="description"
-                  className="text-[#4A4A4A] block font-bold pr-5"
-                >
+                  className="text-[#4A4A4A] block font-bold pr-5">
                   Description
                 </label>
                 <textarea
@@ -301,8 +301,7 @@ const AddCampaign = () => {
                             minWidth={MIN_DIMENSION}
                             onChange={(pixelCrop, percentCrop) =>
                               setCrop(percentCrop)
-                            }
-                          >
+                            }>
                             <Image
                               src={currentContent.uri}
                               ref={imgRef}
@@ -349,30 +348,36 @@ const AddCampaign = () => {
           </div>
 
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
-              onClick={() => {
-                dispatch(
-                  creatorContentInfo({
-                    currentContent: {
-                      ...currentContent,
-                      contentType: "campaign",
-                    },
-                  })
-                );
-              }}
-            >
-              Save
-            </button>
+            {currentContent.uri && currentContent.socialMedia && !disableSaveButton ? (
+              <button
+                type="submit"
+                className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+                onClick={() => {
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: {
+                        ...currentContent,
+                        contentType: "campaign",
+                      },
+                    })
+                  );
+                }}>
+                Save
+              </button>
+            ) : (
+              <button
+                disabled
+                className="bg-[#D7D7D7] text-[#6D6D6D] font-bold py-3 px-6 capitalize rounded-md">
+                Save
+              </button>
+            )}
           </div>
           <button
             onClick={() => {
               handleCloseModal();
             }}
             type="button"
-            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-          >
+            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
             ✕
           </button>
           {crop && (
