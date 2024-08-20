@@ -14,7 +14,7 @@ type BarChartProps = {
   data: any;
   XaxisDataKey: string;
   BarDataKey: string;
-  BarColor?: string;
+  color?: string;
 };
 
 const BaseBarchart = ({
@@ -22,7 +22,7 @@ const BaseBarchart = ({
   data,
   XaxisDataKey,
   BarDataKey,
-  BarColor = "#f59e0b",
+  color = "#f59e0b",
 }: BarChartProps) => {
   return (
     <div>
@@ -35,7 +35,7 @@ const BaseBarchart = ({
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey={BarDataKey} fill={BarColor} />
+          <Bar dataKey={BarDataKey} fill={color} />
         </BarChart>
       </ResponsiveContainer>
     </div>

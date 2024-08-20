@@ -13,7 +13,6 @@ export default function Analytics() {
         <ReachChart />
         <BaseReachChart />
       </div>
-      <div>Aggregate demo</div>
     </main>
   );
 }
