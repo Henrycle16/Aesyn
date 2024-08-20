@@ -23,7 +23,6 @@ type SocialMediaData = {
 };
 
 const SocialMedia = () => {
-  const [isModalClosed, setIsModalClosed] = useState(false);
   const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,8 +65,6 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
-    setIsModalClosed(true);
-
     const instagramData = { 
       _id, 
       username, 
