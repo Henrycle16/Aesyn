@@ -41,7 +41,7 @@ const rootReducer = combineReducers({
   signUpReducer,
   creatorPackagesReducer,
   creatorContentReducer,
-        instagramDataReducer,
+  instagramDataReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
