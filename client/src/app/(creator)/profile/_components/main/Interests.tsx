@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { interestsArray, Interest } from "@/lib/user/interestsLib";
+import { interestsArray} from "@/lib/user/interestsLib";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Select, {
   components,
@@ -11,7 +11,7 @@ import Select, {
 import "@/styles/interestSelect.css";
 import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import { profileDataInfo, selectInterests } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import { updateCreatorInterests } from "@/actions/creatorApi";
 
@@ -21,15 +21,12 @@ type OptionType = {
 };
 
 const Interests = () => {
-  const interests = useAppSelector(
-    (state) => state.profileDataReducer.value.interests
-  );
+  const interests = useAppSelector(selectInterests);
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedInterests, setSelectedInterests] = useState<OptionType[]>([]);
-  const [isLimitExceeded, setIsLimitExceeded] = useState(
-    6 - interests.length < 0
-  );
+  const [initialInterests, setInitialInterests] = useState<OptionType[]>([]);
+  const [isLimitExceeded, setIsLimitExceeded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const session = useSession();
@@ -50,8 +47,11 @@ const Interests = () => {
       })
       .filter(Boolean) as OptionType[];
     setSelectedInterests(initialSelectedInterests);
+    setInitialInterests(initialSelectedInterests);
     setIsLimitExceeded(6 - interests.length < 0);
   }, [interests]);
+
+  const hasChanges = JSON.stringify(initialInterests) !== JSON.stringify(selectedInterests);
 
   // Handles the form submission
   const onFormSubmit = async () => {
@@ -214,9 +214,9 @@ const Interests = () => {
             <div className="flex justify-end mt-10">
               <button
                 type="submit"
-                disabled={selectedInterests.length === 0}
+                disabled={!hasChanges}
                 className={`save-btn ml-auto ${
-                  selectedInterests.length === 0
+                  !hasChanges
                     ? "bg-g3 hover:bg-g3"
                     : "bg-ts1 hover:bg-ts2"
                 }`}>
