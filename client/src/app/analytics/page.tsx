@@ -1,5 +1,6 @@
 "use client";
 import ChartContainer from "@/components/charting/ChartContainer";
+import ImpressionLineChart from "@/components/charting/ImpressionLineChart";
 import ReachChart from "@/components/charting/ReachChart";
 
 export default function Analytics() {
@@ -11,6 +12,7 @@ export default function Analytics() {
       <div className="grid grid-cols-2 max-">
         <ReachChart />
         <ReachChart chartColor="#3EB489" />
+        <ImpressionLineChart lineColor="black" />
       </div>
     </main>
   );
