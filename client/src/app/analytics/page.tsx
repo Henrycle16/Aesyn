@@ -1,7 +1,9 @@
 "use client";
 import ChartContainer from "@/components/charting/ChartContainer";
+import GenderPieChart from "@/components/charting/GenderPieChart";
 import ImpressionLineChart from "@/components/charting/ImpressionLineChart";
 import ReachChart from "@/components/charting/ReachChart";
+import { followersList } from "@/components/charting/data/mockFollowers";
 
 export default function Analytics() {
   return (
@@ -13,6 +15,7 @@ export default function Analytics() {
         <ReachChart />
         <ReachChart chartColor="#3EB489" />
         <ImpressionLineChart lineColor="black" />
+        <GenderPieChart data={followersList} />
       </div>
     </main>
   );
