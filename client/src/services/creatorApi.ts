@@ -5,7 +5,10 @@ const creatorApi = emptySplitApi.injectEndpoints({
     getCreators: build.query<any[], void>({
       query: () => 'creators',
     }),
+    getCreatorByUsername: build.query<any, string>({
+      query: (username) => `creators/username/${username}`,
+    }),
   }),
 })
 
-export const { useGetCreatorsQuery } = creatorApi;
+export const { useGetCreatorsQuery, useGetCreatorByUsernameQuery } = creatorApi;
