@@ -64,7 +64,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
 
       // Getting creator instagram data
       const instagramData = await getInstagramDataById(response.data._id);
-
+      
       if (instagramData.data) {
         const followersGenderMap: { [gender: string]: number } = {};
         const followersAgeMap: { [age: string]: number } = {};
