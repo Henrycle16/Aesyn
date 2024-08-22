@@ -8,6 +8,10 @@ interface WeeklyData {
   totalReach: number;
 }
 
+interface ReachChartProps {
+  chartColor?: string;
+}
+
 // Sum up reach by week
 const aggregateByWeek = (data: DailyData[]): WeeklyData[] => {
   const weeklyData: WeeklyData[] = [];
@@ -28,7 +32,7 @@ const aggregateByWeek = (data: DailyData[]): WeeklyData[] => {
 
 const weeklyData: WeeklyData[] = aggregateByWeek(socialMediaReach);
 
-const ReachChart: React.FC = () => {
+const ReachChart: React.FC<ReachChartProps> = ({ chartColor }) => {
   return (
     <ChartContainer title="Weekly Reach">
       <BarChart data={weeklyData}>
@@ -36,7 +40,7 @@ const ReachChart: React.FC = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="totalReach" />
+        <Bar dataKey="totalReach" fill={chartColor} />
       </BarChart>
     </ChartContainer>
   );

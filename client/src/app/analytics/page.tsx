@@ -10,6 +10,7 @@ export default function Analytics() {
       </h1>
       <div className="grid grid-cols-2 max-">
         <ReachChart />
+        <ReachChart chartColor="#3EB489" />
       </div>
     </main>
   );
