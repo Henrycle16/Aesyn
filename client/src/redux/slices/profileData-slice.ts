@@ -72,6 +72,11 @@ export const profileData = createSlice({
 
 export const { profileDataInfo, resetProfileData } = profileData.actions;
 
+export const selectBio = createSelector(
+  (state: RootState) => state.profileDataReducer.value,
+  (profileData) => profileData.bio
+);
+
 export const selectInterests = createSelector(
   (state: RootState) => state.profileDataReducer.value,
   (profileData) => profileData.interests
