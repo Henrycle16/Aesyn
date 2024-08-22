@@ -1,7 +1,6 @@
 "use client";
-import BaseReachChart from "@/components/charting/BaseReachChart";
+import ChartContainer from "@/components/charting/ChartContainer";
 import ReachChart from "@/components/charting/ReachChart";
-import BaseBarchart from "@/components/charting/utils/BaseBarChart";
 
 export default function Analytics() {
   return (
@@ -11,7 +10,6 @@ export default function Analytics() {
       </h1>
       <div className="grid grid-cols-2 max-">
         <ReachChart />
-        <BaseReachChart />
       </div>
     </main>
   );

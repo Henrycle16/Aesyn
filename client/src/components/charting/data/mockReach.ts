@@ -1,4 +1,9 @@
-const socialMediaReach = [
+export interface DailyData {
+  day: string;
+  totalReach: number;
+}
+
+export const socialMediaReach: DailyData[] = [
   { day: "2024-08-01", totalReach: 1543 },
   { day: "2024-08-02", totalReach: 2310 },
   { day: "2024-08-03", totalReach: 1987 },
@@ -31,4 +36,4 @@ const socialMediaReach = [
   { day: "2024-08-30", totalReach: 2795 },
 ];
 
-export default socialMediaReach;
+// export default socialMediaReach;
