@@ -23,7 +23,6 @@ import { redirect, useRouter } from "next/navigation";
 import { clearPersistedState, useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { profile } from "console";
 
 const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
@@ -41,7 +40,7 @@ const CreatorAvatar: React.FC = () => {
   }, [dispatch, session.data, session.status]);
 
   // redux store
-  const profileStore = useAppSelector((state) => state.profileDataReducer.value)
+  const authStore = useAppSelector((state) => state.authReducer.value)
 
   const handleSignOut = () => {
     clearPersistedState();
@@ -61,7 +60,7 @@ const CreatorAvatar: React.FC = () => {
   };
 
   const handleProfile = () => {
-    router.push(`/profile/${profileStore.username}`)
+    router.push(`/profile/${authStore.creatorUsername}`)
   }
 
   const open = Boolean(anchorEl);
@@ -94,9 +93,9 @@ const CreatorAvatar: React.FC = () => {
       >
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography className="ts5-text subheader1">{profileStore.firstName} {profileStore.lastName}</Typography>
+          <Typography className="ts5-text subheader1">{authStore.name}</Typography>
           <Typography className="">
-            {profileStore.email}
+            {authStore.email}
           </Typography>
         </Box>
         <Divider />

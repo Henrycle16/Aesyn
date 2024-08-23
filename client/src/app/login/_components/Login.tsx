@@ -12,6 +12,10 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { getCreatorByUserId } from "@/actions/creatorApi";
 
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/redux/slices/auth-slice";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
@@ -22,12 +26,20 @@ const LoginComponent = () => {
   const [errors, setErrors] = useState("");
   const router = useRouter();
   const session = useSession();
+  const dispatch = useDispatch<AppDispatch>();
+  
 
   const redirecting = async (userId: string) => {
       const creator = await getCreatorByUserId(userId)
       //const brand = await getBrandByUserId(userId)
       if(creator)
       {
+        dispatch(
+          logIn({
+            creatorUsername: creator.data.userName,
+            creatorId: creator.data._id
+          })
+        );
         router.push(`/profile/${creator.data.userName}`)
       }
       // else if(brand) {

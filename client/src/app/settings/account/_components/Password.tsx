@@ -19,6 +19,7 @@ const PasswordInfo = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [loginErrors, setLoginErrors] = useState("");
 
   const [password, setPassword] = useState("");
   const session = useSession();
@@ -57,6 +58,7 @@ const PasswordInfo = () => {
             result[key] = value;
           }
         }
+        setLoginErrors("");
         userPasswordUpdate(session.data?.user.id, result);
         showSuccessToast();
         setTimeout(() => window.location.reload(), 3000);
@@ -64,6 +66,7 @@ const PasswordInfo = () => {
         console.log(error);
       }
     } else {
+      setLoginErrors("Wrong Password!")
       console.log("Wrong Password!");
     }
   };
@@ -114,7 +117,7 @@ const PasswordInfo = () => {
                   )}
                 </button>
               </div>
-              <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+              <p className="mt-1 text-sm min-h-5 ts8-text">{loginErrors}</p>
             </div>
           </div>
           <div className="relative">

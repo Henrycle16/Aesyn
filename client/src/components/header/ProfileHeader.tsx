@@ -25,6 +25,7 @@ const ProfileHeader = () => {
         })
       );
     }
+
   };
 
   useEffect(() => {

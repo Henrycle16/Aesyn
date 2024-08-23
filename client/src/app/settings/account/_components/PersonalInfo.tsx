@@ -12,24 +12,47 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { userEmailUpdate } from "@/actions/userApi";
 import { showSuccessToast } from "@/utils/toast/toastEmitters";
+import mapboxgl from "mapbox-gl";
+import { AddressAutofill, Geocoder } from "@mapbox/search-js-react";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { getCreatorByUserId } from "@/actions/creatorApi";
 
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
   const [location, setLocation] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
 
-  const profileStore = useAppSelector((state) => state.profileDataReducer.value)
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
+  const authStore = useAppSelector((state) => state.authReducer.value)
 
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<Inputs>({
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<Inputs>({
     resolver: zodResolver(PersonalInfoSchema),
     mode: "onChange",
   });
+
+  const creatorCall = async () => {
+    await getCreatorByUserId(session?.user.id).then((res) => {
+      if(res.status === 200) {
+        setLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
+      }
+    })
+  }
 
   useEffect(() => {
     if (status === "authenticated") {
       // You can now safely interact with session data
       // For example, set any default form values or states based on session.user
+      setUsername(authStore.creatorUsername);
+      setEmail(authStore.email);
+      creatorCall();
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
@@ -39,6 +62,8 @@ export default function PersonalInfo() {
     interface LooseObject {
       [key: string]: any;
     }
+
+    console.log("SUBMIT LOCATION: ", location);
 
     const result: LooseObject = {};
     for (const [key, value] of Object.entries(data)) {
@@ -56,7 +81,7 @@ export default function PersonalInfo() {
     try {
       await creatorMyAccountUpdate(session?.user.id, result);
       showSuccessToast();
-      setTimeout(() => window.location.reload(), 1000)
+      setTimeout(() => window.location.reload(), 1000);
     } catch (error) {
       console.log(error);
     }
@@ -66,14 +91,26 @@ export default function PersonalInfo() {
     return <div>Loading...</div>; // or a loading spinner
   }
 
-  const storeLocation = profileStore.city + ", " + profileStore.state + ", " + profileStore.country
+  const handleUsernameChange = (d: any) => {
+    console.log(d.target.value)
+    setUsername(d.target.value)
+  };
+  const handleEmailChange = (d: any) => {
+    setEmail(d.target.value);
+  };
+  const handleLocationChange = (d: any) => {
+    console.log(d)
+    setLocation(d.properties.full_address);
+  };
 
   return (
     <section className="border border-gray-300 rounded-badge min-h-[24rem] grid grid-cols-2">
       <div className="col-span-1 p-6">
         <h2 className="subheader2 ts5-text pb-4"> Personal Information </h2>
         <h2 className="body2 ts5-text"> Name </h2>
-        <p>{profileStore.firstName} {profileStore.lastName}</p>
+        <p>
+          {authStore.name}
+        </p>
         <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <h2 className="body2 ts5-text"> Username </h2>
@@ -82,10 +119,8 @@ export default function PersonalInfo() {
               className="input-md w-full input-focus-primary"
               type="text"
               id="userName"
-              placeholder={profileStore.username}
-              onKeyDown={(e) => {
-                e.key === "Enter" && e.preventDefault();
-              }}
+              value={username}
+              onChangeCapture={handleUsernameChange}
               {...register("userName")}
             />
             <p className="mt-1 text-sm min-h-5 ts8-text">
@@ -99,12 +134,9 @@ export default function PersonalInfo() {
                 className="input-md w-full input-focus-primary"
                 type="email"
                 id="email"
-                placeholder={profileStore.email}
-                onKeyDown={(e) => {
-                  e.key === "Enter" && e.preventDefault();
-                }}
+                value={email}
+                onChangeCapture={handleEmailChange}
                 {...register("email")}
-                name="email"
               />
             </div>
             <p className="mt-1 text-sm min-h-5 ts8-text">
@@ -114,6 +146,17 @@ export default function PersonalInfo() {
           <h2 className="body2 ts5-text"> Location </h2>
           <div className="relative">
             <div className="flex flex-row items-center justify-between">
+              <Geocoder
+                accessToken={mapboxgl.accessToken}
+                options={{
+                  types: "place",
+                  country: "US",
+                }}
+                value={location}
+                onRetrieve={handleLocationChange}
+              />
+              {/* 
+              <AddressAutofill>
               <input
                 className="input-md w-full input-focus-primary"
                 type="text"
@@ -124,18 +167,19 @@ export default function PersonalInfo() {
                 }
                 name="location"
               />
+              </ AddressAutofill>
+              */}
             </div>
             <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
           </div>
           <button
             disabled={
-              (!getValues("userName") && !getValues("email")) ||
+              (!getValues("userName") && !getValues("email") && !location) ||
               !!errors.userName ||
               !!errors.email
             }
             type="submit"
-            className="primary-btn button w-24"
-          >
+            className="primary-btn button w-24">
             Save
           </button>
         </form>
