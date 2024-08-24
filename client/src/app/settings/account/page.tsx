@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/settings/account/_components/PersonalInfo";
 import AccountManagement from "@/app/settings/account/_components/AccountManagement";
 import Password from "@/app/settings/account/_components/Password";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { getUserById } from "@/actions/userApi";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useSession } from "next-auth/react";
+
+import { useGetUserByIdQuery } from "@/services/userApi";
 
 export default function AccountPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,6 +18,10 @@ export default function AccountPage() {
 
   const session = useSession();
   const userId = session.data?.user.id;
+
+  const { data, error, isLoading, isFetching, isUninitialized } = useGetUserByIdQuery(userId, {
+    skip: !userId,
+  });
 
   useEffect(() => {
     if (userId) {
@@ -40,8 +46,8 @@ export default function AccountPage() {
       getProfileInfo();
     }
   }, [userId, dispatch]);
-
-  if (!isDataLoaded) {
+  
+  if (isUninitialized || isLoading) {
     return <div>Loading...</div>; // Placeholder while data is loading
   }
 

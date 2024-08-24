@@ -21,7 +21,7 @@ interface AnalyticsProfileCardProps {
   username: string;
 }
 
-const TopProfileCard: React.FC<AnalyticsProfileCardProps> = ({
+const AnalyticsProfileCard: React.FC<AnalyticsProfileCardProps> = ({
   profileData,
   initials,
   username,
@@ -69,4 +69,4 @@ const TopProfileCard: React.FC<AnalyticsProfileCardProps> = ({
   );
 };
 
-export default TopProfileCard;
+export default AnalyticsProfileCard;

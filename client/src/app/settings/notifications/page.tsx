@@ -11,20 +11,46 @@ import Switch from "@mui/material/Switch";
 import { useSession } from "next-auth/react";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
+import { useGetUserByIdQuery } from "@/services/userApi";
+import { set } from "lodash";
+
 export default function NotificationPage() {
-  const dispatch = useDispatch<AppDispatch>();
-  const emailSettings = useAppSelector(selectEmailSettings);
-
-  const [localEmail, setLocalEmail] = useState(emailSettings);
-  const [isChanged, setIsChanged] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
   const session = useSession();
   const userId = session.data?.user.id;
 
+  const { emailSettingsCopy, error, isFetching, isUninitialized, isLoading } =
+    useGetUserByIdQuery(session.data?.user.id, {
+      skip: !userId,
+      selectFromResult: ({
+        data,
+        error,
+        isFetching,
+        isUninitialized,
+        isLoading,
+      }) => ({
+        emailSettingsCopy: {
+          communicationEmail: data?.communicationEmail,
+          marketingEmail: data?.marketingEmail,
+          messageEmail: data?.messageEmail,
+          securityEmail: data?.securityEmail,
+        },
+        isFetching,
+        isUninitialized,
+        isLoading,
+        error,
+      }),
+    });
+
+  const dispatch = useDispatch<AppDispatch>();
+  const emailSettings = useAppSelector(selectEmailSettings);
+
+  const [localEmail, setLocalEmail] = useState(emailSettingsCopy);
+  const [isChanged, setIsChanged] = useState(false);
+
   useEffect(() => {
-    setHydrated(true); // Set hydration to true after the component mounts
-  }, []);
+    if (isUninitialized && isLoading) return;
+    setLocalEmail(emailSettingsCopy);
+  }, [isUninitialized, isLoading]);
 
   useEffect(() => {
     setIsChanged(JSON.stringify(localEmail) !== JSON.stringify(emailSettings));
@@ -49,6 +75,10 @@ export default function NotificationPage() {
     }
   };
 
+  if (isUninitialized || isLoading) {
+    return <div>Loading...</div>; // Placeholder while data is loading
+  }
+
   return (
     <>
       <h1 className="heading1 ts5-text">Notification Settings</h1>
@@ -64,13 +94,11 @@ export default function NotificationPage() {
                 Receive emails about your account activity.
               </p>
             </div>
-            {hydrated && (
-              <Switch
-                checked={localEmail.communicationEmail}
-                onChange={handleChange("communicationEmail")}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            )}
+            <Switch
+              checked={!!localEmail.communicationEmail}
+              onChange={handleChange("communicationEmail")}
+              inputProps={{ "aria-label": "controlled" }}
+            />
           </div>
           <div className="flex justify-between">
             <div>
@@ -80,13 +108,11 @@ export default function NotificationPage() {
                 ShareFluence.
               </p>
             </div>
-            {hydrated && (
-              <Switch
-                checked={localEmail.marketingEmail}
-                onChange={handleChange("marketingEmail")}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            )}
+            <Switch
+              checked={!!localEmail.marketingEmail}
+              onChange={handleChange("marketingEmail")}
+              inputProps={{ "aria-label": "controlled" }}
+            />
           </div>
           <div className="flex justify-between">
             <div>
@@ -95,13 +121,11 @@ export default function NotificationPage() {
                 Receive emails when you receive messages.
               </p>
             </div>
-            {hydrated && (
-              <Switch
-                checked={localEmail.messageEmail}
-                onChange={handleChange("messageEmail")}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            )}
+            <Switch
+              checked={!!localEmail.messageEmail}
+              onChange={handleChange("messageEmail")}
+              inputProps={{ "aria-label": "controlled" }}
+            />
           </div>
           <div className="flex justify-between">
             <div>
@@ -110,13 +134,11 @@ export default function NotificationPage() {
                 Receive emails about your account security.
               </p>
             </div>
-            {hydrated && (
-              <Switch
-                checked={localEmail.securityEmail}
-                onChange={handleChange("securityEmail")}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            )}
+            <Switch
+              checked={!!localEmail.securityEmail}
+              onChange={handleChange("securityEmail")}
+              inputProps={{ "aria-label": "controlled" }}
+            />
           </div>
         </div>
         <button
