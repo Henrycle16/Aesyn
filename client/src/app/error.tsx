@@ -1,0 +1,42 @@
+"use client";
+
+import { useEffect } from "react";
+import Image from "next/image";
+import errorImage from "../../public/500-error.svg";
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Optionally log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
+  return (
+    <main className="flex h-full flex-col items-center justify-center grow">
+      <h1 className="mx-auto mt-20 font-semibold">
+        500 |<span> Something went our end!</span>
+      </h1>
+      <Image
+        src={errorImage}
+        width={530}
+        height={530}
+        alt="Error 500: Server Error"
+        className="mx-auto my-5"
+      />
+      <button
+        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
+        onClick={
+          // Attempt to recover by trying to re-render the invoices route
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+    </main>
+  );
+}
