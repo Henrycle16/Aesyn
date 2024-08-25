@@ -1,63 +1,98 @@
 "use client";
 
-import Link from "next/link";
-import Avatar from "@mui/material/Avatar";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
-
 import { useGetCreatorByUsernameQuery } from "@/services/creatorApi";
+import Instagram from "@/components/svgs/Instagram";
+import Tiktok from "@/components/svgs/Tiktok";
+import { useEffect, useState } from "react";
+import Overview from "../_components/Overview";
+import Demographic from "../_components/Demographic";
+import RecentPost from "../_components/RecentPost";
+import AnalyticsProfileCard from "../_components/AnalyticsProfileCard";
+import { getInstagramDataById } from "@/actions/InstagramApi";
 
 type Params = {
   username: string;
 };
 
-export default function Page({ params }: { params: Params }) {
-  const avatarUrl = "/static/images/avatar/1.jpg";
-  const { data: profileData, error, isLoading } = useGetCreatorByUsernameQuery(params.username);
+const getInitials = (firstName: string, lastName: string) => {
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+};
+
+export default function CreatorAnalytics({ params }: { params: Params }) {
+  const {
+    data: profileData,
+    error,
+    isLoading,
+  } = useGetCreatorByUsernameQuery(params.username);
+  const [selectedButton, setSelectedButton] = useState("instagram");
+  const [instagramData, setInstagramData] = useState(null);
+
+  const initials = profileData
+    ? getInitials(profileData.user.firstName, profileData.user.lastName)
+    : "";
+
+  useEffect(() => {
+    const fetchInstagramData = async () => {
+      if (profileData) {
+        const instagramDataResponse = await getInstagramDataById(profileData._id);
+        setInstagramData(instagramDataResponse.data);
+      }
+    };
+
+    fetchInstagramData();
+  }, [profileData]);
+
+  const SocialTiles = ({
+    icon,
+    text,
+    name,
+  }: {
+    icon: React.ReactNode;
+    text: string;
+    name: string;
+  }) => (
+    <button
+      type="button"
+      onClick={() => setSelectedButton(name)}
+      className={`flex justify-center items-center border-2 rounded-lg h-[3.5rem] w-[11.281rem] ${
+        selectedButton === name ? "border-[#3798E3]" : "border-gray-300"
+      }`}>
+      <div className="flex items-center text-[#184465] font-semibold space-x-4">
+        <div>{icon}</div>
+        <div>{text}</div>
+      </div>
+    </button>
+  );
 
   return (
     <div className="py-10 w-[77.5rem] mx-auto">
       {/* Top Profile Card */}
       <section className="h-[12.75rem] py-5 px-10 border border-gray-300 rounded-badge flex">
-        <Avatar
-          alt="Avatar"
-          src={profileData?.avatar ? profileData.avatar : avatarUrl}
-          sx={{ width: 150, height: 150 }}
-          className="ml-8 self-center"
+        <AnalyticsProfileCard
+          profileData={profileData}
+          initials={initials}
+          username={params.username}
         />
-        {/* name, username, location Container */}
-        <div className="ml-10 mt-3">
-          {/* Name */}
-          <h1 className="text-2xl font-semibold text-[#184465]">
-            {profileData?.user.firstName} {profileData?.user.lastName}
-            <span className="ml-2">
-              <VerifiedUserOutlinedIcon
-                sx={{ color: "#3798E3", fontSize: 22 }}
-                className="mb-1.5"
-              />
-            </span>
-          </h1>
-          {/* Username */}
-          <p className="text-sm text-[#061119] mt-1">@{profileData?.userName}</p>
-          {/* Location */}
-          <div className="flex gap-1 items-center mt-2.5 ml-[-0.3rem]">
-            <LocationOnOutlinedIcon sx={{ color: "#6D6D6D" }} />
-            <p className="text-sm text-[#061119]">
-              {profileData?.location.city}, {profileData?.location.state}
-            </p>
-          </div>
-        </div>
-        {/* See Profile View Button */}
-        <div className="ml-auto mt-[1.375rem]">
-          <Link
-            href={`/profile/${params.username}`}
-            className="border-2 ts1-border py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
-              See Profile View
-          </Link>
+      </section>
+
+      {/* Tab Section */}
+      {/* In the future this will dynamically about to load data from different social Medias. */}
+      <section className="mt-4">
+        <div className="flex gap-x-4">
+          <SocialTiles icon={<Instagram />} text="Instagram" name="instagram" />
+          <SocialTiles icon={<Tiktok />} text="TikTok" name="tiktok" />
         </div>
       </section>
-      {/* Analytics Section */}
-      <section className="mt-8">Analytics Section</section>
+
+      {/* Main Section */}
+      <section className="mt-4 mb-10 flex flex-col gap-10 w-[77.5rem]">
+        {/* Overview Section */}
+        <Overview instagramData={instagramData}/>
+        {/* Demographic Section */}
+        <Demographic />
+        {/* Recent Post */}
+        <RecentPost />
+      </section>
     </div>
   );
 }
