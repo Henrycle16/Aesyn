@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 const getInitials = (firstName: string, lastName: string) => {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -142,15 +143,13 @@ const ProfileCard = () => {
             </div>
           </div>
 
-          {/* Public View Button */}
-          <div className="flex flex-col ml-auto mb-24">
-            {" "}
-            <button className="border-solid border-2 ts1-border py-2 px-6 rounded-md flex items-center justify-center hover:bg-[#F5F5F5]">
-              <span className="text-[#3798E3] font-semibold">
-                {" "}
-                See Public View
-              </span>
-            </button>{" "}
+          {/* Analytics View Button */}
+          <div className="ml-auto mb-24">
+            <Link
+              href={`/analytics/${profileData.username}`}
+              className="border-2 ts1-border py-[10px] px-[25px] rounded-md text-[#3798E3] font-semibold hover:bg-[#F5F5F5]">
+              See Analytics View
+            </Link>
           </div>
         </div>
       </div>

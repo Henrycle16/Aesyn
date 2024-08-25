@@ -4,10 +4,14 @@ import profileDataReducer from "./slices/profileData-slice";
 import signUpReducer from "./slices/signUp-slice";
 import creatorPackagesReducer from "./slices/creatorPackages-slice";
 import creatorContentReducer from "./slices/creatorPortfolio-slice";
-import instagramDataReducer from './slices/instagramData-slice'
+import instagramDataReducer from "./slices/instagramData-slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
+
+// RTK Query Imports
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { emptySplitApi } from "@/services/api";
 
 const createNoopStorage = () => {
   return {
@@ -36,12 +40,13 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  [emptySplitApi.reducerPath]: emptySplitApi.reducer,
   authReducer,
   profileDataReducer,
   signUpReducer,
   creatorPackagesReducer,
   creatorContentReducer,
-        instagramDataReducer,
+  instagramDataReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -49,7 +54,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      emptySplitApi.middleware
+    ),
 });
 
 export const persistor = persistStore(store);
@@ -63,3 +70,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const clearPersistedState = () => {
   persistor.purge();
 };
+
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+setupListeners(store.dispatch);

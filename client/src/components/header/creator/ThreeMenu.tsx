@@ -9,19 +9,25 @@ import {
 } from "@headlessui/react";
 import Link from "next/link";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useRouter } from 'next/navigation'
+import { useAppSelector } from "@/redux/store";
 
 const ThreeMenu = () => {
   const [isReportsOpen, setIsReportsOpen] = useState(false);
+  const { ...profileData } = useAppSelector(
+    (state) => state.profileDataReducer.value
+  );
+  const router = useRouter();
 
   return (
     <div className="flex space-x-10">
       <div className="relative">
-        <Link
-          href={"#"}
+        <button
+          onClick={() => router.push(`/analytics/${profileData.username}`)}
           className="text-sm font-semibold text-gray-700 hover:text-[#3798E3]"
         >
-          Dashboard
-        </Link>
+          Analytics
+        </button>
       </div>
 
       <Popover className="relative">
@@ -32,7 +38,7 @@ const ThreeMenu = () => {
           onMouseLeave={() => setIsReportsOpen(false)}
           onClick={() => setIsReportsOpen(!isReportsOpen)}
         >
-          Reports
+          Campaigns
           <span className="text-gray-700">
             <ArrowDropDownIcon
               className={`h-5 w-5 transform transition-transform ${

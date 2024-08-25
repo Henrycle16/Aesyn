@@ -87,7 +87,7 @@ const CampaignPortfolioCard = (props: Props) => {
                 dispatch(creatorContentInfo({ currentContent: props }));
                 (
                   document.getElementById(
-                    `view_content_modal`
+                    `view_campaign_modal`
                   ) as HTMLDialogElement
                 ).showModal();
               }}
