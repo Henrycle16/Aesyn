@@ -144,7 +144,7 @@
     @apply text-xl;
   }
   .heading3 {
-    @apply text-base;
+    @apply text-lg font-semibold;
   }
   .subheader1 {
     @apply text-base font-bold;
