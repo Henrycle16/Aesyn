@@ -1,6 +1,24 @@
+import GenderPieChart from "@/components/charting/GenderPieChart";
 import React from "react";
 
-const Demographic = () => {
+export type GenderData = {
+  dimension_values: string[];
+  value: number;
+};
+
+type IGDemographicData = {
+  insights: {
+    followersGender: GenderData[];
+  };
+};
+
+const Demographic = ({
+  instagramData,
+}: {
+  instagramData: IGDemographicData | null;
+}) => {
+  console.log("InstagramData Into Demographic:", instagramData);
+
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
       <div className="heading1">Followers Demographics</div>
@@ -29,7 +47,7 @@ const Demographic = () => {
           <div className="body2 ts5-text mb-4">FOLLOWERS: BY GENDER</div>
           {/* Placeholder for Location content */}
           <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Map Placeholder
+            <GenderPieChart data={instagramData?.insights.followersGender} />
           </div>
         </div>
         <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">

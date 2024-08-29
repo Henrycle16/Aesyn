@@ -8,11 +8,8 @@ interface ChartContainerProps {
 
 const ChartContainer: React.FC<ChartContainerProps> = ({ title, children }) => {
   return (
-    <div>
-      <h3 className="scroll-m-20 mb-3 text-xl font-semibold tracking-tight">
-        {title}
-      </h3>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full">
+      <ResponsiveContainer width="100%" height={180}>
         {children}
       </ResponsiveContainer>
     </div>

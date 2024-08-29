@@ -1,39 +1,27 @@
-import React from "react";
+
 import ChartContainer from "./ChartContainer";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 import { UserData } from "./data/mockFollowers";
+import { GenderData } from "@/app/(creator)/analytics/_components/Demographic";
 
 interface PieChartProps {
   colorList?: string[];
-  data?: UserData[];
+  data: GenderData[];
   outerRadius?: number;
 }
 
-interface GroupedData {
-  groupName: string;
-  followers: number;
+const formatGenderData = (data: GenderData[]) => {
+  let formatedData = [];
+  if (data === undefined) return console.log("Data is undefined")
+  for (let i = 0; i < data.length; i++) {
+    let obj = {
+      gender: data[i].dimension_values[0],
+      value: data[i].value
+    }
+    formatedData.push(obj)
+  }
+  return formatedData
 }
-
-const aggregateGender = (dataArr: UserData[] | undefined) => {
-  let accumlator = dataArr.reduce(
-    (acc, currUser) => {
-      if (currUser.gender === "male") {
-        acc.male++;
-      } else if (currUser.gender === "female") {
-        acc.female++;
-      } else {
-        acc.other++;
-      }
-      return acc;
-    },
-    { male: 0, female: 0, other: 0 },
-  );
-  return [
-    { name: "male", followers: accumlator.male },
-    { name: "female", followers: accumlator.female },
-    { name: "other", followers: accumlator.other },
-  ];
-};
 
 const defaultColors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -72,23 +60,22 @@ const GenderPieChart: React.FC<PieChartProps> = ({
 }) => {
   return (
     <ChartContainer title="Followers By Gender ">
-      <PieChart width={150} height={150}>
+      <PieChart width={90} height={90}>
         <Pie
-          data={aggregateGender(data)}
-          dataKey="followers"
-          outerRadius={150}
+          data={formatGenderData(data)}
+          dataKey="value"
+          nameKey="gender"
+          outerRadius={90}
           fill="green"
           // ----------------
           label={renderCustomizedLabel}
           labelLine={false}
           //--------------------
         >
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={colorList[index % colorList.length]}
-            />
+          {data?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colorList[index % colorList.length]} />
           ))}
+
         </Pie>
         <Tooltip />
       </PieChart>
