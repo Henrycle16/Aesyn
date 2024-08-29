@@ -1,4 +1,5 @@
 import GenderPieChart from "@/components/charting/GenderPieChart";
+import AgeHistogram from "@/components/charting/AgeHistogram";
 import React from "react";
 
 export type GenderData = {
@@ -6,9 +7,15 @@ export type GenderData = {
   value: number;
 };
 
+export type AgeData = {
+  dimension_values: string[];
+  value: number;
+};
+
 type IGDemographicData = {
   insights: {
     followersGender: GenderData[];
+    followersAge: AgeData[];
   };
 };
 
@@ -36,7 +43,7 @@ const Demographic = ({
           <div className="body2 ts5-text mb-4">FOLLOWERS: BY AGE</div>
           {/* Placeholder for Gender Distribution content */}
           <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Chart Placeholder
+            <AgeHistogram data={instagramData?.insights.followersAge} />
           </div>
         </div>
       </div>

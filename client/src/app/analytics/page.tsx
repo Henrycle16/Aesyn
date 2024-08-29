@@ -15,7 +15,7 @@ export default function Analytics() {
         <ReachChart />
         <ReachChart chartColor="#3EB489" />
         <ImpressionLineChart lineColor="black" />
-        <GenderPieChart data={followersList} />
+        {/* <GenderPieChart data={followersList} /> */}
       </div>
     </main>
   );
