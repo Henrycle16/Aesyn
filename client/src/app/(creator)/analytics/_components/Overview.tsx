@@ -4,6 +4,8 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import ImpressionLineChart from "@/components/charting/ImpressionLineChart";
+import ReachChart from "@/components/charting/ReachChart";
 
 type ImpressionsAndReach = {
   value: number;
@@ -36,7 +38,8 @@ const Overview = ({
           />
           <select
             defaultValue="this-month"
-            className="border border-black rounded-md p-2 pl-10 gap-2 body2 ts7-text">
+            className="border border-black rounded-md p-2 pl-10 gap-2 body2 ts7-text"
+          >
             <option value="this-week">This Week</option>
             <option value="this-month">This Month</option>
             <option value="last-3-months">Last 3 Months</option>
@@ -82,17 +85,19 @@ const Overview = ({
         {/* Graphs */}
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">REACH</div>
-          {/* Placeholder for Gender Distribution content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Chart Placeholder
-          </div>
+          <ReachChart />
+          {/* Placeholder for Reachr Distribution content */}
+          {/* <div className="w-full h-full bg-gray-100 flex items-center justify-center"> */}
+          {/*   <ImpressionLineChart /> */}
+          {/* </div> */}
         </div>
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">IMPRESSIONS</div>
           {/* Placeholder for Gender Distribution content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Chart Placeholder
-          </div>
+          <ImpressionLineChart />
+          {/* <div className="w-full h-full bg-gray-100 flex items-center justify-center"> */}
+          {/*   Chart Placeholder */}
+          {/* </div> */}
         </div>
       </div>
     </div>
