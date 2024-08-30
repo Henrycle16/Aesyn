@@ -37,14 +37,14 @@ const HeroSection = () => {
         <div className="flex justify-center">
           <Link
             onClick={onClickBrand}
-            href={"/signup"}
+            href={"/waitlist"}
             className="inline-flex text-white ts1-bg border-0 py-2 px-6 focus:outline-none hover:ts2-bg rounded text-lg"
           >
             Join as Brand!
           </Link>
           <Link
             onClick={onClickCreator}
-            href={"/signup"}
+            href={"/waitlist"}
             className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
           >
             Join as Creator!
