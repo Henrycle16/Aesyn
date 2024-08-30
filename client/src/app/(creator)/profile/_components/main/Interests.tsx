@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { interestsArray, Interest } from "@/lib/user/interestsLib";
+import { interestsArray} from "@/lib/user/interestsLib";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Select, {
   components,
@@ -11,7 +11,7 @@ import Select, {
 import "@/styles/interestSelect.css";
 import { useSession } from "next-auth/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { profileDataInfo } from "@/redux/slices/profileData-slice";
+import { profileDataInfo, selectInterests } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import { updateCreatorInterests } from "@/actions/creatorApi";
 import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
@@ -23,17 +23,13 @@ type OptionType = {
 };
 
 const Interests = () => {
-  const interests = useAppSelector(
-    (state) => state.profileDataReducer.value.interests
-  );
+  const interests = useAppSelector(selectInterests);
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedInterests, setSelectedInterests] = useState<OptionType[]>([]);
-  const [initialSelected, setInitialSelected] = useState<OptionType[]>([]);
+  const [initialInterests, setInitialInterests] = useState<OptionType[]>([]);
+  const [isLimitExceeded, setIsLimitExceeded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [isLimitExceeded, setIsLimitExceeded] = useState(
-    6 - interests.length < 0
-  );
   const [isHovered, setIsHovered] = useState(false);
 
   const session = useSession();
@@ -55,13 +51,11 @@ const Interests = () => {
       })
       .filter(Boolean) as OptionType[];
     setSelectedInterests(initialSelectedInterests);
-    setInitialSelected(initialSelectedInterests);
+    setInitialInterests(initialSelectedInterests);
     setIsLimitExceeded(6 - interests.length < 0);
   }, [interests]);
 
-  const objectsEqual = (o1:any, o2:any) =>
-    Object.keys(o1).length === Object.keys(o2).length 
-        && Object.keys(o1).every(p => o1[p] === o2[p]);
+  const hasChanges = JSON.stringify(initialInterests) !== JSON.stringify(selectedInterests);
 
   // Handles the form submission
   const onFormSubmit = async () => {
@@ -124,7 +118,8 @@ const Interests = () => {
   };
 
   const closeModal = () => {
-    if (!objectsEqual(initialSelected, selectedInterests) && !submitted) {
+    console.log("submitted: ", submitted)
+    if (hasChanges && !submitted) {
       showDiscardedToast();
     }
     setSelectedInterests(
@@ -229,9 +224,9 @@ const Interests = () => {
             <div className="flex justify-end mt-10">
               <button
                 type="submit"
-                disabled={selectedInterests.length === 0}
+                disabled={!hasChanges}
                 className={`save-btn ml-auto ${
-                  selectedInterests.length === 0
+                  !hasChanges
                     ? "bg-g3 hover:bg-g3"
                     : "bg-ts1 hover:bg-ts2"
                 }`}>

@@ -46,6 +46,7 @@ const AddPersonal = () => {
   );
 
   const [resetContentButton, setResetContentButton] = useState(false);
+  const [disableSaveButton, setDisableSaveButton] = useState(false);
 
   const onImageLoad = (e: React.ChangeEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -76,6 +77,7 @@ const AddPersonal = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setDisableSaveButton(true);
 
     if (currentContent.mediaType === "video") {
       try {
@@ -145,7 +147,7 @@ const AddPersonal = () => {
 
       try {
         const response = await uploadImage(userId, formData);
-        
+
         const portfolio = response.data.data.portfolio;
         const newestPortfolioContent = portfolio[portfolio.length - 1];
         const newestPortfolioId = newestPortfolioContent._id;
@@ -166,6 +168,7 @@ const AddPersonal = () => {
     dispatch(resetCurrentContent());
 
     setResetContentButton(true);
+    setDisableSaveButton(false);
     (document.getElementById(`add_content_modal`) as HTMLDialogElement).close();
   };
 
@@ -203,8 +206,7 @@ const AddPersonal = () => {
                       minWidth={MIN_DIMENSION}
                       onChange={(pixelCrop, percentCrop) =>
                         setCrop(percentCrop)
-                      }
-                    >
+                      }>
                       <Image
                         src={currentContent.uri}
                         ref={imgRef}
@@ -248,30 +250,36 @@ const AddPersonal = () => {
           )}
 
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
-              onClick={() => {
-                dispatch(
-                  creatorContentInfo({
-                    currentContent: {
-                      ...currentContent,
-                      contentType: "personal",
-                    },
-                  })
-                );
-              }}
-            >
-              Save
-            </button>
+            {currentContent.uri && !disableSaveButton? (
+              <button
+                type="submit"
+                className="bg-[#3798E3] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[#2C7AB6]"
+                onClick={() => {
+                  dispatch(
+                    creatorContentInfo({
+                      currentContent: {
+                        ...currentContent,
+                        contentType: "personal",
+                      },
+                    })
+                  );
+                }}>
+                Save
+              </button>
+            ) : (
+              <button
+                disabled
+                className="bg-[#D7D7D7] text-[#6D6D6D] font-bold py-3 px-6 capitalize rounded-md">
+                Save
+              </button>
+            )}
           </div>
           <button
             onClick={() => {
               handleCloseModal();
             }}
             type="button"
-            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg"
-          >
+            className="btn btn-lg btn-circle btn-ghost outline-none absolute right-4 top-2 text-lg">
             ✕
           </button>
           {crop && (

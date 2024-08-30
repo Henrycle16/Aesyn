@@ -24,10 +24,10 @@ type SocialMediaData = {
 };
 
 const SocialMedia = () => {
-  const [isModalClosed, setIsModalClosed] = useState(false);
-  const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);;
+  const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { _id, username, followersCount, profilePictureURL} = useAppSelector(
+  const { _id, username, followersCount, profilePictureURL, socialMedia, creatorId} = useAppSelector(
     (state) => state.instagramDataReducer.value
   );
 
@@ -37,17 +37,17 @@ const SocialMedia = () => {
       username, 
       followersCount, 
       profilePictureURL, 
-      socialMedia: "Instagram", 
+      socialMedia, 
       component: <Instagram /> 
     };
 
-    if(_id !== "" && _id !== null){
+    if(_id != null && _id != "") {
       setSocialMediaData((prevData) => [
         ...prevData.filter(data => data.socialMedia !== "Instagram"),
         instagramData
       ]);
     }
-  }, [_id, username, followersCount, profilePictureURL]);
+  }, [creatorId]);
 
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
   const SocialTiles = ({
@@ -66,8 +66,22 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
-    showSuccessToast();
-    setIsModalClosed(true);
+    const instagramData = { 
+      _id, 
+      username, 
+      followersCount, 
+      profilePictureURL, 
+      socialMedia, 
+      component: <Instagram /> 
+    };
+
+    if(_id != null && _id != "") {
+      setSocialMediaData((prevData) => [
+        ...prevData.filter(data => data.socialMedia !== "Instagram"),
+        instagramData
+      ]);
+    }
+
     (document.getElementById(`social_modal`) as HTMLDialogElement).close();
   };
 
@@ -102,7 +116,7 @@ const SocialMedia = () => {
         </div>
         <div className="flex flex-col">
           {socialMediaData.length > 0 ? (
-            <div className="grid grid-cols-2 grid-rows-2 gap-x-8 gap-y-9">
+            <div className="flex flex-wrap gap-x-8 gap-y-9">
               {socialMediaData.map((socialMediaData) => (
                 <SocialMediaCard
                   key={socialMediaData._id}
@@ -131,7 +145,7 @@ const SocialMedia = () => {
               {/* Social Media Tiles */}
               <SocialTiles icon={<Youtube />} text="Youtube" />
               {/* <SocialTiles icon={<Instagram />} text="Instagram" /> */}
-              <InstagramTile />
+              <InstagramTile isLoading={isLoading} setIsLoading={setIsLoading} />
               <SocialTiles icon={<X />} text="Twitter/X" />
               <SocialTiles icon={<Tiktok />} text="Tiktok" />
               <SocialTiles icon={<Facebook />} text="Facebook" />
@@ -139,18 +153,15 @@ const SocialMedia = () => {
             </div>
 
             <div className="flex justify-end mt-7">
-              {/* if there is a button, it will close the modal */}
               <button
                 onClick={closeModal}
                 // type="submit"
-                className="bg-[#3798E3] text-white ml-auto py-[10px] px-[25px] text-sm font-bold rounded-lg hover:bg-[#2C7AB6]"
+                disabled={isLoading}
+                className={` ml-auto py-[10px] px-[25px] text-sm font-bold rounded-lg ${isLoading ? 'bg-[#D7D7D7] text-[#6D6D6D]' : 'bg-[#3798E3] text-white hover:bg-[#2C7AB6]'}`}
               >
-                Save
+                Close
               </button>
             </div>
-            <button className="btn btn-lg btn-circle btn-ghost outline-none absolute right-3 top-2 text-lg">
-              ✕
-            </button>
           </form>
         </div>
       </dialog>
