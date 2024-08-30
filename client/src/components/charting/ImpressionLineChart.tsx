@@ -1,16 +1,12 @@
 import React from "react";
 import ChartContainer from "./ChartContainer";
-import { LineChart, XAxis, YAxis, Tooltip, Legend, Line } from "recharts";
+import { LineChart, XAxis, YAxis, Tooltip, Line } from "recharts";
 import { DailyData, socialMediaReach } from "./data/mockReach";
 
 interface ImpressionLineChartProps {
   data?: DailyData[];
   lineColor?: string;
 }
-
-// remove later -------------------------------------
-//
-// -------------------------------------
 
 // Format the date
 const formatXAxis = (tickItem: string) => {
@@ -23,16 +19,24 @@ const formatXAxis = (tickItem: string) => {
 
 const ImpressionLineChart: React.FC<ImpressionLineChartProps> = ({
   data,
-  lineColor,
+  lineColor = "#3798E3",
 }) => {
   return (
     <ChartContainer title="Impression Line Chart">
       <LineChart data={socialMediaReach}>
-        <XAxis dataKey="day" tickFormatter={formatXAxis} />
-        <YAxis />
+        <XAxis
+          dataKey="day"
+          tickFormatter={formatXAxis}
+          padding={{ left: 10, right: 10 }}
+        />
+        <YAxis domain={["dataMin-1000", "dataMax"]} scale="linear" />
         <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="totalReach" stroke={lineColor} />
+        <Line
+          type="monotone"
+          dataKey="totalReach"
+          stroke={lineColor}
+          dot={false}
+        />
       </LineChart>
     </ChartContainer>
   );

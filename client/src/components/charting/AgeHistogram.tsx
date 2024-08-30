@@ -36,7 +36,7 @@ const AgeHistogram: React.FC<AgeHistogramProps> = ({ data }) => {
         <XAxis dataKey="Age" padding={{ left: 10, right: 10 }} />
         <YAxis scale="linear" />
         <Tooltip />
-        <Bar dataKey="Followers" fill="#3EB489" />
+        <Bar dataKey="Followers" fill="#3789E3" />
       </BarChart>
     </ChartContainer>
   );

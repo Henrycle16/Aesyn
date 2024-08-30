@@ -9,7 +9,7 @@ interface ChartContainerProps {
 const ChartContainer: React.FC<ChartContainerProps> = ({ title, children }) => {
   return (
     <div className="w-full">
-      <ResponsiveContainer width="100%" height={180}>
+      <ResponsiveContainer width="100%" height={196}>
         {children}
       </ResponsiveContainer>
     </div>

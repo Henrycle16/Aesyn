@@ -5,7 +5,7 @@ import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
 
 interface WeeklyData {
   week: string;
-  totalReach: number;
+  reach: number;
 }
 
 interface ReachChartProps {
@@ -22,7 +22,7 @@ const aggregateByWeek = (data: DailyData[]): WeeklyData[] => {
     currentSum += item.totalReach;
 
     if ((index + 1) % 7 === 0 || index === data.length - 1) {
-      weeklyData.push({ week: `w${currentWeek}`, totalReach: currentSum });
+      weeklyData.push({ week: `Week ${currentWeek}`, reach: currentSum });
       currentWeek += 1;
       currentSum = 0;
     }
@@ -32,15 +32,14 @@ const aggregateByWeek = (data: DailyData[]): WeeklyData[] => {
 
 const weeklyData: WeeklyData[] = aggregateByWeek(socialMediaReach);
 
-const ReachChart: React.FC<ReachChartProps> = ({ chartColor }) => {
+const ReachChart: React.FC<ReachChartProps> = ({ chartColor = "#3798E3" }) => {
   return (
     <ChartContainer title="Weekly Reach">
       <BarChart data={weeklyData}>
         <XAxis dataKey="week" />
-        <YAxis />
+        <YAxis domain={["dataMin - 1000", "dataMax"]} scale="linear" />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="totalReach" fill={chartColor} />
+        <Bar dataKey="reach" fill={chartColor} barSize={40} />
       </BarChart>
     </ChartContainer>
   );

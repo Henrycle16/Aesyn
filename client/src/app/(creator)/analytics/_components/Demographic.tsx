@@ -41,10 +41,7 @@ const Demographic = ({
         </div>
         <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">FOLLOWERS: BY AGE</div>
-          {/* Placeholder for Gender Distribution content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            <AgeHistogram data={instagramData?.insights.followersAge} />
-          </div>
+          <AgeHistogram data={instagramData?.insights.followersAge} />
         </div>
       </div>
 
@@ -52,10 +49,7 @@ const Demographic = ({
       <div className="grid grid-cols-3 gap-6 mt-8 pb-8">
         <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">FOLLOWERS: BY GENDER</div>
-          {/* Placeholder for Location content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            <GenderPieChart data={instagramData?.insights.followersGender} />
-          </div>
+          <GenderPieChart data={instagramData?.insights.followersGender} />
         </div>
         <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">FOLLOWERS: BY COCK SIZE</div>

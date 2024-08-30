@@ -86,18 +86,10 @@ const Overview = ({
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">REACH</div>
           <ReachChart />
-          {/* Placeholder for Reachr Distribution content */}
-          {/* <div className="w-full h-full bg-gray-100 flex items-center justify-center"> */}
-          {/*   <ImpressionLineChart /> */}
-          {/* </div> */}
         </div>
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">IMPRESSIONS</div>
-          {/* Placeholder for Gender Distribution content */}
           <ImpressionLineChart />
-          {/* <div className="w-full h-full bg-gray-100 flex items-center justify-center"> */}
-          {/*   Chart Placeholder */}
-          {/* </div> */}
         </div>
       </div>
     </div>
