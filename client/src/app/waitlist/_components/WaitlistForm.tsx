@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import Button from "@mui/material/Button";
@@ -8,13 +9,17 @@ import { FormDataSchema } from "@/lib/zod-schemas/waitlistSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { addApplicant } from "@/actions/waitlistApi";
 import { useAppSelector } from "@/redux/store";
 import Link from "next/link";
+import { addApplicant } from "@/actions/waitlistApi";
+
+import { showWaitlistSuccessToast } from "@/utils/toast/toastEmitters";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 
 export default function WaitlistForm() {
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -39,26 +44,27 @@ export default function WaitlistForm() {
 
     try {
       const response = await addApplicant(formData);
-
       console.log(response.data);
+      setIsFormSubmitted(true);
+      showWaitlistSuccessToast();
 
     } catch (err) {
       console.log(err);
     }
-    reset();
+    // reset();
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
+      className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1 w-[25rem]"
     >
       {/* Form Header */}
       <div className="mx-auto mt-16 flex flex-col items-center">
         <Avatar className="m-1 ts1-bg">
           <PersonPinOutlinedIcon />
         </Avatar>
-        <h1 className="text-2xl">Sign Up</h1>
+        <h1 className="text-2xl">Waitlist Sign Up</h1>
       </div>
 
       {/* Input Fields */}
@@ -71,6 +77,7 @@ export default function WaitlistForm() {
           {...register("firstName")}
           autoFocus
           autoComplete="given-name"
+          disabled={isFormSubmitted}
         />
         <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.firstName?.message}
@@ -84,6 +91,7 @@ export default function WaitlistForm() {
           id="lastName"
           {...register("lastName")}
           autoComplete="family-name"
+          disabled={isFormSubmitted}
         />
         <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.lastName?.message}
@@ -97,6 +105,7 @@ export default function WaitlistForm() {
           id="email"
           {...register("email")}
           autoComplete="email"
+          disabled={isFormSubmitted}
         />
         <p className="mt-1 text-sm min-h-5 ts8-text">
           {errors.email?.message}
@@ -108,6 +117,7 @@ export default function WaitlistForm() {
         fullWidth
         variant="contained"
         className="py-2 ts1-bg mt-5"
+        disabled={isFormSubmitted}
       >
         Sign Up
       </Button>

@@ -2,12 +2,12 @@ import WaitlistForm from "./_components/WaitlistForm"
 
 export default function Page() {
   return (
-    <div className="flex justify-between px-12 max-lg:flex-col max-lg:items-center gap-2">
-      <div className="max-w-xl">
+    <div className="flex px-12 max-lg:flex-col max-lg:items-center gap-2">
+      <div className="ml-[10rem]">
         <WaitlistForm />
       </div>
 
-      <div className="max-w-lg grid place-items-center">
+      <div className="max-w-lg grid place-items-center ml-[10rem]">
         <video
           src="https://www.w3schools.com/html/mov_bbb.mp4"
           controls

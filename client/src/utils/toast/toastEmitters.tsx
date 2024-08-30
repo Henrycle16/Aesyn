@@ -29,6 +29,17 @@ export const showSuccessToast = () => {
   });
 };
 
+export const showWaitlistSuccessToast = () => {
+  const msgProps = {
+    title: "Waitlist Application Saved",
+    text: "You've been added to our waitlist!",
+  };
+  return toast.success(<Msg {...msgProps} />, {
+    toastId: "success-toast",
+    icon: <CheckCircleOutlinedIcon fontSize="large"/>,
+  });
+};
+
 export const showDiscardedToast = () => {
   const msgProps = {
     title: "Changes Discarded",
