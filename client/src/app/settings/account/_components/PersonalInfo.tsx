@@ -203,13 +203,21 @@ export default function PersonalInfo() {
           <div className="relative">
             <div className="flex flex-row items-center justify-between">
               <Geocoder
-                accessToken={mapboxgl.accessToken}
+                
+                accessToken={mapboxgl.accessToken}theme={{
+                  variables: {
+                    padding: '60px',
+                    boxShadow: '0 0 0 1px #d7d7d7',
+                    minWidth: '300px'
+                  }
+                }}
                 options={{
                   types: "place",
                   country: "US",
                 }}
                 value={location}
                 onRetrieve={handleLocationChange}
+                
               />
               {/* 
               <AddressAutofill>
