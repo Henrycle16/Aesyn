@@ -36,6 +36,7 @@ const LoginComponent = () => {
       {
         dispatch(
           logIn({
+            email: email,
             creatorUsername: creator.data.userName,
             creatorId: creator.data._id
           })

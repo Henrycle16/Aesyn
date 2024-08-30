@@ -17,6 +17,11 @@ import { getCreatorByUserId } from "@/actions/creatorApi";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "@/styles/mapbox.css";
+import { getUserById } from "@/actions/userApi";
+
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/redux/slices/auth-slice";
 
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
@@ -24,8 +29,12 @@ export default function PersonalInfo() {
   const [location, setLocation] = useState("");
   const [oldLocation, setOldLocation] = useState("");
   const [username, setUsername] = useState("");
+  const [oldUsername, setOldUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [oldEmail, setOldEmail] = useState("");
   const { data: session, status } = useSession();
+
+  const dispatch = useDispatch<AppDispatch>();
 
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
   const authStore = useAppSelector((state) => state.authReducer.value)
@@ -40,6 +49,16 @@ export default function PersonalInfo() {
     mode: "onChange",
   });
 
+  const userCall = async () => {
+    await getUserById(session?.user.id).then((res) => {
+      if (res.status === 200) {
+        console.log("res: ", res);
+        setEmail(res.data.email);
+        setOldEmail(res.data.email);
+      }
+    });
+  };
+  
   const creatorCall = async () => {
     await getCreatorByUserId(session?.user.id).then((res) => {
       if(res.status === 200) {
@@ -51,15 +70,19 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      // You can now safely interact with session data
-      // For example, set any default form values or states based on session.user
+      userCall();
       setUsername(authStore.creatorUsername);
-      setEmail(authStore.email);
+      setOldUsername(authStore.creatorUsername);
       creatorCall();
+
+      console.log("authStore: ", authStore);
+      console.log("session: ", session)
+
+      
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
-  }, [status]);
+  }, [session, status]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     interface LooseObject {
@@ -93,6 +116,28 @@ export default function PersonalInfo() {
 
     try {
       await creatorMyAccountUpdate(session?.user.id, result);
+
+      // Dispatch to auth-slice redux after successful PATCH call to backend
+      for (const [key, value] of Object.entries(data)) {
+        if (key == "email" && value !== "") {
+          dispatch(
+            logIn({
+              email: value,
+            })
+          );
+          console.log("dispatched email");
+        } else if (key == "userName" && value !== "") {
+          dispatch(
+            logIn({
+              creatorUsername: value,
+            })
+          );
+          console.log("dispatched username");
+        }
+      }
+
+      console.log(authStore)
+
       showSuccessToast();
       setTimeout(() => window.location.reload(), 1000);
     } catch (error) {
@@ -185,9 +230,7 @@ export default function PersonalInfo() {
           </div>
           <button
             disabled={
-              (!getValues("userName") && !getValues("email") && !location) ||
-              !!errors.userName ||
-              !!errors.email
+              (oldUsername == username && oldEmail == email && oldLocation == location)
             }
             type="submit"
             className="primary-btn button w-24">
