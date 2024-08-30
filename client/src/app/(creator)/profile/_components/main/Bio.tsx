@@ -16,7 +16,6 @@ const Bio: React.FC = () => {
   const [tempBioText, setTempBioText] = useState<string>(bio || "");
   const [charCount, setCharCount] = useState(500 - (bio?.length || 0));
   const [isHovered, setIsHovered] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -40,9 +39,7 @@ const Bio: React.FC = () => {
       // Dispatch the updated bio to Redux store
       dispatch(profileDataInfo({ bio: updatedBio }));
 
-      setSubmitted(true);
-      showSuccessToast();
-      closeModal();
+      closeModal(true);
     } catch (error) {
       console.error("Error updating bio:", error);
     }
@@ -61,10 +58,13 @@ const Bio: React.FC = () => {
     (document.getElementById("bio_modal") as HTMLDialogElement).showModal();
   };
 
-  const closeModal = () => {
-    if (hasChanges && !submitted)
-    {
+  const closeModal = (submitted: any) => {
+    console.log("submitted: ", submitted)
+    console.log("hasChanges: ", hasChanges)
+    if (hasChanges && submitted != true) {
       showDiscardedToast();
+    } else if (hasChanges && submitted == true) {
+      showSuccessToast();
     }
     (document.getElementById("bio_modal") as HTMLDialogElement).close();
   };

@@ -29,7 +29,6 @@ const Interests = () => {
   const [selectedInterests, setSelectedInterests] = useState<OptionType[]>([]);
   const [initialInterests, setInitialInterests] = useState<OptionType[]>([]);
   const [isLimitExceeded, setIsLimitExceeded] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const session = useSession();
@@ -68,9 +67,7 @@ const Interests = () => {
         await updateCreatorInterests(userId, selectedInterestLabels);
         dispatch(profileDataInfo({ interests: selectedInterestLabels }));
       }
-      setSubmitted(true);
-      showSuccessToast();
-      closeModal();
+      closeModal(true);
     } catch (error) {
       console.error("Failed to update interests:", error);
     }
@@ -116,11 +113,15 @@ const Interests = () => {
       document.getElementById(`interests_modal`) as HTMLDialogElement
     ).showModal();
   };
-
-  const closeModal = () => {
+  
+  const closeModal = (submitted: any) => {
     console.log("submitted: ", submitted)
-    if (hasChanges && !submitted) {
+    console.log("hasChanges: ", hasChanges)
+
+    if (hasChanges && submitted != true) {
       showDiscardedToast();
+    } else if (hasChanges && submitted == true) {
+      showSuccessToast();
     }
     setSelectedInterests(
       interests
