@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,14 +12,17 @@ import { redirect } from "next/navigation";
 import { userEmailUpdate } from "@/actions/userApi";
 import { showSuccessToast } from "@/utils/toast/toastEmitters";
 import mapboxgl from "mapbox-gl";
-import { AddressAutofill, Geocoder } from "@mapbox/search-js-react";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { Geocoder } from "@mapbox/search-js-react";
 import { getCreatorByUserId } from "@/actions/creatorApi";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import "@/styles/mapbox.css";
 
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
   const [location, setLocation] = useState("");
+  const [oldLocation, setOldLocation] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
@@ -42,6 +44,7 @@ export default function PersonalInfo() {
     await getCreatorByUserId(session?.user.id).then((res) => {
       if(res.status === 200) {
         setLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
+        setOldLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
       }
     })
   }
@@ -63,7 +66,7 @@ export default function PersonalInfo() {
       [key: string]: any;
     }
 
-    console.log("SUBMIT LOCATION: ", location);
+    const [city, state, country] = location.split(", ");
 
     const result: LooseObject = {};
     for (const [key, value] of Object.entries(data)) {
@@ -77,6 +80,16 @@ export default function PersonalInfo() {
     if (Object.keys(result).length === 0) {
       return;
     }
+
+    if(location != oldLocation){
+      result["location"] = {
+        city: city,
+        state: state,
+        country: country
+      }
+    }
+
+    console.log("Result DATA: ", result);
 
     try {
       await creatorMyAccountUpdate(session?.user.id, result);
@@ -92,14 +105,12 @@ export default function PersonalInfo() {
   }
 
   const handleUsernameChange = (d: any) => {
-    console.log(d.target.value)
     setUsername(d.target.value)
   };
   const handleEmailChange = (d: any) => {
     setEmail(d.target.value);
   };
   const handleLocationChange = (d: any) => {
-    console.log(d)
     setLocation(d.properties.full_address);
   };
 
