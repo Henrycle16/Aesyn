@@ -58,6 +58,7 @@ export default function PersonalInfo() {
     }
   });
 
+  // Function to call user and creator data
   const apiCall = async () => {
     const user = await getUserById(session?.user.id);
     const creator = await getCreatorByUserId(session?.user.id);
@@ -73,6 +74,7 @@ export default function PersonalInfo() {
     });
   };
 
+  // Resets zod form validator values
   const onReset = async () => {
     reset({
       userName: "",
@@ -96,6 +98,7 @@ export default function PersonalInfo() {
     const result: LooseObject = {};
     const email : LooseObject = {};
    
+    // Break apart data since email has to go into a different call.
     for (const [key, value] of Object.entries(data)) {
       if (key !== "email" && value !== "") {
         result[key] = value;
@@ -104,6 +107,7 @@ export default function PersonalInfo() {
       }
     }
 
+    // Adds location into results object
     if(newData.location != oldData.location){
       const [city, state, country] = newData.location.split(", ");
 
@@ -141,6 +145,7 @@ export default function PersonalInfo() {
         );
       }
 
+      // Function to rerender component to reset button
       forceUpdate();
     } catch (error) {
       console.log(error);
@@ -164,7 +169,6 @@ export default function PersonalInfo() {
     })
   };
   const handleLocationChange = (d: any) => {
-    console.log(d.properties.full_address)
     setNewData({
       ...newData,
       location: d.properties.full_address
