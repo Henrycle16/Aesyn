@@ -26,12 +26,16 @@ import { logIn } from "@/redux/slices/auth-slice";
 type Inputs = z.infer<typeof PersonalInfoSchema>;
 
 export default function PersonalInfo() {
-  const [location, setLocation] = useState("");
-  const [oldLocation, setOldLocation] = useState("");
-  const [username, setUsername] = useState("");
-  const [oldUsername, setOldUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [oldEmail, setOldEmail] = useState("");
+  const [oldData, setOldData] = useState({
+    username: "",
+    location: "",
+    email: ""
+  });
+  const [newData, setNewData] = useState({
+    username: "",
+    location: "",
+    email: ""
+  });
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
   const { data: session, status } = useSession();
 
@@ -54,25 +58,20 @@ export default function PersonalInfo() {
     }
   });
 
-  const userCall = async () => {
-    await getUserById(session?.user.id).then((res) => {
-      if (res.status === 200) {
-        setEmail(res.data.email);
-        setOldEmail(res.data.email);
-      }
+  const apiCall = async () => {
+    const user = await getUserById(session?.user.id);
+    const creator = await getCreatorByUserId(session?.user.id);
+    setOldData({
+      username: creator.data.userName,
+      location: `${creator.data.location.city}, ${creator.data.location.state}, ${creator.data.location.country}`,
+      email: user.data.email,
+    });
+    setNewData({
+      username: creator.data.userName,
+      location: `${creator.data.location.city}, ${creator.data.location.state}, ${creator.data.location.country}`,
+      email: user.data.email,
     });
   };
-  
-  const creatorCall = async () => {
-    await getCreatorByUserId(session?.user.id).then((res) => {
-      if(res.status === 200) {
-        setLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
-        setOldLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
-        setUsername(res.data.userName);
-        setOldUsername(res.data.userName);
-      }
-    })
-  }
 
   const onReset = async () => {
     reset({
@@ -83,8 +82,7 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      creatorCall();
-      userCall();
+      apiCall();
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
@@ -106,8 +104,8 @@ export default function PersonalInfo() {
       }
     }
 
-    if(location != oldLocation){
-      const [city, state, country] = location.split(", ");
+    if(newData.location != oldData.location){
+      const [city, state, country] = newData.location.split(", ");
 
       result["location"] = {
         city: city,
@@ -126,9 +124,15 @@ export default function PersonalInfo() {
       // Dispatch to auth-slice redux after successful PATCH call to backend
       for (const [key, value] of Object.entries(data)) {
         if(key === "email"){
-          setOldEmail(value)
+          setOldData({
+            ...oldData,
+            email: value
+          })
         } else if(key === "userName"){
-          setOldUsername(value)
+          setOldData({
+            ...oldData,
+            username: value
+          })
         }
         dispatch(
           logIn({
@@ -148,13 +152,23 @@ export default function PersonalInfo() {
   }
 
   const handleUsernameChange = (d: any) => {
-    setUsername(d.target.value)
+    setNewData({
+      ...newData,
+      username: d.target.value
+    })
   };
   const handleEmailChange = (d: any) => {
-    setEmail(d.target.value);
+    setNewData({
+      ...newData,
+      email: d.target.value
+    })
   };
   const handleLocationChange = (d: any) => {
-    setLocation(d.properties.full_address);
+    console.log(d.properties.full_address)
+    setNewData({
+      ...newData,
+      location: d.properties.full_address
+    })
   };
 
   return (
@@ -173,7 +187,7 @@ export default function PersonalInfo() {
               className="input-md w-full input-focus-primary"
               type="text"
               id="userName"
-              value={username}
+              value={newData.username}
               onChangeCapture={handleUsernameChange}
               {...register("userName")}
             />
@@ -188,7 +202,7 @@ export default function PersonalInfo() {
                 className="input-md w-full input-focus-primary"
                 type="email"
                 id="email"
-                value={email}
+                value={newData.email}
                 onChangeCapture={handleEmailChange}
                 {...register("email")}
               />
@@ -211,30 +225,16 @@ export default function PersonalInfo() {
                   types: "place",
                   country: "US",
                 }}
-                value={location}
+                value={newData.location}
                 onRetrieve={handleLocationChange}
                 
               />
-              {/* 
-              <AddressAutofill>
-              <input
-                className="input-md w-full input-focus-primary"
-                type="text"
-                id="location"
-                placeholder={storeLocation}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setLocation(e.target.value)
-                }
-                name="location"
-              />
-              </ AddressAutofill>
-              */}
             </div>
             <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
           </div>
           <button
             disabled={
-              (oldUsername == username && oldEmail == email && oldLocation == location)
+              (oldData.username == newData.username && oldData.email == newData.email && oldData.location == newData.location)
             }
             type="submit"
             className="primary-btn button w-24">
