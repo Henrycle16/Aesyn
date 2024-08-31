@@ -20,6 +20,7 @@ const ProfileHeader = () => {
         logIn({
           isAuth: true,
           name: session.data.user.name,
+          email: session.data.user.email,
           userId: session.data.user.id,
         })
       );

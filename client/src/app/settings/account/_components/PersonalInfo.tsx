@@ -64,17 +64,22 @@ export default function PersonalInfo() {
       if(res.status === 200) {
         setLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
         setOldLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
+        setUsername(res.data.userName);
+        setOldUsername(res.data.userName);
+        dispatch(
+          logIn({
+            creatorUsername: res.data.userName,
+          })
+        );
+        console.log("Creator res: ", res)
       }
     })
   }
 
   useEffect(() => {
     if (status === "authenticated") {
-      userCall();
-      setUsername(authStore.creatorUsername);
-      setOldUsername(authStore.creatorUsername);
       creatorCall();
-
+      userCall();
       console.log("authStore: ", authStore);
       console.log("session: ", session)
 
@@ -98,6 +103,7 @@ export default function PersonalInfo() {
       } else if (key === "email" && value !== "") {
         const temp = { email: value };
         userEmailUpdate(session?.user.id, temp);
+        showSuccessToast();
       }
     }
     if (Object.keys(result).length === 0) {
@@ -139,7 +145,6 @@ export default function PersonalInfo() {
       console.log(authStore)
 
       showSuccessToast();
-      setTimeout(() => window.location.reload(), 1000);
     } catch (error) {
       console.log(error);
     }

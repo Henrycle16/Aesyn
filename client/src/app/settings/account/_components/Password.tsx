@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { userPasswordUpdate } from "@/actions/userApi";
 import { showSuccessToast } from "@/utils/toast/toastEmitters";
+import { getUserById } from "@/actions/userApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -16,15 +17,26 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 type Inputs = z.infer<typeof PasswordResetSchema>;
 
 const PasswordInfo = () => {
+  const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [loginErrors, setLoginErrors] = useState("");
 
   const [password, setPassword] = useState("");
-  const session = useSession();
+  const { data: session, status } = useSession();
 
-  useEffect(() => {}, [session.data, session.status]);
+  const userCall = async () => {
+    await getUserById(session?.user.id).then((res) => {
+      if (res.status === 200) {
+        setEmail(res.data.email);
+      }
+    });
+  };
+
+  useEffect(() => {
+    userCall();
+  }, [session, status]);
 
   const {
     register,
@@ -37,10 +49,10 @@ const PasswordInfo = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("SESSION: ", session.data?.user.email);
+    console.log("SESSION: ", session?.user.email);
 
     const loginResponse = await signIn("login", {
-      email: session.data?.user.email,
+      email: email,
       password: password,
       redirect: false,
     });
@@ -59,9 +71,8 @@ const PasswordInfo = () => {
           }
         }
         setLoginErrors("");
-        userPasswordUpdate(session.data?.user.id, result);
+        userPasswordUpdate(session?.user.id, result);
         showSuccessToast();
-        setTimeout(() => window.location.reload(), 3000);
       } catch (error) {
         console.log(error);
       }
