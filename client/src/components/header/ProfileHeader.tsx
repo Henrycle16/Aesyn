@@ -5,32 +5,36 @@ import Link from "next/link";
 import ThreeMenu from "./creator/ThreeMenu";
 import CreatorAvatar from "./creator/CreatorAvatar";
 import { useSession } from "next-auth/react";
+import { getUserById } from "@/actions/userApi";
 
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { logIn } from "@/redux/slices/auth-slice";
 
 const ProfileHeader = () => {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const dispatch = useDispatch<AppDispatch>();
 
   const getUserInfo = async () => {
-    if (session.data && session.status === "authenticated") {
-      dispatch(
-        logIn({
-          isAuth: true,
-          name: session.data.user.name,
-          email: session.data.user.email,
-          userId: session.data.user.id,
-        })
-      );
+    if (session?.user.id && status === "authenticated") {
+      await getUserById(session.user.id).then((res) => {
+        if (res.status === 200) {
+          dispatch(
+            logIn({
+              isAuth: true,
+              email: res.data.email,
+              name: session.user.name,
+              userId: session.user.id,
+            })
+          );
+        }
+      });
     }
-
   };
 
   useEffect(() => {
     getUserInfo();
-  }, [session.data])
+  }, [session])
 
   return (
     <header className="flex flex-wrap px-16 pt-4 flex-col md:flex-row items-center">

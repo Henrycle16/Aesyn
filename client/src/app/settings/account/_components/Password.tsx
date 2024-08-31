@@ -36,7 +36,7 @@ const PasswordInfo = () => {
 
   useEffect(() => {
     userCall();
-  }, [session, status]);
+  }, [session, status, email]);
 
   const {
     register,

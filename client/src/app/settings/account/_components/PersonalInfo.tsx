@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useAppSelector } from "@/redux/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,7 @@ export default function PersonalInfo() {
   const [oldUsername, setOldUsername] = useState("");
   const [email, setEmail] = useState("");
   const [oldEmail, setOldEmail] = useState("");
+  const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
   const { data: session, status } = useSession();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -42,17 +43,20 @@ export default function PersonalInfo() {
   const {
     register,
     handleSubmit,
-    getValues,
-    formState: { errors },
+    formState,
+    reset
   } = useForm<Inputs>({
     resolver: zodResolver(PersonalInfoSchema),
     mode: "onChange",
+    defaultValues: {
+      userName: "",
+      email: ""
+    }
   });
 
   const userCall = async () => {
     await getUserById(session?.user.id).then((res) => {
       if (res.status === 200) {
-        console.log("res: ", res);
         setEmail(res.data.email);
         setOldEmail(res.data.email);
       }
@@ -66,51 +70,45 @@ export default function PersonalInfo() {
         setOldLocation(`${res.data.location.city}, ${res.data.location.state}, ${res.data.location.country}`)
         setUsername(res.data.userName);
         setOldUsername(res.data.userName);
-        dispatch(
-          logIn({
-            creatorUsername: res.data.userName,
-          })
-        );
-        console.log("Creator res: ", res)
       }
     })
   }
+
+  const onReset = async () => {
+    reset({
+      userName: "",
+      email: ""
+    });
+  };
 
   useEffect(() => {
     if (status === "authenticated") {
       creatorCall();
       userCall();
-      console.log("authStore: ", authStore);
-      console.log("session: ", session)
-
-      
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
-  }, [session, status]);
+  }, [session, status, reducerValue]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     interface LooseObject {
       [key: string]: any;
     }
 
-    const [city, state, country] = location.split(", ");
-
     const result: LooseObject = {};
+    const email : LooseObject = {};
+   
     for (const [key, value] of Object.entries(data)) {
       if (key !== "email" && value !== "") {
         result[key] = value;
       } else if (key === "email" && value !== "") {
-        const temp = { email: value };
-        userEmailUpdate(session?.user.id, temp);
-        showSuccessToast();
+        email[key] = value;
       }
-    }
-    if (Object.keys(result).length === 0) {
-      return;
     }
 
     if(location != oldLocation){
+      const [city, state, country] = location.split(", ");
+
       result["location"] = {
         city: city,
         state: state,
@@ -118,33 +116,28 @@ export default function PersonalInfo() {
       }
     }
 
-    console.log("Result DATA: ", result);
-
     try {
+      if (email != null) {
+        await userEmailUpdate(session?.user.id, email);
+      }
       await creatorMyAccountUpdate(session?.user.id, result);
-
+      showSuccessToast();
+      onReset();
       // Dispatch to auth-slice redux after successful PATCH call to backend
       for (const [key, value] of Object.entries(data)) {
-        if (key == "email" && value !== "") {
-          dispatch(
-            logIn({
-              email: value,
-            })
-          );
-          console.log("dispatched email");
-        } else if (key == "userName" && value !== "") {
-          dispatch(
-            logIn({
-              creatorUsername: value,
-            })
-          );
-          console.log("dispatched username");
+        if(key === "email"){
+          setOldEmail(value)
+        } else if(key === "userName"){
+          setOldUsername(value)
         }
+        dispatch(
+          logIn({
+            [key]: value,
+          })
+        );
       }
 
-      console.log(authStore)
-
-      showSuccessToast();
+      forceUpdate();
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +178,7 @@ export default function PersonalInfo() {
               {...register("userName")}
             />
             <p className="mt-1 text-sm min-h-5 ts8-text">
-              {errors.userName?.message}
+              {formState.errors.userName?.message}
             </p>
           </div>
           <h2 className="body2 ts5-text"> Contact email </h2>
@@ -201,7 +194,7 @@ export default function PersonalInfo() {
               />
             </div>
             <p className="mt-1 text-sm min-h-5 ts8-text">
-              {errors.email?.message}
+              {formState.errors.email?.message}
             </p>
           </div>
           <h2 className="body2 ts5-text"> Location </h2>
@@ -211,9 +204,7 @@ export default function PersonalInfo() {
                 
                 accessToken={mapboxgl.accessToken}theme={{
                   variables: {
-                    padding: '60px',
                     boxShadow: '0 0 0 1px #d7d7d7',
-                    minWidth: '300px'
                   }
                 }}
                 options={{

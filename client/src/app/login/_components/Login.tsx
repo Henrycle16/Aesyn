@@ -81,8 +81,7 @@ const LoginComponent = () => {
     <>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1"
-      >
+        className="flex flex-col border border-gray-300 rounded-2xl md:px-20 px-5 gap-1">
         {/* Form Header */}
         <div className="mx-auto mt-16 flex flex-col items-center">
           <Avatar className="m-1 bg-blue-500">
@@ -117,9 +116,10 @@ const LoginComponent = () => {
               placeholder="Password"
               id="password"
               value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(e.target.value);
+                setErrors("");
+              }}
               name="password"
               autoFocus
               autoComplete="new-password"
@@ -128,8 +128,7 @@ const LoginComponent = () => {
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="absolute right-0 pr-3 text-sm leading-5"
-            >
+              className="absolute right-0 pr-3 text-sm leading-5">
               {showPassword ? (
                 <VisibilityIcon className="h-5 w-5 g5-text" />
               ) : (
@@ -137,17 +136,14 @@ const LoginComponent = () => {
               )}
             </button>
           </div>
-          <p className="mt-1 text-sm min-h-5 ts8-text">
-            {errors}
-            </p>
+          <p className="mt-1 text-sm min-h-5 ts8-text">{errors}</p>
         </div>
 
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          className="mt-3 mb-2 ts1-bg"
-        >
+          className="mt-3 mb-2 ts1-bg">
           Login
         </Button>
 
@@ -156,8 +152,7 @@ const LoginComponent = () => {
             (
               document.getElementById("sign-up-modal") as HTMLDialogElement
             ).showModal()
-          }
-        >
+          }>
           <Link href="#">Don&apos;t have an account? Sign up</Link>
         </button>
 
