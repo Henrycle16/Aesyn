@@ -23,8 +23,6 @@ import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { logIn } from "@/redux/slices/auth-slice";
 
-type Inputs = z.infer<typeof PersonalInfoSchema>;
-
 export default function PersonalInfo() {
   const [oldData, setOldData] = useState({
     username: "",
@@ -44,13 +42,17 @@ export default function PersonalInfo() {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
   const authStore = useAppSelector((state) => state.authReducer.value)
 
+  const schema = PersonalInfoSchema(authStore.userId)
+
+  type Inputs = z.infer<typeof schema>;
+
   const {
     register,
     handleSubmit,
     formState,
     reset
   } = useForm<Inputs>({
-    resolver: zodResolver(PersonalInfoSchema),
+    resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       userName: "",
