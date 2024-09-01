@@ -127,22 +127,27 @@ export default function PersonalInfo() {
       onReset();
       // Dispatch to auth-slice redux after successful PATCH call to backend
       for (const [key, value] of Object.entries(data)) {
-        if(key === "email"){
+        if(key === "email" && value != null){
           setOldData({
             ...oldData,
             email: value
           })
-        } else if(key === "userName"){
+          dispatch(
+            logIn({
+              email: value,
+            })
+          );
+        } else if(key === "userName" && value != null){
           setOldData({
             ...oldData,
             username: value
-          })
+          });
+          dispatch(
+            logIn({
+              creatorUsername: value,
+            })
+          );
         }
-        dispatch(
-          logIn({
-            [key]: value,
-          })
-        );
       }
 
       // Function to rerender component to reset button
