@@ -42,11 +42,24 @@ const PasswordInfo = () => {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(PasswordResetSchema),
     mode: "onChange",
+    defaultValues: {
+      password: "",
+      password2: ""
+    }
   });
+
+  // Resets zod form validator values
+  const onReset = async () => {
+    reset({
+      password: "",
+      password2: ""
+    });
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("SESSION: ", session?.user.email);
@@ -73,6 +86,8 @@ const PasswordInfo = () => {
         setLoginErrors("");
         userPasswordUpdate(session?.user.id, result);
         showSuccessToast();
+        setPassword("");
+        onReset();
       } catch (error) {
         console.log(error);
       }
