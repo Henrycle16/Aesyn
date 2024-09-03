@@ -13,6 +13,9 @@ const WaitlistSchema = new mongoose.Schema({
   lastName: {
     type: String,
   },
+  questionnaire: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,
