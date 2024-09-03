@@ -1,7 +1,7 @@
-import HeroSection from "@/components/ui/HeroSection";
+import HeroSection from "@/components/landing-page/HeroSection";
 import LandingHeader from "@/components/header/LandingHeader";
 import LandingFooter from "@/components/footer/LandingFooter";
-import CallToAction from "@/components/ui/CallToAction";
+import CallToAction from "@/components/landing-page/CallToAction";
 
 export default function Home() {
   return (
