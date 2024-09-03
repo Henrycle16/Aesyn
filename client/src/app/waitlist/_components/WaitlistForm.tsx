@@ -39,7 +39,8 @@ export default function WaitlistForm() {
       applicantType: isBrand ? "brand" : "creator",
       firstName: data.firstName,
       lastName: data.lastName,
-      email: data.email
+      email: data.email,
+      questionairre: data.questionnaire,
     };
 
     try {

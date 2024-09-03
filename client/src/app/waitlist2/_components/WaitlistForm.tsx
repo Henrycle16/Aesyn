@@ -1,10 +1,49 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
+import { FormDataSchema } from "@/lib/zod-schemas/waitlistSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { addApplicant } from "@/actions/waitlistApi";
+
+type Inputs = z.infer<typeof FormDataSchema>;
 
 export default function WaitlistForm() {
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isBrand, setIsBrand] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(FormDataSchema),
+    mode: "onChange",
+  });
+
+  // Add validation for Join as Brand/Creator buttons
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const formData = {
+      applicantType: isBrand ? "brand" : "creator",
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      questionairre: data.questionnaire,
+    };
+
+    try {
+      const response = await addApplicant(formData);
+      console.log(response.data);
+      setIsFormSubmitted(true);
+      setIsClicked(false);
+    } catch (err) {
+      console.log(err);
+    }
+    reset();
+  };
 
   const joinAsBrandBtn = () => {
     setIsBrand(true);
@@ -24,7 +63,10 @@ export default function WaitlistForm() {
     "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-white focus:outline-none focus:ring-1";
 
   return (
-    <form className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-14 py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%">
+    <form 
+      onSubmit={handleSubmit(onSubmit)} 
+      className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-14 py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%"
+    >
       {/* Title & Description */}
       <div className="mt-6">
         <h1 className="font-semibold text-2xl">Get Early Access!!</h1>
@@ -61,6 +103,7 @@ export default function WaitlistForm() {
             placeholder="First Name *"
             id="firstName"
             autoComplete="given-name"
+            {...register("firstName")}
           />
         </div>
         {/* Last Name */}
@@ -71,6 +114,7 @@ export default function WaitlistForm() {
             placeholder="Last Name *"
             id="lastName"
             autoComplete="family-name"
+            {...register("lastName")}
           />
         </div>
         {/* Email */}
@@ -81,21 +125,27 @@ export default function WaitlistForm() {
             placeholder="Email Address *"
             id="email"
             autoComplete="email"
+            {...register("email")}
           />
         </div>
-        {/* Questionairre */}
+        {/* Questionnaire */}
         <div>
-          <select name="" id="" className={`${inputTextStyle}`}>
-            <option value="">What are you most excited about?</option>
-            <option value="">Option 1</option>
-            <option value="">Option 2</option>
-            <option value="">Option 3</option>
+          <select 
+            id="questionnaire" 
+            className={`${inputTextStyle}`}
+            defaultValue=""
+            {...register("questionnaire", { required: true })}
+          >
+            <option value="" disabled>What are you most excited about?</option>
+            <option value="Option 1">Option 1</option>
+            <option value="Option 2">Option 2</option>
+            <option value="Option 3">Option 3</option>
           </select>
         </div>
       </div>
       {/* Submit Button */}
       <div className="mt-auto">
-        <button type="button" className={`${gradientButtonStyle} w-full`}>
+        <button type="submit" className={`${gradientButtonStyle} w-full`}>
           Join Waitlist
         </button>
       </div>
