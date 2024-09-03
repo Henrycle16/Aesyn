@@ -1,0 +1,25 @@
+import Link from "next/link";
+
+export default function JoinedWaitlistModal() {
+  const gradientButtonStyle =
+    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
+  
+  return (
+    <div
+      className="w-[32.063rem] h-[17.125rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-14 py-6 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%"
+    >
+      <h1 className="font-semibold text-2xl self-center mt-5">You're in!</h1>
+      <p className="text-sm mt-8">
+        Thank you for joining ShareFluence's waitlist! Stay tuned
+        for our new and exciting platform, we'll be in touch soon!
+      </p>
+
+      <Link 
+        href="/"
+        className={`${gradientButtonStyle} w-full mt-auto flex items-center justify-center`}
+      >
+        <span>Back to Home</span>
+      </Link> 
+    </div>
+  )
+}

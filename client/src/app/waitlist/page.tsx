@@ -1,23 +1,19 @@
-import WaitlistForm from "./_components/WaitlistForm"
+"use client";
+
+import { useState } from "react";
+import WaitlistForm from "./_components/WaitlistForm";
+import JoinedWaitlistModal from "./_components/JoinedWaitlistModal";
 
 export default function Page() {
-  return (
-    <div className="flex px-12 max-lg:flex-col max-lg:items-center gap-2">
-      <div className="ml-[10rem]">
-        <WaitlistForm />
-      </div>
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-      <div className="max-w-lg grid place-items-center ml-[10rem]">
-        <video
-          src="https://www.w3schools.com/html/mov_bbb.mp4"
-          controls
-          className="object-cover object-center rounded"
-          width="720"
-          height="600"
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
+  return (
+    <div>
+      {!isFormSubmitted ? (
+        <WaitlistForm setIsFormSubmitted={setIsFormSubmitted} />
+      ) : (
+        <JoinedWaitlistModal />
+      )}
     </div>
-  )
+  );
 }
