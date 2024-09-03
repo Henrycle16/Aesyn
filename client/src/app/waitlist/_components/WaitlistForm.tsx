@@ -8,9 +8,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { addApplicant } from "@/actions/waitlistApi";
 
 type Inputs = z.infer<typeof FormDataSchema>;
+type Props = {
+  setIsFormSubmitted: (value: boolean) => void;
+};
 
-export default function WaitlistForm() {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const [isBrand, setIsBrand] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
