@@ -1,15 +1,37 @@
+"use client";
+
 import HeroSection from "@/components/landing-page/HeroSection";
 import LandingHeader from "@/components/header/LandingHeader";
 import LandingFooter from "@/components/footer/LandingFooter";
 import CallToAction from "@/components/landing-page/CallToAction";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { use, useState } from "react";
 
 export default function Home() {
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    
+    if(latest > (previous ?? 0)){
+      setHidden(true);
+    }else{
+      setHidden(false);
+    }
+
+  });
+
   return (
     <>
       <section className="bg-gradient-to-b from-[#36035F] from-38% via-[#240B4D] via-50% to-[#000000] to-76% text-white">
-        <header>
+        <motion.header
+          variants={{ visible: { y: 0 }, hidden: { y: "-130%" } }}
+          animate={hidden ? "hidden" : "visible"}
+          transition={{ duration: 0.35, ease: "easeInOut" }}
+          className="sticky top-5">
           <LandingHeader />
-        </header>
+        </motion.header>
         <main>
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <HeroSection />
