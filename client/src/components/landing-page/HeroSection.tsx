@@ -19,7 +19,7 @@ const HeroSection = () => {
         their business. Using innovative technology, brands can find their
         perfect...
       </p>
-      <Link href="/waitlist2" className={`${gradientButtonStyle}`}>
+      <Link href="/waitlist" className={`${gradientButtonStyle}`}>
         Join Waitlist
       </Link>
     </div>
