@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 const HeroSection = () => {
   const gradientTextStyle =
@@ -18,9 +19,9 @@ const HeroSection = () => {
         their business. Using innovative technology, brands can find their
         perfect...
       </p>
-      <button type="button" className={`${gradientButtonStyle}`}>
+      <Link href="/waitlist2" className={`${gradientButtonStyle}`}>
         Join Waitlist
-      </button>
+      </Link>
     </div>
   );
 };
