@@ -6,6 +6,7 @@ import LandingFooter from "@/components/footer/LandingFooter";
 import CallToAction from "@/components/landing-page/CallToAction";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { use, useState } from "react";
+import BentoBox from "@/components/landing-page/BentoBox";
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
@@ -13,18 +14,18 @@ export default function Home() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
-    
-    if(latest > (previous ?? 0)){
+
+    if (latest > (previous ?? 0)) {
       setHidden(true);
-    }else{
+    } else {
       setHidden(false);
     }
-
   });
 
   return (
     <>
-      <section className="bg-gradient-to-b from-[#36035F] from-38% via-[#240B4D] via-50% to-[#000000] to-76% text-white">
+      <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-40% text-white">
+        {/* Header */}
         <motion.header
           variants={{ visible: { y: 0 }, hidden: { y: "-130%" } }}
           animate={hidden ? "hidden" : "visible"}
@@ -32,19 +33,28 @@ export default function Home() {
           className="sticky top-5">
           <LandingHeader />
         </motion.header>
-        <main>
-          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
-            <HeroSection />
-          </div>
-        </main>
-      </section>
-      <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-3xl">
-        <div className="container mx-auto flex justify-center items-center px-5 ">
-          <CallToAction />
+
+        {/* Hero */}
+        <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+          <HeroSection />
         </div>
-        <footer>
-          <LandingFooter />
-        </footer>
+
+        {/* Bentobox */}
+        <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-40% text-white rounded-t-3xl">
+          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+            <BentoBox />
+          </div>
+        </section>
+
+        {/* Call to action + Footer*/}
+        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-3xl">
+          <div className="container mx-auto flex justify-center items-center px-5 ">
+            <CallToAction />
+          </div>
+          <footer>
+            <LandingFooter />
+          </footer>
+        </section>
       </section>
     </>
   );
