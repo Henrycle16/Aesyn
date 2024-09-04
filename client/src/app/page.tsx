@@ -40,7 +40,7 @@ export default function Home() {
         </div>
 
         {/* Bentobox */}
-        <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-40% text-white rounded-t-3xl">
+        <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-3xl">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <BentoBox />
           </div>
