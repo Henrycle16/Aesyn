@@ -20,13 +20,14 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     register,
     handleSubmit,
     reset,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
     mode: "onChange",
   });
 
-  // Add validation for Join as Brand/Creator buttons
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formData = {
       applicantType: isBrand ? "brand" : "creator",
@@ -37,6 +38,13 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     };
 
     try {
+      if (!isClicked) {
+        setError("applicantType", {
+          type: "custom",
+          message: "Join as* required",
+        });
+        return;
+      }
       const response = await addApplicant(formData);
       console.log(response.data);
       setIsFormSubmitted(true);
@@ -50,13 +58,16 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const joinAsBrandBtn = () => {
     setIsBrand(true);
     setIsClicked(true);
+    clearErrors("applicantType");
   };
   const joinAsCreatorBtn = () => {
     setIsBrand(false);
     setIsClicked(true);
+    clearErrors("applicantType");
   };
 
-  const activeButtonStyle = "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] border-0"
+  const activeButtonStyle =
+    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] border-0";
 
   const gradientButtonStyle =
     "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
@@ -65,10 +76,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-white focus:outline-none focus:ring-1";
 
   return (
-    <form 
-      onSubmit={handleSubmit(onSubmit)} 
-      className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-14 py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%"
-    >
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-14 py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%">
       {/* Title & Description */}
       <div className="mt-6">
         <h1 className="font-semibold text-2xl">Get Early Access!!</h1>
@@ -86,13 +96,17 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
             <button
               type="button"
               onClick={joinAsBrandBtn}
-              className={`${isBrand && isClicked ? activeButtonStyle : "border-[3px]"} w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
+              className={`${
+                isBrand && isClicked ? activeButtonStyle : "border-[3px]"
+              } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
               Brand
             </button>
             <button
               type="button"
               onClick={joinAsCreatorBtn}
-              className={`${!isBrand && isClicked ? activeButtonStyle : "border-[3px]"} w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
+              className={`${
+                !isBrand && isClicked ? activeButtonStyle : "border-[3px]"
+              } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
               Creator
             </button>
           </div>
@@ -132,13 +146,14 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
         </div>
         {/* Questionnaire */}
         <div>
-          <select 
-            id="questionnaire" 
+          <select
+            id="questionnaire"
             className={`${inputTextStyle}`}
             defaultValue=""
-            {...register("questionnaire", { required: true })}
-          >
-            <option value="" disabled>What are you most excited about?</option>
+            {...register("questionnaire", { required: true })}>
+            <option value="" disabled>
+              What are you most excited about?
+            </option>
             <option value="Option 1">Option 1</option>
             <option value="Option 2">Option 2</option>
             <option value="Option 3">Option 3</option>
