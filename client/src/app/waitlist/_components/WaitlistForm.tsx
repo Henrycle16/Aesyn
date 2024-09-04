@@ -20,6 +20,8 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     register,
     handleSubmit,
     reset,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
@@ -37,6 +39,10 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     };
 
     try {
+        if (!isClicked) {
+          setError("applicantType", { type: "custom", message: "Join as* required" })
+          return;
+        } 
       const response = await addApplicant(formData);
       console.log(response.data);
       setIsFormSubmitted(true);
@@ -50,10 +56,12 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const joinAsBrandBtn = () => {
     setIsBrand(true);
     setIsClicked(true);
+    clearErrors("applicantType");
   };
   const joinAsCreatorBtn = () => {
     setIsBrand(false);
     setIsClicked(true);
+    clearErrors("applicantType");
   };
 
   const activeButtonStyle = "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] border-0"
@@ -76,6 +84,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
           Be the first to experience our collaborative innovative platform and
           get notified when we launch!
         </p>
+        {errors.applicantType?.message}
       </div>
       {/* Form Fields */}
       <div className="mt-6 flex flex-col gap-4">

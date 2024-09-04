@@ -6,6 +6,7 @@ export const FormDataSchema = z.object({
   firstName: z.string().min(1, "First name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
   lastName: z.string().min(1, "Last name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
   questionnaire: z.string().min(1, "Response is required"),
+  applicantType: z.unknown(),
   email: z.string().min(1, "Email is required").email("Invalid email address"),
 }).superRefine(async ({ email }, ctx) => {
   if (!email) return;
