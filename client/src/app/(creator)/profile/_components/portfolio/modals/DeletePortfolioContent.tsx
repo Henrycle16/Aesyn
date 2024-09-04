@@ -9,6 +9,7 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
 import { useSession } from "next-auth/react";
+import { showDeletedToast } from "@/utils/toast/toastEmitters";
 
 const DeletePortfolioContent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,7 @@ const DeletePortfolioContent = () => {
       
       dispatch(deleteContent(currentContent));
       console.log(response.data);
+      showDeletedToast("Portfolio item deleted", "")
     } catch (error) {
       console.log(error);
     }

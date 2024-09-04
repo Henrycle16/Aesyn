@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { addPackage as addPackageStore } from "@/redux/slices/creatorPackages-slice";
 import { addPackage } from "@/actions/creatorApi";
 import PackageForm from "./PackageForm";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 const AddPackage =  () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +22,7 @@ const AddPackage =  () => {
       const response = await addPackage(userId, currentPackage);
       console.log(response.data);
       dispatch(addPackageStore(response.data));
+      showSuccessToast();
     } catch (error) {
       console.error(error);
     }

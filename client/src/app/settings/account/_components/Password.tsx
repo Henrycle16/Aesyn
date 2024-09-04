@@ -8,6 +8,8 @@ import { PasswordResetSchema } from "@/lib/zod-schemas/passwordResetSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { userPasswordUpdate } from "@/actions/userApi";
+import { showSuccessToast } from "@/utils/toast/toastEmitters";
+import { getUserById } from "@/actions/userApi";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -15,50 +17,83 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 type Inputs = z.infer<typeof PasswordResetSchema>;
 
 const PasswordInfo = () => {
+  const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [loginErrors, setLoginErrors] = useState("");
 
   const [password, setPassword] = useState("");
-  const session = useSession();
+  const { data: session, status } = useSession();
+
+  const userCall = async () => {
+    await getUserById(session?.user.id).then((res) => {
+      if (res.status === 200) {
+        setEmail(res.data.email);
+      }
+    });
+  };
 
   useEffect(() => {
-  }, [session.data, session.status]);
+    userCall();
+  }, [session, status, email]);
 
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(PasswordResetSchema),
     mode: "onChange",
+    defaultValues: {
+      password: "",
+      password2: ""
+    }
   });
 
+  // Resets zod form validator values
+  const onReset = async () => {
+    reset({
+      password: "",
+      password2: ""
+    });
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("SESSION: ", session.data?.user.email)
+    console.log("SESSION: ", session?.user.email);
 
     const loginResponse = await signIn("login", {
-      email: session.data?.user.email,
+      email: email,
       password: password,
       redirect: false,
     });
-    
+
     if (loginResponse && !loginResponse.error) {
-      console.log("Authenticated!");
-      interface LooseObject {
-        [key: string]: any
-      }
-      const result: LooseObject = {}
-      // Function to call post to replace password
-      for (const [key, value] of Object.entries(data)) {
-        if(key === 'password' && value !== '') {
-          result[key] = value
+      try {
+        console.log("Authenticated!");
+        interface LooseObject {
+          [key: string]: any;
         }
+        const result: LooseObject = {};
+        // Function to call post to replace password
+        for (const [key, value] of Object.entries(data)) {
+          if (key === "password" && value !== "") {
+            result[key] = value;
+          }
+        }
+        setLoginErrors("");
+        userPasswordUpdate(session?.user.id, result);
+        showSuccessToast();
+        setPassword("");
+        onReset();
+      } catch (error) {
+        console.log(error);
       }
-      userPasswordUpdate(session.data?.user.id, result)
     } else {
-      console.log("Error!");
+      setLoginErrors("Wrong Password!")
+      console.log("Wrong Password!");
     }
   };
 
@@ -100,8 +135,7 @@ const PasswordInfo = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-0 pr-3 text-sm leading-5"
-                >
+                  className="absolute right-0 pr-3 text-sm leading-5">
                   {showPassword ? (
                     <VisibilityIcon className="h-5 w-5 g5-text" />
                   ) : (
@@ -109,7 +143,7 @@ const PasswordInfo = () => {
                   )}
                 </button>
               </div>
-              <p className="mt-1 text-sm min-h-5 ts8-text">{}</p>
+              <p className="mt-1 text-sm min-h-5 ts8-text">{loginErrors}</p>
             </div>
           </div>
           <div className="relative">
@@ -127,8 +161,7 @@ const PasswordInfo = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility1}
-                className="absolute right-0 pr-3 text-sm leading-5"
-              >
+                className="absolute right-0 pr-3 text-sm leading-5">
                 {showPassword1 ? (
                   <VisibilityIcon className="h-5 w-5 g5-text" />
                 ) : (
@@ -155,8 +188,7 @@ const PasswordInfo = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility2}
-                className="absolute right-0 pr-3 text-sm leading-5"
-              >
+                className="absolute right-0 pr-3 text-sm leading-5">
                 {showPassword2 ? (
                   <VisibilityIcon className="h-5 w-5 g5-text" />
                 ) : (
@@ -168,12 +200,18 @@ const PasswordInfo = () => {
               {errors.password2?.message}
             </p>
           </div>
-          <button disabled={(!getValues("password") || !getValues("password2")) || !!errors.password || !!errors.password2} type="submit" className="primary-btn button w-24">
+          <button
+            disabled={
+              !getValues("password") ||
+              !getValues("password2") ||
+              !!errors.password ||
+              !!errors.password2
+            }
+            type="submit"
+            className="primary-btn button w-24">
             Save
           </button>
         </form>
-
-        
       </div>
     </section>
   );

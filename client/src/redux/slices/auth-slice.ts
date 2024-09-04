@@ -9,6 +9,9 @@ type AuthState = {
     name: string;
     email: string;
     userId: string;
+    creatorUsername: string;
+    creatorId: string;
+    brandId: string;
 }
 
 const initialState = {
@@ -17,6 +20,9 @@ const initialState = {
         name: "",
         email: "",
         userId: "",
+        creatorUsername: "",
+        creatorId: "",
+        brandId: ""
     } as AuthState,
 } as InitialState
 
