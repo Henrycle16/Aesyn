@@ -14,9 +14,9 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import MenuList from "@mui/material/MenuList";
 import { ListItemIcon, MenuItem } from "@mui/material";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { signOut } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { getCreatorByUserId } from "@/actions/creatorApi";
@@ -41,12 +41,13 @@ const CreatorAvatar: React.FC = () => {
   }, [dispatch, session, session]);
 
   // redux store
-  const authStore = useAppSelector((state) => state.authReducer.value)
+  const authStore = useAppSelector((state) => state.authReducer.value);
+  const profileData = useAppSelector((state) => state.profileDataReducer.value);
 
   const handleSignOut = () => {
     clearPersistedState();
     signOut({ redirect: true, callbackUrl: "/" });
-  }
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -57,16 +58,16 @@ const CreatorAvatar: React.FC = () => {
   };
 
   const handleSettings = () => {
-    router.push("/settings/account")
+    router.push("/settings/account");
   };
 
   const handleProfile = async () => {
     await getCreatorByUserId(session?.user.id).then((res) => {
-      if(res.status === 200) {
-        router.push(`/profile/${res.data.userName}`)
+      if (res.status === 200) {
+        router.push(`/profile/${res.data.userName}`);
       }
-    })
-  }
+    });
+  };
 
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
@@ -84,7 +85,11 @@ const CreatorAvatar: React.FC = () => {
             <NotificationsNoneOutlinedIcon />
           </IconButton>
         </Tooltip>
-        <Avatar onClick={handleClick} className="cursor-pointer" />
+        <Avatar
+          onClick={handleClick}
+          className="cursor-pointer"
+          src={profileData.avatar || ""}
+        />
       </Stack>
 
       <Popover
@@ -93,37 +98,41 @@ const CreatorAvatar: React.FC = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-        transformOrigin={{ horizontal: 200, vertical: 'top' }}
-        slotProps={{ paper: { sx: { width: "240px" } } }}
-      >
+        transformOrigin={{ horizontal: 200, vertical: "top" }}
+        slotProps={{ paper: { sx: { width: "240px" } } }}>
         <Box sx={{ p: "16px 20px " }}>
           {/* Will need to add logic that pulls user name and email from the database */}
-          <Typography className="ts5-text subheader1">{authStore.name}</Typography>
-          <Typography className="">
-            {authStore.email}
+          <Typography className="ts5-text subheader1">
+            {authStore.name}
           </Typography>
+          <Typography className="">{authStore.email}</Typography>
         </Box>
         <Divider />
-      <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem className="g5-text" onClick={handleProfile}>
-          <ListItemIcon>
-            <PersonOutlineOutlinedIcon className="g5-text" fontSize="medium" />
-          </ListItemIcon>
-          Profile
-        </MenuItem>
-        <MenuItem className="g5-text" onClick={handleSettings}>
-          <ListItemIcon>
-            <SettingsOutlinedIcon className="g5-text" fontSize="medium" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem className="g5-text" onClick={handleSignOut}>
-          <ListItemIcon>
-            <LogoutOutlinedIcon className="g5-text" fontSize="medium" />
-          </ListItemIcon>
-          Sign out
-        </MenuItem>
-      </MenuList>
+        <MenuList
+          disablePadding
+          sx={{ p: "8px", "& .MuiMenuItem-root": { borderRadius: 1 } }}>
+          <MenuItem className="g5-text" onClick={handleProfile}>
+            <ListItemIcon>
+              <PersonOutlineOutlinedIcon
+                className="g5-text"
+                fontSize="medium"
+              />
+            </ListItemIcon>
+            Profile
+          </MenuItem>
+          <MenuItem className="g5-text" onClick={handleSettings}>
+            <ListItemIcon>
+              <SettingsOutlinedIcon className="g5-text" fontSize="medium" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+          <MenuItem className="g5-text" onClick={handleSignOut}>
+            <ListItemIcon>
+              <LogoutOutlinedIcon className="g5-text" fontSize="medium" />
+            </ListItemIcon>
+            Sign out
+          </MenuItem>
+        </MenuList>
       </Popover>
     </div>
   );

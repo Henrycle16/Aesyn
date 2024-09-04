@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import ThreeMenu from "./creator/ThreeMenu";
 import CreatorAvatar from "./creator/CreatorAvatar";
@@ -14,6 +14,8 @@ import { logIn } from "@/redux/slices/auth-slice";
 const ProfileHeader = () => {
   const { data: session, status } = useSession();
   const dispatch = useDispatch<AppDispatch>();
+
+  const [isMounted, setIsMounted] = useState(false);
 
   const getUserInfo = async () => {
     if (session?.user.id && status === "authenticated") {
@@ -33,8 +35,13 @@ const ProfileHeader = () => {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     getUserInfo();
-  }, [session])
+  }, [session]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <header className="flex flex-wrap px-16 pt-4 flex-col md:flex-row items-center">
