@@ -6,6 +6,9 @@ const Header = () => {
       <Link href={"/"} className="text-2xl font-semibold">
         ShareFluence
       </Link>
+      <Link href={"/login"} className="hover:text-gray-900">
+          Login
+        </Link>
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
         <a href="#section1" className="">
           Section 1
