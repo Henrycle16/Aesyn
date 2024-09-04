@@ -32,14 +32,14 @@
   --toastify-toast-width: 387px;
   --toastify-toast-max-height: 93px;
 
-  --toastify-color-success: #E9F3EB;
-  --toastify-color-info: #E8EDF0;
-  --toastify-color-error: #F8E8E8;
-  --toastify-color-warning: #FCF0E9;
+  --toastify-color-success: #e9f3eb;
+  --toastify-color-info: #e8edf0;
+  --toastify-color-error: #f8e8e8;
+  --toastify-color-warning: #fcf0e9;
 
   --toastify-text-color-success: #1d8133;
   --toastify-text-color-info: #184465;
-  --toastify-text-color-error: #B21717;
+  --toastify-text-color-error: #b21717;
   --toastify-text-color-warning: #061119;
 }
 
@@ -190,8 +190,8 @@
     @apply bg-[var(--ts1)] text-white font-bold py-3 px-6 capitalize rounded-md hover:bg-[var(--ts2)] disabled:text-[var(--g4)] disabled:bg-[var(--g3)];
   }
 
-   /* Mode Edit Outline Icon */
-   .mode-edit-icon {
+  /* Mode Edit Outline Icon */
+  .mode-edit-icon {
     @apply border-2 rounded-full p-[.12rem] ml-auto cursor-pointer;
   }
   .mode-edit-icon-hovered {
@@ -204,19 +204,19 @@
 
 /** Toast Classes **/
 .Toastify__close-button {
-  color: #6D6D6D;
+  color: #6d6d6d;
 }
 
 /* sample that will change the styling just for this toast id in the icon area. This css class is imported in the file where the custom toast is used. */
 #success-toast {
-  @apply border border-[#1D8133]
+  @apply border border-[#1D8133];
 }
 #info-toast {
-  @apply border border-[#184465]
+  @apply border border-[#184465];
 }
 #delete-toast {
-  @apply border border-[#B21717]
+  @apply border border-[#B21717];
 }
 #warn-toast {
-  @apply border border-[#E1651F]
+  @apply border border-[#E1651F];
 }

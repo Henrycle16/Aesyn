@@ -14,17 +14,14 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        'muiblue': '#1976d2'
-      }
+        muiblue: "#1976d2",
+      },
     },
   },
-  plugins: [
-    require("daisyui"), 
-    require("@tailwindcss/line-clamp"), 
-  ],
-  daisyui:{
+  plugins: [require("daisyui"), require("@tailwindcss/line-clamp")],
+  daisyui: {
     themes: [],
     base: false,
-  }
+  },
 };
 export default config;
