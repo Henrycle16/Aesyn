@@ -7,6 +7,8 @@ import CallToAction from "@/components/landing-page/CallToAction";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { use, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
+import Showcase from "@/components/landing-page/Showcase";
+import Carousel from "@/components/landing-page/Carousel";
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
@@ -39,21 +41,35 @@ export default function Home() {
           <HeroSection />
         </div>
 
-        {/* Bentobox */}
-        <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-3xl">
+        {/* Showcase */}
+        <section className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
-            <BentoBox />
+            <Showcase />
           </div>
-        </section>
 
-        {/* Call to action + Footer*/}
-        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-3xl">
-          <div className="container mx-auto flex justify-center items-center px-5 ">
-            <CallToAction />
-          </div>
-          <footer>
-            <LandingFooter />
-          </footer>
+          {/* Bentobox */}
+          <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem]">
+            <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+              <BentoBox />
+            </div>
+
+            {/* Carousel */}
+            <section className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
+              <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+                <Carousel />
+              </div>
+
+              {/* Call to action + Footer*/}
+              <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem]">
+                <div className="container mx-auto flex justify-center items-center px-5 ">
+                  <CallToAction />
+                </div>
+                <footer>
+                  <LandingFooter />
+                </footer>
+              </section>
+            </section>
+          </section>
         </section>
       </section>
     </>
