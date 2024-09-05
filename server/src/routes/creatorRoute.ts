@@ -171,7 +171,6 @@ router.get("/", async (req, res) => {
 // @access  Public
 router.get("/user/:user_id", async (req, res) => {
   try {
-    console.log("here");
     const profile = await Creator.findOne({
       user: req.params.user_id,
     }).populate("user", ["username", "firstName", "lastName", "avatar"]);

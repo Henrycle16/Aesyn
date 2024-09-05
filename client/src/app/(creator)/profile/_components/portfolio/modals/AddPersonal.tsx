@@ -27,6 +27,7 @@ import setCanvasPreview from "../PortfolioSetCanvas";
 
 import { uploadImage, uploadVideo } from "@/actions/creators3/portfolio";
 import { current } from "@reduxjs/toolkit";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 const ASPECT_RATIO = 5 / 4;
 const MIN_DIMENSION = 150;
@@ -158,6 +159,7 @@ const AddPersonal = () => {
             thumbnailUri: thumbnailUri,
           })
         );
+        showSuccessToast();
       } catch (error) {
         console.error(error);
       }

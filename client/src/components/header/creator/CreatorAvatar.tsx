@@ -19,6 +19,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { signOut } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
+import { getCreatorByUserId } from "@/actions/creatorApi";
 
 import { clearPersistedState, useAppSelector } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
@@ -27,22 +28,20 @@ import { useDispatch } from "react-redux";
 const CreatorAvatar: React.FC = () => {
   // State to manage popover visibility
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const session = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (session.data && session.status === "authenticated") {
+    if (session && status === "authenticated") {
     } else {
       redirect("/login");
     }
-  }, [dispatch, session.data, session.status]);
+  }, [dispatch, session, session]);
 
   // redux store
-  const authStore = useAppSelector(
-    (state) => state.authReducer.value
-  );
+  const authStore = useAppSelector((state) => state.authReducer.value)
 
   const handleSignOut = () => {
     clearPersistedState();
@@ -60,6 +59,14 @@ const CreatorAvatar: React.FC = () => {
   const handleSettings = () => {
     router.push("/settings/account")
   };
+
+  const handleProfile = async () => {
+    await getCreatorByUserId(session?.user.id).then((res) => {
+      if(res.status === 200) {
+        router.push(`/profile/${res.data.userName}`)
+      }
+    })
+  }
 
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
@@ -98,7 +105,7 @@ const CreatorAvatar: React.FC = () => {
         </Box>
         <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem className="g5-text" onClick={handleClose}>
+        <MenuItem className="g5-text" onClick={handleProfile}>
           <ListItemIcon>
             <PersonOutlineOutlinedIcon className="g5-text" fontSize="medium" />
           </ListItemIcon>

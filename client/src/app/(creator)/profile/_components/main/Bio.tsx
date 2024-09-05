@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { selectBio, profileDataInfo } from "@/redux/slices/profileData-slice";
 import { updateCreatorBio } from "@/actions/creatorApi";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
 
 const Bio: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +31,7 @@ const Bio: React.FC = () => {
     e.preventDefault();
     if (!hasChanges) return; // Prevent submission if no changes
 
+    console.log("in form submit");
     try {
       const response = await updateCreatorBio(userId, tempBioText);
       const updatedBio = response.data;
@@ -37,7 +39,7 @@ const Bio: React.FC = () => {
       // Dispatch the updated bio to Redux store
       dispatch(profileDataInfo({ bio: updatedBio }));
 
-      closeModal();
+      closeModal(true);
     } catch (error) {
       console.error("Error updating bio:", error);
     }
@@ -56,7 +58,14 @@ const Bio: React.FC = () => {
     (document.getElementById("bio_modal") as HTMLDialogElement).showModal();
   };
 
-  const closeModal = () => {
+  const closeModal = (submitted: any) => {
+    console.log("submitted: ", submitted)
+    console.log("hasChanges: ", hasChanges)
+    if (hasChanges && submitted != true) {
+      showDiscardedToast();
+    } else if (hasChanges && submitted == true) {
+      showSuccessToast();
+    }
     (document.getElementById("bio_modal") as HTMLDialogElement).close();
   };
 
