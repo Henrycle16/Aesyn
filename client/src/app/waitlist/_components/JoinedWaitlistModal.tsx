@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function JoinedWaitlistModal() {
   const gradientButtonStyle =
-    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
+    "bg-gradient-to-r from-[#5B58EB] via-[#BB63FF] to-[#5B58EB] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold";
   
   return (
     <div
@@ -16,7 +16,7 @@ export default function JoinedWaitlistModal() {
 
       <Link 
         href="/"
-        className={`${gradientButtonStyle} w-full mt-auto flex items-center justify-center`}
+        className={`${gradientButtonStyle} w-full mt-auto flex items-center justify-center [background-size:200%_100%] [transition:background_0.15s_ease-in-out] hover:[background-position:100%_center]`}
       >
         <span>Back to Home</span>
       </Link> 
