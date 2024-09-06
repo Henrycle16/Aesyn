@@ -66,8 +66,8 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const activeButtonStyle = "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF]";
 
   const gradientButtonStyle =
-    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
-
+    "bg-gradient-to-r from-[#5B58EB] via-[#BB63FF] to-[#5B58EB] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold";
+  //  hover:from-[#BB63FF] hover:to-[#5B58EB]
   const inputTextStyle =
     "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-opacity-50 focus:ring-white focus:outline-none focus:ring-1";
 
@@ -184,7 +184,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       </div>
       {/* Submit Button */}
       <div className="mt-auto mb-1">
-        <button type="submit" className={`${gradientButtonStyle} w-full`}>
+        <button type="submit" className={`${gradientButtonStyle} w-full [background-size:200%_100%] [transition:background_0.15s_ease-in-out] hover:[background-position:100%_center]`}>
           Join Waitlist
         </button>
       </div>
