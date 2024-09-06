@@ -41,7 +41,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       if (!isClicked) {
         setError("applicantType", {
           type: "custom",
-          message: "Join as* required",
+          message: "Required",
         });
         return;
       }
@@ -55,25 +55,24 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     reset();
   };
 
-  const joinAsBrandBtn = () => {
-    setIsBrand(true);
-    setIsClicked(true);
-    clearErrors("applicantType");
-  };
-  const joinAsCreatorBtn = () => {
-    setIsBrand(false);
+  const joinAsOnClick = (isBrand: boolean) => {
+    isBrand ? setIsBrand(true) : setIsBrand(false);
     setIsClicked(true);
     clearErrors("applicantType");
   };
 
-  const activeButtonStyle =
-    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF]";
+  const activeButtonStyle = "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF]";
 
   const gradientButtonStyle =
     "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
 
   const inputTextStyle =
     "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-opacity-50 focus:ring-white focus:outline-none focus:ring-1";
+
+  const errorInputBoxStyle =
+    "bg-[#7E5151] border-[#A91111] w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] text-sm placeholder-white outline-none";
+
+  const errorStyle = "text-xs text-red-500 absolute mt-1";
 
   return (
     <form
@@ -95,7 +94,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
           <div className="mt-1 flex gap-3">
             <button
               type="button"
-              onClick={joinAsBrandBtn}
+              onClick={() => joinAsOnClick(true)}
               className={`${
                 isBrand && isClicked ? activeButtonStyle : "border-[3px]"
               } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
@@ -103,61 +102,82 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
             </button>
             <button
               type="button"
-              onClick={joinAsCreatorBtn}
+              onClick={() => joinAsOnClick(false)}
               className={`${
                 !isBrand && isClicked ? activeButtonStyle : "border-[3px]"
               } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
               Creator
             </button>
           </div>
+          <p className={errorStyle}>{errors.applicantType?.message}</p>
         </div>
         {/* First Name */}
         <div>
           <input
             type="text"
-            className={`${inputTextStyle}`}
+            className={`${
+              errors.firstName?.message ? errorInputBoxStyle : inputTextStyle
+            }`}
             placeholder="First Name *"
             id="firstName"
             autoComplete="given-name"
             {...register("firstName")}
           />
+          <p className={errorStyle}>{errors.firstName?.message}</p>
         </div>
         {/* Last Name */}
         <div>
           <input
             type="text"
-            className={`${inputTextStyle}`}
+            className={`${
+              errors.lastName?.message ? errorInputBoxStyle : inputTextStyle
+            }`}
             placeholder="Last Name *"
             id="lastName"
             autoComplete="family-name"
             {...register("lastName")}
           />
+          <p className={errorStyle}>{errors.lastName?.message}</p>
         </div>
         {/* Email */}
         <div>
           <input
             type="email"
-            className={`${inputTextStyle}`}
+            className={`${
+              errors.email?.message ? errorInputBoxStyle : inputTextStyle
+            }`}
             placeholder="Email Address *"
             id="email"
             autoComplete="email"
             {...register("email")}
           />
+          <p className={errorStyle}>{errors.email?.message}</p>
         </div>
         {/* Questionnaire */}
         <div>
-          <select
-            id="questionnaire"
-            className={`${inputTextStyle} px-[0.6rem]`}
-            defaultValue=""
-            {...register("questionnaire", { required: true })}>
-            <option value="" disabled>
-              What are you most excited about?
-            </option>
-            <option value="Option 1">Option 1</option>
-            <option value="Option 2">Option 2</option>
-            <option value="Option 3">Option 3</option>
-          </select>
+          <div
+            className={
+              errors.questionnaire?.message &&
+              "border border-[#A91111] rounded-[0.3125rem]"
+            }>
+            <select
+              id="questionnaire"
+              className={`${
+                errors.questionnaire?.message
+                  ? errorInputBoxStyle
+                  : inputTextStyle
+              } px-[0.6rem]`}
+              defaultValue=""
+              {...register("questionnaire", { required: true })}>
+              <option value="" disabled>
+                What are you most excited about?
+              </option>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+          </div>
+          <p className={errorStyle}>{errors.questionnaire?.message}</p>
         </div>
       </div>
       {/* Submit Button */}
