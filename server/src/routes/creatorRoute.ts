@@ -127,7 +127,7 @@ router.patch("/myaccount/:user_id", [], async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  
+
   try {
     const userId = req.params.user_id;
     //Update if found
@@ -141,7 +141,7 @@ router.patch("/myaccount/:user_id", [], async (req, res) => {
     if (!updatedCreator) {
       return res.status(404).json({ msg: "Creator not found" });
     }
-    res.json(updatedCreator)
+    res.json(updatedCreator);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -175,16 +175,11 @@ router.get("/user/:user_id", async (req, res) => {
       user: req.params.user_id,
     }).populate("user", ["username", "firstName", "lastName", "avatar"]);
 
-    if (!profile) {
-      return res.status(400).json({ msg: "Profile not found" });
+    if (profile) {
+      return res.json(profile);
     }
-    res.json(profile);
   } catch (err) {
-    //console.error(err.message);
-    //if (err.kind == 'ObjectId') {
-    //    return res.status(400).json({ msg: 'Profile not found' });
-    //}
-    //res.status(500).send('Server Error');
+    console.error(err.message);
   }
 });
 
@@ -230,8 +225,13 @@ router.put("/:user_id/interests", async (req, res) => {
     const { interests } = req.body;
 
     // Ensure interests is an array of strings
-    if (!Array.isArray(interests) || !interests.every(interests => typeof interests === 'string')) {
-      return res.status(400).json({ msg: "Interests must be an array of strings" });
+    if (
+      !Array.isArray(interests) ||
+      !interests.every((interests) => typeof interests === "string")
+    ) {
+      return res
+        .status(400)
+        .json({ msg: "Interests must be an array of strings" });
     }
 
     const updatedCreator = await Creator.findOneAndUpdate(
