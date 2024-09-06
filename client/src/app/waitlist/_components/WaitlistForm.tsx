@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { addApplicant } from "@/actions/waitlistApi";
 
+import "@/styles/gradientButton.css";
+
 type Inputs = z.infer<typeof FormDataSchema>;
 type Props = {
   setIsFormSubmitted: (value: boolean) => void;
@@ -91,22 +93,22 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
         {/* Brand/Creator Select Btns */}
         <div>
           <label className="text-sm font-bold">Join as *</label>
-          <div className="mt-1 flex gap-3">
+          <div className="mt-1 flex gap-3 font-bold text-sm">
             <button
               type="button"
               onClick={() => joinAsOnClick(true)}
               className={`${
-                isBrand && isClicked ? activeButtonStyle : "border-[3px]"
-              } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
-              Brand
+                isBrand && isClicked ? activeButtonStyle : "btn-gradient flex items-center"
+              } w-[6.563rem] h-[2.813rem] rounded-[36px]`}>
+              <span className="px-[1.65rem]">Brand</span>
             </button>
             <button
               type="button"
               onClick={() => joinAsOnClick(false)}
               className={`${
-                !isBrand && isClicked ? activeButtonStyle : "border-[3px]"
-              } w-[6.563rem] h-[2.813rem] rounded-[36px] font-bold text-sm`}>
-              Creator
+                !isBrand && isClicked ? activeButtonStyle : "btn-gradient flex items-center"
+              } w-[6.563rem] h-[2.813rem] rounded-[36px]`}>
+              <span className="px-[1.3425rem]">Creator</span>
             </button>
           </div>
           <p className={errorStyle}>{errors.applicantType?.message}</p>
