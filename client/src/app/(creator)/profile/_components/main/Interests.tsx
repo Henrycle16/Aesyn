@@ -14,6 +14,8 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { profileDataInfo, selectInterests } from "@/redux/slices/profileData-slice";
 import { useDispatch } from "react-redux";
 import { updateCreatorInterests } from "@/actions/creatorApi";
+import { showSuccessToast, showDiscardedToast } from "@/utils/toast/toastEmitters";
+import { object } from "zod";
 
 type OptionType = {
   value: string;
@@ -33,6 +35,7 @@ const Interests = () => {
   const userId = session.data?.user.id;
 
   useEffect(() => {
+    console.log("INTERESTS: ", selectedInterests);
     const initialSelectedInterests = interests
       .map((interest) => {
         const interestObject = interestsArray.find(
@@ -64,7 +67,7 @@ const Interests = () => {
         await updateCreatorInterests(userId, selectedInterestLabels);
         dispatch(profileDataInfo({ interests: selectedInterestLabels }));
       }
-      closeModal();
+      closeModal(true);
     } catch (error) {
       console.error("Failed to update interests:", error);
     }
@@ -110,8 +113,16 @@ const Interests = () => {
       document.getElementById(`interests_modal`) as HTMLDialogElement
     ).showModal();
   };
+  
+  const closeModal = (submitted: any) => {
+    console.log("submitted: ", submitted)
+    console.log("hasChanges: ", hasChanges)
 
-  const closeModal = () => {
+    if (hasChanges && submitted != true) {
+      showDiscardedToast();
+    } else if (hasChanges && submitted == true) {
+      showSuccessToast();
+    }
     setSelectedInterests(
       interests
         .map((interest) => {

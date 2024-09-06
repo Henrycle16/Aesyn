@@ -21,7 +21,7 @@ const UsernameForm = ({ register, errors, getValues }: UsernameFormProps) => {
   );
 
   const onNext = () => {
-    dispatch(userInfo({ username: getValues("userName") }));
+    dispatch(userInfo({ username: getValues('userName').toLowerCase() }));
     dispatch(userInfo({ currentStep: currentStep + 1 }));
   };
 

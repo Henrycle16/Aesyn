@@ -5,6 +5,7 @@ import { deletePackage as deletePackageStore } from "@/redux/slices/creatorPacka
 
 import { deletePackage } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
+import { showDeletedToast } from "@/utils/toast/toastEmitters";
 
 const DeletePackage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,7 @@ const DeletePackage = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     removePackage(userId, currentPackage._id!);
+    showDeletedToast("Package Deleted", "sayonara");
     (document.getElementById(`delete_package_modal`) as HTMLDialogElement).close();
   };
 
