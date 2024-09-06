@@ -40,12 +40,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      companyName,
-      industry,
-      location,
-      preferences,
-    } = req.body;
+    const { companyName, industry, location, preferences } = req.body;
 
     //Build profile object
     const brandFields = {
@@ -89,11 +84,7 @@ router.put("/", [], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {
-    companyName,
-    industry,
-    preferences,
-  } = req.body;
+  const { companyName, industry, preferences } = req.body;
 
   //Build profile object
   const brandFields = {
@@ -120,7 +111,6 @@ router.put("/", [], async (req, res) => {
         errors: [{ msg: "No Brand profile found" }],
       });
     }
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -154,16 +144,11 @@ router.get("/user/:user_id", async (req, res) => {
       user: req.params.user_id,
     }).populate("user", ["username", "firstName", "lastName", "avatar"]);
 
-    if (!profile) {
-      return res.status(400).json({ msg: "Profile not found" });
+    if (profile) {
+      return res.json(profile);
     }
-    res.json(profile);
   } catch (err) {
     console.error(err.message);
-    if (err.kind == "ObjectId") {
-      return res.status(400).json({ msg: "Profile not found" });
-    }
-    res.status(500).send("Server Error");
   }
 });
 
