@@ -98,10 +98,10 @@ export default function PersonalInfo() {
       onReset();
 
       Object.entries(data).forEach(([key, value]) => {
-        if (key === "email" && value) {
+        if (key === "email" && value != "") {
           setOldData((prev) => ({ ...prev, email: value }));
           dispatch(logIn({ email: value }));
-        } else if (key === "userName" && value) {
+        } else if (key === "userName" && value != "") {
           setOldData((prev) => ({ ...prev, username: value }));
           dispatch(logIn({ creatorUsername: value }));
         }
