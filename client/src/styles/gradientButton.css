@@ -1,0 +1,20 @@
+.btn-gradient {
+  position: relative;
+  border: 4px solid transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    width: 6.563rem;
+    height: 2.813rem;
+
+    background: linear-gradient(to bottom right, #5B58EB, #BB63FF) border-box;
+    border: inherit;
+    border-radius: inherit;
+    mask:
+      linear-gradient(white, white) content-box,
+      linear-gradient(white, white);
+      mask-composite: exclude;
+  }
+}

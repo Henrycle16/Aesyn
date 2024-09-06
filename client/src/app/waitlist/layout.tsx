@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import SmallFooter from "@/components/footer/SmallFooter";
+import LandingSmallFooter from "@/components/footer/LandingSmallFooter";
 
 export default function Layout({
   children,
@@ -12,7 +12,7 @@ export default function Layout({
       <main className="container flex-1 flex items-center justify-center mx-auto my-10">
         {children}
       </main>
-      <SmallFooter />
+      <LandingSmallFooter />
     </div>
   );
 }
