@@ -67,7 +67,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
 
   const gradientButtonStyle =
     "bg-gradient-to-r from-[#5B58EB] via-[#BB63FF] to-[#5B58EB] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold";
-  //  hover:from-[#BB63FF] hover:to-[#5B58EB]
+
   const inputTextStyle =
     "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-opacity-50 focus:ring-white focus:outline-none focus:ring-1";
 
