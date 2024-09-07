@@ -16,7 +16,7 @@ const Showcase = () => {
         </p>
 
         {/* Left Side: Description */}
-        <div className="grid grid-cols-[45%_55%] gap-10 items-center justify-center w-[69rem]">
+        <div className="grid grid-cols-[45%_55%] gap-10 items-center justify-center w-[62rem]">
           <div className="border-[1px] border-[#F153FF] min-h-[250px] bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100% px-10 py-10 flex flex-col gap-y-5 rounded-xl">
             <h3 className="font-semibold text-2xl">Lorem ipsum dolor sit amet, consectetu</h3>
             <p className="text-[#4A4A4A] text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun</p>
@@ -38,8 +38,8 @@ const Showcase = () => {
             <Image
               src="/showcase_analytics.png"
               alt="Showcase"
-              width={623}
-              height={627} />
+              width={600}
+              height={600} />
           </div>
         </div>
       </div>
