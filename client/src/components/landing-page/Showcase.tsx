@@ -21,13 +21,13 @@ const Showcase = () => {
             <h3 className="font-semibold text-2xl">Lorem ipsum dolor sit amet, consectetu</h3>
             <p className="text-[#4A4A4A] text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun</p>
             <div className="gap-y-5 flex flex-col font-semibold my-10">
-              <div className="border-2 border-red-500 px-20 py-4 rounded-xl">
+              <div className="border-[1px] border-[#F153FF] px-20 py-4 rounded-xl">
                 Section 1
               </div>
-              <div className="border-2 border-red-500 px-20 py-4 rounded-xl">
+              <div className="border-[1px] border-[#F153FF] px-20 py-4 rounded-xl">
                 Section 2
               </div>
-              <div className="border-2 border-red-500 px-20 py-4 rounded-xl">
+              <div className="border-[1px] border-[#F153FF] px-20 py-4 rounded-xl">
                 Section 3
               </div>
             </div>
