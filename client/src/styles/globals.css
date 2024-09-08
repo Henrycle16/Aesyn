@@ -220,3 +220,33 @@
 #warn-toast {
   @apply border border-[#E1651F];
 }
+
+/* Gradient Text Style */
+.gradient-text {
+  @apply bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] text-transparent bg-clip-text;
+}
+
+.gradient-button {
+  border-color: #5b58eb;
+  color: #fff;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  /* Apply the gradient background */
+  background: linear-gradient(to right, #5b58eb, #bb63ff);
+  background-clip: padding-box; /* Ensure gradient stays within the button's padding */
+
+  /* Subtle initial shadow effect */
+  box-shadow: 0 0 10px 0 rgba(91, 88, 235, 0.3) inset,
+    0 0 10px 4px rgba(187, 99, 255, 0.3);
+  transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.gradient-button:hover {
+  /* Make the gradient disappear on hover */
+  background: transparent;
+  box-shadow: 0 0 20px 0 rgba(91, 88, 235, 1) inset,
+    0 0 20px 4px rgba(187, 99, 255, 1);
+}

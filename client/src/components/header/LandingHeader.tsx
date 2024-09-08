@@ -9,13 +9,13 @@ const Header = () => {
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
         <a href="#section1" className="">
-          Section 1
+          Showcase
         </a>
         <a href="#section2" className="">
-          Section 2
+          Bento Box
         </a>
         <a href="#section3" className="">
-          Section 3
+          Carousel
         </a>
         <Link href={"/login"} className="hover:text-gray-900">
           Login
