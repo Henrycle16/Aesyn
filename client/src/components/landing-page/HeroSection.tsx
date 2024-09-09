@@ -2,9 +2,6 @@
 import Link from "next/link";
 
 const HeroSection = () => {
-  const gradientTextStyle =
-    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] text-transparent bg-clip-text";
-
   return (
     <div className="flex flex-col items-center max-w-2xl mb-64">
       <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">

@@ -221,6 +221,12 @@
   @apply border border-[#E1651F];
 }
 
+/*! NEW STYLING */
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* Gradient Text Style */
 .gradient-text {
   @apply bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] text-transparent bg-clip-text;

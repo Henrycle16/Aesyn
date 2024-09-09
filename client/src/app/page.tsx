@@ -42,19 +42,19 @@ export default function Home() {
         </div>
 
         {/* Showcase */}
-        <section className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
+        <section id="showcase" className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <Showcase />
           </div>
 
           {/* Bentobox */}
-          <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem]">
+          <section id="bentobox" className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem]">
             <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
               <BentoBox />
             </div>
 
             {/* Carousel */}
-            <section className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
+            <section id="carousel" className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
               <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
                 <Carousel />
               </div>
