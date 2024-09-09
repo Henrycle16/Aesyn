@@ -56,56 +56,23 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
       );
 
       if (response.data) {
-        const followersGenderMap: { [gender: string]: number } = {};
-        const followersAgeMap: { [age: string]: number } = {};
-        const followersTopCitiesMap: { [city: string]: number } = {};
-
-        // Map followersGender into an object
-        response.data.insights.insights.followersGender.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const gender = item.dimension_values[0];
-            const value = item.value;
-            followersGenderMap[gender] = value;
-          },
-        );
-
-        // Map followersAge into an object
-        response.data.insights.insights.followersAge.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const age = item.dimension_values[0];
-            const value = item.value;
-            followersAgeMap[age] = value;
-          },
-        );
-
-        // Map followersTopCities into an object
-        response.data.insights.insights.followersTopCities.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const city = item.dimension_values[0];
-            const value = item.value;
-            followersTopCitiesMap[city] = value;
-          },
-        );
+        console.log("from tile:", response);
 
         // Dispatching creator instagram data to redux store
         dispatch(
           instagramDataInfo({
             _id: response.data.user._id,
+            creatorId: response.data.creatorID,
             pageId: response.data.user.pageID,
             businessId: response.data.user.businessID,
             longLivedAccessToken: response.data.user.longLivedAccessToken,
             username: response.data.user.userName,
             profilePictureURL: response.data.user.profilePicURL,
-            followersCount: response.data.user.followers_count,
-            followersTopCities: followersTopCitiesMap,
-            followersAge: followersAgeMap,
-            followersGender: followersGenderMap,
-            monthlyImpressions:
-              response.data.insights.insights.monthylyImpressionsAndReach
-                .impressions[0].value,
-            monthlyReach:
-              response.data.insights.insights.monthylyImpressionsAndReach
-                .reach[0].value,
+            followersCount: response.data.user.followersCount,
+            followersTopCities: response.data.insights.followersTopCities,
+            followersAge: response.data.insights.followersAge,
+            followersGender: response.data.insights.followersGender,
+            dailyMetrics: response.data.insights.dailyMetrics,
           }),
         );
         setIsLoading(false);

@@ -16,8 +16,7 @@ type instagramDataReducer = {
   followersTopCities: { [city: string]: number };
   followersAge: { [age: string]: number };
   followersGender: { [gender: string]: number };
-  monthlyImpressions: number;
-  monthlyReach: number;
+  dailyMetrics: [{ date: Date; impression: number; reach: number }];
   socialMedia: string;
 };
 
@@ -34,8 +33,7 @@ const initialState = {
     followersTopCities: {},
     followersAge: {},
     followersGender: {},
-    monthlyImpressions: 0,
-    monthlyReach: 0,
+    dailyMetrics: [],
     socialMedia: "Instagram",
   } as instagramDataReducer,
 } as InitialState;

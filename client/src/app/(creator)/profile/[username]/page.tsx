@@ -71,37 +71,6 @@ export default function CreatorProfile({ params }: { params: Params }) {
       );
 
       if (instagramData.data) {
-        const followersGenderMap: { [gender: string]: number } = {};
-        const followersAgeMap: { [age: string]: number } = {};
-        const followersTopCitiesMap: { [city: string]: number } = {};
-
-        // Map followersGender into an object
-        instagramData.data.insights.followersGender.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const gender = item.dimension_values[0];
-            const value = item.value;
-            followersGenderMap[gender] = value;
-          },
-        );
-
-        // Map followersAge into an object
-        instagramData.data.insights.followersAge.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const age = item.dimension_values[0];
-            const value = item.value;
-            followersAgeMap[age] = value;
-          },
-        );
-
-        // Map followersAge into an object
-        instagramData.data.insights.followersTopCities.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const city = item.dimension_values[0];
-            const value = item.value;
-            followersTopCitiesMap[city] = value;
-          },
-        );
-
         // Dispatching creator instagram data to redux store
         dispatch(
           instagramDataInfo({
@@ -112,27 +81,11 @@ export default function CreatorProfile({ params }: { params: Params }) {
             longLivedAccessToken: instagramData.data.longLivedAccessToken,
             username: instagramData.data.userName,
             profilePictureURL: instagramData.data.profilePicURL,
-            // followersCount: instagramData.data.followers_count,
-            // followersTopCities: followersTopCitiesMap,
-            // followersAge: followersAgeMap,
-            // followersGender: followersGenderMap,
-            // monthlyImpressions:
-            //   instagramData.data.insights.monthylyImpressionsAndReach
-            //     .impressions[0].value,
-            // monthlyReach:
-            //   instagramData.data.insights.monthylyImpressionsAndReach.reach[0]
-            //     .value,
-
-            followersCount: instagramData.data.followers_count,
-            followersTopCities: followersTopCitiesMap,
-            followersAge: followersAgeMap,
-            followersGender: followersGenderMap,
-            monthlyImpressions:
-              instagramData.data.insights.monthylyImpressionsAndReach
-                .impressions[0].value,
-            monthlyReach:
-              instagramData.data.insights.monthylyImpressionsAndReach.reach[0]
-                .value,
+            followersCount: instagramData.data.insights.followersCount,
+            followersTopCities: instagramData.data.insights.followersTopCities,
+            followersAge: instagramData.data.insights.followersAge,
+            followersGender: instagramData.data.insights.followersGender,
+            dailyMetrics: instagramData.data.insights.dailyMetrics,
           }),
         );
       }
