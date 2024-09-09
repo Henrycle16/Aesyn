@@ -7,15 +7,20 @@ import { connectToPinecone } from "./db/pineconedb-connection";
 const PORT = process.env.PORT || 5000;
 
 // Initalizing MongoDB connection
-connectToDatabase().then(async () => {
-    app.listen(PORT, () => console.log(`Server listening on port ${PORT} & connected to MongoDB`));
-    })
-    .catch(error => console.log(error));
+connectToDatabase()
+  .then(async () => {
+    app.listen(PORT, () =>
+      console.log(`Server listening on port ${PORT} & connected to MongoDB`),
+    );
+  })
+  .catch((error) => console.log(error));
 
 // Initalizing PineconeDB connection
-connectToPinecone().then(() => {
+connectToPinecone()
+  .then(() => {
     console.log("Pinecone connection successful");
-}).catch(error => console.log(error));
+  })
+  .catch((error) => console.log(error));
 
 // Initalizing watch function for PineconeDB
 // pineconeWatch().then(() => {
@@ -26,3 +31,4 @@ connectToPinecone().then(() => {
 // tokenRefresh().then(() => {
 //     console.log("Tokens refreshed successfully");
 // }).catch(error => console.log(error));
+

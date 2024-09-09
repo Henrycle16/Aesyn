@@ -3,14 +3,18 @@ import {
   getBusinessId,
   getBasicUserInfo,
   getLongLivedAccessToken,
-  getMonthlyUserImpressionsAndReach,
-  getFollowerDemographics_Gender,
+  // getMonthlyUserImpressionsAndReach,
+  // getFollowerDemographics_Gender,
   getFollowerDemographics_Age,
   getFollowerDemographics_TopCities,
   getLastMonthData,
+
+  // test
+  getFollowerDemographics_GenderFormatted,
 } from "../../services/instagramGraphAPI";
 //import instagram_data from '../../models/InstagramData';
-import InstagramData from "../../models/InstagramData";
+// import InstagramData from "../../models/InstagramData";
+import InstagramData from "../../models/InstagramDatav2";
 
 interface BasicUserInfo {
   name: string;
@@ -69,14 +73,14 @@ const instagramUserCheck = async (accessToken: string, creatorId: string) => {
 
 const instagramInsights = async (businessID: string, accessToken: string) => {
   try {
-    const monthylyImpressionsAndReach = await getMonthlyUserImpressionsAndReach(
-      businessID,
-      accessToken,
-    );
-    const followersGender = await getFollowerDemographics_Gender(
-      businessID,
-      accessToken,
-    );
+    // const monthylyImpressionsAndReach = await getMonthlyUserImpressionsAndReach(
+    //   businessID,
+    //   accessToken,
+    // );
+    // const followersGender = await getFollowerDemographics_Gender(
+    //   businessID,
+    //   accessToken,
+    // );
     const followersAge = await getFollowerDemographics_Age(
       businessID,
       accessToken,
@@ -86,10 +90,15 @@ const instagramInsights = async (businessID: string, accessToken: string) => {
       accessToken,
     );
 
+    const followersGender = await getFollowerDemographics_GenderFormatted(
+      businessID,
+      accessToken,
+    );
+
     const dailyMetrics = await getLastMonthData(businessID, accessToken);
 
     return {
-      monthylyImpressionsAndReach,
+      // monthylyImpressionsAndReach,
       followersGender,
       followersAge,
       followersTopCities,
@@ -123,8 +132,12 @@ const getInsights = async (businessID: string) => {
   user.name = name;
   user.userName = userName;
   user.profilePicURL = profilePicURL;
-  user.followers_count = followers_count;
+  // user.followers_count = followers_count;
 
+  //-----------------------------------------
+  user.insights.followersCount = Number(followers_count);
+
+  //-----------------------------------------
   const userInsights = await instagramInsights(businessID, accessToken);
 
   if (userInsights) {
@@ -141,4 +154,3 @@ const getInsights = async (businessID: string) => {
 };
 
 export { instagramUserCheck, getInsights };
-

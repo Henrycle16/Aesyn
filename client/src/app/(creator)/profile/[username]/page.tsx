@@ -44,27 +44,32 @@ export default function CreatorProfile({ params }: { params: Params }) {
           preferences: response.data.preferences,
           interests: response.data.interests,
           avatar: response.data.avatar,
-        })
+        }),
       );
 
       // Dispatching creator packages to redux store
       dispatch(
         creatorPackagesInfo({
           packages: response.data.packages,
-        })
+        }),
       );
 
       // Dispatching creator portfolio content to redux store
       dispatch(
         creatorContentInfo({
           content: response.data.portfolio,
-        })
+        }),
       );
       setIsDataLoaded(true);
 
       // Getting creator instagram data
       const instagramData = await getInstagramDataById(response.data._id);
-      
+
+      console.log(
+        "instagram data from profiles page: getInstagramById",
+        instagramData,
+      );
+
       if (instagramData.data) {
         const followersGenderMap: { [gender: string]: number } = {};
         const followersAgeMap: { [age: string]: number } = {};
@@ -76,7 +81,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
             const gender = item.dimension_values[0];
             const value = item.value;
             followersGenderMap[gender] = value;
-          }
+          },
         );
 
         // Map followersAge into an object
@@ -85,7 +90,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
             const age = item.dimension_values[0];
             const value = item.value;
             followersAgeMap[age] = value;
-          }
+          },
         );
 
         // Map followersAge into an object
@@ -94,7 +99,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
             const city = item.dimension_values[0];
             const value = item.value;
             followersTopCitiesMap[city] = value;
-          }
+          },
         );
 
         // Dispatching creator instagram data to redux store
@@ -107,6 +112,17 @@ export default function CreatorProfile({ params }: { params: Params }) {
             longLivedAccessToken: instagramData.data.longLivedAccessToken,
             username: instagramData.data.userName,
             profilePictureURL: instagramData.data.profilePicURL,
+            // followersCount: instagramData.data.followers_count,
+            // followersTopCities: followersTopCitiesMap,
+            // followersAge: followersAgeMap,
+            // followersGender: followersGenderMap,
+            // monthlyImpressions:
+            //   instagramData.data.insights.monthylyImpressionsAndReach
+            //     .impressions[0].value,
+            // monthlyReach:
+            //   instagramData.data.insights.monthylyImpressionsAndReach.reach[0]
+            //     .value,
+
             followersCount: instagramData.data.followers_count,
             followersTopCities: followersTopCitiesMap,
             followersAge: followersAgeMap,
@@ -117,7 +133,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
             monthlyReach:
               instagramData.data.insights.monthylyImpressionsAndReach.reach[0]
                 .value,
-          })
+          }),
         );
       }
     } catch (error) {
