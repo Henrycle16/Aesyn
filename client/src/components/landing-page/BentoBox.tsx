@@ -57,7 +57,7 @@ const BentoBox = () => {
         <p className="text-center mt-5 mb-16 text-xl max-w-3xl">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididun, consectetur adipiscing elit, sed do eiusmod
-          tempor incididun
+          tempor
         </p>
 
           <BentoGrid>

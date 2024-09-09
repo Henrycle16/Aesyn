@@ -30,8 +30,6 @@ const Bio: React.FC = () => {
   const onFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!hasChanges) return; // Prevent submission if no changes
-
-    console.log("in form submit");
     try {
       const response = await updateCreatorBio(userId, tempBioText);
       const updatedBio = response.data;
@@ -59,8 +57,6 @@ const Bio: React.FC = () => {
   };
 
   const closeModal = (submitted: any) => {
-    console.log("submitted: ", submitted)
-    console.log("hasChanges: ", hasChanges)
     if (hasChanges && submitted != true) {
       showDiscardedToast();
     } else if (hasChanges && submitted == true) {

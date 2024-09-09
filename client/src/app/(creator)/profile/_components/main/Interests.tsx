@@ -35,7 +35,6 @@ const Interests = () => {
   const userId = session.data?.user.id;
 
   useEffect(() => {
-    console.log("INTERESTS: ", selectedInterests);
     const initialSelectedInterests = interests
       .map((interest) => {
         const interestObject = interestsArray.find(
@@ -62,7 +61,6 @@ const Interests = () => {
       const selectedInterestLabels = selectedInterests.map(
         (interest) => interest.label
       );
-      console.log("Submitting interests:", selectedInterestLabels);
       if (userId) {
         await updateCreatorInterests(userId, selectedInterestLabels);
         dispatch(profileDataInfo({ interests: selectedInterestLabels }));
@@ -115,9 +113,6 @@ const Interests = () => {
   };
   
   const closeModal = (submitted: any) => {
-    console.log("submitted: ", submitted)
-    console.log("hasChanges: ", hasChanges)
-
     if (hasChanges && submitted != true) {
       showDiscardedToast();
     } else if (hasChanges && submitted == true) {

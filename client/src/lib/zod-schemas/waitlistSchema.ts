@@ -3,11 +3,11 @@ import validator from 'validator';
 import axios from "axios";
 
 export const FormDataSchema = z.object({
-  firstName: z.string().min(1, "First name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
-  lastName: z.string().min(1, "Last name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
-  questionnaire: z.string().min(1, "Response is required"),
+  firstName: z.string().min(1, "Required").refine((data) => validator.isAlpha(data), "Invalid characters"),
+  lastName: z.string().min(1, "Required").refine((data) => validator.isAlpha(data), "Invalid characters"),
+  questionnaire: z.string().min(1, "Required"),
   applicantType: z.unknown(),
-  email: z.string().min(1, "Email is required").email("Invalid email address"),
+  email: z.string().min(1, "Required").email("Invalid entry"),
 }).superRefine(async ({ email }, ctx) => {
   if (!email) return;
 
