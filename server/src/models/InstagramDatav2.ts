@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DailyMetricSchema = new mongoose.Schema({
+const DailyMetricSchema = {
   date: {
     type: Date,
   },
@@ -10,7 +10,7 @@ const DailyMetricSchema = new mongoose.Schema({
   reach: {
     type: Number,
   },
-});
+};
 
 // Top level contains basic user data and keys for retrieval
 const InstagramDataSchema = new mongoose.Schema({
@@ -47,7 +47,7 @@ const InstagramDataSchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  // Stores all metric data to be passed down and updated.
+  // Stores all metric data to be passed down to front end components.
   insights: {
     followersCount: { type: Number },
 
@@ -66,11 +66,18 @@ const InstagramDataSchema = new mongoose.Schema({
       },
     },
 
+    followersTopCities: [
+      {
+        location: { type: String },
+        value: { type: Number },
+      },
+    ],
+
     // List of age groups and their followers count
     followersAge: [
       {
-        ageRange: { type: String },
-        followersCount: { type: String },
+        ageGroup: { type: String },
+        value: { type: String },
       },
     ],
   },

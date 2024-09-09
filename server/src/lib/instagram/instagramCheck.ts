@@ -3,17 +3,11 @@ import {
   getBusinessId,
   getBasicUserInfo,
   getLongLivedAccessToken,
-  // getMonthlyUserImpressionsAndReach,
-  // getFollowerDemographics_Gender,
   getFollowerDemographics_Age,
   getFollowerDemographics_TopCities,
   getLastMonthData,
-
-  // test
   getFollowerDemographics_GenderFormatted,
 } from "../../services/instagramGraphAPI";
-//import instagram_data from '../../models/InstagramData';
-// import InstagramData from "../../models/InstagramData";
 import InstagramData from "../../models/InstagramDatav2";
 
 interface BasicUserInfo {
@@ -73,14 +67,6 @@ const instagramUserCheck = async (accessToken: string, creatorId: string) => {
 
 const instagramInsights = async (businessID: string, accessToken: string) => {
   try {
-    // const monthylyImpressionsAndReach = await getMonthlyUserImpressionsAndReach(
-    //   businessID,
-    //   accessToken,
-    // );
-    // const followersGender = await getFollowerDemographics_Gender(
-    //   businessID,
-    //   accessToken,
-    // );
     const followersAge = await getFollowerDemographics_Age(
       businessID,
       accessToken,
@@ -98,7 +84,6 @@ const instagramInsights = async (businessID: string, accessToken: string) => {
     const dailyMetrics = await getLastMonthData(businessID, accessToken);
 
     return {
-      // monthylyImpressionsAndReach,
       followersGender,
       followersAge,
       followersTopCities,
@@ -132,17 +117,14 @@ const getInsights = async (businessID: string) => {
   user.name = name;
   user.userName = userName;
   user.profilePicURL = profilePicURL;
-  // user.followers_count = followers_count;
 
-  //-----------------------------------------
-  user.insights.followersCount = Number(followers_count);
-
-  //-----------------------------------------
   const userInsights = await instagramInsights(businessID, accessToken);
 
   if (userInsights) {
     // Update the user with the insights
     user.insights = userInsights;
+    user.insights.followersCount = Number(followers_count);
+
     const updatedUser = await user.save();
 
     console.log("User updated with insights and basic user info");

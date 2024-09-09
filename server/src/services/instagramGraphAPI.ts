@@ -115,7 +115,14 @@ const getFollowerDemographics_Age = async (
     const followersAge =
       response.data.data[0].total_value.breakdowns[0].results;
 
-    return followersAge;
+    const followersAgeFormated = followersAge.map((ageGroup) => {
+      return {
+        ageGroup: ageGroup.dimension_values[0],
+        value: ageGroup.value,
+      };
+    });
+
+    return followersAgeFormated;
   } catch (error) {
     console.log(error);
     return error;
@@ -140,7 +147,15 @@ const getFollowerDemographics_TopCities = async (
       .sort((a, b) => b.value - a.value)
       .slice(0, 5);
 
-    return followersTopCities;
+    // Refactor data to fit into database
+    const formatedTopCities = followersTopCities.map((city) => {
+      return {
+        location: city.dimension_values[0],
+        value: city.value,
+      };
+    });
+
+    return formatedTopCities;
   } catch (error) {
     console.log(error);
     return error;
@@ -181,50 +196,6 @@ const getReachedDemographic_Gender = async (
       response.data.data[0].total_value.breakdowns[0].results;
 
     return reachedGender;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
-
-const getReachedDemographic_Age = async (
-  BUSINESS_ID: string,
-  ACCESS_TOKEN: string,
-) => {
-  try {
-    // Get reached audience demographics last 90 days - age
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=reached_audience_demographics&period=lifetime&timeframe=last_90_days&breakdown=age&metric_type=total_value&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`,
-    );
-
-    const reachedAge = response.data.data[0].total_value.breakdowns[0].results;
-
-    return reachedAge;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
-
-const getReachedDemographic_TopCities = async (
-  BUSINESS_ID: string,
-  ACCESS_TOKEN: string,
-) => {
-  try {
-    // Get reached audience demographics last 90 days - age
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=reached_audience_demographics&period=lifetime&timeframe=last_90_days&breakdown=city&metric_type=total_value&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`,
-    );
-
-    let reachedTopCities =
-      response.data.data[0].total_value.breakdowns[0].results;
-
-    // Sort cities by value in descending order and get top 5
-    reachedTopCities = reachedTopCities
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 5);
-
-    return reachedTopCities;
   } catch (error) {
     console.log(error);
     return error;
@@ -307,6 +278,7 @@ const getFollowerDemographics_GenderFormatted = async (
       },
       {},
     );
+
     return followerCountByGender;
   } catch (error) {
     console.log(error);
@@ -325,8 +297,6 @@ export {
   getFollowerDemographics_TopCities,
   getOnlineFollowers,
   getReachedDemographic_Gender,
-  getReachedDemographic_Age,
-  getReachedDemographic_TopCities,
   getLastMonthData,
   getFollowerDemographics_GenderFormatted,
 };
