@@ -30,7 +30,7 @@ router.post("/check/:creatorId", async (req, res) => {
       await basicUser.save();
 
       const insights = await getInsights(basicUser.businessID);
-      res.json({ user: basicUser, insights: insights });
+      res.json(insights);
     } else {
       res.status(200).send("User already exists");
     }
