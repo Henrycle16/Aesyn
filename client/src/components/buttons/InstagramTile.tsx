@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
 
 // test v2 slice
-import { instagramDataInfo } from "@/redux/slices/instagramData-sliceV2";
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type Props = {
   isLoading: boolean;
