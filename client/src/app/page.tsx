@@ -58,29 +58,29 @@ export default function Home() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-40% text-white">
+      <div className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-40% text-white relative z-0">
         <motion.header
           variants={{ visible: { y: 0 }, hidden: { y: "-130%" } }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.35, ease: "easeInOut" }}
-          className="sticky top-5 z-10">
+          className="sticky top-5 z-[99999]">
           <LandingHeader
             currentSection={currentSection}
-            refs={{ showcaseRef, bentoboxRef, carouselRef }}
+            refs={{ heroRef, showcaseRef, bentoboxRef, carouselRef }}
           />
         </motion.header>
 
         <section
           id="hero"
           ref={heroRef}
-          className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+          className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen relative z-10">
           <HeroSection />
         </section>
 
         <section
           id="showcase"
           ref={showcaseRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
+          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <Showcase />
           </div>
@@ -89,7 +89,7 @@ export default function Home() {
         <section
           id="bentobox"
           ref={bentoboxRef}
-          className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem]">
+          className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem] relative z-30 top-[-7rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <BentoBox />
           </div>
@@ -98,13 +98,13 @@ export default function Home() {
         <section
           id="carousel"
           ref={carouselRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem]">
+          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-40 top-[-8rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <Carousel />
           </div>
         </section>
 
-        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem]">
+        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] relative z-50 top-[-9rem]">
           <div className="container mx-auto flex justify-center items-center px-5 ">
             <CallToAction />
           </div>
@@ -112,7 +112,7 @@ export default function Home() {
             <LandingFooter />
           </footer>
         </section>
-      </section>
+      </div>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { RefObject } from "react";
 interface LandingHeaderProps {
   currentSection: string | null;
   refs: {
+    heroRef: RefObject<HTMLDivElement>;
     showcaseRef: RefObject<HTMLDivElement>;
     bentoboxRef: RefObject<HTMLDivElement>;
     carouselRef: RefObject<HTMLDivElement>;
@@ -19,9 +20,19 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
 
   const isActive = (section: string) => currentSection === section;
 
+  const isBlackText =
+    currentSection === "showcase" || currentSection === "carousel";
+
   return (
-    <header className="flex px-12 py-5 flex-col md:flex-row border-[1px] border-stone-600 rounded-2xl mt-5 mx-5 items-center backdrop-blur-sm">
-      <div className="text-2xl font-semibold">ShareFluence</div>
+    <header
+      className={`flex px-12 py-5 flex-col md:flex-row border-[1px] border-stone-600 rounded-2xl mt-5 mx-5 items-center backdrop-blur-sm ${
+        isBlackText ? "text-black" : ""
+      }`}>
+      <div
+        className="text-2xl font-semibold cursor-pointer"
+        onClick={() => scrollToSection("heroRef")}>
+        ShareFluence
+      </div>
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
         <button
