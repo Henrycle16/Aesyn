@@ -37,17 +37,23 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
         <button
           onClick={() => scrollToSection("showcaseRef")}
-          className={`${isActive("showcase") ? "font-bold" : ""}`}>
+          className={`${
+            isActive("showcase") ? "font-bold" : ""
+          } hover:font-bold`}>
           Showcase
         </button>
         <button
           onClick={() => scrollToSection("bentoboxRef")}
-          className={`${isActive("bentobox") ? "font-bold" : ""}`}>
+          className={`${
+            isActive("bentobox") ? "font-bold" : ""
+          } hover:font-bold`}>
           Bento Box
         </button>
         <button
           onClick={() => scrollToSection("carouselRef")}
-          className={`${isActive("carousel") ? "font-bold" : ""}`}>
+          className={`${
+            isActive("carousel") ? "font-bold" : ""
+          } hover:font-bold`}>
           Carousel
         </button>
         <a href="/login" className="hover:text-gray-900">
