@@ -33,7 +33,7 @@ const initialState = {
     followersTopCities: {},
     followersAge: {},
     followersGender: {},
-    dailyMetrics: [],
+    dailyMetrics: [{}],
     socialMedia: "Instagram",
   } as instagramDataReducer,
 } as InitialState;
@@ -42,7 +42,7 @@ export const instagramData = createSlice({
   name: "instagramData",
   initialState,
   reducers: {
-    instagramDataInfo: (
+    instagramDataInfoV2: (
       state,
       action: PayloadAction<Partial<instagramDataReducer>>,
     ) => {
@@ -51,11 +51,11 @@ export const instagramData = createSlice({
         ...action.payload,
       };
     },
-    resetInstagramData: (state) => {
+    resetInstagramDataV2: (state) => {
       state.value = { ...initialState.value };
     },
   },
 });
 
-export const { instagramDataInfo, resetInstagramData } = instagramData.actions;
+export const { instagramDataInfoV2, resetInstagramDataV2 } = instagramData.actions;
 export default instagramData.reducer;

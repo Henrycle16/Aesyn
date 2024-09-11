@@ -7,7 +7,7 @@ import Portfolio from "../_components/portfolio/Portfolio";
 import UnsavedModal from "@/components/modals/UnsavedModal";
 
 import { profileDataInfo } from "@/redux/slices/profileData-slice";
-import { instagramDataInfo } from "@/redux/slices/instagramData-slice";
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 import { creatorPackagesInfo } from "@/redux/slices/creatorPackages-slice";
 import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch } from "@/redux/store";
@@ -73,7 +73,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
       if (instagramData.data) {
         // Dispatching creator instagram data to redux store
         dispatch(
-          instagramDataInfo({
+          instagramDataInfoV2({
             _id: instagramData.data._id,
             creatorId: instagramData.data.creatorID,
             pageId: instagramData.data.pageID,
@@ -96,6 +96,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
 
   useEffect(() => {
     getProfileInfo();
+
   }, []);
 
   if (!isDataLoaded) {
