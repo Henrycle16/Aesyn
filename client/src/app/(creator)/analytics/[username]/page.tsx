@@ -41,6 +41,14 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
     (state) => state.instagramDataReducer.value.creatorId,
   );
 
+  const instaStore = useAppSelector(
+    (state) => state.instagramDataReducerV2.value
+  );
+
+  console.log("InstaStore: ", instaStore)
+
+  console.log("Raw Insta Data: ", instagramData)
+
   const initials = profileData
     ? getInitials(profileData.user.firstName, profileData.user.lastName)
     : "";
@@ -54,9 +62,6 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
         setInstagramData(instagramDataResponse.data);
       }
     };
-
-    // Remove
-    console.log("BussinessId", bussinessId);
 
     fetchInstagramData();
   }, [profileData]);
@@ -112,7 +117,7 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
       {/* Main Section */}
       <section className="mt-4 mb-10 flex flex-col gap-10 w-[77.5rem]">
         {/* Overview Section */}
-        <Overview instagramData={instagramData} />
+        <Overview instagramData={instaStore} />
         {/* Demographic Section */}
         <Demographic />
         {/* Recent Post */}

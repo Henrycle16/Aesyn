@@ -11,12 +11,9 @@ type ImpressionsAndReach = {
 };
 
 type InstagramData = {
-  followers_count: number;
+  followersCount: number;
   // This might be wrong with how I am parsing through the object
-  insights: {
-    impressions: ImpressionsAndReach[];
-    reach: ImpressionsAndReach[];
-  };
+  dailyMetrics: [{}];
 };
 
 const Overview = ({
@@ -52,7 +49,7 @@ const Overview = ({
             Followers
           </div>
           <div className="text-[#3798E3]">
-            {instagramData ? instagramData.followers_count : "Loading..."}
+            {instagramData ? instagramData.followersCount : "Loading..."}
           </div>
         </div>
 
@@ -60,7 +57,7 @@ const Overview = ({
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
             <VisibilityIcon className="mr-4" />
-            View
+            Posts
           </div>
           <div className="text-[#3798E3]">111,111</div>
         </div>
