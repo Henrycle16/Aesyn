@@ -6,6 +6,7 @@ import { FormDataSchema } from "@/lib/zod-schemas/waitlistSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { addApplicant } from "@/actions/waitlistApi";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import "@/styles/gradientButton.css";
 
@@ -17,13 +18,12 @@ type Props = {
 export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const [isBrand, setIsBrand] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
-    setError,
-    clearErrors,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
@@ -40,13 +40,6 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     };
 
     try {
-      if (!isClicked) {
-        setError("applicantType", {
-          type: "custom",
-          message: "Required",
-        });
-        return;
-      }
       const response = await addApplicant(formData);
       console.log(response.data);
       setIsFormSubmitted(true);
@@ -60,7 +53,6 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
   const joinAsOnClick = (isBrand: boolean) => {
     isBrand ? setIsBrand(true) : setIsBrand(false);
     setIsClicked(true);
-    clearErrors("applicantType");
   };
 
   const activeButtonStyle = "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF]";
@@ -98,7 +90,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               type="button"
               onClick={() => joinAsOnClick(true)}
               className={`${
-                isBrand && isClicked ? activeButtonStyle : "btn-gradient flex items-center"
+                isBrand && isClicked
+                  ? activeButtonStyle
+                  : "btn-gradient flex items-center"
               } w-[6.563rem] h-[2.813rem] rounded-[36px]`}>
               <span className="px-[1.65rem]">Brand</span>
             </button>
@@ -106,7 +100,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               type="button"
               onClick={() => joinAsOnClick(false)}
               className={`${
-                !isBrand && isClicked ? activeButtonStyle : "btn-gradient flex items-center"
+                !isBrand && isClicked
+                  ? activeButtonStyle
+                  : "btn-gradient flex items-center"
               } w-[6.563rem] h-[2.813rem] rounded-[36px]`}>
               <span className="px-[1.3425rem]">Creator</span>
             </button>
@@ -158,19 +154,23 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
         {/* Questionnaire */}
         <div>
           <div
-            className={
+            className={`${
               errors.questionnaire?.message &&
               "border border-[#A91111] rounded-[0.3125rem]"
-            }>
+            } relative`}>
             <select
               id="questionnaire"
               className={`${
                 errors.questionnaire?.message
                   ? errorInputBoxStyle
                   : inputTextStyle
-              } px-[0.6rem]`}
+              } px-[0.6rem] appearance-none`}
               defaultValue=""
-              {...register("questionnaire", { required: true })}>
+              onClick={() => setIsOpen(!isOpen)}
+              {...register("questionnaire", {
+                required: true,
+                onBlur: () => isOpen && setIsOpen(!isOpen),
+              })}>
               <option value="" disabled>
                 What are you most excited about?
               </option>
@@ -178,13 +178,22 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
             </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <ArrowDropDownIcon
+                className={`transform transition-transform ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
           </div>
           <p className={errorStyle}>{errors.questionnaire?.message}</p>
         </div>
       </div>
       {/* Submit Button */}
       <div className="mt-auto mb-1">
-        <button type="submit" className={`${gradientButtonStyle} w-full [background-size:200%_100%] [transition:background_0.15s_ease-in-out] hover:[background-position:100%_center]`}>
+        <button
+          type="submit"
+          className={`${gradientButtonStyle} w-full [background-size:200%_100%] [transition:background_0.15s_ease-in-out] hover:[background-position:100%_center]`}>
           Join Waitlist
         </button>
       </div>
