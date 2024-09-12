@@ -1,27 +1,42 @@
-import React, { useEffect } from "react";
+"use client"
+
+import { useEffect, useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
-type ImpressionsAndReach = {
-  value: number;
-  end_time: string;
-};
+import { useAppSelector } from "@/redux/store";
 
-type InstagramData = {
-  followersCount: number;
-  // This might be wrong with how I am parsing through the object
-  dailyMetrics: [{}];
-};
 
-const Overview = ({
-  instagramData,
-}: {
-  instagramData: InstagramData | null;
-}) => {
-  console.log("Instagram Data:", instagramData); // Log Instagram Data
+// type ImpressionsAndReach = {
+//   value: number;
+//   end_time: string;
+// };
+
+// type InstagramData = {
+//   followersCount: number;
+//   // This might be wrong with how I am parsing through the object
+//   dailyMetrics: [{}];
+// };
+
+const Overview = () => {
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  const instaStore = useAppSelector(
+    (state) => state.instagramDataReducerV2.value
+  );
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsHydrated(true);
+    }, 10);
+
+    return () => clearTimeout(timeout);
+  }, [])
+  
+  console.log("this is in overView: ", instaStore)
 
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
@@ -49,7 +64,7 @@ const Overview = ({
             Followers
           </div>
           <div className="text-[#3798E3]">
-            {instagramData ? instagramData.followersCount : "Loading..."}
+            {isHydrated ? instaStore.followersCount: "Loading..."}
           </div>
         </div>
 

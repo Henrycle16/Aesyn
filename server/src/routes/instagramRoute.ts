@@ -11,7 +11,6 @@ router.get("/creator/:creatorId", async (req, res) => {
   try {
     const creatorId = req.params.creatorId;
     const creator = await InstagramData.findOne({ creatorID: creatorId });
-    console.log(creator);
     return res.status(200).json(creator);
   } catch (error) {
     console.log(error);

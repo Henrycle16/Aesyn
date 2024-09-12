@@ -60,7 +60,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
 
         // Dispatching creator instagram data to redux store
         dispatch(
-          instagramDataInfo({
+          instagramDataInfoV2({
             _id: response.data.user._id,
             creatorId: response.data.creatorID,
             pageId: response.data.user.pageID,
