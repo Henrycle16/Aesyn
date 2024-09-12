@@ -219,9 +219,6 @@ const getLastMonthData = async (BUSINESS_ID: string, ACCESS_TOKEN: string) => {
     const yesterdayUnix = Math.floor(yesterday.getTime() / 1000);
     const lastMonthUnix = Math.floor(lastMonth.getTime() / 1000);
 
-    console.log("Retrieving data between", lastMonth, yesterday);
-    console.log("Unix Time Conversions ", lastMonth, yesterday);
-
     // Get monhtly impressions & reach
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}/insights?metric=impressions,reach&period=day&since=${lastMonthUnix}&until=${yesterdayUnix}&client_id=${process.env.NEXT_PUBLIC_APP_ID}&client_secret=${process.env.NEXT_PUBLIC_APP_SECRET}&access_token=${ACCESS_TOKEN}`,
@@ -286,6 +283,26 @@ const getFollowerDemographics_GenderFormatted = async (
   }
 };
 
+const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: string) => {
+
+  const params = "followers_count,media_count,media{comments_count,like_count}"
+
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=business_discovery.username(${USERNAME}){${params}}&access_token=${ACCESS_TOKEN}`
+    )
+    console.log("getUserMedia log: ", response.data)
+
+    const media = {
+      media_count: response.data.business_discovery.media_count,
+      mediaData: response.data.business_discovery.media.data
+    }
+    return media
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getPageId,
   getBusinessId,
@@ -299,4 +316,5 @@ export {
   getReachedDemographic_Gender,
   getLastMonthData,
   getFollowerDemographics_GenderFormatted,
+  getUserMedia
 };

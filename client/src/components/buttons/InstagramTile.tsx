@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
 
 // test v2 slice
-import { instagramDataInfo } from "@/redux/slices/instagramData-sliceV2";
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type Props = {
   isLoading: boolean;
@@ -60,7 +60,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
 
         // Dispatching creator instagram data to redux store
         dispatch(
-          instagramDataInfo({
+          instagramDataInfoV2({
             _id: response.data.user._id,
             creatorId: response.data.creatorID,
             pageId: response.data.user.pageID,

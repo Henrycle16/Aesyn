@@ -12,6 +12,18 @@ const DailyMetricSchema = {
   },
 };
 
+const Media = {
+  comments_count: {
+    type: Number,
+  },
+  like_count: {
+    type: Number,
+  },
+  id: {
+    type: String,
+  },
+};
+
 // Top level contains basic user data and keys for retrieval
 const InstagramDataSchema = new mongoose.Schema({
   creatorID: {
@@ -81,6 +93,14 @@ const InstagramDataSchema = new mongoose.Schema({
       },
     ],
   },
+  // Stores user media data
+  media: {
+    media_count: {
+      type: Number,
+    },
+    data: [Media]
+  }
+  
 });
 
 const InstagramDB = mongoose.model("instagramDataV2", InstagramDataSchema);

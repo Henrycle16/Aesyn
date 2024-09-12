@@ -117,7 +117,7 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
       {/* Main Section */}
       <section className="mt-4 mb-10 flex flex-col gap-10 w-[77.5rem]">
         {/* Overview Section */}
-        <Overview instagramData={instaStore} />
+        <Overview />
         {/* Demographic Section */}
         <Demographic />
         {/* Recent Post */}

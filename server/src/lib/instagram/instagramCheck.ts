@@ -7,6 +7,7 @@ import {
   getFollowerDemographics_TopCities,
   getLastMonthData,
   getFollowerDemographics_GenderFormatted,
+  getUserMedia,
 } from "../../services/instagramGraphAPI";
 import InstagramData from "../../models/InstagramDatav2";
 
@@ -120,10 +121,15 @@ const getInsights = async (businessID: string) => {
 
   const userInsights = await instagramInsights(businessID, accessToken);
 
+  const userMedia = await getUserMedia(businessID, accessToken, userName);
+
   if (userInsights) {
     // Update the user with the insights
     user.insights = userInsights;
     user.insights.followersCount = Number(followers_count);
+
+    user.media.media_count = Number(userMedia.media_count);
+    user.media.data = userMedia.mediaData
 
     const updatedUser = await user.save();
 
