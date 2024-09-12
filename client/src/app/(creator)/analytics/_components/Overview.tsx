@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -8,7 +8,8 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
 import { useAppSelector } from "@/redux/store";
-
+import ImpresionLineChart from "./charting/ImpressionLineChart";
+import ReachBarChart from "./charting/ReachBarChart";
 
 // type ImpressionsAndReach = {
 //   value: number;
@@ -22,10 +23,10 @@ import { useAppSelector } from "@/redux/store";
 // };
 
 const Overview = () => {
-  const [isHydrated, setIsHydrated] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false);
 
   const instaStore = useAppSelector(
-    (state) => state.instagramDataReducerV2.value
+    (state) => state.instagramDataReducerV2.value,
   );
 
   useEffect(() => {
@@ -34,9 +35,9 @@ const Overview = () => {
     }, 10);
 
     return () => clearTimeout(timeout);
-  }, [])
-  
-  console.log("this is in overView: ", instaStore)
+  }, []);
+
+  console.log("this is in overView: ", instaStore);
 
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
@@ -48,7 +49,8 @@ const Overview = () => {
           />
           <select
             defaultValue="this-month"
-            className="border border-black rounded-md p-2 pl-10 gap-2 body2 ts7-text">
+            className="border border-black rounded-md p-2 pl-10 gap-2 body2 ts7-text"
+          >
             <option value="this-week">This Week</option>
             <option value="this-month">This Month</option>
             <option value="last-3-months">Last 3 Months</option>
@@ -64,7 +66,7 @@ const Overview = () => {
             Followers
           </div>
           <div className="text-[#3798E3]">
-            {isHydrated ? instaStore.followersCount: "Loading..."}
+            {isHydrated ? instaStore.followersCount : "Loading..."}
           </div>
         </div>
 
@@ -94,17 +96,23 @@ const Overview = () => {
         {/* Graphs */}
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">REACH</div>
-          {/* Placeholder for Gender Distribution content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Chart Placeholder
-          </div>
+          {isHydrated ? (
+            <ReachBarChart data={instaStore.dailyMetrics} />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              Loading ...
+            </div>
+          )}
         </div>
         <div className="col-span-2 border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
           <div className="body2 ts5-text mb-4">IMPRESSIONS</div>
-          {/* Placeholder for Gender Distribution content */}
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            Chart Placeholder
-          </div>
+          {isHydrated ? (
+            <ImpresionLineChart data={instaStore.dailyMetrics} />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              Loading ...
+            </div>
+          )}
         </div>
       </div>
     </div>

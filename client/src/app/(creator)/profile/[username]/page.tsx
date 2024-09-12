@@ -13,7 +13,10 @@ import { creatorContentInfo } from "@/redux/slices/creatorPortfolio-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { getCreatorByUsername } from "@/actions/creatorApi";
-import { getInstagramDataById } from "@/actions/InstagramApi";
+import {
+  getInstagramDataById,
+  updateInstagramData,
+} from "@/actions/InstagramApi";
 
 type Params = {
   username: string;
@@ -70,22 +73,27 @@ export default function CreatorProfile({ params }: { params: Params }) {
         instagramData,
       );
 
+      // If the user does exist with data get new data and dispatch
       if (instagramData.data) {
-        // Dispatching creator instagram data to redux store
+        const recentInstagramData = await updateInstagramData(
+          instagramData.data.businessID,
+        );
+
         dispatch(
           instagramDataInfoV2({
-            _id: instagramData.data._id,
-            creatorId: instagramData.data.creatorID,
-            pageId: instagramData.data.pageID,
-            businessId: instagramData.data.businessID,
-            longLivedAccessToken: instagramData.data.longLivedAccessToken,
-            username: instagramData.data.userName,
-            profilePictureURL: instagramData.data.profilePicURL,
-            followersCount: instagramData.data.insights.followersCount,
-            followersTopCities: instagramData.data.insights.followersTopCities,
-            followersAge: instagramData.data.insights.followersAge,
-            followersGender: instagramData.data.insights.followersGender,
-            dailyMetrics: instagramData.data.insights.dailyMetrics,
+            _id: recentInstagramData.data._id,
+            creatorId: recentInstagramData.data.creatorID,
+            pageId: recentInstagramData.data.pageID,
+            businessId: recentInstagramData.data.businessID,
+            longLivedAccessToken: recentInstagramData.data.longLivedAccessToken,
+            username: recentInstagramData.data.userName,
+            profilePictureURL: recentInstagramData.data.profilePicURL,
+            followersCount: recentInstagramData.data.insights.followersCount,
+            followersTopCities:
+              recentInstagramData.data.insights.followersTopCities,
+            followersAge: recentInstagramData.data.insights.followersAge,
+            followersGender: recentInstagramData.data.insights.followersGender,
+            dailyMetrics: recentInstagramData.data.insights.dailyMetrics,
           }),
         );
       }
@@ -96,7 +104,6 @@ export default function CreatorProfile({ params }: { params: Params }) {
 
   useEffect(() => {
     getProfileInfo();
-
   }, []);
 
   if (!isDataLoaded) {

@@ -30,24 +30,24 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
   const [instagramData, setInstagramData] = useState(null);
 
   //Remove
-  const bussinessId = useAppSelector(
-    (state) => state.instagramDataReducer.value.businessId,
-  );
-  const longLived = useAppSelector(
-    (state) => state.instagramDataReducer.value.longLivedAccessToken,
-  );
-
-  const creatorId = useAppSelector(
-    (state) => state.instagramDataReducer.value.creatorId,
-  );
+  // const bussinessId = useAppSelector(
+  //   (state) => state.instagramDataReducer.value.businessId,
+  // );
+  // const longLived = useAppSelector(
+  //   (state) => state.instagramDataReducer.value.longLivedAccessToken,
+  // );
+  //
+  // const creatorId = useAppSelector(
+  //   (state) => state.instagramDataReducer.value.creatorId,
+  // );
 
   const instaStore = useAppSelector(
-    (state) => state.instagramDataReducerV2.value
+    (state) => state.instagramDataReducerV2.value,
   );
 
-  console.log("InstaStore: ", instaStore)
+  console.log("InstaStore: ", instaStore);
 
-  console.log("Raw Insta Data: ", instagramData)
+  console.log("Raw Insta Data: ", instagramData);
 
   const initials = profileData
     ? getInitials(profileData.user.firstName, profileData.user.lastName)
@@ -65,6 +65,8 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
 
     fetchInstagramData();
   }, [profileData]);
+
+  console.log("Instagram Data state: ", instagramData);
 
   const SocialTiles = ({
     icon,
@@ -106,11 +108,7 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
         <div className="flex gap-x-4">
           <SocialTiles icon={<Instagram />} text="Instagram" name="instagram" />
           <SocialTiles icon={<Tiktok />} text="TikTok" name="tiktok" />
-          <GetNewInstagramDataBtn
-            bussinessId={bussinessId}
-            longLive={longLived}
-            creatorId={creatorId}
-          />
+          <GetNewInstagramDataBtn />
         </div>
       </section>
 
@@ -119,6 +117,7 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
         {/* Overview Section */}
         <Overview />
         {/* Demographic Section */}
+        {/* <Demographic instagramData={instagramData?.insights} /> */}
         <Demographic />
         {/* Recent Post */}
         <RecentPost />

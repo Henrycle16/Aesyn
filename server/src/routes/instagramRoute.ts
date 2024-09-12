@@ -39,7 +39,7 @@ router.post("/check/:creatorId", async (req, res) => {
   }
 });
 
-router.post("/insights", async (req, res) => {
+router.put("/insights", async (req, res) => {
   // BusinessID must be passed in the request body
   const { businessID } = req.body;
   try {

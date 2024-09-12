@@ -39,7 +39,12 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["authReducer", "profileDataReducer", "signUpReducer", "instagramDataReducerV2"],
+  whitelist: [
+    "authReducer",
+    "profileDataReducer",
+    "signUpReducer",
+    "instagramDataReducerV2",
+  ],
 };
 
 const rootReducer = combineReducers({
@@ -80,4 +85,3 @@ export const clearPersistedState = () => {
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 setupListeners(store.dispatch);
-
