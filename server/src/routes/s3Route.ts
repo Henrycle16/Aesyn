@@ -7,10 +7,10 @@ import Creator from "../models/Creator";
 dotenv.config();
 
 // Retrieve AWS S3 bucket details and credentials from environment variables
-const bucketName = process.env.AWS_BUCKET_NAME;
-const bucketRegion = process.env.AWS_BUCKET_REGION;
-const accessKeyId = process.env.AWS_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const bucketName = process.env.AWS_BUCKET_NAME_ID;
+const bucketRegion = process.env.AWS_BUCKET_REGION_ID;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY_TOKEN;
 
 // Initialize S3 client with credentials and region
 const s3 = new S3Client({
