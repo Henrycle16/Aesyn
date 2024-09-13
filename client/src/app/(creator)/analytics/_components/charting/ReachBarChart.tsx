@@ -33,10 +33,12 @@ const aggregateByWeek = (data: DailyMetric[]): WeeklyData[] => {
   data.forEach((item: DailyMetric, index: number) => {
     currentSum += item.reach;
 
-    if ((index + 1) % 7 === 0 || index === data.length - 1) {
+    if ((index + 1) % 7 === 0 && currentWeek !== 5) {
       weeklyData.push({ week: `Week ${currentWeek}`, reach: currentSum });
       currentWeek += 1;
       currentSum = 0;
+    } else if (index === data.length - 1) {
+      weeklyData[3].reach = currentSum + weeklyData[3].reach;
     }
   });
   return weeklyData;
@@ -62,9 +64,9 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
           </linearGradient>
         </defs>
         <XAxis dataKey="week" />
-        <YAxis domain={["dataMin", "dataMax"]} scale="linear" />
+        <YAxis domain={[0, "dataMax"]} scale="linear" />
         <Tooltip />
-        <Bar dataKey="reach" fill="url(#colorUv)" barSize={40} />
+        <Bar dataKey="reach" fill="url(#colorUv)" barSize={60} />
       </BarChart>
     </ResponsiveContainer>
   );
