@@ -76,21 +76,21 @@ const Overview = () => {
             <CollectionsIcon className="mr-4" />
             Posts
           </div>
-          <div className="text-[#3798E3]">111,111</div>
+          <div className="text-[#3798E3]">{isHydrated ? instaStore.mediaCount : "Loading..."}</div>
         </div>
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
             <ThumbUpAltOutlinedIcon className="mr-4" />
             Likes
           </div>
-          <div className="text-[#3798E3]">111,111</div>
+          <div className="text-[#3798E3]">{isHydrated ? instaStore.likeCount : "Loading..."}</div>
         </div>
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
             <CommentOutlinedIcon className="mr-4" />
             Comments
           </div>
-          <div className="text-[#3798E3]">111,111</div>
+          <div className="text-[#3798E3]">{isHydrated ? instaStore.commentCount : "Loading..."}</div>
         </div>
 
         {/* Graphs */}

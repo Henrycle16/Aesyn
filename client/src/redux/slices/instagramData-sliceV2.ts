@@ -14,6 +14,7 @@ type instagramDataReducer = {
   profilePictureURL: string;
   mediaCount: number;
   likeCount: number;
+  commentCount: number;
   followersCount: number;
   followersTopCities: { [city: string]: number };
   followersAge: { [age: string]: number };
@@ -33,6 +34,7 @@ const initialState = {
     profilePictureURL: "",
     mediaCount: 0,
     likeCount: 0,
+    commentCount: 0,
     followersCount: 0,
     followersTopCities: {},
     followersAge: {},

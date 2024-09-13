@@ -99,6 +99,7 @@ const InstagramDataSchema = new mongoose.Schema({
       type: Number,
     },
     total_like_count: Number,
+    total_comment_count: Number,
     data: [Media]
   }
   
