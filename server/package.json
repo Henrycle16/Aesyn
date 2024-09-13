@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "tsc",
+    "build": "tsc",
     "vercel-build": "npm run prepare && next build"
   },
   "keywords": [],
@@ -19,12 +21,14 @@
     "eslint": "^8.56.0",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.529.0",
-    "@langchain/openai": "^0.0.14",
+    "@langchain/core": "^0.2.32",
+    "@langchain/openai": "^0.2.11",
     "@pinecone-database/pinecone": "^2.0.1",
+    "@sinclair/typebox": "^0.33.10",
     "@types/bcryptjs": "^2.4.6",
     "axios": "^1.7.4",
     "bcryptjs": "^2.4.3",
