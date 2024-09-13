@@ -10,7 +10,6 @@ import RecentPost from "../_components/RecentPost";
 import AnalyticsProfileCard from "../_components/AnalyticsProfileCard";
 import { getInstagramDataById } from "@/actions/InstagramApi";
 import { useAppSelector } from "@/redux/store";
-import GetNewInstagramDataBtn from "@/components/buttons/GetNewInstagramData";
 
 type Params = {
   username: string;
@@ -90,7 +89,6 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
         <div className="flex gap-x-4">
           <SocialTiles icon={<Instagram />} text="Instagram" name="instagram" />
           <SocialTiles icon={<Tiktok />} text="TikTok" name="tiktok" />
-          <GetNewInstagramDataBtn />
         </div>
       </section>
 
@@ -99,7 +97,6 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
         {/* Overview Section */}
         <Overview />
         {/* Demographic Section */}
-        {/* <Demographic instagramData={instagramData?.insights} /> */}
         <Demographic />
         {/* Recent Post */}
         <RecentPost />
