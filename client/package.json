@@ -6,7 +6,8 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "npm run prepare && next build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

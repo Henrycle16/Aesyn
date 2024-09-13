@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "npm run prepare && next build"
   },
   "keywords": [],
   "author": "",
