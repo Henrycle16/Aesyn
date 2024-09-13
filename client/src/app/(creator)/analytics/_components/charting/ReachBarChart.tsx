@@ -48,10 +48,23 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
   return (
     <ResponsiveContainer>
       <BarChart data={weeklyData}>
+        <defs>
+          <linearGradient
+            id="colorUv"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100%"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stopColor="#5B58EB" />
+            <stop offset="1" stopColor="#BB63FF" />
+          </linearGradient>
+        </defs>
         <XAxis dataKey="week" />
         <YAxis domain={["dataMin", "dataMax"]} scale="linear" />
         <Tooltip />
-        <Bar dataKey="reach" fill="#B69BE1" barSize={40} />
+        <Bar dataKey="reach" fill="url(#colorUv)" barSize={40} />
       </BarChart>
     </ResponsiveContainer>
   );
