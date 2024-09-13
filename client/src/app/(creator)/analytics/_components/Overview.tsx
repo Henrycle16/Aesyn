@@ -3,24 +3,13 @@
 import { useEffect, useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import CollectionsIcon from '@mui/icons-material/Collections';
+import CollectionsIcon from "@mui/icons-material/Collections";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
 import { useAppSelector } from "@/redux/store";
 import ImpresionLineChart from "./charting/ImpressionLineChart";
 import ReachBarChart from "./charting/ReachBarChart";
-
-// type ImpressionsAndReach = {
-//   value: number;
-//   end_time: string;
-// };
-
-// type InstagramData = {
-//   followersCount: number;
-//   // This might be wrong with how I am parsing through the object
-//   dailyMetrics: [{}];
-// };
 
 const Overview = () => {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -36,8 +25,6 @@ const Overview = () => {
 
     return () => clearTimeout(timeout);
   }, []);
-
-  console.log("this is in overView: ", instaStore);
 
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
@@ -76,21 +63,27 @@ const Overview = () => {
             <CollectionsIcon className="mr-4" />
             Posts
           </div>
-          <div className="text-[#3798E3]">{isHydrated ? instaStore.mediaCount : "Loading..."}</div>
+          <div className="text-[#3798E3]">
+            {isHydrated ? instaStore.mediaCount : "Loading..."}
+          </div>
         </div>
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
             <ThumbUpAltOutlinedIcon className="mr-4" />
             Likes
           </div>
-          <div className="text-[#3798E3]">{isHydrated ? instaStore.likeCount : "Loading..."}</div>
+          <div className="text-[#3798E3]">
+            {isHydrated ? instaStore.likeCount : "Loading..."}
+          </div>
         </div>
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
             <CommentOutlinedIcon className="mr-4" />
             Comments
           </div>
-          <div className="text-[#3798E3]">{isHydrated ? instaStore.commentCount : "Loading..."}</div>
+          <div className="text-[#3798E3]">
+            {isHydrated ? instaStore.commentCount : "Loading..."}
+          </div>
         </div>
 
         {/* Graphs */}

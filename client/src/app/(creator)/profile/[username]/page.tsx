@@ -68,11 +68,6 @@ export default function CreatorProfile({ params }: { params: Params }) {
       // Getting creator instagram data
       const instagramData = await getInstagramDataById(response.data._id);
 
-      console.log(
-        "instagram data from profiles page: getInstagramById",
-        instagramData,
-      );
-
       // If the user does exist with data get new data and dispatch
       if (instagramData.data) {
         const recentInstagramData = await updateInstagramData(

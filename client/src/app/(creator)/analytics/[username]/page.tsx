@@ -29,25 +29,9 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
   const [selectedButton, setSelectedButton] = useState("instagram");
   const [instagramData, setInstagramData] = useState(null);
 
-  //Remove
-  // const bussinessId = useAppSelector(
-  //   (state) => state.instagramDataReducer.value.businessId,
-  // );
-  // const longLived = useAppSelector(
-  //   (state) => state.instagramDataReducer.value.longLivedAccessToken,
-  // );
-  //
-  // const creatorId = useAppSelector(
-  //   (state) => state.instagramDataReducer.value.creatorId,
-  // );
-
   const instaStore = useAppSelector(
     (state) => state.instagramDataReducerV2.value,
   );
-
-  console.log("InstaStore: ", instaStore);
-
-  console.log("Raw Insta Data: ", instagramData);
 
   const initials = profileData
     ? getInitials(profileData.user.firstName, profileData.user.lastName)
@@ -65,8 +49,6 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
 
     fetchInstagramData();
   }, [profileData]);
-
-  console.log("Instagram Data state: ", instagramData);
 
   const SocialTiles = ({
     icon,

@@ -46,7 +46,6 @@ const aggregateByWeek = (data: DailyMetric[]): WeeklyData[] => {
 
 const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
   const weeklyData: WeeklyData[] = aggregateByWeek(data);
-  console.log("Reach Bar Chart", weeklyData);
   return (
     <ResponsiveContainer>
       <BarChart data={weeklyData}>
