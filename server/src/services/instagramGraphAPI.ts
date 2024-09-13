@@ -293,9 +293,16 @@ const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: 
     )
     console.log("getUserMedia log: ", response.data)
 
+    let sum = 0;
+
+    response.data.business_discovery.media.data.map((item) => {
+      sum += Number(item.like_count)
+    })
+
     const media = {
       media_count: response.data.business_discovery.media_count,
-      mediaData: response.data.business_discovery.media.data
+      mediaData: response.data.business_discovery.media.data,
+      total_like_count: sum
     }
     return media
   } catch (error) {

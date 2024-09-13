@@ -129,7 +129,8 @@ const getInsights = async (businessID: string) => {
     user.insights.followersCount = Number(followers_count);
 
     user.media.media_count = Number(userMedia.media_count);
-    user.media.data = userMedia.mediaData
+    user.media.data = userMedia.mediaData;
+    user.media.total_like_count = userMedia.total_like_count;
 
     const updatedUser = await user.save();
 

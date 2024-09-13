@@ -12,6 +12,8 @@ type instagramDataReducer = {
   longLivedAccessToken: string;
   username: string;
   profilePictureURL: string;
+  mediaCount: number;
+  likeCount: number;
   followersCount: number;
   followersTopCities: { [city: string]: number };
   followersAge: { [age: string]: number };
@@ -29,6 +31,8 @@ const initialState = {
     longLivedAccessToken: "",
     username: "",
     profilePictureURL: "",
+    mediaCount: 0,
+    likeCount: 0,
     followersCount: 0,
     followersTopCities: {},
     followersAge: {},

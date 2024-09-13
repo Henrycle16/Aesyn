@@ -88,6 +88,8 @@ export default function CreatorProfile({ params }: { params: Params }) {
             longLivedAccessToken: recentInstagramData.data.longLivedAccessToken,
             username: recentInstagramData.data.userName,
             profilePictureURL: recentInstagramData.data.profilePicURL,
+            mediaCount: recentInstagramData.data.media.media_count,
+            likeCount: recentInstagramData.data.media.total_like_count,
             followersCount: recentInstagramData.data.insights.followersCount,
             followersTopCities:
               recentInstagramData.data.insights.followersTopCities,

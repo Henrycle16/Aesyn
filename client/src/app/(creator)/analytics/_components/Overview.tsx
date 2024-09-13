@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import CollectionsIcon from '@mui/icons-material/Collections';
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
@@ -73,7 +73,7 @@ const Overview = () => {
         {/* All the following divs are placeholders for the actual data that will be displayed in the future. */}
         <div className="border border-black rounded p-4 heading3 ts7-text flex flex-col items-start gap-2">
           <div className="flex items-center">
-            <VisibilityIcon className="mr-4" />
+            <CollectionsIcon className="mr-4" />
             Posts
           </div>
           <div className="text-[#3798E3]">111,111</div>
