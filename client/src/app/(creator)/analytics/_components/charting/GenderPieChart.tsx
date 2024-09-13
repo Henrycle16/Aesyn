@@ -10,7 +10,7 @@ import {
 
 // change adjust these values
 const lineLength = 25;
-const defaultColors = ["#3798E3", "#184465", "#9ED4FE", "#FF8042"];
+const defaultColors = ["#645281", "#B69BE1", "#5B58EB", "#FF8042"];
 // --------------------------------------------
 
 interface PieChartProps {

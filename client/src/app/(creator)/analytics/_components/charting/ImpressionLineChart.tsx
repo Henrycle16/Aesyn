@@ -34,7 +34,7 @@ const ImpresionLineChart: React.FC<ImpressionLineChartProps> = ({ data }) => {
         <Line
           type="monotone"
           dataKey="impression"
-          stroke="#8884d8"
+          stroke="#B69BE1"
           dot={false}
         />
       </LineChart>

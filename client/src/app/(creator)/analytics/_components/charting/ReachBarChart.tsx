@@ -51,7 +51,7 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
         <XAxis dataKey="week" />
         <YAxis domain={["dataMin", "dataMax"]} scale="linear" />
         <Tooltip />
-        <Bar dataKey="reach" fill="8884d8" barSize={40} />
+        <Bar dataKey="reach" fill="#B69BE1" barSize={40} />
       </BarChart>
     </ResponsiveContainer>
   );
