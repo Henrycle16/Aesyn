@@ -1,9 +1,8 @@
 "use client";
 
-const CallToAction = () => {
-  const gradientButtonStyle =
-    "bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] rounded-3xl py-2 px-5 text-sm font-bold hover:from-pink-500 hover:to-orange-500";
+import Link from "next/link";
 
+const CallToAction = () => {
   return (
     <div className="flex flex-col items-center max-w-5xl pt-32 pb-32">
       <h1 className="text-[60px] text-center leading-[4rem] font-semibold">
@@ -14,9 +13,9 @@ const CallToAction = () => {
         ensuring you&apos;re among the first to experience our innovative
         features and updates.
       </p>
-      <button type="button" className="gradient-button">
+      <Link href="/waitlist " className="gradient-button">
         Join Waitlist
-      </button>
+      </Link>
     </div>
   );
 };
