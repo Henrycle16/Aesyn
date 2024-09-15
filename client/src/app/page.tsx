@@ -9,11 +9,15 @@ import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
 import Carousel from "@/components/landing-page/Carousel";
+import { set } from "lodash";
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
+  const [feature, setFeature] = useState<number>(1);
+  const [direction, setDirection] = useState<string>("down");
   const { scrollY } = useScroll();
+  const previousScrollY = useRef(0);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const showcaseRef = useRef<HTMLDivElement>(null);
@@ -37,7 +41,6 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setCurrentSection(entry.target.id);
-            console.log(entry.target.id);
           }
         });
       },
@@ -56,6 +59,24 @@ export default function Home() {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (currentSection === "showcase") {
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+        const currentDirection = scrollPosition > previousScrollY.current ? "down" : "up";
+
+        setFeature(Math.floor(scrollPosition / 100));
+        console.log(`feature-${Math.floor(scrollPosition / 100)}`);
+        //console.log(`Scroll direction: ${currentDirection}`);
+
+        previousScrollY.current = scrollPosition;
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [currentSection]);
 
   return (
     <>
@@ -82,8 +103,8 @@ export default function Home() {
           id="showcase"
           ref={showcaseRef}
           className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
-          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-36 ${currentSection === "showcase" ? "sticky top-[-5rem] text-red-500" : ""} ${currentSection === "bentobox" ? "sticky top-[-15rem] text-green-500 ": ""}`}>
-            <Showcase feature={"test"}/>
+          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-36 ${currentSection === "showcase" ? "sticky top-[-5rem]" : ""} ${currentSection === "bentobox" ? "sticky top-[-15rem] ": ""}`}>
+            <Showcase feature={feature} scrollDirection={direction}/>
           </div>
         </section>
 
