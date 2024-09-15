@@ -8,7 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { addApplicant } from "@/actions/waitlistApi";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import "@/styles/gradientButton.css";
+import "@/styles/gradientBorder.css";
 
 type Inputs = z.infer<typeof FormDataSchema>;
 type Props = {

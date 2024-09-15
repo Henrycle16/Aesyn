@@ -1,0 +1,76 @@
+.btn-gradient {
+  position: relative;
+  border: 3px solid transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    width: 6.563rem;
+    height: 2.813rem;
+
+    background: linear-gradient(to bottom right, #5B58EB, #BB63FF) border-box;
+    border: inherit;
+    border-radius: inherit;
+    mask:
+      linear-gradient(white, white) content-box,
+      linear-gradient(white, white);
+      mask-composite: exclude;
+  }
+}
+
+.feature-gradient {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 12px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    background: linear-gradient(to bottom right, #F79AFF, #FFFFFF) border-box;
+    border: inherit;
+    border-radius: inherit;
+    mask:
+      linear-gradient(white, white) content-box,
+      linear-gradient(white, white);
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.feature-container-gradient {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 12px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -1px;
+    bottom: -1px;
+    left: -2px;
+    background: linear-gradient(to bottom right, #F79AFF 30%, rgba(255, 255, 255, 0) 50%) border-box;
+    border: inherit;
+    border-radius: inherit;
+    mask:
+      linear-gradient(white, white) content-box,
+      linear-gradient(white, white);
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+}

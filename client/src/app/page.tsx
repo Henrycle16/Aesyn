@@ -101,7 +101,7 @@ export default function Home() {
           id="showcase"
           ref={showcaseRef}
           className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
-          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-36 ${currentSection === "showcase" ? "sticky top-[-5rem]" : ""} ${currentSection === "bentobox" ? "sticky top-[-15rem] ": ""}`}>
+          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-48 ${currentSection === "showcase" ? "sticky top-[-5rem]" : ""} ${currentSection === "bentobox" ? "sticky top-[-10rem] ": ""}`}>
             <Showcase feature={feature} scrollDirection={direction}/>
           </div>
         </section>

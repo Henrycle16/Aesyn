@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import "@/styles/gradientBorder.css";
 interface ShowcaseProps {
   feature: number;
   scrollDirection: string;
@@ -22,17 +22,15 @@ const Showcase = ({ feature }: ShowcaseProps) => {
   const sectionHighlight =
     "bg-gradient-to-br from-[#FDE9FF] to-[#F3EAFF] from-0% to-100%";
   const sectionStyle = "border-[1px] shadow-lg px-20 py-4 rounded-xl";
-  const sectionHighlightBorder =
-    "bg-gradient-to-br from-[#F153FF] to-[#FFFFFF] from-0% to-100% rounded-2xl border-2 border-transparent bg-clip-padding p-[1px]";
 
   useEffect(() => {
-    if (feature < 11) {
+    if (feature < 12) {
       setSection("feature-1");
       setImgSrc("/showcase_analytics.png");
-    } else if (feature >= 11 && feature <= 14) {
+    } else if (feature >= 12 && feature <= 15) {
       setSection("feature-2");
       setImgSrc("/showcase_analytics_2.png");
-    } else if (feature > 14) {
+    } else if (feature > 15) {
       setSection("feature-3");
       setImgSrc("/showcase_analytics_3.png");
     }
@@ -50,9 +48,9 @@ const Showcase = ({ feature }: ShowcaseProps) => {
           tempor
         </p>
 
-        {/* Left Side: Description */}
-        <div className="grid grid-cols-[45%_55%] gap-10 items-center justify-center w-[62rem]">
-          <div className="shadow-lg border-[1px] min-h-[250px] bg-gradient-to-br from-[#ffffffce] to-[#ffffff26] from-0% to-100% px-10 py-10 flex flex-col gap-y-5 rounded-xl">
+        <div className="grid grid-cols-[45%_55%] gap-10 items-center justify-center w-[70rem]">
+          {/* Left Side: Description */}
+          <div className="feature-container-gradient shadow-lg min-h-[250px] bg-gradient-to-br from-[#ffffffb0] to-[#ffffff86] from-0% to-100% px-10 py-10 flex flex-col gap-y-5 rounded-xl">
             <h3 className="font-semibold text-2xl">
               Lorem ipsum dolor sit amet, consectetu
             </h3>
@@ -63,37 +61,37 @@ const Showcase = ({ feature }: ShowcaseProps) => {
             <div className="gap-y-5 flex flex-col font-semibold my-10">
               <div
                 className={`${
-                  section === "feature-1" ? `${sectionHighlightBorder}` : ""
+                  section === "feature-1" ? `feature-gradient` : ""
                 }`}>
                 <div
                   className={`${
                     section === "feature-1" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 1
+                  Section 1 - Lorem ipsum dolor sit amet
                 </div>
               </div>
 
               <div
                 className={`${
-                  section === "feature-2" ? `${sectionHighlightBorder}` : ""
+                  section === "feature-2" ? `feature-gradient` : ""
                 }`}>
                 <div
                   className={`${
                     section === "feature-2" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 2
+                  Section 2 - Lorem ipsum dolor sit amet
                 </div>
               </div>
 
               <div
                 className={`${
-                  section === "feature-3" ? `${sectionHighlightBorder}` : ""
+                  section === "feature-3" ? `feature-gradient` : ""
                 }`}>
                 <div
                   className={`${
                     section === "feature-3" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 3
+                  Section 3 - Lorem ipsum dolor sit amet
                 </div>
               </div>
             </div>
