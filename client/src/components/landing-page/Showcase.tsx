@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 
-const Showcase = () => {
+interface ShowcaseProps {
+  feature: string;
+}
+
+const Showcase = ({feature}: ShowcaseProps) => {
   return (
     <>
       <div className="flex flex-col items-center max-w-7xl">

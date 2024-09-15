@@ -37,17 +37,18 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setCurrentSection(entry.target.id);
+            console.log(entry.target.id);
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.5 }
     );
-
+  
     sections.forEach((id) => {
       const section = document.getElementById(id);
       if (section) observer.observe(section);
     });
-
+  
     return () => {
       sections.forEach((id) => {
         const section = document.getElementById(id);
@@ -80,9 +81,9 @@ export default function Home() {
         <section
           id="showcase"
           ref={showcaseRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]">
-          <div className="container mx-auto flex justify-center max-lg:py-5 px-5 min-h-[175vh] pt-36">
-            <Showcase />
+          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
+          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-36 ${currentSection === "showcase" ? "sticky top-[-5rem] text-red-500" : ""} ${currentSection === "bentobox" ? "sticky top-[-15rem] text-green-500 ": ""}`}>
+            <Showcase feature={"test"}/>
           </div>
         </section>
 
