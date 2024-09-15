@@ -33,7 +33,7 @@ export default function Home() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     setScrollDirection(latest > previous ? "down" : "up");
-  
+
     if (latest > previous) {
       setHidden(true);
     } else {
@@ -60,38 +60,49 @@ export default function Home() {
 
             // Update visibility state based on scroll direction and active section
             if (scrollDirection === "down") {
-              if (id === "showcase-1") {
-                setShowcaseVisibility({
-                  showcase1: true,
-                  showcase2: false,
-                  showcase3: false,
-                });
-              } else if (id === "showcase-2") {
-                setShowcaseVisibility({
-                  showcase1: false,
-                  showcase2: true,
-                  showcase3: false,
-                });
-              } else if (id === "showcase-3") {
-                setShowcaseVisibility({
-                  showcase1: false,
-                  showcase2: false,
-                  showcase3: true,
-                });
+              switch (id) {
+                case "showcase-1":
+                  setShowcaseVisibility({
+                    showcase1: true,
+                    showcase2: false,
+                    showcase3: false,
+                  });
+                  break;
+                case "showcase-2":
+                  setShowcaseVisibility({
+                    showcase1: false,
+                    showcase2: true,
+                    showcase3: false,
+                  });
+                  break;
+                case "showcase-3":
+                  setShowcaseVisibility({
+                    showcase1: false,
+                    showcase2: false,
+                    showcase3: true,
+                  });
+                  break;
+                default:
+                  break;
               }
             } else {
-              if (id === "showcase-3") {
-                setShowcaseVisibility({
-                  showcase1: false,
-                  showcase2: true,
-                  showcase3: false,
-                });
-              } else if (id === "showcase-2") {
-                setShowcaseVisibility({
-                  showcase1: true,
-                  showcase2: false,
-                  showcase3: false,
-                });
+              switch (id) {
+                case "showcase-3":
+                  setShowcaseVisibility({
+                    showcase1: false,
+                    showcase2: true,
+                    showcase3: false,
+                  });
+                  break;
+                case "showcase-2":
+                  setShowcaseVisibility({
+                    showcase1: true,
+                    showcase2: false,
+                    showcase3: false,
+                  });
+                  break;
+                default:
+                  break;
               }
             }
           }
@@ -147,7 +158,11 @@ export default function Home() {
             className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
               showcaseVisibility.showcase1 ? "z-[24]" : "z-[20]"
             } ${showcaseVisibility.showcase1 ? "visible" : "invisible"}`}
-            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase1 ? 24 : 20 }}>
+            style={{
+              position: "sticky",
+              top: "0",
+              zIndex: showcaseVisibility.showcase1 ? 24 : 20,
+            }}>
             <Showcase featuredSection={1} />
           </div>
 
@@ -158,7 +173,11 @@ export default function Home() {
             className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
               showcaseVisibility.showcase2 ? "z-[25]" : "z-[21]"
             } ${showcaseVisibility.showcase2 ? "visible" : "invisible"}`}
-            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase2 ? 25 : 21 }}>
+            style={{
+              position: "sticky",
+              top: "0",
+              zIndex: showcaseVisibility.showcase2 ? 25 : 21,
+            }}>
             <Showcase featuredSection={2} />
           </div>
 
@@ -169,7 +188,11 @@ export default function Home() {
             className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
               showcaseVisibility.showcase3 ? "z-[26]" : "z-[22]"
             } ${showcaseVisibility.showcase3 ? "visible" : "invisible"}`}
-            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase3 ? 26 : 22 }}>
+            style={{
+              position: "sticky",
+              top: "0",
+              zIndex: showcaseVisibility.showcase3 ? 26 : 22,
+            }}>
             <Showcase featuredSection={3} />
           </div>
         </section>
