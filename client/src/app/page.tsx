@@ -81,7 +81,7 @@ export default function Home() {
           id="showcase"
           ref={showcaseRef}
           className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]">
-          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+          <div className="container mx-auto flex justify-center max-lg:py-5 px-5 min-h-[175vh] pt-36">
             <Showcase />
           </div>
         </section>

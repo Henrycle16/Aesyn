@@ -5,7 +5,7 @@ import Image from "next/image";
 const Showcase = () => {
   return (
     <>
-      <div className="flex flex-col items-center max-w-7xl py-40">
+      <div className="flex flex-col items-center max-w-7xl">
         <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
           Lorem ipsum dolor sit amet, consectetu
         </h1>
