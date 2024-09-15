@@ -144,11 +144,10 @@ export default function Home() {
           <div
             id="showcase-1"
             ref={showcase1Ref}
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseVisibility.showcase1
-                ? "sticky top-[-5rem] z-[22] visible"
-                : "z-[20] invisible"
-            }`}>
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
+              showcaseVisibility.showcase1 ? "z-[24]" : "z-[20]"
+            } ${showcaseVisibility.showcase1 ? "visible" : "invisible"}`}
+            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase1 ? 24 : 20 }}>
             <Showcase featuredSection={1} />
           </div>
 
@@ -156,11 +155,10 @@ export default function Home() {
           <div
             id="showcase-2"
             ref={showcase2Ref}
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseVisibility.showcase2
-                ? "sticky top-[-5rem] z-[23] visible"
-                : "z-[21] invisible"
-            }`}>
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
+              showcaseVisibility.showcase2 ? "z-[25]" : "z-[21]"
+            } ${showcaseVisibility.showcase2 ? "visible" : "invisible"}`}
+            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase2 ? 25 : 21 }}>
             <Showcase featuredSection={2} />
           </div>
 
@@ -168,11 +166,10 @@ export default function Home() {
           <div
             id="showcase-3"
             ref={showcase3Ref}
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseVisibility.showcase3
-                ? "sticky top-[-5rem] z-[24] visible"
-                : "z-[22] invisible"
-            }`}>
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen sticky top-0 ${
+              showcaseVisibility.showcase3 ? "z-[26]" : "z-[22]"
+            } ${showcaseVisibility.showcase3 ? "visible" : "invisible"}`}
+            style={{ position: "sticky", top: "0", zIndex: showcaseVisibility.showcase3 ? 26 : 22 }}>
             <Showcase featuredSection={3} />
           </div>
         </section>
