@@ -13,46 +13,86 @@ import Carousel from "@/components/landing-page/Carousel";
 export default function Home() {
   const [hidden, setHidden] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
-  const [showcaseActive, setShowcaseActive] = useState(false);
+  const [showcaseVisibility, setShowcaseVisibility] = useState({
+    showcase1: true,
+    showcase2: false,
+    showcase3: false,
+  });
   const { scrollY } = useScroll();
 
   const heroRef = useRef<HTMLDivElement>(null);
-  const showcaseRef = useRef<HTMLDivElement>(null);
+  const showcase1Ref = useRef<HTMLDivElement>(null);
+  const showcase2Ref = useRef<HTMLDivElement>(null);
+  const showcase3Ref = useRef<HTMLDivElement>(null);
   const bentoboxRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  // Track the direction of the scroll
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down");
+
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-    if (latest > (previous ?? 0)) {
+    const previous = scrollY.getPrevious() ?? 0;
+    setScrollDirection(latest > previous ? "down" : "up");
+  
+    if (latest > previous) {
       setHidden(true);
     } else {
       setHidden(false);
     }
   });
 
-  //this is to track what section the user is on
+  // Observer for tracking which section is active and updating visibility
   useEffect(() => {
     const sections = [
-      "hero",
-      "showcase-1",
-      "showcase-2",
-      "showcase-3",
-      "bentobox",
-      "carousel",
+      { id: "showcase-1", ref: showcase1Ref },
+      { id: "showcase-2", ref: showcase2Ref },
+      { id: "showcase-3", ref: showcase3Ref },
+      { id: "bentobox", ref: bentoboxRef },
+      { id: "carousel", ref: carouselRef },
+      { id: "hero", ref: heroRef },
     ];
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setCurrentSection(entry.target.id);
-            console.log(`Current section: ${entry.target.id}`);
+            const { id } = entry.target;
 
-            if (entry.target.id === "showcase-1" || entry.target.id === "showcase-2" || entry.target.id === "showcase-3") {
-              setShowcaseActive(true);
-              console.log("Showcase is active");
+            // Update visibility state based on scroll direction and active section
+            if (scrollDirection === "down") {
+              if (id === "showcase-1") {
+                setShowcaseVisibility({
+                  showcase1: true,
+                  showcase2: false,
+                  showcase3: false,
+                });
+              } else if (id === "showcase-2") {
+                setShowcaseVisibility({
+                  showcase1: false,
+                  showcase2: true,
+                  showcase3: false,
+                });
+              } else if (id === "showcase-3") {
+                setShowcaseVisibility({
+                  showcase1: false,
+                  showcase2: false,
+                  showcase3: true,
+                });
+              }
             } else {
-              setShowcaseActive(false);
-              console.log("Showcase is not active");
+              if (id === "showcase-3") {
+                setShowcaseVisibility({
+                  showcase1: false,
+                  showcase2: true,
+                  showcase3: false,
+                });
+              } else if (id === "showcase-2") {
+                setShowcaseVisibility({
+                  showcase1: true,
+                  showcase2: false,
+                  showcase3: false,
+                });
+              }
             }
           }
         });
@@ -60,18 +100,16 @@ export default function Home() {
       { threshold: 0.8 }
     );
 
-    sections.forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
+    sections.forEach((section) => {
+      if (section.ref.current) observer.observe(section.ref.current);
     });
 
     return () => {
-      sections.forEach((id) => {
-        const section = document.getElementById(id);
-        if (section) observer.unobserve(section);
+      sections.forEach((section) => {
+        if (section.ref.current) observer.unobserve(section.ref.current);
       });
     };
-  }, []);
+  }, [scrollDirection]);
 
   return (
     <>
@@ -83,7 +121,14 @@ export default function Home() {
           className="sticky top-5 z-[99999]">
           <LandingHeader
             currentSection={currentSection}
-            refs={{ heroRef, showcaseRef, bentoboxRef, carouselRef }}
+            refs={{
+              heroRef,
+              showcase1Ref,
+              showcase2Ref,
+              showcase3Ref,
+              bentoboxRef,
+              carouselRef,
+            }}
           />
         </motion.header>
 
@@ -94,30 +139,40 @@ export default function Home() {
           <HeroSection />
         </section>
 
-        <section
-          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]`}>
+        <section className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative top-[-5rem]">
+          {/* Showcase 1 */}
           <div
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseActive ? "sticky top-[-5rem] z-[21]" : ""
-            }`}
             id="showcase-1"
-            ref={showcaseRef}>
+            ref={showcase1Ref}
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseVisibility.showcase1
+                ? "sticky top-[-5rem] z-[22] visible"
+                : "z-[20] invisible"
+            }`}>
             <Showcase featuredSection={1} />
           </div>
+
+          {/* Showcase 2 */}
           <div
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseActive ? "sticky top-[-5rem] z-[22]" : ""
-            }`}
             id="showcase-2"
-            ref={showcaseRef}>
+            ref={showcase2Ref}
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseVisibility.showcase2
+                ? "sticky top-[-5rem] z-[23] visible"
+                : "z-[21] invisible"
+            }`}>
             <Showcase featuredSection={2} />
           </div>
+
+          {/* Showcase 3 */}
           <div
-            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
-              showcaseActive ? "sticky top-[-5rem] z-[23]" : ""
-            }`}
             id="showcase-3"
-            ref={showcaseRef}>
+            ref={showcase3Ref}
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseVisibility.showcase3
+                ? "sticky top-[-5rem] z-[24] visible"
+                : "z-[22] invisible"
+            }`}>
             <Showcase featuredSection={3} />
           </div>
         </section>
@@ -141,7 +196,7 @@ export default function Home() {
         </section>
 
         <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] relative z-50 top-[-9rem]">
-          <div className="container mx-auto flex justify-center items-center px-5 ">
+          <div className="container mx-auto flex justify-center items-center px-5">
             <CallToAction />
           </div>
           <footer>

@@ -4,11 +4,17 @@ interface LandingHeaderProps {
   currentSection: string | null;
   refs: {
     heroRef: RefObject<HTMLDivElement>;
-    showcaseRef: RefObject<HTMLDivElement>;
+    showcase1Ref: RefObject<HTMLDivElement>;
+    showcase2Ref: RefObject<HTMLDivElement>;
+    showcase3Ref: RefObject<HTMLDivElement>;
     bentoboxRef: RefObject<HTMLDivElement>;
     carouselRef: RefObject<HTMLDivElement>;
   };
 }
+
+// { id: "bentobox", ref: bentoboxRef },
+// { id: "carousel", ref: carouselRef },
+// { id: "hero", ref: heroRef },
 
 const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
   const scrollToSection = (section: keyof typeof refs) => {
@@ -22,7 +28,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
 
   const isBlackText =
     currentSection === "showcase-1" || currentSection === "carousel" || currentSection === "showcase-2" || currentSection === "showcase-3";
-
+    
   return (
     <header
       className={`flex px-12 py-5 flex-col md:flex-row border-[1px] border-stone-600 rounded-2xl mt-5 mx-5 items-center backdrop-blur-sm ${
@@ -36,7 +42,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
         <button
-          onClick={() => scrollToSection("showcaseRef")}
+          onClick={() => scrollToSection("showcase1Ref")}
           className={`${
             isActive("showcase") ? "font-bold" : ""
           } hover:font-bold`}>
