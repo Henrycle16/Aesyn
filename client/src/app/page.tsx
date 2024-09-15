@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
 import Carousel from "@/components/landing-page/Carousel";
-import { set } from "lodash";
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
@@ -68,7 +67,6 @@ export default function Home() {
 
         setFeature(Math.floor(scrollPosition / 100));
         console.log(`feature-${Math.floor(scrollPosition / 100)}`);
-        //console.log(`Scroll direction: ${currentDirection}`);
 
         previousScrollY.current = scrollPosition;
       };

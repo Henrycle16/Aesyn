@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
 
 interface ShowcaseProps {
   feature: number;
@@ -8,11 +10,32 @@ interface ShowcaseProps {
 }
 
 const Showcase = ({feature}: ShowcaseProps) => {
-  //going up 17-5, going down 8-21
+  // Scrolling up goes from feature-17 to feature-5
+  // Scrolling down goes from feature-8 to feature-21
 
   // Feature 1: < 11
   // Feature 2: 11-14
   // Feature 3: > 14
+  // Need to adjust scrolling amount (can be done by changing height of parent container)
+
+  const [imgSrc, setImgSrc] = useState<string>("/showcase_analytics.png");
+  const [section, setSection] = useState<string>("feature-1");
+
+  useEffect(() => {
+    if (feature < 11) {
+      setSection("feature-1");
+      setImgSrc("/showcase_analytics.png");
+
+    } else if (feature >= 11 && feature <= 14) {
+      setSection("feature-2");
+      setImgSrc("/showcase_analytics_2.png");
+
+    } else if (feature > 14) {
+      setSection("feature-3");
+      setImgSrc("/showcase_analytics_3.png");
+    }
+  }, [feature]);
+  
 
   return (
     <>
@@ -32,13 +55,13 @@ const Showcase = ({feature}: ShowcaseProps) => {
             <h3 className="font-semibold text-2xl">Lorem ipsum dolor sit amet, consectetu</h3>
             <p className="text-[#4A4A4A] text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun</p>
             <div className="gap-y-5 flex flex-col font-semibold my-10">
-              <div className={`${feature < 11 ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
+              <div className={`${section === "feature-1" ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
                 Section 1
               </div>
-              <div className={`${(feature >= 11 && Number(feature) <= 14) ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
+              <div className={`${section === "feature-2" ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
                 Section 2
               </div>
-              <div className={`${feature > 14 ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
+              <div className={`${section === "feature-3" ? "text-blue-500" : ""} border-[1px] border-[#F153FF] px-20 py-4 rounded-xl`}>
                 Section 3
               </div>
             </div>
@@ -47,7 +70,7 @@ const Showcase = ({feature}: ShowcaseProps) => {
           {/* Right Side: Image */}
           <div className="">
             <Image
-              src="/showcase_analytics.png"
+              src={imgSrc}
               alt="Showcase"
               width={600}
               height={600} />
