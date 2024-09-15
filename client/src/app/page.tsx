@@ -13,6 +13,7 @@ import Carousel from "@/components/landing-page/Carousel";
 export default function Home() {
   const [hidden, setHidden] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
+  const [showcaseActive, setShowcaseActive] = useState(false);
   const { scrollY } = useScroll();
 
   const heroRef = useRef<HTMLDivElement>(null);
@@ -31,16 +32,32 @@ export default function Home() {
 
   //this is to track what section the user is on
   useEffect(() => {
-    const sections = ["hero", "showcase", "bentobox", "carousel"];
+    const sections = [
+      "hero",
+      "showcase-1",
+      "showcase-2",
+      "showcase-3",
+      "bentobox",
+      "carousel",
+    ];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setCurrentSection(entry.target.id);
+            console.log(`Current section: ${entry.target.id}`);
+
+            if (entry.target.id === "showcase-1" || entry.target.id === "showcase-2" || entry.target.id === "showcase-3") {
+              setShowcaseActive(true);
+              console.log("Showcase is active");
+            } else {
+              setShowcaseActive(false);
+              console.log("Showcase is not active");
+            }
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.8 }
     );
 
     sections.forEach((id) => {
@@ -78,11 +95,30 @@ export default function Home() {
         </section>
 
         <section
-          id="showcase"
-          ref={showcaseRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]">
-          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
-            <Showcase />
+          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]`}>
+          <div
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseActive ? "sticky top-[-5rem] z-[21]" : ""
+            }`}
+            id="showcase-1"
+            ref={showcaseRef}>
+            <Showcase featuredSection={1} />
+          </div>
+          <div
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseActive ? "sticky top-[-5rem] z-[22]" : ""
+            }`}
+            id="showcase-2"
+            ref={showcaseRef}>
+            <Showcase featuredSection={2} />
+          </div>
+          <div
+            className={`container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen ${
+              showcaseActive ? "sticky top-[-5rem] z-[23]" : ""
+            }`}
+            id="showcase-3"
+            ref={showcaseRef}>
+            <Showcase featuredSection={3} />
           </div>
         </section>
 

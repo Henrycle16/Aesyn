@@ -21,7 +21,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
   const isActive = (section: string) => currentSection === section;
 
   const isBlackText =
-    currentSection === "showcase" || currentSection === "carousel";
+    currentSection === "showcase-1" || currentSection === "carousel" || currentSection === "showcase-2" || currentSection === "showcase-3";
 
   return (
     <header
