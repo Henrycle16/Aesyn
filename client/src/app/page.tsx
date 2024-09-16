@@ -13,7 +13,10 @@ import Carousel from "@/components/landing-page/Carousel";
 export default function Home() {
   const [hidden, setHidden] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
+  const [feature, setFeature] = useState<number>(1);
+  const [direction, setDirection] = useState<string>("down");
   const { scrollY } = useScroll();
+  const previousScrollY = useRef(0);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const showcaseRef = useRef<HTMLDivElement>(null);
@@ -40,14 +43,14 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.5 }
     );
-
+  
     sections.forEach((id) => {
       const section = document.getElementById(id);
       if (section) observer.observe(section);
     });
-
+  
     return () => {
       sections.forEach((id) => {
         const section = document.getElementById(id);
@@ -55,6 +58,23 @@ export default function Home() {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (currentSection === "showcase") {
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+        const currentDirection = scrollPosition > previousScrollY.current ? "down" : "up";
+
+        setFeature(Math.floor(scrollPosition / 100));
+        console.log(`feature-${Math.floor(scrollPosition / 100)}`);
+
+        previousScrollY.current = scrollPosition;
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [currentSection]);
 
   return (
     <>
@@ -80,9 +100,9 @@ export default function Home() {
         <section
           id="showcase"
           ref={showcaseRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem]">
-          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
-            <Showcase />
+          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
+          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-48 ${currentSection === "showcase" ? "sticky top-[-5rem]" : ""} ${currentSection === "bentobox" ? "sticky top-[-10rem] ": ""}`}>
+            <Showcase feature={feature} scrollDirection={direction}/>
           </div>
         </section>
 
