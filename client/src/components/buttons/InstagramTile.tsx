@@ -10,8 +10,11 @@ import { getInstagramDataById } from "@/actions/InstagramApi";
 
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { instagramDataInfo } from "@/redux/slices/instagramData-slice";
+// import { instagramDataInfo } from "@/redux/slices/instagramData-slice";
 import { CircularProgress } from "@mui/material";
+
+// test v2 slice
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type Props = {
   isLoading: boolean;
@@ -26,7 +29,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const creatorId = useAppSelector(
-    (state) => state.profileDataReducer.value.creatorId
+    (state) => state.profileDataReducer.value.creatorId,
   );
 
   const getIGData = async (creatorId: string) => {
@@ -49,61 +52,28 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
 
       const response = await axios.post(
         `http://localhost:5000/api/instagram/check/${creatorId}`,
-        { accessToken }
+        { accessToken },
       );
 
       if (response.data) {
-        const followersGenderMap: { [gender: string]: number } = {};
-        const followersAgeMap: { [age: string]: number } = {};
-        const followersTopCitiesMap: { [city: string]: number } = {};
-
-        // Map followersGender into an object
-        response.data.insights.insights.followersGender.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const gender = item.dimension_values[0];
-            const value = item.value;
-            followersGenderMap[gender] = value;
-          }
-        );
-
-        // Map followersAge into an object
-        response.data.insights.insights.followersAge.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const age = item.dimension_values[0];
-            const value = item.value;
-            followersAgeMap[age] = value;
-          }
-        );
-
-        // Map followersTopCities into an object
-        response.data.insights.insights.followersTopCities.forEach(
-          (item: { dimension_values: string[]; value: number }) => {
-            const city = item.dimension_values[0];
-            const value = item.value;
-            followersTopCitiesMap[city] = value;
-          }
-        );
+        console.log("from tile:", response);
 
         // Dispatching creator instagram data to redux store
         dispatch(
-          instagramDataInfo({
+          instagramDataInfoV2({
             _id: response.data.user._id,
+            creatorId: response.data.creatorID,
             pageId: response.data.user.pageID,
             businessId: response.data.user.businessID,
             longLivedAccessToken: response.data.user.longLivedAccessToken,
             username: response.data.user.userName,
             profilePictureURL: response.data.user.profilePicURL,
-            followersCount: response.data.user.followers_count,
-            followersTopCities: followersTopCitiesMap,
-            followersAge: followersAgeMap,
-            followersGender: followersGenderMap,
-            monthlyImpressions:
-              response.data.insights.insights.monthylyImpressionsAndReach
-                .impressions[0].value,
-            monthlyReach:
-              response.data.insights.insights.monthylyImpressionsAndReach
-                .reach[0].value,
-          })
+            followersCount: response.data.user.followersCount,
+            followersTopCities: response.data.insights.followersTopCities,
+            followersAge: response.data.insights.followersAge,
+            followersGender: response.data.insights.followersGender,
+            dailyMetrics: response.data.insights.dailyMetrics,
+          }),
         );
         setIsLoading(false);
         setIsSocialLinked(true);
@@ -127,7 +97,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
           // Scopes that allow us to publish content to Instagram
           scope:
             "public_profile,instagram_basic,business_management,instagram_manage_insights,pages_read_engagement,pages_show_list",
-        }
+        },
       );
     }
   };
@@ -175,16 +145,21 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
             : " border border-gray-300")
         }
         onClick={logInToFB}
-        disabled={isSocialLinked || isLoading}>
+        disabled={isSocialLinked || isLoading}
+      >
         <div
           className={
             "flex items-center text-[#184465] font-semibold " +
             (isSocialLinked ? "gap-7" : "gap-4")
-          }>
+          }
+        >
           <Instagram />
           <p>Instagram</p>
           {isLoading && (
-            <CircularProgress sx={{ color: "#d1d5db", marginLeft: "25px" }} size={"25px"}/>
+            <CircularProgress
+              sx={{ color: "#d1d5db", marginLeft: "25px" }}
+              size={"25px"}
+            />
           )}
           {isSocialLinked && (
             <CheckCircleOutlinedIcon

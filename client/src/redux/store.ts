@@ -9,6 +9,9 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
+// test slice
+import instagramDataReducerV2 from "./slices/instagramData-sliceV2";
+
 // RTK Query Imports
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { emptySplitApi } from "@/services/api";
@@ -36,7 +39,12 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["authReducer", "profileDataReducer", "signUpReducer"],
+  whitelist: [
+    "authReducer",
+    "profileDataReducer",
+    "signUpReducer",
+    "instagramDataReducerV2",
+  ],
 };
 
 const rootReducer = combineReducers({
@@ -47,6 +55,9 @@ const rootReducer = combineReducers({
   creatorPackagesReducer,
   creatorContentReducer,
   instagramDataReducer,
+
+  // added test slice
+  instagramDataReducerV2,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -55,7 +66,7 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
-      emptySplitApi.middleware
+      emptySplitApi.middleware,
     ),
 });
 

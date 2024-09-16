@@ -26,6 +26,7 @@
     "@langchain/openai": "^0.0.14",
     "@pinecone-database/pinecone": "^2.0.1",
     "@types/bcryptjs": "^2.4.6",
+    "aws4": "^1.13.2",
     "axios": "^1.7.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

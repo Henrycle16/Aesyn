@@ -9,6 +9,7 @@ import Demographic from "../_components/Demographic";
 import RecentPost from "../_components/RecentPost";
 import AnalyticsProfileCard from "../_components/AnalyticsProfileCard";
 import { getInstagramDataById } from "@/actions/InstagramApi";
+import { useAppSelector } from "@/redux/store";
 
 type Params = {
   username: string;
@@ -27,6 +28,10 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
   const [selectedButton, setSelectedButton] = useState("instagram");
   const [instagramData, setInstagramData] = useState(null);
 
+  const instaStore = useAppSelector(
+    (state) => state.instagramDataReducerV2.value,
+  );
+
   const initials = profileData
     ? getInitials(profileData.user.firstName, profileData.user.lastName)
     : "";
@@ -34,7 +39,9 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
   useEffect(() => {
     const fetchInstagramData = async () => {
       if (profileData) {
-        const instagramDataResponse = await getInstagramDataById(profileData._id);
+        const instagramDataResponse = await getInstagramDataById(
+          profileData._id,
+        );
         setInstagramData(instagramDataResponse.data);
       }
     };
@@ -56,7 +63,8 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
       onClick={() => setSelectedButton(name)}
       className={`flex justify-center items-center border-2 rounded-lg h-[3.5rem] w-[11.281rem] ${
         selectedButton === name ? "border-[#3798E3]" : "border-gray-300"
-      }`}>
+      }`}
+    >
       <div className="flex items-center text-[#184465] font-semibold space-x-4">
         <div>{icon}</div>
         <div>{text}</div>
@@ -87,7 +95,7 @@ export default function CreatorAnalytics({ params }: { params: Params }) {
       {/* Main Section */}
       <section className="mt-4 mb-10 flex flex-col gap-10 w-[77.5rem]">
         {/* Overview Section */}
-        <Overview instagramData={instagramData}/>
+        <Overview />
         {/* Demographic Section */}
         <Demographic />
         {/* Recent Post */}

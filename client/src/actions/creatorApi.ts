@@ -1,6 +1,6 @@
 import api from "./axiosConfig";
 import { getServerSession } from "next-auth";
-import { config } from '@../../../auth'
+import { config } from '@../../../auth';
 
 type Package = {
   socialMedia: string;
