@@ -118,13 +118,13 @@ export default function Home() {
         <section
           id="carousel"
           ref={carouselRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-40 top-[-8rem]">
+          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] min-h-[106vh] relative z-40 top-[-8rem]">
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <Carousel />
           </div>
         </section>
 
-        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] relative z-50 top-[-9rem]">
+        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
           <div className="container mx-auto flex justify-center items-center px-5 ">
             <CallToAction />
           </div>
