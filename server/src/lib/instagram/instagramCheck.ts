@@ -35,7 +35,7 @@ const instagramUserCheck = async (accessToken: string, creatorId: string) => {
       // Get basic user info
       const basicUserInfo = (await getBasicUserInfo(
         businessID,
-        accessToken,
+        accessToken
       )) as BasicUserInfo;
       const { name, userName, profilePicURL, followers_count } = basicUserInfo;
 
@@ -70,16 +70,16 @@ const instagramInsights = async (businessID: string, accessToken: string) => {
   try {
     const followersAge = await getFollowerDemographics_Age(
       businessID,
-      accessToken,
+      accessToken
     );
     const followersTopCities = await getFollowerDemographics_TopCities(
       businessID,
-      accessToken,
+      accessToken
     );
 
     const followersGender = await getFollowerDemographics_GenderFormatted(
       businessID,
-      accessToken,
+      accessToken
     );
 
     const dailyMetrics = await getLastMonthData(businessID, accessToken);
@@ -110,30 +110,41 @@ const getInsights = async (businessID: string) => {
   // Update basic user info
   const basicUserInfo = (await getBasicUserInfo(
     businessID,
-    accessToken,
+    accessToken
   )) as BasicUserInfo;
   const { name, userName, profilePicURL, followers_count } = basicUserInfo;
 
-  // Update the user with the basicUserInfo
-  user.name = name;
-  user.userName = userName;
-  user.profilePicURL = profilePicURL;
-
   const userInsights = await instagramInsights(businessID, accessToken);
-
   const userMedia = await getUserMedia(businessID, accessToken, userName);
 
   if (userInsights) {
-    // Update the user with the insights
-    user.insights = userInsights;
-    user.insights.followersCount = Number(followers_count);
+    // Prepare the update object
+    const update = {
+      name: name,
+      userName: userName,
+      profilePicURL: profilePicURL,
+      insights: {
+        ...userInsights,
+        followersCount: Number(followers_count),
+      },
+      media: {
+        media_count: Number(userMedia.media_count),
+        data: userMedia.mediaData,
+        total_like_count: userMedia.total_like_count,
+        total_comment_count: userMedia.total_comment_count,
+      },
+    };
 
-    user.media.media_count = Number(userMedia.media_count);
-    user.media.data = userMedia.mediaData;
-    user.media.total_like_count = userMedia.total_like_count;
-    user.media.total_comment_count = userMedia.total_comment_count;
+    // Use findOneAndUpdate to update the user atomically
+    const updatedUser = await InstagramData.findOneAndUpdate(
+      { businessID: businessID },
+      { $set: update },
+      { new: true, runValidators: true }
+    );
 
-    const updatedUser = await user.save();
+    if (!updatedUser) {
+      throw new Error("Failed to update user");
+    }
 
     console.log("User updated with insights and basic user info");
 
