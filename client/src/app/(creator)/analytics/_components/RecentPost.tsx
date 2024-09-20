@@ -27,9 +27,10 @@ const RecentPost = () => {
       <table className="min-w-full border-collapse">
         <thead>
           <tr className="text-left text-[#061119] font-semibold">
-            <th className="pb-4">Post Image</th>
+            <th className="pb-4">Post Thumbnail</th>
             <th className="pb-4">Post Caption</th>
             <th className="pb-4">Date Posted</th>
+            <th className="pb-4">Type</th>
             <th className="pb-4">Reach</th>
             <th className="pb-4">Likes</th>
             <th className="pb-4">Shares</th>

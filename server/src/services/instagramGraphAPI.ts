@@ -285,7 +285,7 @@ const getFollowerDemographics_GenderFormatted = async (
 
 const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: string) => {
 
-  const params = "followers_count,media_count,media{media_url,caption,comments_count,like_count,timestamp}"
+  const params = "followers_count,media_count,media{media_url,caption,media_type,comments_count,like_count,timestamp}"
 
   try {
     const response = await axios.get(

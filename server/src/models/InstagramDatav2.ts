@@ -19,6 +19,9 @@ const Media = {
   caption: { 
     type: String 
   },
+  media_type: {
+    type: String
+  },
   comments_count: {
     type: Number,
   },

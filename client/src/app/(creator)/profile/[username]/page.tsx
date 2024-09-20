@@ -77,6 +77,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
         interface Media {
           media_url: string,
           caption: string,
+          media_type: string,
           comments_count: number,
           like_count: number,
           id: string,

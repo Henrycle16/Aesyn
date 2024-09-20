@@ -2,7 +2,8 @@
 
 interface Data {
   media_url: string; 
-  caption: string, 
+  caption: string,
+  media_type: string,
   comments_count: number, 
   like_count: number, 
   timestamp: string, 
@@ -18,10 +19,23 @@ const Post: React.FC<Props> = ({data}) => {
   const dateObj = new Date(data.timestamp)
 
   const day = dateObj.getUTCDate();
-  const month = dateObj.getUTCMonth() + 1;
+  const month = dateObj.toLocaleString('default', { month: 'short' });
   const year = dateObj.getUTCFullYear();
 
-  const date = `${month}-${day}-${year}`;
+  const date = `${month} ${day}, ${year}`;
+
+  const mediaType = (data: string) => {
+    switch (data) {
+      case "CAROUSEL_ALBUM":
+        return "Album";
+      case "IMAGE":
+        return "Image";
+      case "VIDEO":
+        return "Video";
+      default:
+        return "Image";
+    }
+  };
 
   return (
     <tr className="border-b">
@@ -34,6 +48,7 @@ const Post: React.FC<Props> = ({data}) => {
         </p>
       </td>
       <td className="py-4">{date}</td>
+      <td className="py-4">{mediaType(data.media_type)}</td>
       <td className="py-4">2.3k</td>
       <td className="py-4">{data.like_count}</td>
       <td className="py-4">32.6k</td>
