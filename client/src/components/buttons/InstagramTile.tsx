@@ -10,10 +10,7 @@ import { getInstagramDataById } from "@/actions/InstagramApi";
 
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-// import { instagramDataInfo } from "@/redux/slices/instagramData-slice";
 import { CircularProgress } from "@mui/material";
-
-// test v2 slice
 import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type Props = {
@@ -29,7 +26,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const creatorId = useAppSelector(
-    (state) => state.profileDataReducer.value.creatorId,
+    (state) => state.profileDataReducer.value.creatorId
   );
 
   const getIGData = async (creatorId: string) => {
@@ -52,7 +49,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
 
       const response = await axios.post(
         `http://localhost:5000/api/instagram/check/${creatorId}`,
-        { accessToken },
+        { accessToken }
       );
 
       if (response.data) {
@@ -61,7 +58,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
         // Dispatching creator instagram data to redux store
         dispatch(
           instagramDataInfoV2({
-            _id: response.data.user._id,
+            _id: response.data.user?._id,
             creatorId: response.data.creatorID,
             pageId: response.data.user.pageID,
             businessId: response.data.user.businessID,
@@ -73,7 +70,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
             followersAge: response.data.insights.followersAge,
             followersGender: response.data.insights.followersGender,
             dailyMetrics: response.data.insights.dailyMetrics,
-          }),
+          })
         );
         setIsLoading(false);
         setIsSocialLinked(true);
@@ -97,7 +94,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
           // Scopes that allow us to publish content to Instagram
           scope:
             "public_profile,instagram_basic,business_management,instagram_manage_insights,pages_read_engagement,pages_show_list",
-        },
+        }
       );
     }
   };
@@ -145,14 +142,12 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
             : " border border-gray-300")
         }
         onClick={logInToFB}
-        disabled={isSocialLinked || isLoading}
-      >
+        disabled={isSocialLinked || isLoading}>
         <div
           className={
             "flex items-center text-[#184465] font-semibold " +
             (isSocialLinked ? "gap-7" : "gap-4")
-          }
-        >
+          }>
           <Instagram />
           <p>Instagram</p>
           {isLoading && (
