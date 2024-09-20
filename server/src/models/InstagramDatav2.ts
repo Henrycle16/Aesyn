@@ -13,6 +13,12 @@ const DailyMetricSchema = {
 };
 
 const Media = {
+  media_url: { 
+    type: String 
+  },
+  caption: { 
+    type: String 
+  },
   comments_count: {
     type: Number,
   },
@@ -21,6 +27,9 @@ const Media = {
   },
   id: {
     type: String,
+  },
+  timestamp: { 
+    type: String 
   },
 };
 
