@@ -73,8 +73,6 @@ export default function CreatorProfile({ params }: { params: Params }) {
         const recentInstagramData = await updateInstagramData(
           instagramData.data.businessID,
         );
-
-        console.log("recentInsta: ", recentInstagramData);
         
         interface Media {
           media_url: string,
@@ -92,8 +90,6 @@ export default function CreatorProfile({ params }: { params: Params }) {
             recentMedia.push(item)
           }
         })
-
-        console.log("media array: ", recentMedia)
 
         dispatch(
           instagramDataInfoV2({
