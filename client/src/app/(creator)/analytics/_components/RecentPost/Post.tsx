@@ -49,9 +49,9 @@ const Post: React.FC<Props> = ({data}) => {
       </td>
       <td className="py-4 body3">{date}</td>
       <td className="py-4 body3">{mediaType(data.media_type)}</td>
-      <td className="py-4 body3">2.3k</td>
+      <td className="py-4 body3">--</td>
       <td className="py-4 body3">{data.like_count}</td>
-      <td className="py-4 body3">32.6k</td>
+      <td className="py-4 body3">--</td>
       <td className="py-4 body3">{data.comments_count}</td>
     </tr>
   );
