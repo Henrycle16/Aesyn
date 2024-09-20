@@ -43,16 +43,16 @@ const Post: React.FC<Props> = ({data}) => {
       <img className="w-24 h-24 bg-gray-300" src={data.media_url} alt="A description of the image" />
       </td>
       <td className="py-4 max-w-xs">
-        <p className="line-clamp-2 overflow-hidden">
+        <p className="max-w-80 body3 line-clamp-2 overflow-hidden">
           {data.caption}
         </p>
       </td>
-      <td className="py-4">{date}</td>
-      <td className="py-4">{mediaType(data.media_type)}</td>
-      <td className="py-4">2.3k</td>
-      <td className="py-4">{data.like_count}</td>
-      <td className="py-4">32.6k</td>
-      <td className="py-4">{data.comments_count}</td>
+      <td className="py-4 body3">{date}</td>
+      <td className="py-4 body3">{mediaType(data.media_type)}</td>
+      <td className="py-4 body3">2.3k</td>
+      <td className="py-4 body3">{data.like_count}</td>
+      <td className="py-4 body3">32.6k</td>
+      <td className="py-4 body3">{data.comments_count}</td>
     </tr>
   );
 };
