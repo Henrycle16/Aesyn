@@ -4,12 +4,9 @@ import profileDataReducer from "./slices/profileData-slice";
 import signUpReducer from "./slices/signUp-slice";
 import creatorPackagesReducer from "./slices/creatorPackages-slice";
 import creatorContentReducer from "./slices/creatorPortfolio-slice";
-import instagramDataReducer from "./slices/instagramData-slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
-
-// test slice
 import instagramDataReducerV2 from "./slices/instagramData-sliceV2";
 
 // RTK Query Imports
@@ -54,9 +51,6 @@ const rootReducer = combineReducers({
   signUpReducer,
   creatorPackagesReducer,
   creatorContentReducer,
-  instagramDataReducer,
-
-  // added test slice
   instagramDataReducerV2,
 });
 
