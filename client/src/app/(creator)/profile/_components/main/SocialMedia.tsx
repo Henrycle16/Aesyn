@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import Youtube from "@/components/svgs/Youtube";
 import Instagram from "@/components/svgs/Instagram";
@@ -27,24 +27,29 @@ const SocialMedia = () => {
   const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { _id, username, followersCount, profilePictureURL, socialMedia, creatorId} = useAppSelector(
-    (state) => state.instagramDataReducer.value
-  );
+  const {
+    _id,
+    username,
+    followersCount,
+    profilePictureURL,
+    socialMedia,
+    creatorId,
+  } = useAppSelector((state) => state.instagramDataReducerV2.value);
 
   useEffect(() => {
-    const instagramData = { 
-      _id, 
-      username, 
-      followersCount, 
-      profilePictureURL, 
-      socialMedia, 
-      component: <Instagram /> 
+    const instagramData = {
+      _id,
+      username,
+      followersCount,
+      profilePictureURL,
+      socialMedia,
+      component: <Instagram />,
     };
 
-    if(_id != null && _id != "") {
+    if (_id != null && _id != "") {
       setSocialMediaData((prevData) => [
-        ...prevData.filter(data => data.socialMedia !== "Instagram"),
-        instagramData
+        ...prevData.filter((data) => data.socialMedia !== "Instagram"),
+        instagramData,
       ]);
     }
   }, [creatorId]);
@@ -57,7 +62,10 @@ const SocialMedia = () => {
     icon: React.ReactNode;
     text: string;
   }) => (
-    <button type="button" className="border border-gray-300 rounded-[15px] py-4 px-7">
+    <button
+      type="button"
+      className="border border-gray-300 rounded-[15px] py-4 px-7"
+    >
       <div className="flex items-center text-[#184465] font-semibold space-x-4">
         <div>{icon}</div>
         <div>{text}</div>
@@ -66,19 +74,19 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
-    const instagramData = { 
-      _id, 
-      username, 
-      followersCount, 
-      profilePictureURL, 
-      socialMedia, 
-      component: <Instagram /> 
+    const instagramData = {
+      _id,
+      username,
+      followersCount,
+      profilePictureURL,
+      socialMedia,
+      component: <Instagram />,
     };
 
-    if(_id != null && _id != "") {
+    if (_id != null && _id != "") {
       setSocialMediaData((prevData) => [
-        ...prevData.filter(data => data.socialMedia !== "Instagram"),
-        instagramData
+        ...prevData.filter((data) => data.socialMedia !== "Instagram"),
+        instagramData,
       ]);
     }
 
@@ -157,7 +165,7 @@ const SocialMedia = () => {
                 onClick={closeModal}
                 // type="submit"
                 disabled={isLoading}
-                className={` ml-auto py-[10px] px-[25px] text-sm font-bold rounded-lg ${isLoading ? 'bg-[#D7D7D7] text-[#6D6D6D]' : 'bg-[#3798E3] text-white hover:bg-[#2C7AB6]'}`}
+                className={` ml-auto py-[10px] px-[25px] text-sm font-bold rounded-lg ${isLoading ? "bg-[#D7D7D7] text-[#6D6D6D]" : "bg-[#3798E3] text-white hover:bg-[#2C7AB6]"}`}
               >
                 Close
               </button>
