@@ -8,7 +8,7 @@ const Demographic = () => {
   const [isHydrated, setIsHydrated] = useState(false);
 
   const instaStore = useAppSelector(
-    (state) => state.instagramDataReducerV2.value,
+    (state) => state.instagramDataReducerV2.value
   );
 
   useEffect(() => {
@@ -18,6 +18,19 @@ const Demographic = () => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  // Transform followersTopCities object into an array of objects
+  // Ensure instaStore.followersTopCities is not undefined or null
+  const followersTopCitiesArray = Array.isArray(instaStore.followersTopCities)
+    ? instaStore.followersTopCities.map(
+        (cityData: { location: any; value: any }) => ({
+          city: cityData.location,
+          value: cityData.value,
+        })
+      )
+    : [];
+
+  console.log("followersTopCitiesArray:", followersTopCitiesArray); // Log the transformed data
 
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
@@ -50,7 +63,16 @@ const Demographic = () => {
         </div>
 
         {/* Second Column */}
-        <MapChart />
+        <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[35.25rem]">
+          <div className="body2 ts5-text mb-4">LOCATION</div>
+          {followersTopCitiesArray.length > 0 && isHydrated ? (
+            <MapChart data={followersTopCitiesArray} />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              Loading ...
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
