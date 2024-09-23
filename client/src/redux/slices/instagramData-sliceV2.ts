@@ -20,6 +20,7 @@ type instagramDataReducer = {
   followersAge: { [age: string]: number };
   followersGender: { [gender: string]: number };
   dailyMetrics: [{ date: Date; impression: number; reach: number }];
+  recentPosts: {media_url: string; caption: string, media_type: string, comments_count: number, like_count: number, timestamp: string, id: string}[]
   socialMedia: string;
 };
 
@@ -40,6 +41,7 @@ const initialState = {
     followersAge: {},
     followersGender: {},
     dailyMetrics: [{}],
+    recentPosts: [{}],
     socialMedia: "Instagram",
   } as instagramDataReducer,
 } as InitialState;

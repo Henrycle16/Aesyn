@@ -285,13 +285,13 @@ const getFollowerDemographics_GenderFormatted = async (
 
 const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: string) => {
 
-  const params = "followers_count,media_count,media{comments_count,like_count}"
+  const params = "followers_count,media_count,media{media_url,caption,media_type,comments_count,like_count,timestamp}"
 
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=business_discovery.username(${USERNAME}){${params}}&access_token=${ACCESS_TOKEN}`
     )
-    console.log("getUserMedia log: ", response.data)
+    console.log("getUserMedia log: ", response.data.business_discovery.media.data)
 
     let likeSum = 0;
     let commentSum = 0;
@@ -301,12 +301,11 @@ const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: 
       commentSum += Number(item.comments_count);
     })
 
-
     const media = {
       media_count: response.data.business_discovery.media_count,
       mediaData: response.data.business_discovery.media.data,
       total_like_count: likeSum,
-      total_comment_count: commentSum
+      total_comment_count: commentSum,
     }
     return media
   } catch (error) {

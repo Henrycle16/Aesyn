@@ -73,6 +73,24 @@ export default function CreatorProfile({ params }: { params: Params }) {
         const recentInstagramData = await updateInstagramData(
           instagramData.data.businessID,
         );
+        
+        interface Media {
+          media_url: string,
+          caption: string,
+          media_type: string,
+          comments_count: number,
+          like_count: number,
+          id: string,
+          timestamp: string,
+        }
+
+        const recentMedia: Media[] = [];
+
+        recentInstagramData.data.media.data.map((item: Media,index: number) => {
+          if(index < 3){
+            recentMedia.push(item)
+          }
+        })
 
         dispatch(
           instagramDataInfoV2({
@@ -92,6 +110,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
             followersAge: recentInstagramData.data.insights.followersAge,
             followersGender: recentInstagramData.data.insights.followersGender,
             dailyMetrics: recentInstagramData.data.insights.dailyMetrics,
+            recentPosts: recentMedia,
           }),
         );
       }
