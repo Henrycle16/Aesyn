@@ -1,4 +1,5 @@
 import React from "react";
+import MapboxChart from "./charting/MapboxChart";
 
 interface MapChartProps {
   data: FollowerCity[];
@@ -12,8 +13,10 @@ type FollowerCity = {
 const MapChart: React.FC<MapChartProps> = ({ data }) => {
   return (
     <div className="w-full h-full">
-      <div className="w-full h-3/5 bg-gray-100 flex items-center justify-center mb-4">
-        Map Placeholder
+      <div className="w-full h-3/5 flex items-center justify-center mb-4">
+        <div className="w-full h-full">
+          <MapboxChart cities={data} />
+        </div>
       </div>
       {/* Line for splitting section */}
       <div className="w-full flex items-center justify-center mb-4">

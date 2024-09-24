@@ -30,8 +30,6 @@ const Demographic = () => {
       )
     : [];
 
-  console.log("followersTopCitiesArray:", followersTopCitiesArray); // Log the transformed data
-
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
       <div className="heading1">Followers Demographics</div>
@@ -53,7 +51,14 @@ const Demographic = () => {
           <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
             <div className="body2 ts5-text mb-4">GENDER</div>
             {instaStore.followersGender && isHydrated ? (
-              <GenderPieChart data={instaStore.followersGender} />
+              // temp solution for the data, lmk if this works Antho
+              <GenderPieChart
+                data={{
+                  female: instaStore.followersGender.female || 0,
+                  male: instaStore.followersGender.male || 0,
+                  other: instaStore.followersGender.other || 0,
+                }}
+              />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 Loading ...

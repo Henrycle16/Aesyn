@@ -118,3 +118,7 @@ body,
 .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
   visibility: hidden !important;
 }
+
+a.mapboxgl-ctrl-logo {
+  display: none !important;
+}
