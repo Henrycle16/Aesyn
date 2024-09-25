@@ -131,7 +131,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
+        <section
+          id="landing-footer"
+          className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
           <div className="container mx-auto flex justify-center items-center px-5 ">
             <CallToAction />
           </div>
