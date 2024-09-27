@@ -8,7 +8,7 @@ const Demographic = () => {
   const [isHydrated, setIsHydrated] = useState(false);
 
   const instaStore = useAppSelector(
-    (state) => state.instagramDataReducerV2.value,
+    (state) => state.instagramDataReducerV2.value
   );
 
   useEffect(() => {
@@ -18,6 +18,17 @@ const Demographic = () => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  // Transform followersTopCities object into an array of objects
+  // Ensure instaStore.followersTopCities is not undefined or null
+  const followersTopCitiesArray = Array.isArray(instaStore.followersTopCities)
+    ? instaStore.followersTopCities.map(
+        (cityData: { location: any; value: any }) => ({
+          city: cityData.location,
+          value: cityData.value,
+        })
+      )
+    : [];
 
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
@@ -40,7 +51,14 @@ const Demographic = () => {
           <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
             <div className="body2 ts5-text mb-4">GENDER</div>
             {instaStore.followersGender && isHydrated ? (
-              <GenderPieChart data={instaStore.followersGender} />
+              // temp solution for the data, lmk if this works Antho
+              <GenderPieChart
+                data={{
+                  female: instaStore.followersGender.female || 0,
+                  male: instaStore.followersGender.male || 0,
+                  other: instaStore.followersGender.other || 0,
+                }}
+              />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 Loading ...
@@ -50,7 +68,16 @@ const Demographic = () => {
         </div>
 
         {/* Second Column */}
-        <MapChart />
+        <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[35.25rem]">
+          <div className="body2 ts5-text mb-4">LOCATION</div>
+          {followersTopCitiesArray.length > 0 && isHydrated ? (
+            <MapChart data={followersTopCitiesArray} />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              Loading ...
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
