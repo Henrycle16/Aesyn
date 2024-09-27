@@ -16,9 +16,14 @@ import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 type Props = {
   isLoading: boolean;
   setIsLoading: (arg0: boolean) => void;
+  setIsInstagramLinked: (linked: boolean) => void;
 };
 
-const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
+const InstagramTile = ({
+  isLoading,
+  setIsLoading,
+  setIsInstagramLinked,
+}: Props) => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
   const [isSocialLinked, setIsSocialLinked] = useState(false);
@@ -26,7 +31,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const creatorId = useAppSelector(
-    (state) => state.profileDataReducer.value.creatorId
+    (state) => state.profileDataReducer.value.creatorId,
   );
 
   const getIGData = async (creatorId: string) => {
@@ -49,11 +54,13 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
 
       const response = await axios.post(
         `http://localhost:5000/api/instagram/check/${creatorId}`,
-        { accessToken }
+        { accessToken },
       );
 
       if (response.data) {
-        console.log("from tile:", response);
+        setIsLoading(false);
+        setIsSocialLinked(true);
+        setIsInstagramLinked(true);
 
         // Dispatching creator instagram data to redux store
         dispatch(
@@ -70,10 +77,8 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
             followersAge: response.data.insights.followersAge,
             followersGender: response.data.insights.followersGender,
             dailyMetrics: response.data.insights.dailyMetrics,
-          })
+          }),
         );
-        setIsLoading(false);
-        setIsSocialLinked(true);
       }
     } catch (error) {
       console.error(error);
@@ -87,6 +92,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
         (response: any) => {
           if (response.status === "connected") {
             setLoginStatus(response.status);
+            setIsInstagramLinked(true);
             console.log(response);
           }
         },
@@ -94,7 +100,7 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
           // Scopes that allow us to publish content to Instagram
           scope:
             "public_profile,instagram_basic,business_management,instagram_manage_insights,pages_read_engagement,pages_show_list",
-        }
+        },
       );
     }
   };
@@ -142,12 +148,14 @@ const InstagramTile = ({ isLoading, setIsLoading }: Props) => {
             : " border border-gray-300")
         }
         onClick={logInToFB}
-        disabled={isSocialLinked || isLoading}>
+        disabled={isSocialLinked || isLoading}
+      >
         <div
           className={
             "flex items-center text-[#184465] font-semibold " +
             (isSocialLinked ? "gap-7" : "gap-4")
-          }>
+          }
+        >
           <Instagram />
           <p>Instagram</p>
           {isLoading && (

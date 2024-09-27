@@ -26,6 +26,7 @@ type SocialMediaData = {
 const SocialMedia = () => {
   const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInstagramLinked, setIsInstagramLinked] = useState(false);
 
   const {
     _id,
@@ -153,7 +154,11 @@ const SocialMedia = () => {
               {/* Social Media Tiles */}
               <SocialTiles icon={<Youtube />} text="Youtube" />
               {/* <SocialTiles icon={<Instagram />} text="Instagram" /> */}
-              <InstagramTile isLoading={isLoading} setIsLoading={setIsLoading} />
+              <InstagramTile
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                setIsInstagramLinked={setIsInstagramLinked}
+              />
               <SocialTiles icon={<X />} text="Twitter/X" />
               <SocialTiles icon={<Tiktok />} text="Tiktok" />
               <SocialTiles icon={<Facebook />} text="Facebook" />
