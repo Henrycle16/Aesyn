@@ -45,12 +45,12 @@ export default function Home() {
       },
       { threshold: 0.5 }
     );
-  
+
     sections.forEach((id) => {
       const section = document.getElementById(id);
       if (section) observer.observe(section);
     });
-  
+
     return () => {
       sections.forEach((id) => {
         const section = document.getElementById(id);
@@ -63,7 +63,8 @@ export default function Home() {
     if (currentSection === "showcase") {
       const handleScroll = () => {
         const scrollPosition = window.scrollY;
-        const currentDirection = scrollPosition > previousScrollY.current ? "down" : "up";
+        const currentDirection =
+          scrollPosition > previousScrollY.current ? "down" : "up";
 
         setFeature(Math.floor(scrollPosition / 100));
         console.log(`feature-${Math.floor(scrollPosition / 100)}`);
@@ -101,8 +102,11 @@ export default function Home() {
           id="showcase"
           ref={showcaseRef}
           className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
-          <div className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-48 ${currentSection === "showcase" ? "sticky top-[-5rem]" : ""} ${currentSection === "bentobox" ? "sticky top-[-10rem] ": ""}`}>
-            <Showcase feature={feature} scrollDirection={direction}/>
+          <div
+            className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-48 ${
+              currentSection === "showcase" ? "sticky top-[-5rem]" : ""
+            } ${currentSection === "bentobox" ? "sticky top-[-10rem] " : ""}`}>
+            <Showcase feature={feature} scrollDirection={direction} />
           </div>
         </section>
 
@@ -119,12 +123,17 @@ export default function Home() {
           id="carousel"
           ref={carouselRef}
           className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] min-h-[106vh] relative z-40 top-[-8rem]">
-          <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
+          <div className="mx-auto flex flex-col justify-center items-center min-h-screen">
             <Carousel />
+            <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
+              Lorem ipsum dolor sit amet, consectetu adipiscing
+            </h1>
           </div>
         </section>
 
-        <section className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
+        <section
+          id="landing-footer"
+          className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
           <div className="container mx-auto flex justify-center items-center px-5 ">
             <CallToAction />
           </div>
