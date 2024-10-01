@@ -20,7 +20,15 @@ type instagramDataReducer = {
   followersAge: { [age: string]: number };
   followersGender: { [gender: string]: number };
   dailyMetrics: [{ date: Date; impression: number; reach: number }];
-  recentPosts: {media_url: string; caption: string, media_type: string, comments_count: number, like_count: number, timestamp: string, id: string}[]
+  recentPosts: {
+    media_url: string;
+    caption: string;
+    media_type: string;
+    comments_count: number;
+    like_count: number;
+    timestamp: string;
+    id: string;
+  }[];
   socialMedia: string;
 };
 
@@ -46,7 +54,7 @@ const initialState = {
   } as instagramDataReducer,
 } as InitialState;
 
-export const instagramData = createSlice({
+export const instagramDataV2 = createSlice({
   name: "instagramData",
   initialState,
   reducers: {
@@ -65,5 +73,6 @@ export const instagramData = createSlice({
   },
 });
 
-export const { instagramDataInfoV2, resetInstagramDataV2 } = instagramData.actions;
-export default instagramData.reducer;
+export const { instagramDataInfoV2, resetInstagramDataV2 } =
+  instagramDataV2.actions;
+export default instagramDataV2.reducer;

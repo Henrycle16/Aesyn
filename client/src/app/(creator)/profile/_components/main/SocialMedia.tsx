@@ -13,6 +13,7 @@ import Twitch from "@/components/svgs/Twitch";
 import InstagramTile from "@/components/buttons/InstagramTile";
 import { useAppSelector } from "@/redux/store";
 import { showSuccessToast } from "@/utils/toast/toastEmitters";
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type SocialMediaData = {
   _id: string;
@@ -53,7 +54,14 @@ const SocialMedia = () => {
         instagramData,
       ]);
     }
-  }, [creatorId]);
+  }, [
+    _id,
+    username,
+    followersCount,
+    profilePictureURL,
+    socialMedia,
+    creatorId,
+  ]);
 
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
   const SocialTiles = ({
@@ -75,22 +83,6 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
-    const instagramData = {
-      _id,
-      username,
-      followersCount,
-      profilePictureURL,
-      socialMedia,
-      component: <Instagram />,
-    };
-
-    if (_id != null && _id != "") {
-      setSocialMediaData((prevData) => [
-        ...prevData.filter((data) => data.socialMedia !== "Instagram"),
-        instagramData,
-      ]);
-    }
-
     (document.getElementById(`social_modal`) as HTMLDialogElement).close();
   };
 

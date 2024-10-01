@@ -58,27 +58,25 @@ const InstagramTile = ({
       );
 
       if (response.data) {
-        setIsLoading(false);
-        setIsSocialLinked(true);
-        setIsInstagramLinked(true);
-
         // Dispatching creator instagram data to redux store
         dispatch(
           instagramDataInfoV2({
-            _id: response.data.user?._id,
+            _id: response.data._id,
             creatorId: response.data.creatorID,
-            pageId: response.data.user.pageID,
-            businessId: response.data.user.businessID,
-            longLivedAccessToken: response.data.user.longLivedAccessToken,
-            username: response.data.user.userName,
-            profilePictureURL: response.data.user.profilePicURL,
-            followersCount: response.data.user.followersCount,
+            pageId: response.data.pageID,
+            businessId: response.data.businessID,
+            longLivedAccessToken: response.data.longLivedAccessToken,
+            username: response.data.userName,
+            profilePictureURL: response.data.profilePicURL,
+            followersCount: response.data.insights.followersCount,
             followersTopCities: response.data.insights.followersTopCities,
             followersAge: response.data.insights.followersAge,
             followersGender: response.data.insights.followersGender,
             dailyMetrics: response.data.insights.dailyMetrics,
           }),
         );
+        setIsLoading(false);
+        setIsSocialLinked(true);
       }
     } catch (error) {
       console.error(error);
