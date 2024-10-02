@@ -227,6 +227,27 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Style for the entire scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+/* Style for the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #e4d6f2; /* Background color of the track */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Style for the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #5b58eb,
+    #bb63ff
+  ); /* Gradient color of the thumb */
+  border-radius: 5px; /* Rounded corners */
+}
+
 /* Gradient Text Style */
 .gradient-text {
   @apply bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] text-transparent bg-clip-text;
