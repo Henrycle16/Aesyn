@@ -3,6 +3,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const BentoGrid = ({
   children,
@@ -40,15 +41,16 @@ const BentoCard = ({
   <div
     key={name}
     className={cn(
-      "min-h-[225px] col-span-13 flex flex-col justify-between overflow-hidden rounded-xl border-[1px] border-transparent hover:border-red-500",
+      "group relative min-h-[225px] col-span-13 flex flex-col justify-between overflow-hidden rounded-xl border-[1px] border-transparent",
       // light styles
       "bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%",
       className
     )}>
-    <div className="flex flex-col gap-1 p-6">
+    <div className="flex flex-col gap-1 p-6 relative z-10">
       <h3 className="text-xl font-bold text-white">{name}</h3>
       <p className="max-w-lg text-[#D9D9D9]">{description}</p>
     </div>
+    <BorderBeam className="group-hover:opacity-100 opacity-0 transition-opacity duration-300 absolute inset-0 rounded-xl pointer-events-none" />
   </div>
 );
 
