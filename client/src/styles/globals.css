@@ -227,6 +227,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  overflow: overlay;
+}
+
 /* Style for the entire scrollbar */
 ::-webkit-scrollbar {
   width: 10px; /* Width of the scrollbar */
@@ -234,7 +238,7 @@ html {
 
 /* Style for the scrollbar track */
 ::-webkit-scrollbar-track {
-  background: #e4d6f2; /* Background color of the track */
+  background: rgba(0, 0, 0, 0.2); /* Background color of the track */
   border-radius: 5px; /* Rounded corners */
 }
 

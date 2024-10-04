@@ -1,8 +1,5 @@
 import { ReactNode } from "react";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
-
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { BorderBeam } from "@/components/ui/border-beam";
 
 const BentoGrid = ({
