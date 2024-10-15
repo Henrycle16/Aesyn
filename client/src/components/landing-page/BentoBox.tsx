@@ -10,61 +10,59 @@ import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 
 const features = [
   {
-    //Icon: InputIcon,
-    name: "1 Lorem ipsum dolor sit amet, consectetur",
-    description: "Lorem ipsum dolor sit amet, consectetur",
-    href: "/",
+    //Icon: FileTextIcon,
+    name: "Integration",
+    description: "Learn the step-by-step process behind connecting.",
+    href: "#",
     cta: "Learn more",
-    background: "",
-    className: "lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:row-end-8",
-  },
-  {
-    //Icon: GlobeIcon,
-    name: "2 Lorem ipsum dolor sit amet, consectetur",
-    description: "Lorem ipsum dolor sit amet, consectetur",
-    href: "/",
-    cta: "Learn more",
-    background: "",
-    className: "lg:col-start-1 lg:col-end-7 lg:row-start-8 lg:row-end-13",
-  },
-  {
-    //Icon: CalendarIcon,
-    name: "3 Lorem ipsum dolor sit amet, consectetur",
-    description: "Lorem ipsum dolor sit amet, consectetur",
-    href: "/",
-    cta: "Learn more",
-    background: "",
-    className: "lg:col-start-9 lg:col-end-13 lg:row-start-1 lg:row-end-8",
+    className: "col-span-3 lg:col-span-7",
   },
   {
     //Icon: BellIcon,
-    name: "4 Lorem ipsum dolor sit amet, consectetur",
-    description: "Lorem ipsum dolor sit amet, consectetur",
-    href: "/",
+    name: "Resources for Creators & Brands",
+    description: "Explore tips, strategies, and tools to elevate.",
+    href: "#",
     cta: "Learn more",
-    background: "",
-    className: "lg:col-start-7 lg:col-end-13 lg:row-start-8 lg:row-end-13",
+    
+    className: "col-span-3 lg:col-span-5",
+  },
+  {
+    //Icon: Share2Icon,
+    name: "Insights",
+    description: "Access actionable data and campaigns.",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-5",
+  },
+  {
+    //Icon: CalendarIcon,
+    name: "Optimal Results",
+    description: "Let our AI find the perfect creators for your brand.",
+    className: "col-span-3 lg:col-span-7",
+    href: "#",
+    cta: "Learn more",
   },
 ];
 
 const BentoBox = () => {
   return (
     <>
-      <div className="flex flex-col items-center max-w-7xl py-40">
-        <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
-          Lorem ipsum dolor sit amet, consectetu adipiscing
-        </h1>
-        <p className="text-center mt-5 mb-16 text-xl max-w-3xl">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididun, consectetur adipiscing elit, sed do eiusmod
-          tempor
-        </p>
+      <div className="flex flex-col items-center py-40">
+        <div className="max-w-[52rem]">
+          <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
+            Empowering Brands & Creators through AI-Powered Collaboration
+          </h1>
+          <p className="text-center mt-5 mb-10 text-xl">
+            Harness the power of AI to create meaningful connections, drive
+            success, and simplify your social media marketing strategy.
+          </p>
+        </div>
 
-          <BentoGrid>
-            {features.map((feature) => (
-              <BentoCard key={feature.name} {...feature} />
-            ))}
-          </BentoGrid>
+        <BentoGrid className="max-w-5xl">
+          {features.map((feature) => (
+            <BentoCard key={feature.name} {...feature} />
+          ))}
+        </BentoGrid>
       </div>
     </>
   );
