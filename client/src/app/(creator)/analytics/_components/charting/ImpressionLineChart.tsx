@@ -30,7 +30,16 @@ const ImpresionLineChart: React.FC<ImpressionLineChartProps> = ({ data }) => {
           padding={{ left: 10, right: 10 }}
         />
         <YAxis domain={["dataMin", "dataMax"]} scale="linear" />
-        <Tooltip />
+        <Tooltip
+          labelFormatter={(label) => {
+            const date = new Date(label);
+            return date.toLocaleString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }}
+        />
         <Line
           type="monotone"
           dataKey="impression"

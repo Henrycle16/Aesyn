@@ -44,6 +44,29 @@ const aggregateByWeek = (data: DailyMetric[]): WeeklyData[] => {
   return weeklyData;
 };
 
+const CustomReachToolTip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const value = payload[0].value;
+    const color = "#5B58EB"; // Customize the color for value
+
+    return (
+      <div
+        style={{
+          backgroundColor: "#fff",
+          border: "1px solid #ccc",
+          padding: "10px",
+          borderRadius: "4px",
+        }}
+      >
+        <p>{payload[0].payload.week}</p>
+        <p style={{ color }}>Reach: {value}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
   const weeklyData: WeeklyData[] = aggregateByWeek(data);
   return (
@@ -64,7 +87,7 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
         </defs>
         <XAxis dataKey="week" />
         <YAxis domain={[0, "dataMax"]} scale="linear" />
-        <Tooltip />
+        <Tooltip content={<CustomReachToolTip />} />
         <Bar dataKey="reach" fill="url(#colorUv)" barSize={60} />
       </BarChart>
     </ResponsiveContainer>
