@@ -40,23 +40,20 @@ const Showcase = ({ feature }: ShowcaseProps) => {
     <>
       <div className="flex flex-col items-center max-w-7xl">
         <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
-          Lorem ipsum dolor sit amet, consectetu
+          Empower Your Creative Journey
         </h1>
         <p className="text-center mt-5 mb-16 text-xl max-w-3xl text-[#4A4A4A]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididun, consectetur adipiscing elit, sed do eiusmod
-          tempor
+          Track performance, manage campaigns, and connect with brands - all
+          from one powerful dashboard.
         </p>
 
         <div className="grid grid-cols-[45%_55%] gap-10 items-center justify-center w-[70rem]">
           {/* Left Side: Description */}
           <div className="feature-container-gradient shadow-lg min-h-[250px] bg-gradient-to-br from-[#ffffffb0] to-[#ffffff86] from-0% to-100% px-10 py-10 flex flex-col gap-y-5 rounded-xl">
-            <h3 className="font-semibold text-2xl">
-              Lorem ipsum dolor sit amet, consectetu
-            </h3>
+            <h3 className="font-semibold text-2xl">Create and Connect</h3>
             <p className="text-[#4A4A4A] text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididun
+              A dashboard built for creators. Streamline your workflow and take
+              control of your creative growth.
             </p>
             <div className="gap-y-5 flex flex-col font-semibold my-10">
               <div
@@ -67,7 +64,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                   className={`${
                     section === "feature-1" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 1 - Lorem ipsum dolor sit amet
+                  <div style={{ fontWeight: 700 }}>Track Analytics</div>
+                  <div>Insights at Your Fingertips</div>
                 </div>
               </div>
 
@@ -79,7 +77,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                   className={`${
                     section === "feature-2" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 2 - Lorem ipsum dolor sit amet
+                  <div style={{ fontWeight: 700 }}>Track Campaigns</div>
+                  <div>Track Your Milestones</div>
                 </div>
               </div>
 
@@ -91,7 +90,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                   className={`${
                     section === "feature-3" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  Section 3 - Lorem ipsum dolor sit amet
+                  <div style={{ fontWeight: 700 }}>Messaging Connections</div>
+                  <div>Build Meaningful Connections</div>
                 </div>
               </div>
             </div>
