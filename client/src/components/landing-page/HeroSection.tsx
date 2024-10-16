@@ -9,10 +9,9 @@ const HeroSection = () => {
         <span className="gradient-text">creators</span> with the power of{" "}
         <span className="gradient-text">AI</span>
       </h1>
-      <p className="text-center mt-[2.3rem] mb-16 text-[20px] max-w-3xl">
-        We revolutionize digital marketing by leveraging AI to connect brands
-        with creators, providing insightful metrics and fostering success in
-        social media.
+      <p className="text-center mt-[2.3rem] mb-16 text-[20px] max-w-2xl">
+        Boost your reach, perfect your campaigns, and build your network. All
+        powered by AI, all in one place.
       </p>
       <Link href="/waitlist" className="gradient-button">
         Join Waitlist

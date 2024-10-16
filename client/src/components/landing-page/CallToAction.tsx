@@ -9,9 +9,7 @@ const CallToAction = () => {
         You don&apos;t want to miss out!
       </h1>
       <p className="text-center mt-5 mb-16 text-[20px] max-w-4xl">
-        Joining the waitlist grants you priority access and exclusive benefits,
-        ensuring you&apos;re among the first to experience our innovative
-        features and updates.
+        Join the waitlist to get early access and receive exclusive perks.
       </p>
       <Link href="/waitlist " className="gradient-button">
         Join Waitlist
