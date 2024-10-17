@@ -7,6 +7,7 @@ import {
   InputIcon,
 } from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
+import { AnimatedBeamMultipleOutputDemo } from "../ui/animated-beam-bento";
 
 const features = [
   {
@@ -15,6 +16,9 @@ const features = [
     description: "Learn the step-by-step process behind connecting.",
     href: "#",
     cta: "Learn more",
+    background: (
+      <AnimatedBeamMultipleOutputDemo className="absolute right-2 bottom-8 h-[300px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+    ),
     className: "col-span-3 lg:col-span-7",
   },
   {
@@ -23,7 +27,7 @@ const features = [
     description: "Explore tips, strategies, and tools to elevate.",
     href: "#",
     cta: "Learn more",
-    
+    background: "",
     className: "col-span-3 lg:col-span-5",
   },
   {
@@ -32,6 +36,7 @@ const features = [
     description: "Access actionable data and campaigns.",
     href: "#",
     cta: "Learn more",
+    background: "",
     className: "col-span-3 lg:col-span-5",
   },
   {
@@ -41,6 +46,7 @@ const features = [
     className: "col-span-3 lg:col-span-7",
     href: "#",
     cta: "Learn more",
+    background: "",
   },
 ];
 
