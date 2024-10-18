@@ -47,7 +47,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
           className={`${
             isActive("bentobox") ? "font-bold" : ""
           } hover:font-bold`}>
-          How We Help
+          Key Features & Tools
         </button>
         <button
           onClick={() => scrollToSection("carouselRef")}

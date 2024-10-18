@@ -12,8 +12,9 @@ import { AnimatedBeamMultipleOutputDemo } from "../ui/animated-beam-bento";
 const features = [
   {
     //Icon: FileTextIcon,
-    name: "Integration",
-    description: "Learn the step-by-step process behind connecting.",
+    name: "Social Media Integrations",
+    description:
+      "Connect your social media accounts and streamline your campaigns.",
     href: "#",
     cta: "Learn more",
     background: (
@@ -24,7 +25,7 @@ const features = [
   {
     //Icon: BellIcon,
     name: "Resources for Creators & Brands",
-    description: "Explore tips, strategies, and tools to elevate.",
+    description: "Explore tips and tools to boost your digital marketing.",
     href: "#",
     cta: "Learn more",
     background: "",
@@ -33,7 +34,7 @@ const features = [
   {
     //Icon: Share2Icon,
     name: "Insights",
-    description: "Access actionable data and campaigns.",
+    description: "Get actionable data on performance, engagement, and reach.",
     href: "#",
     cta: "Learn more",
     background: "",
@@ -41,12 +42,13 @@ const features = [
   },
   {
     //Icon: CalendarIcon,
-    name: "Optimal Results",
-    description: "Let our AI find the perfect creators for your brand.",
-    className: "col-span-3 lg:col-span-7",
+    name: "AI-Powered Matching for Optimal Results",
+    description:
+      "Let our AI find the perfect creators for your brand, driving targeted, impactful campaigns with ease.",
     href: "#",
     cta: "Learn more",
     background: "",
+    className: "col-span-3 lg:col-span-7",
   },
 ];
 
