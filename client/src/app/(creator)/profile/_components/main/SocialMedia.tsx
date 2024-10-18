@@ -13,6 +13,7 @@ import Twitch from "@/components/svgs/Twitch";
 import InstagramTile from "@/components/buttons/InstagramTile";
 import { useAppSelector } from "@/redux/store";
 import { showSuccessToast } from "@/utils/toast/toastEmitters";
+import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
 type SocialMediaData = {
   _id: string;
@@ -26,6 +27,7 @@ type SocialMediaData = {
 const SocialMedia = () => {
   const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInstagramLinked, setIsInstagramLinked] = useState(false);
 
   const {
     _id,
@@ -52,7 +54,14 @@ const SocialMedia = () => {
         instagramData,
       ]);
     }
-  }, [creatorId]);
+  }, [
+    _id,
+    username,
+    followersCount,
+    profilePictureURL,
+    socialMedia,
+    creatorId,
+  ]);
 
   // !Currently I have type button just so it doesn't close the modal, will need to change later */
   const SocialTiles = ({
@@ -74,22 +83,6 @@ const SocialMedia = () => {
   );
 
   const closeModal = () => {
-    const instagramData = {
-      _id,
-      username,
-      followersCount,
-      profilePictureURL,
-      socialMedia,
-      component: <Instagram />,
-    };
-
-    if (_id != null && _id != "") {
-      setSocialMediaData((prevData) => [
-        ...prevData.filter((data) => data.socialMedia !== "Instagram"),
-        instagramData,
-      ]);
-    }
-
     (document.getElementById(`social_modal`) as HTMLDialogElement).close();
   };
 
@@ -153,7 +146,11 @@ const SocialMedia = () => {
               {/* Social Media Tiles */}
               <SocialTiles icon={<Youtube />} text="Youtube" />
               {/* <SocialTiles icon={<Instagram />} text="Instagram" /> */}
-              <InstagramTile isLoading={isLoading} setIsLoading={setIsLoading} />
+              <InstagramTile
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                setIsInstagramLinked={setIsInstagramLinked}
+              />
               <SocialTiles icon={<X />} text="Twitter/X" />
               <SocialTiles icon={<Tiktok />} text="Tiktok" />
               <SocialTiles icon={<Facebook />} text="Facebook" />

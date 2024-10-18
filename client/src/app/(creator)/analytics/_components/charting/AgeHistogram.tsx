@@ -11,6 +11,29 @@ type AgeData = {
   value: Number;
 };
 
+const CustomAgeToolTip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const value = payload[0].value;
+    const color = "#5B58EB";
+
+    return (
+      <div
+        style={{
+          backgroundColor: "#fff",
+          border: "1px solid #ccc",
+          padding: "10px",
+          borderRadius: "4px",
+        }}
+      >
+        <p>Ages: {payload[0].payload.ageGroup}</p>
+        <p style={{ color }}>Followers: {value}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const AgeHistogram: React.FC<AgeHistogramProps> = ({ data }) => {
   return (
     <ResponsiveContainer>
@@ -39,7 +62,7 @@ const AgeHistogram: React.FC<AgeHistogramProps> = ({ data }) => {
         </defs>
         <XAxis dataKey="ageGroup" padding={{ left: 10, right: 10 }} />
         <YAxis scale="linear" />
-        <Tooltip />
+        <Tooltip content={CustomAgeToolTip} />
         <Bar dataKey="value" fill="url(#colorUv)" />
       </BarChart>
     </ResponsiveContainer>
