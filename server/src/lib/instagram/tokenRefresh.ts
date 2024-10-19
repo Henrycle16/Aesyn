@@ -10,6 +10,7 @@ const tokenRefresh = async () => {
 
         console.log(`Number of users being updated: ${users.length}`);
 
+        // eslint-disable-next-line prefer-const
         for (let user of users) {
             const oldLongToken = user.longLivedAccessToken;
             const newLongtoken = await getLongLivedAccessToken(oldLongToken);
