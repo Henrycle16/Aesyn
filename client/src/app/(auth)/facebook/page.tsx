@@ -11,6 +11,8 @@ interface BasicUserInfo {
   profilePicURL: string;
 }
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'
+
 const FacebookLogin = () => {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
@@ -19,7 +21,7 @@ const FacebookLogin = () => {
 
   const sendAccessTokenToBackend = async (accessToken: String) => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/instagram/check/${creatorId}`, { accessToken });
+      const response = await axios.post(`${serverUrl}/api/instagram/check/${creatorId}`, { accessToken });
       console.log(response.data);
     } catch (error) {
       console.error(error);

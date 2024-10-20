@@ -6,6 +6,8 @@ import { getUserById } from "@/actions/userApi";
 
 import { useAppSelector } from "@/redux/store";
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'
+
 export const PersonalInfoSchema = (userId: string) => {
   return z
     .object({
@@ -32,7 +34,7 @@ export const PersonalInfoSchema = (userId: string) => {
       if (!userName || creator.data.userName == userName) return;
       try {
         const result = await axios.get(
-          `http://localhost:5000/api/creators/username/${userName}`
+          `${serverUrl}/api/creators/username/${userName}`
         );
         if (result.data) {
           ctx.addIssue({
@@ -49,7 +51,7 @@ export const PersonalInfoSchema = (userId: string) => {
       if (!email || user.data.email == email) return;
       try {
         const result = await axios.get(
-          `http://localhost:5000/api/users/email/${email}`
+          `${serverUrl}/api/users/email/${email}`
         );
         if (result.data) {
           ctx.addIssue({

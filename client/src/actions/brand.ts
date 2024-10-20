@@ -1,11 +1,13 @@
 import axios from "axios";
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'
+
 //Get User by ID
 export const brandSignUp = async (formData: string) => {
 
 
  try {
-   const res = await axios.post("http://localhost:5000/api/brands", formData, {
+   const res = await axios.post(`${serverUrl}/api/brands`, formData, {
      headers: {
        "Content-Type": "application/json",
      },

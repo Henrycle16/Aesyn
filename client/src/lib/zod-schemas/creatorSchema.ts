@@ -2,6 +2,8 @@ import { z } from "zod";
 import validator from "validator";
 import axios from "axios";
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+
 export const FormDataSchema = z
   .object({
     userName: z
@@ -17,7 +19,7 @@ export const FormDataSchema = z
 
     try {
       const result = await axios.get(
-        `http://localhost:5000/api/creators/username/${userName}`
+        `${serverUrl}/api/creators/username/${userName}`
       );
       if (result.data) {
         ctx.addIssue({
