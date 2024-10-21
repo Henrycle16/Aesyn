@@ -18,7 +18,7 @@ const features = [
     href: "#",
     cta: "Learn more",
     background: (
-      <AnimatedBeamMultipleOutputDemo className="absolute right-2 bottom-8 h-[300px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+      <AnimatedBeamMultipleOutputDemo className="absolute right-2 bottom-10 h-[400px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
     ),
     className: "col-span-3 lg:col-span-7",
   },
