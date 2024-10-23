@@ -30,6 +30,14 @@ const Demographic = () => {
       )
     : [];
 
+  // Transform followersAge object into an array of objects
+  const followersAgeArray = Array.isArray(instaStore.followersAge)
+    ? instaStore.followersAge
+    : Object.keys(instaStore.followersAge || {}).map((ageGroup) => ({
+        ageGroup,
+        value: instaStore.followersAge[ageGroup],
+      }));
+
   return (
     <div className="border border-gray-300 rounded-badge min-h-[35.125rem] px-10 pt-10 pb-4">
       <div className="heading1">Followers Demographics</div>
@@ -41,7 +49,7 @@ const Demographic = () => {
           <div className="border border-black rounded-lg p-6 flex flex-col items-start justify-between min-h-[17.625rem]">
             <div className="body2 ts5-text mb-4">AGE</div>
             {instaStore.followersGender && isHydrated ? (
-              <AgeHistogram data={instaStore.followersAge} />
+              <AgeHistogram data={followersAgeArray} />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 Loading ...
