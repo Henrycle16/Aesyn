@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 
 import { useState, useEffect } from 'react';
 import Script from "next/script";
@@ -111,4 +111,4 @@ const FacebookLogin = () => {
   );
 };
 
-export default FacebookLogin;
+export default FacebookLogin; */

@@ -7,6 +7,7 @@ import {
   Legend,
   Bar,
   ResponsiveContainer,
+  TooltipProps,
 } from "recharts";
 
 interface ReachBarChartProps {
@@ -15,13 +16,13 @@ interface ReachBarChartProps {
 
 type DailyMetric = {
   date: Date;
-  impression: Number;
-  reach: Number;
+  impression: number;
+  reach: number;
 };
 
 type WeeklyData = {
-  week: String;
-  reach: Number;
+  week?: String;
+  reach: number;
 };
 
 // Sum up reach by week
@@ -38,13 +39,17 @@ const aggregateByWeek = (data: DailyMetric[]): WeeklyData[] => {
       currentWeek += 1;
       currentSum = 0;
     } else if (index === data.length - 1) {
-      weeklyData[3].reach = currentSum + weeklyData[3].reach;
+      if (weeklyData.length >= 3)
+        weeklyData[3].reach = currentSum + weeklyData[3].reach;
     }
   });
   return weeklyData;
 };
 
-const CustomReachToolTip = ({ active, payload }) => {
+const CustomReachToolTip: React.FC<TooltipProps<number, string>> = ({
+  active,
+  payload,
+}) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     const color = "#5B58EB"; // Customize the color for value
@@ -56,8 +61,7 @@ const CustomReachToolTip = ({ active, payload }) => {
           border: "1px solid #ccc",
           padding: "10px",
           borderRadius: "4px",
-        }}
-      >
+        }}>
         <p>{payload[0].payload.week}</p>
         <p style={{ color }}>Reach: {value}</p>
       </div>
@@ -68,7 +72,7 @@ const CustomReachToolTip = ({ active, payload }) => {
 };
 
 const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
-  const weeklyData: WeeklyData[] = aggregateByWeek(data);
+  const weeklyData: WeeklyData[] = aggregateByWeek(data || []);
   return (
     <ResponsiveContainer>
       <BarChart data={weeklyData}>
@@ -79,8 +83,7 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
             y1="0"
             x2="0"
             y2="100%"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#5B58EB" />
             <stop offset="1" stopColor="#BB63FF" />
           </linearGradient>
@@ -88,7 +91,7 @@ const ReachBarChart: React.FC<ReachBarChartProps> = ({ data }) => {
         <XAxis dataKey="week" />
         <YAxis domain={[0, "dataMax"]} scale="linear" />
         <Tooltip content={<CustomReachToolTip />} />
-        <Bar dataKey="reach" fill="url(#colorUv)" barSize={60} />
+        <Bar dataKey="reach" fill="url(#colorUv)" />
       </BarChart>
     </ResponsiveContainer>
   );

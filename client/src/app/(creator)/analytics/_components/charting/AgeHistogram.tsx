@@ -1,6 +1,6 @@
 import React from "react";
 import { Bar, Tooltip, XAxis, YAxis } from "recharts";
-import { BarChart, ResponsiveContainer } from "recharts";
+import { BarChart, ResponsiveContainer, TooltipProps, } from "recharts";
 
 interface AgeHistogramProps {
   data: AgeData[];
@@ -11,7 +11,7 @@ type AgeData = {
   value: Number;
 };
 
-const CustomAgeToolTip = ({ active, payload }) => {
+const CustomAgeToolTip: React.FC<TooltipProps<number, string>> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     const color = "#5B58EB";
@@ -23,8 +23,7 @@ const CustomAgeToolTip = ({ active, payload }) => {
           border: "1px solid #ccc",
           padding: "10px",
           borderRadius: "4px",
-        }}
-      >
+        }}>
         <p>Ages: {payload[0].payload.ageGroup}</p>
         <p style={{ color }}>Followers: {value}</p>
       </div>
