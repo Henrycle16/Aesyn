@@ -36,6 +36,7 @@ const PasswordInfo = () => {
 
   useEffect(() => {
     userCall();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, status, email]);
 
   const {

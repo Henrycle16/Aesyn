@@ -52,6 +52,7 @@ const LoginComponent = () => {
     if(session.data?.user.id != null){
       redirecting(session.data?.user.id)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.data, session.status]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

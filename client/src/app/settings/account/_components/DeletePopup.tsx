@@ -8,10 +8,6 @@ import { useRouter } from "next/navigation";
 import { deleteCreator } from "@/actions/creatorApi";
 import { useSession } from "next-auth/react";
 
-import { userInfo } from "@/redux/slices/user-slice";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
-
 const DeletePopup = () => {
   const router = useRouter();
   const session = useSession();
@@ -41,7 +37,7 @@ const DeletePopup = () => {
             onClick={handleDelete}
             className="ml-4 delete-btn button"
           >
-            Yes, I'm sure
+            Yes, I&apos;m sure
           </button>
         </Grid>
       </Grid>

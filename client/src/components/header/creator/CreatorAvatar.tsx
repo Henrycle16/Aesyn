@@ -38,6 +38,7 @@ const CreatorAvatar: React.FC = () => {
     } else {
       redirect("/login");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, session, session]);
 
   // redux store
