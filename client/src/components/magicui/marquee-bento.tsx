@@ -5,6 +5,7 @@ import Tiktok from "@/components/svgs/Tiktok";
 import Youtube from "@/components/svgs/Youtube";
 import X from "@/components/svgs/X";
 import Twitch from "@/components/svgs/Twitch";
+import React from "react";
 
 const reviews = [
   {
@@ -84,7 +85,7 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-72 cursor-pointer overflow-hidden rounded-xl border p-4 bg-[#FAFAFA] text-black"
+        "relative w-72 cursor-pointer overflow-hidden rounded-xl border pt-4 px-4 pb-1 bg-[#FAFAFA] text-black"
       )}>
       <div className="flex flex-row items-start gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
@@ -96,7 +97,13 @@ const ReviewCard = ({
           <p className="mt-2 text-sm">{body}</p>
         </div>
       </div>
-      <div className="mt-2 flex justify-end space-x-2 border-2 border-red-500">{icon}</div>
+      <div className="mt-2 flex justify-end space-x-2">
+        {React.Children.map(icon, (child) =>
+          React.cloneElement(child as React.ReactElement, {
+            className: "w-[15px] h-[15px]",
+          })
+        )}
+      </div>
     </figure>
   );
 };
