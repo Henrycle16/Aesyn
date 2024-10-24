@@ -1,42 +1,67 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
+import Instagram from "@/components/svgs/Instagram";
+import Tiktok from "@/components/svgs/Tiktok";
+import Youtube from "@/components/svgs/Youtube";
+import X from "@/components/svgs/X";
+import Twitch from "@/components/svgs/Twitch";
 
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
+    name: "Vi Le",
+    username: "@vile",
+    body: "Video Games | Tech | Streamer",
     img: "https://avatar.vercel.sh/jack",
+    icon: [<X />, <Youtube />, <Twitch />],
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
+    name: "Kris Walker",
+    username: "@kwalker",
+    body: "DIY | Creative | Art",
     img: "https://avatar.vercel.sh/jill",
+    icon: [<Tiktok />],
   },
   {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    name: "Sash Sloan",
+    username: "@sashs",
+    body: "Health | Fitness",
     img: "https://avatar.vercel.sh/john",
+    icon: [<Instagram />, <Tiktok />, <Youtube />],
   },
   {
-    name: "Jane",
-    username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    name: "Jacky Pham",
+    username: "@jpham",
+    body: "Entrepreneur | Finance",
     img: "https://avatar.vercel.sh/jane",
+    icon: [<Youtube />],
   },
   {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    name: "Jane Ann",
+    username: "@janea",
+    body: "Beauty | Health",
     img: "https://avatar.vercel.sh/jenny",
+    icon: [<Instagram />, <Youtube />, <Tiktok />],
   },
   {
-    name: "James",
-    username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    name: "Calvin Freeman",
+    username: "@IamCaorin",
+    body: "LifeStyle | Sports | Health",
     img: "https://avatar.vercel.sh/james",
+    icon: [<Instagram />, <Tiktok />],
+  },
+  {
+    name: "Damon Salvatore",
+    username: "@dsalvatore",
+    body: "Foodie | Travel | Adventure",
+    img: "https://avatar.vercel.sh/jenny",
+    icon: [<Instagram />, <Tiktok />],
+  },
+  {
+    name: "Sammy James",
+    username: "@sammyj",
+    body: "Foodie | Travel | Adventure",
+    img: "https://avatar.vercel.sh/james",
+    icon: [<X />, <Instagram />, <Youtube />],
   },
 ];
 
@@ -48,28 +73,30 @@ const ReviewCard = ({
   name,
   username,
   body,
+  icon,
 }: {
   img: string;
   name: string;
   username: string;
   body: string;
+  icon: React.ReactNode;
 }) => {
   return (
     <figure
       className={cn(
-        "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
-      )}
-    >
-      <div className="flex flex-row items-center gap-2">
+        "relative w-72 cursor-pointer overflow-hidden rounded-xl border p-4 bg-[#FAFAFA] text-black"
+      )}>
+      <div className="flex flex-row items-start gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
         <div className="flex flex-col">
-          <figcaption className="text-sm font-medium dark:text-white">
+          <figcaption className="text-xs font-bold dark:text-white">
             {name}
           </figcaption>
-          <p className="text-xs font-medium dark:text-white/40">{username}</p>
+          <p className="text-xs dark:text-white/40">{username}</p>
+          <p className="mt-2 text-sm">{body}</p>
         </div>
       </div>
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
+      <div className="mt-2 flex justify-end space-x-2 border-2 border-red-500">{icon}</div>
     </figure>
   );
 };
