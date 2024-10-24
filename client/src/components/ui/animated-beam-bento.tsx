@@ -52,10 +52,6 @@ export function AnimatedBeamMultipleOutputDemo({
           <Circle ref={div2Ref}>
             <Icons.instagram />
           </Circle>
-
-          <Circle ref={div3Ref}>
-            <Icons.x />
-          </Circle>
           <Circle ref={div4Ref}>
             <Icons.tiktok />
           </Circle>
@@ -82,11 +78,6 @@ export function AnimatedBeamMultipleOutputDemo({
       />
       <AnimatedBeam
         containerRef={containerRef}
-        fromRef={div3Ref}
-        toRef={div6Ref}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
         fromRef={div4Ref}
         toRef={div6Ref}
       />
@@ -107,7 +98,6 @@ export function AnimatedBeamMultipleOutputDemo({
 const Icons = {
   instagram: () => <Instagram />,
   tiktok: () => <Tiktok />,
-  x: () => <X />,
   youtube: () => <Youtube />,
   openai: () => (
     <svg
