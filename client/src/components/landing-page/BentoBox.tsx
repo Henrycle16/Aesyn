@@ -7,14 +7,16 @@ import {
   InputIcon,
 } from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import { AnimatedBeamMultipleOutputDemo } from "../ui/animated-beam-bento";
+import { AnimatedBeamMultipleOutputDemo } from "../magicui/animated-beam-bento";
+import { AnimatedListDemo } from "../magicui/animated-list-bento";
+import { MarqueeDemo } from "../magicui/marquee-bento";
 
 const features = [
   {
     //Icon: FileTextIcon,
-    name: "Social Media Integrations",
+    name: "Fully Integrated",
     description:
-      "Connect your social media accounts and streamline your campaigns.",
+      "Supports all of your favorite social media platforms.",
     href: "#",
     cta: "Learn more",
     background: (
@@ -24,8 +26,8 @@ const features = [
   },
   {
     //Icon: BellIcon,
-    name: "Resources for Creators & Brands",
-    description: "Explore tips and tools to boost your digital marketing.",
+    name: "Insights",
+    description: "Access actionable data on your campaign's performance.",
     href: "#",
     cta: "Learn more",
     background: "",
@@ -33,21 +35,25 @@ const features = [
   },
   {
     //Icon: Share2Icon,
-    name: "Insights",
-    description: "Get actionable data on performance, engagement, and reach.",
+    name: "Stay Updated",
+    description: "Track new and ongoing campaigns in real-time.",
     href: "#",
     cta: "Learn more",
-    background: "",
+    background: (
+      <AnimatedListDemo className="absolute top-4 h-[300px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+    ),
     className: "col-span-3 lg:col-span-5",
   },
   {
     //Icon: CalendarIcon,
-    name: "AI-Powered Matching for Optimal Results",
+    name: "Optimal Results",
     description:
-      "Let our AI find the perfect creators for your brand, driving targeted, impactful campaigns with ease.",
+      "Let our AI find the perfect creators for your brand.",
     href: "#",
     cta: "Learn more",
-    background: "",
+    background: (
+      <MarqueeDemo />
+    ),
     className: "col-span-3 lg:col-span-7",
   },
 ];

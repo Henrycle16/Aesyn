@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
-import { AnimatedBeam } from "@/components/ui/animated-beam";
+import { AnimatedBeam } from "@/components/magicui/animated-beam";
 import Instagram from "../svgs/Instagram";
 import Tiktok from "../svgs/Tiktok";
 import X from "../svgs/X";
