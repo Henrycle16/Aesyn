@@ -7,9 +7,9 @@ import {
   InputIcon,
 } from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import { AnimatedBeamMultipleOutputDemo } from "../magicui/animated-beam-bento";
-import { AnimatedListDemo } from "../magicui/animated-list-bento";
-import { MarqueeDemo } from "../magicui/marquee-bento";
+import { AnimatedBeamMultipleOutputDemo } from "@/components/magicui/animated-beam-bento/animated-beam-bento";
+import { AnimatedListDemo } from "../magicui/animated-list-bento/animated-list-bento";
+import { MarqueeDemo } from "../magicui/marquee-bento/marquee-bento";
 import { Marquee3D } from "../magicui/marquee-3d/marquee-3d-bento";
 
 const features = [

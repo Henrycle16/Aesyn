@@ -1,7 +1,7 @@
 "use client";
  
 import { cn } from "@/lib/utils";
-import { AnimatedList } from "@/components/magicui/animated-list";
+import { AnimatedList } from "@/components/magicui/animated-list-bento/animated-list";
  
 interface Item {
   name: string;

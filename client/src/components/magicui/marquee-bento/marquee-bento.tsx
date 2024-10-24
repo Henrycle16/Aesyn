@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Marquee } from "@/components/magicui/marquee";
+import { Marquee } from "@/components/magicui/marquee-bento/marquee";
 import Instagram from "@/components/svgs/Instagram";
 import Tiktok from "@/components/svgs/Tiktok";
 import Youtube from "@/components/svgs/Youtube";
