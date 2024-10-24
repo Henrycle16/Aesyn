@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { BorderBeam } from "@/components/ui/border-beam";
+import { BorderBeam } from "@/components/magicui/border-beam";
 
 const BentoGrid = ({
   children,

@@ -7,7 +7,7 @@ import {
   InputIcon,
 } from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import { AnimatedBeamMultipleOutputDemo } from "../ui/animated-beam-bento";
+import { AnimatedBeamMultipleOutputDemo } from "../magicui/animated-beam-bento";
 import { AnimatedListDemo } from "../magicui/animated-list-bento";
 
 const features = [
