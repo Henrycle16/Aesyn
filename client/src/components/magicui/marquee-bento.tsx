@@ -85,7 +85,7 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-72 cursor-pointer overflow-hidden rounded-xl border pt-4 px-4 pb-1 bg-[#FAFAFA] text-black"
+        "relative w-72 cursor-pointer overflow-hidden rounded-xl border pt-4 px-4 pb-1 bg-[#FAFAFA] text-black border-gray-500"
       )}>
       <div className="flex flex-row items-start gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
