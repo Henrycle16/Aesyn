@@ -31,11 +31,11 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   fromRef,
   toRef,
   curvature = 0,
-  reverse = false, // Include the reverse prop
+  reverse = false,
   duration = Math.random() * 3 + 4,
   delay = 0,
   pathColor = "gray",
-  pathWidth = 2,
+  pathWidth = 4,
   pathOpacity = 0.2,
   gradientStartColor = "#ffaa40",
   gradientStopColor = "#9c40ff",
@@ -130,10 +130,9 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         "pointer-events-none absolute left-0 top-0 transform-gpu stroke-2",
-        className,
+        className
       )}
-      viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
-    >
+      viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}>
       <path
         d={pathD}
         stroke={pathColor}
@@ -171,16 +170,14 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
             ease: [0.16, 1, 0.3, 1], // https://easings.net/#easeOutExpo
             repeat: Infinity,
             repeatDelay: 0,
-          }}
-        >
+          }}>
           <stop stopColor={gradientStartColor} stopOpacity="0"></stop>
           <stop stopColor={gradientStartColor}></stop>
           <stop offset="32.5%" stopColor={gradientStopColor}></stop>
           <stop
             offset="100%"
             stopColor={gradientStopColor}
-            stopOpacity="0"
-          ></stop>
+            stopOpacity="0"></stop>
         </motion.linearGradient>
       </defs>
     </svg>

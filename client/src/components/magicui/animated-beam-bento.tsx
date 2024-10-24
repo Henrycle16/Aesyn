@@ -17,7 +17,7 @@ const Circle = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "z-10 flex size-12 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+        "z-10 flex size-14 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
         className
       )}>
       {children}
@@ -34,7 +34,6 @@ export function AnimatedBeamMultipleOutputDemo({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const div2Ref = useRef<HTMLDivElement>(null);
-  const div3Ref = useRef<HTMLDivElement>(null);
   const div4Ref = useRef<HTMLDivElement>(null);
   const div5Ref = useRef<HTMLDivElement>(null);
   const div6Ref = useRef<HTMLDivElement>(null);
@@ -48,7 +47,7 @@ export function AnimatedBeamMultipleOutputDemo({
       )}
       ref={containerRef}>
       <div className="flex size-full flex-row items-stretch justify-between gap-10 max-w-lg">
-        <div className="flex flex-col justify-center gap-2">
+        <div className="flex flex-col justify-center gap-6">
           <Circle ref={div2Ref}>
             <Icons.instagram />
           </Circle>
@@ -60,7 +59,7 @@ export function AnimatedBeamMultipleOutputDemo({
           </Circle>
         </div>
         <div className="flex flex-col justify-center">
-          <Circle ref={div6Ref} className="size-16">
+          <Circle ref={div6Ref} className="size-14">
             <Icons.openai />
           </Circle>
         </div>

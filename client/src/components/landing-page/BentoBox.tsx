@@ -10,17 +10,17 @@ import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import { AnimatedBeamMultipleOutputDemo } from "../magicui/animated-beam-bento";
 import { AnimatedListDemo } from "../magicui/animated-list-bento";
 import { MarqueeDemo } from "../magicui/marquee-bento";
+import { Marquee3D } from "../magicui/marquee-3d/marquee-3d-bento";
 
 const features = [
   {
     //Icon: FileTextIcon,
     name: "Fully Integrated",
-    description:
-      "Supports all of your favorite social media platforms.",
+    description: "Supports all of your favorite social media platforms.",
     href: "#",
     cta: "Learn more",
     background: (
-      <AnimatedBeamMultipleOutputDemo className="absolute right-2 bottom-10 h-[400px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+      <AnimatedBeamMultipleOutputDemo className="absolute bottom-8 h-[400px] w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
     ),
     className: "col-span-3 lg:col-span-7",
   },
@@ -30,7 +30,7 @@ const features = [
     description: "Access actionable data on your campaign's performance.",
     href: "#",
     cta: "Learn more",
-    background: "",
+    background: <Marquee3D />,
     className: "col-span-3 lg:col-span-5",
   },
   {
@@ -47,13 +47,10 @@ const features = [
   {
     //Icon: CalendarIcon,
     name: "Optimal Results",
-    description:
-      "Let our AI find the perfect creators for your brand.",
+    description: "Let our AI find the perfect creators for your brand.",
     href: "#",
     cta: "Learn more",
-    background: (
-      <MarqueeDemo />
-    ),
+    background: <MarqueeDemo />,
     className: "col-span-3 lg:col-span-7",
   },
 ];
