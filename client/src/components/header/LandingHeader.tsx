@@ -31,7 +31,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
       <div
         className="text-2xl font-semibold cursor-pointer"
         onClick={() => scrollToSection("heroRef")}>
-        ShareFluence
+        Atrask
       </div>
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
