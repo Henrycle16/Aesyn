@@ -4,10 +4,9 @@ import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam-bento/animated-beam";
-import Instagram from "../svgs/Instagram";
-import Tiktok from "../svgs/Tiktok";
-import X from "../svgs/X";
-import Youtube from "../svgs/Youtube";
+import Instagram from "@/components/svgs/Instagram";
+import Tiktok from "@/components/svgs/Tiktok";
+import Youtube from "react-player/youtube";
 
 const Circle = forwardRef<
   HTMLDivElement,
