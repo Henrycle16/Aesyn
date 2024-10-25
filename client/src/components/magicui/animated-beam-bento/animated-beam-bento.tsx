@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam-bento/animated-beam";
 import Instagram from "@/components/svgs/Instagram";
 import Tiktok from "@/components/svgs/Tiktok";
-import Youtube from "react-player/youtube";
+import Youtube from "@/components/svgs/Youtube";
 
 const Circle = forwardRef<
   HTMLDivElement,
