@@ -1,21 +1,56 @@
+// marquee-3d-bento.tsx
 import { Marquee } from "@/components/magicui/marquee-3d/marquee-3d";
 import Facebook from "@/components/svgs/Facebook";
 import Instagram from "@/components/svgs/Instagram";
 import Tiktok from "@/components/svgs/Tiktok";
-import Image from "next/image";
+import InsightCards from "./InsightCards";
 
-const logos = [
+// MUI Icons
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+interface Insight {
+  title: string;
+  icon: React.ReactNode;
+  reach: string;
+  impressions: string;
+  likes: string;
+  shares: string;
+}
+
+const insights: Insight[] = [
   {
-    name: "BobaAd",
-    body: <Facebook />,
+    title: "Boba Ad",
+    icon: <Instagram />,
+    reach: "12.6k",
+    impressions: "14.1k",
+    likes: "10k",
+    shares: "5.7k",
   },
   {
-    name: "Instagram",
-    body: <Instagram />,
+    title: "Fitness Clothing Ad",
+    icon: <Instagram />,
+    reach: "15k",
+    impressions: "15.7k",
+    likes: "9.6k",
+    shares: "3.8k",
   },
   {
-    name: "TikTok",
-    body: <Tiktok />,
+    title: "Restaurant Review",
+    icon: <Tiktok />,
+    reach: "8.2k",
+    impressions: "9.1k",
+    likes: "5.9k",
+    shares: "2k",
+  },
+  {
+    title: "Pho Campaign",
+    icon: <Instagram />,
+    reach: "10.4k",
+    impressions: "14.7k",
+    likes: "8k",
+    shares: "5.3k",
   },
 ];
 
@@ -30,22 +65,29 @@ export function Marquee3D() {
             transform:
               "translateX(0px) translateY(0px) translateZ(-50px) rotateX(0deg) rotateY(-20deg) rotateZ(10deg) scale(1.5)",
           }}>
-          {logos.map((data, idx) =>
-            typeof data.body === "string" ? (
-              <Image
-                key={idx}
-                src={data.body}
-                alt={data.name}
-                className="mx-auto h-full w-3/4 cursor-pointer rounded-xl border border-neutral-300 transition-all duration-300 "
-              />
-            ) : (
-              <div
-                key={idx}
-                className="mx-auto h-full w-3/4 cursor-pointer rounded-xl border border-neutral-300 transition-all duration-300 ">
-                {data.body}
-              </div>
-            )
-          )}
+          {insights.map((data, idx) => (
+            <InsightCards
+              key={idx}
+              title={data.title}
+              icon={data.icon}
+              reach={data.reach}
+              impressions={data.impressions}
+              likes={data.likes}
+              shares={data.shares}
+              reachIcon={
+                <VisibilityOutlinedIcon className="w-4 h-4 text-[#000000] mr-1" />
+              }
+              impressionsIcon={
+                <SentimentSatisfiedOutlinedIcon className="w-4 h-4 text-[#000000] mr-1" />
+              }
+              likesIcon={
+                <ThumbUpOutlinedIcon className="w-4 h-4 text-[#000000] mr-1" />
+              }
+              sharesIcon={
+                <ShareOutlinedIcon className="w-4 h-4 text-[#000000] mr-1" />
+              }
+            />
+          ))}
         </Marquee>
       </div>
     </div>

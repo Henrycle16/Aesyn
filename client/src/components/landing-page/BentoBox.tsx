@@ -1,11 +1,4 @@
 "use client";
-import {
-  BellIcon,
-  CalendarIcon,
-  FileTextIcon,
-  GlobeIcon,
-  InputIcon,
-} from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import { AnimatedBeamMultipleOutputDemo } from "@/components/magicui/animated-beam-bento/animated-beam-bento";
 import { AnimatedListDemo } from "../magicui/animated-list-bento/animated-list-bento";

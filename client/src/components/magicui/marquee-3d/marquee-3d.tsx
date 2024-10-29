@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
- 
+
 interface MarqueeProps {
   className?: string;
   reverse?: boolean;
@@ -9,11 +9,11 @@ interface MarqueeProps {
   repeat?: number;
   [key: string]: any;
 }
- 
+
 export function Marquee({
   className,
   reverse,
-  pauseOnHover = false,
+  pauseOnHover = true,
   children,
   vertical = false,
   repeat = 4,
@@ -28,9 +28,8 @@ export function Marquee({
           "flex-row": !vertical,
           "flex-col": vertical,
         },
-        className,
-      )}
-    >
+        className
+      )}>
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
@@ -41,8 +40,7 @@ export function Marquee({
               "animate-marquee-vertical flex-col": vertical,
               "group-hover:[animation-play-state:paused]": pauseOnHover,
               "[animation-direction:reverse]": reverse,
-            })}
-          >
+            })}>
             {children}
           </div>
         ))}
