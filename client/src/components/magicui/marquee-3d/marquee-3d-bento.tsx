@@ -59,7 +59,7 @@ export function Marquee3D() {
     <div className="absolute flex h-full w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-lg px-20 md:shadow-xl">
       <div className="flex flex-row gap-4 [perspective:300px] z-0">
         <Marquee
-          className="h-96 justify-center overflow-hidden [--duration:60s] [--gap:1rem]"
+          className="h-96 justify-center overflow-hidden [--duration:25s] [--gap:1rem]"
           vertical
           style={{
             transform:
