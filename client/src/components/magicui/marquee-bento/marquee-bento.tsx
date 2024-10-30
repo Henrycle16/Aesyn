@@ -6,62 +6,63 @@ import Youtube from "@/components/svgs/Youtube";
 import X from "@/components/svgs/X";
 import Twitch from "@/components/svgs/Twitch";
 import React from "react";
+import Image from "next/image";
 
 const reviews = [
   {
     name: "Vi Le",
     username: "@vile",
     body: "Video Games | Tech | Streamer",
-    img: "https://avatar.vercel.sh/jack",
+    img: "/404-image.png",
     icon: [<X key="x" />, <Youtube key="youtube" />, <Twitch key="twitch" />],
   },
   {
     name: "Kris Walker",
     username: "@kwalker",
     body: "DIY | Creative | Art",
-    img: "https://avatar.vercel.sh/jill",
+    img: "/404-image.png",
     icon: [<Tiktok key="tiktok" />],
   },
   {
     name: "Sash Sloan",
     username: "@sashs",
     body: "Health | Fitness",
-    img: "https://avatar.vercel.sh/john",
+    img: "/404-image.png",
     icon: [<Instagram key="instagram" />, <Tiktok key="tiktok" />, <Youtube key="youtube" />],
   },
   {
     name: "Jacky Pham",
     username: "@jpham",
     body: "Entrepreneur | Finance",
-    img: "https://avatar.vercel.sh/jane",
+    img: "/404-image.png",
     icon: [<Youtube key="youtube" />],
   },
   {
     name: "Jane Ann",
     username: "@janea",
     body: "Beauty | Health",
-    img: "https://avatar.vercel.sh/jenny",
+    img: "/404-image.png",
     icon: [<Instagram key="instagram" />, <Youtube key="youtube" />, <Tiktok key="tiktok" />],
   },
   {
     name: "Calvin Freeman",
     username: "@IamCaorin",
     body: "LifeStyle | Sports | Health",
-    img: "https://avatar.vercel.sh/james",
+    img: "/404-image.png",
     icon: [<Instagram key="instagram" />, <Tiktok key="tiktok" />],
   },
   {
     name: "Damon Salvatore",
     username: "@dsalvatore",
     body: "Foodie | Travel | Adventure",
-    img: "https://avatar.vercel.sh/jenny",
+    img: "/404-image.png",
     icon: [<Instagram key="instagram" />, <Tiktok key="tiktok" />],
   },
   {
     name: "Sammy James",
     username: "@sammyj",
     body: "Foodie | Travel | Adventure",
-    img: "https://avatar.vercel.sh/james",
+    img: "/404-image.png",
     icon: [<X key="x" />, <Instagram key="instagram" />, <Youtube key="youtube" />],
   },
 ];
@@ -88,7 +89,7 @@ const ReviewCard = ({
         "relative w-72 cursor-pointer overflow-hidden rounded-xl border pt-4 px-4 pb-1 bg-[#FAFAFA] text-black border-gray-500"
       )}>
       <div className="flex flex-row items-start gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <Image className="rounded-full" width="32" height="32" alt="" src={img} />
         <div className="flex flex-col">
           <figcaption className="text-xs font-bold dark:text-white">
             {name}
