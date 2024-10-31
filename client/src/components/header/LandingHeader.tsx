@@ -29,9 +29,9 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
         isBlackText ? "text-black" : ""
       }`}>
       <div
-        className="text-2xl font-semibold cursor-pointer"
+        className="text-2xl font-bold cursor-pointer italic"
         onClick={() => scrollToSection("heroRef")}>
-        Atrask
+        atrask
       </div>
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
