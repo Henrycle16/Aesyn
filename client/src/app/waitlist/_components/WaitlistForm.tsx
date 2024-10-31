@@ -41,7 +41,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
 
     try {
       const response = await addApplicant(formData);
-      console.log(response.data);
+      // console.log(response.data);
       setIsFormSubmitted(true);
       setIsClicked(false);
     } catch (err) {

@@ -19,7 +19,7 @@ const ToProfile = () => {
       {/* Next Step Button */}
       <div className="self-end mt-auto">
         {/* This uses the development URL and will need to be changed */}
-        <Link href={`https://localhost:3000/profile/${username}`}>
+        <Link href={`/profile/${username}`}>
           <Button
             variant="contained"
             endIcon={<ArrowForwardIcon />}

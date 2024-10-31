@@ -91,7 +91,7 @@ const MapboxChart: React.FC<MapboxProps> = ({ cities }) => {
                 .setLngLat([lng, lat])
                 .addTo(map);
 
-              console.log(`Marker added for ${city.city} at [${lng}, ${lat}]`);
+              // console.log(`Marker added for ${city.city} at [${lng}, ${lat}]`);
 
               // Calculate the center of all markers and fly to that location
               if (coordinates.length === cities.length) {

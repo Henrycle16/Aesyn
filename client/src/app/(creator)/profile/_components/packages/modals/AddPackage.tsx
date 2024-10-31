@@ -20,7 +20,6 @@ const AddPackage =  () => {
   const createPackage = async ( userId: string, currentPackage: any) => {
     try {
       const response = await addPackage(userId, currentPackage);
-      console.log(response.data);
       dispatch(addPackageStore(response.data));
       showSuccessToast();
     } catch (error) {
@@ -30,7 +29,6 @@ const AddPackage =  () => {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("userId: " + userId)
     createPackage(userId, currentPackage);
     (document.getElementById(`add_package_modal`) as HTMLDialogElement).close();
   };

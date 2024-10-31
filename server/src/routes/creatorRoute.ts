@@ -12,7 +12,7 @@ const router = express.Router();
 // @access  Private
 router.get("/me", async (req, res) => {
   try {
-    console.log("PARAMS: ", req.query.userId);
+    // console.log("PARAMS: ", req.query.userId);
     const profile = await Creator.findOne({
       user: req.query.userId,
     }).populate("user", ["username", "firstName", "lastName", "avatar"]);
@@ -191,7 +191,7 @@ router.get("/username/:username", async (req, res) => {
     const creator = await Creator.findOne({
       userName: req.params.username,
     }).populate("user", ["firstName", "lastName", "avatar", "email"]);
-    console.log(creator);
+    // console.log(creator);
     res.status(200).json(creator);
   } catch (error) {
     res.status(500).json(error);

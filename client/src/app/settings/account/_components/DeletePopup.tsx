@@ -15,7 +15,7 @@ const DeletePopup = () => {
   const handleDelete = () => {
     try {
       deleteCreator(session.data?.user.id)
-      console.log("success")
+      // console.log("success")
       router.push("/");
     } catch (error) {
       console.log(error);

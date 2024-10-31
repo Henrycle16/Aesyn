@@ -19,7 +19,7 @@ const DeletePackage = () => {
   const removePackage = async ( userId: string, packageId: string) => {
     try {
       const response = await deletePackage(userId, packageId);
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(deletePackageStore(currentPackage));
     } catch (error) {
       console.error(error);

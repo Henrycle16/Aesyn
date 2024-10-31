@@ -93,7 +93,7 @@ const InstagramTile = ({
           if (response.status === "connected") {
             setLoginStatus(response.status);
             setIsInstagramLinked(true);
-            console.log(response);
+            // console.log(response);
           }
         },
         {
@@ -108,7 +108,7 @@ const InstagramTile = ({
   const logOutOfFB = () => {
     if (typeof window.FB !== "undefined") {
       window.FB.logout(() => {
-        console.log("You are logged out");
+        // console.log("You are logged out");
         setFacebookUserAccessToken("");
         setLoginStatus("");
       });

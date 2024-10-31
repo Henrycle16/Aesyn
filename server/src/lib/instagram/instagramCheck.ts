@@ -54,7 +54,7 @@ const instagramUserCheck = async (accessToken: string, creatorId: string) => {
         followers_count: followers_count,
       };
 
-      console.log("User created successfully");
+      // console.log("User created successfully");
 
       return userPayload;
     } else {

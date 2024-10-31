@@ -8,14 +8,14 @@ const Page = () => {
 
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
   const testUrl = "https://h2jc-backend.vercel.app"
-  console.log(serverUrl);
+  // console.log(serverUrl);
   
   const getCreators = async () => {
     try {
       const results = await axios.get(
         `${testUrl}/api/creators`
       );
-      console.log(results.data);
+      // console.log(results.data);
       setCreators(results.data);
     } catch (error) {
       console.error(error);
