@@ -8,7 +8,11 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
-import Carousel from "@/components/landing-page/Carousel";
+import dynamic from "next/dynamic";
+
+const Carousel = dynamic(() => import("@/components/landing-page/Carousel"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
