@@ -1,9 +1,8 @@
 import React from "react";
 
-const Tiktok = ({ className }: { className?: string }) => {
+const Tiktok = () => {
   return (
     <svg
-      className={className}
       width="29"
       height="29"
       viewBox="0 0 29 29"
