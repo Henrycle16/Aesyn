@@ -73,6 +73,7 @@ export default function PersonalInfo() {
     } else if (status === "unauthenticated") {
       redirect("/login");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, reducerValue]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

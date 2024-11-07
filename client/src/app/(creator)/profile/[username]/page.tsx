@@ -123,6 +123,7 @@ export default function CreatorProfile({ params }: { params: Params }) {
 
   useEffect(() => {
     getProfileInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isDataLoaded) {

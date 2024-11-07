@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
 import { instagramDataInfoV2 } from "@/redux/slices/instagramData-sliceV2";
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+
 type Props = {
   isLoading: boolean;
   setIsLoading: (arg0: boolean) => void;
@@ -53,7 +55,7 @@ const InstagramTile = ({
       }
 
       const response = await axios.post(
-        `http://localhost:5000/api/instagram/check/${creatorId}`,
+        `${serverUrl}/api/instagram/check/${creatorId}`,
         { accessToken },
       );
 
@@ -128,6 +130,7 @@ const InstagramTile = ({
         console.log(response);
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus]);
 
   useEffect(() => {

@@ -2,6 +2,8 @@ import { z } from 'zod';
 import validator from 'validator';
 import axios from "axios";
 
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'
+
 export const FormDataSchema = z.object({
   firstName: z.string().min(1, "First name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
   lastName: z.string().min(1, "Last name is required").refine((data) => validator.isAlpha(data), "No numbers or special characters"),
@@ -23,7 +25,7 @@ export const FormDataSchema = z.object({
 
   try {
     const result = await axios.get(
-      `http://localhost:5000/api/users/email/${email}`
+      `${serverUrl}/api/users/email/${email}`
     );
     if (result.data) {
       ctx.addIssue({

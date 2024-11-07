@@ -11,6 +11,7 @@ async function connectToPinecone() {
   const pineconeClient = await getPineconeClient();
 
   // Setting client to use h2jc index
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const pineconeIndex = await pineconeClient.index("h2jc");
 }
 

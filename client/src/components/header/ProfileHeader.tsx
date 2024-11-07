@@ -37,6 +37,7 @@ const ProfileHeader = () => {
   useEffect(() => {
     setIsMounted(true);
     getUserInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   if (!isMounted) {

@@ -50,6 +50,7 @@ export default function NotificationPage() {
   useEffect(() => {
     if (isUninitialized && isLoading) return;
     setLocalEmail(emailSettingsCopy);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUninitialized, isLoading]);
 
   useEffect(() => {
