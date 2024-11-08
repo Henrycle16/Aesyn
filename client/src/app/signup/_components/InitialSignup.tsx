@@ -66,9 +66,9 @@ const SignUpComponent = () => {
       dispatch(userInfo({ email: data.email }));
 
       if (signUpResponse && !signUpResponse.error) {
-        console.log("User successfully signed up");
-        console.log(signUpResponse);
-        console.log("isBrand: ", isBrand);
+        // console.log("User successfully signed up");
+        // console.log(signUpResponse);
+        // console.log("isBrand: ", isBrand);
 
         if (isBrand) {
           router.push("/signup/brand");

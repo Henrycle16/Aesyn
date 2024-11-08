@@ -51,8 +51,6 @@ router.post(
       preferences: preferences,
     };
 
-    console.log("INSIDE BRAND ROUTE!");
-
     try {
       let brandProfile = await Brand.findOne({ user: req.body.user.id });
 

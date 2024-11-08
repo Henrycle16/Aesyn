@@ -56,9 +56,9 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
           } hover:font-bold`}>
           Carousel
         </button>
-        <a href="/login" className="hover:text-gray-900">
+        {/* <a href="/login" className="hover:text-gray-900">
           Login
-        </a>
+        </a> */}
       </nav>
     </header>
   );

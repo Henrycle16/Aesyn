@@ -52,7 +52,7 @@ export const creatorPackages = createSlice({
       for (let i = 0; i < state.value.packages.length; i++) {
         if (state.value.packages[i]._id === action.payload._id) {
           state.value.packages[i] = action.payload;
-          console.log(state.value.packages[i]);
+          // console.log(state.value.packages[i]);
         }
       }
     },
