@@ -13,8 +13,8 @@ export const brandSignUp = async (formData: string) => {
      },
    });
 
-   console.log("Brand Created: ");
-   console.log(res.data);
+  //  console.log("Brand Created: ");
+  //  console.log(res.data);
    return res.data;
  } catch (err: unknown) {
    if (typeof err === "string") {

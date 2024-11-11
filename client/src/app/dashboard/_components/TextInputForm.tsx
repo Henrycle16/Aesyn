@@ -10,7 +10,7 @@ const TextInputForm = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/queries', { queries: userInput });
-            console.log('Query Submitted', response);
+            // console.log('Query Submitted', response);
         } catch (error) {
             console.error('Unable to submit', error);
         }

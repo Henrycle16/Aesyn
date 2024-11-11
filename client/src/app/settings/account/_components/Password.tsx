@@ -63,7 +63,7 @@ const PasswordInfo = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("SESSION: ", session?.user.email);
+    // console.log("SESSION: ", session?.user.email);
 
     const loginResponse = await signIn("login", {
       email: email,
@@ -73,7 +73,7 @@ const PasswordInfo = () => {
 
     if (loginResponse && !loginResponse.error) {
       try {
-        console.log("Authenticated!");
+        // console.log("Authenticated!");
         interface LooseObject {
           [key: string]: any;
         }
@@ -94,7 +94,7 @@ const PasswordInfo = () => {
       }
     } else {
       setLoginErrors("Wrong Password!")
-      console.log("Wrong Password!");
+      // console.log("Wrong Password!");
     }
   };
 

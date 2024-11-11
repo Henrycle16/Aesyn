@@ -1,6 +1,7 @@
-const Instagram = () => {
+const Instagram = ({ className }: { className?: string }) => {
   return (
     <svg
+      className={className}
       width="30"
       height="30"
       viewBox="0 0 30 30"

@@ -66,8 +66,8 @@ const LoginComponent = () => {
 
     if (loginResponse && !loginResponse.error) {
       setErrors("");
-      console.log("Successful login!");
-      console.log(loginResponse);
+      // console.log("Successful login!");
+      // console.log(loginResponse);
     } else {
       console.log("Error!");
       setErrors("Incorrect email or password");

@@ -37,8 +37,6 @@ app.use('/api/waitlist', waitlistRoute);
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-console.log("App is running");
-
 import { connectToDatabase } from "../src/db/mongodb-connection";
 import { connectToPinecone } from "../src/db/pineconedb-connection";
 

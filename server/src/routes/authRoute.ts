@@ -25,7 +25,7 @@ router.post(
         try {
             // See if user exists
             const user = await User.findOne({ email });
-            console.log(user);
+            // console.log(user);
             if (!user) {
                 return res.status(400).json({
                     errors: [{ msg: 'Invalid Credentials' }],
@@ -33,14 +33,14 @@ router.post(
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
-            console.log(isMatch);
+            // console.log(isMatch);
             if (!isMatch) {
                 return res.status(400).json({
                     errors: [{ msg: 'Invalid Credentials' }],
                 });
             }
 
-            console.log('Authenticated User');
+            // console.log('Authenticated User');
             return res.status(201).json(user);
         } catch (err) {
             console.error(err.message);

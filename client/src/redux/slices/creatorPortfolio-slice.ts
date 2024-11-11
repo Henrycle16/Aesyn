@@ -57,7 +57,7 @@ export const creatorContent = createSlice({
       for (let i = 0; i < state.value.content.length; i++) {
         if (state.value.content[i]._id === action.payload._id) {
           state.value.content[i] = action.payload;
-          console.log(state.value.content[i]);
+          // console.log(state.value.content[i]);
         }
       }
     },

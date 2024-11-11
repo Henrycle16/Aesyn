@@ -34,6 +34,4 @@ app.use('/api/instagram', instagramRoute);
 app.use('/api/s3', s3Route);
 app.use('/api/waitlist', waitlistRoute);
 
-console.log("App is running");
-
 export default app;

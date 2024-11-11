@@ -71,7 +71,7 @@ export default function Home() {
           scrollPosition > previousScrollY.current ? "down" : "up";
 
         setFeature(Math.floor(scrollPosition / 100));
-        // console.log(`feature-${Math.floor(scrollPosition / 100)}`); // debugging scroll positioning
+        // // console.log(`feature-${Math.floor(scrollPosition / 100)}`); // debugging scroll positioning
 
         previousScrollY.current = scrollPosition;
       };
