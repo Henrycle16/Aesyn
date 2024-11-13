@@ -47,7 +47,7 @@ const Carousel = () => {
         invalidateOnRefresh: true,
         trigger: "#carousel",
         endTrigger: "#landing-footer",
-      }
+      },
     });
   }, []);
 
