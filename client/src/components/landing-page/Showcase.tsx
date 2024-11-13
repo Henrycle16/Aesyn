@@ -29,10 +29,10 @@ const Showcase = ({ feature }: ShowcaseProps) => {
       setImgSrc("/showcase_analytics.png");
     } else if (feature >= 12 && feature <= 15) {
       setSection("feature-2");
-      setImgSrc("/showcase_analytics_2.png");
+      setImgSrc("/showcase_campaigns.png");
     } else if (feature > 15) {
       setSection("feature-3");
-      setImgSrc("/showcase_analytics_3.png");
+      setImgSrc("/showcase_analytics.png");
     }
   }, [feature]);
 
@@ -64,7 +64,7 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                   className={`${
                     section === "feature-1" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  <div style={{ fontWeight: 700 }}>Track Analytics</div>
+                  <div style={{ fontWeight: 700 }}>View Analytics</div>
                   <div>Insights at Your Fingertips</div>
                 </div>
               </div>
@@ -78,7 +78,7 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                     section === "feature-2" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
                   <div style={{ fontWeight: 700 }}>Track Campaigns</div>
-                  <div>Track Your Milestones</div>
+                  <div>Celebrate Your Milestones</div>
                 </div>
               </div>
 
@@ -90,8 +90,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
                   className={`${
                     section === "feature-3" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
-                  <div style={{ fontWeight: 700 }}>Messaging Connections</div>
-                  <div>Build Meaningful Connections</div>
+                  <div style={{ fontWeight: 700 }}>Find Proposals</div>
+                  <div>Build Your Portfolio</div>
                 </div>
               </div>
             </div>
