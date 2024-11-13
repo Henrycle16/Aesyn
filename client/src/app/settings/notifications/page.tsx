@@ -69,7 +69,7 @@ export default function NotificationPage() {
         throw new Error("User ID is not available");
       }
       const response = await updateUserSelf(userId, localEmail);
-      console.log("Email settings updated:", response.data);
+      // console.log("Email settings updated:", response.data);
       dispatch(profileDataInfo(localEmail));
     } catch (error) {
       console.error("Failed to update user settings:", error);

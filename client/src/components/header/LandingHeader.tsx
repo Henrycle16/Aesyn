@@ -29,9 +29,9 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
         isBlackText ? "text-black" : ""
       }`}>
       <div
-        className="text-2xl font-semibold cursor-pointer"
+        className="text-2xl font-bold cursor-pointer italic"
         onClick={() => scrollToSection("heroRef")}>
-        ShareFluence
+        atrask
       </div>
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
@@ -47,7 +47,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
           className={`${
             isActive("bentobox") ? "font-bold" : ""
           } hover:font-bold`}>
-          How We Help
+          Key Features & Tools
         </button>
         <button
           onClick={() => scrollToSection("carouselRef")}
@@ -56,9 +56,9 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
           } hover:font-bold`}>
           Carousel
         </button>
-        <a href="/login" className="hover:text-gray-900">
+        {/* <a href="/login" className="hover:text-gray-900">
           Login
-        </a>
+        </a> */}
       </nav>
     </header>
   );

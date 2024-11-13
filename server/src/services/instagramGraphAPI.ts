@@ -291,7 +291,7 @@ const getUserMedia = async (BUSINESS_ID: string,ACCESS_TOKEN: string, USERNAME: 
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_HEADER}/${BUSINESS_ID}?fields=business_discovery.username(${USERNAME}){${params}}&access_token=${ACCESS_TOKEN}`
     )
-    console.log("getUserMedia log: ", response.data.business_discovery.media.data)
+    // console.log("getUserMedia log: ", response.data.business_discovery.media.data)
 
     let likeSum = 0;
     let commentSum = 0;

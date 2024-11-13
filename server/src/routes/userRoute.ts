@@ -23,7 +23,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/email/:email", async (req: Request, res: Response) => {
   try {
     const email = await User.findOne({ email: req.params.email });
-    console.log(email);
+    // console.log(email);
     res.status(200).json(email);
   } catch (error) {
     res.status(500).json(error);

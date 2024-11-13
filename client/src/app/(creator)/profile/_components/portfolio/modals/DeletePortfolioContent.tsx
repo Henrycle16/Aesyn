@@ -28,7 +28,7 @@ const DeletePortfolioContent = () => {
       const response = await deleteAnyContent(userId, contentWithoutUris);
       
       dispatch(deleteContent(currentContent));
-      console.log(response.data);
+      // console.log(response.data);
       showDeletedToast("Portfolio item deleted", "")
     } catch (error) {
       console.log(error);
