@@ -8,9 +8,9 @@ const LargeFooter = () => {
   return (
     <footer className="bg-[#0C2232] text-[#E5E7EB] px-16 pb-3 pt-8 min-h-64 flex flex-col">
       <div className="grid grid-cols-[1fr,1fr,1fr,1fr,1fr] flex-1">
-        {/* ShareFluence */}
+        {/* aesyn */}
         <div>
-          <h1 className="text-2xl font-light">ShareFluence</h1>
+          <h1 className="text-2xl font-light">aesyn</h1>
         </div>
         {/* Get in Touch */}
         <div className="flex flex-col gap-3">

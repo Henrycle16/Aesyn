@@ -161,7 +161,7 @@ const LoginComponent = () => {
           <p className="mx-auto text-sm g4-text">
             Copyright ©{" "}
             <Link href={"/"} className="g4-text">
-              ShareFluence
+              aesyn
             </Link>{" "}
             {new Date().getFullYear()}.
           </p>

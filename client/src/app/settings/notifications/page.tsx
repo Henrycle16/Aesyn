@@ -106,7 +106,7 @@ export default function NotificationPage() {
               <h1 className="body2 ts7-text mb-[.2rem]">Marketing emails </h1>
               <p className="body1 g5-text">
                 Receive emails about new products, features, and more from
-                ShareFluence.
+                Aesyn.
               </p>
             </div>
             <Switch

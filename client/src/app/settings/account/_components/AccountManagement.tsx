@@ -29,7 +29,7 @@ export default function AccountManagement() {
         <div className="flex flex-row items-center justify-between">
           <p className="body1">
             {" "}
-            This will permanently delete your account from ShareFluence.{" "}
+            This will permanently delete your account from Aesyn.{" "}
           </p>
           <div className="self-end">
             <button

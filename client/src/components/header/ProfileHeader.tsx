@@ -47,7 +47,7 @@ const ProfileHeader = () => {
   return (
     <header className="flex flex-wrap px-16 pt-4 flex-col md:flex-row items-center">
       <Link href={"/"} className="text-2xl text-gray-900 font-semibold">
-        ShareFluence
+      aesyn
       </Link>
       <div className="flex ml-40 items-center">
         <ThreeMenu />
