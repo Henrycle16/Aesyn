@@ -8,7 +8,11 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
-import Carousel from "@/components/landing-page/Carousel";
+import dynamic from "next/dynamic";
+
+const Carousel = dynamic(() => import("@/components/landing-page/Carousel"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [hidden, setHidden] = useState(false);
@@ -67,7 +71,7 @@ export default function Home() {
           scrollPosition > previousScrollY.current ? "down" : "up";
 
         setFeature(Math.floor(scrollPosition / 100));
-        console.log(`feature-${Math.floor(scrollPosition / 100)}`);
+        // // console.log(`feature-${Math.floor(scrollPosition / 100)}`); // debugging scroll positioning
 
         previousScrollY.current = scrollPosition;
       };
@@ -84,7 +88,8 @@ export default function Home() {
           variants={{ visible: { y: 0 }, hidden: { y: "-130%" } }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.35, ease: "easeInOut" }}
-          className="sticky top-5 z-[99999]">
+          className="sticky top-5 z-[99999]"
+        >
           <LandingHeader
             currentSection={currentSection}
             refs={{ heroRef, showcaseRef, bentoboxRef, carouselRef }}
@@ -94,18 +99,21 @@ export default function Home() {
         <section
           id="hero"
           ref={heroRef}
-          className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen relative z-10">
+          className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen relative z-10"
+        >
           <HeroSection />
         </section>
 
         <section
           id="showcase"
           ref={showcaseRef}
-          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}>
+          className={`bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] relative z-20 top-[-5rem] min-h-[175vh]`}
+        >
           <div
             className={`container mx-auto flex justify-center max-lg:py-5 px-5 pt-36 pb-48 ${
               currentSection === "showcase" ? "sticky top-[-5rem]" : ""
-            } ${currentSection === "bentobox" ? "sticky top-[-10rem] " : ""}`}>
+            } ${currentSection === "bentobox" ? "sticky top-[-10rem] " : ""}`}
+          >
             <Showcase feature={feature} scrollDirection={direction} />
           </div>
         </section>
@@ -113,7 +121,8 @@ export default function Home() {
         <section
           id="bentobox"
           ref={bentoboxRef}
-          className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem] relative z-30 top-[-7rem]">
+          className="bg-gradient-to-b from-[#36035F] via-[#240B4D] via-10% to-[#000000] to-80% text-white rounded-t-[2rem] relative z-30 top-[-7rem]"
+        >
           <div className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen">
             <BentoBox />
           </div>
@@ -122,7 +131,8 @@ export default function Home() {
         <section
           id="carousel"
           ref={carouselRef}
-          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] min-h-[106vh] relative z-40 top-[-8rem]">
+          className="bg-gradient-to-b from-[#E4D6F2] to-[#ECECF0] text-[#190627] rounded-t-[2rem] min-h-[106vh] relative z-40 top-[-8rem]"
+        >
           <div className="mx-auto flex flex-col justify-center items-center min-h-screen">
             <Carousel />
             <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
@@ -133,7 +143,8 @@ export default function Home() {
 
         <section
           id="landing-footer"
-          className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]">
+          className="bg-gradient-to-b from-[#36035F] from-28% via-[#240B4D] via-30% to-[#000000] to-50% text-white rounded-t-[2rem] absolute w-full z-50 top-[96.3%]"
+        >
           <div className="container mx-auto flex justify-center items-center px-5 ">
             <CallToAction />
           </div>

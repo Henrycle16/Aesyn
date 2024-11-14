@@ -21,7 +21,7 @@ const EditPackage = () => {
   const editPackage = async ( userId: string, currentPackage: any) => {
     try {
       const response = await updatePackage(userId, currentPackage);
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(editPackageStore(currentPackage));
       showSuccessToast();
     } catch (error) {

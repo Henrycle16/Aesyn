@@ -8,15 +8,6 @@ const LandingFooter = () => {
         <h1 className="text-xl">aesyn</h1>
         <div className="flex flex-col justify-between flex-grow">
           <div className="flex flex-row items-center gap-2 mt-5">
-            <div className="text-[#DFDFDF] bg-[#DFDFDF] rounded-full px-[20px] py-[10px]">
-              .
-            </div>
-            <div className="text-[#DFDFDF] bg-[#DFDFDF] rounded-full px-[20px] py-[10px]">
-              .
-            </div>
-            <div className="text-[#DFDFDF] bg-[#DFDFDF] rounded-full px-[20px] py-[10px]">
-              .
-            </div>
           </div>
           <div className="flex justify-between text-xs">
             <p>Copy Right © 2024 All Rights Reserved by Aesyn LLC</p>

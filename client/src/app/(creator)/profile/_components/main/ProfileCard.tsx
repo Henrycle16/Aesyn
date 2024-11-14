@@ -45,7 +45,7 @@ const ProfileCard = () => {
     try {
       // Attempting to upload the avatar
       const response = await uploadAvatar(userId, formData);
-      console.log("Avatar uploaded successfully", response.data);
+      // console.log("Avatar uploaded successfully", response.data);
     } catch (error) {
       console.error("Error uploading avatar", error);
     }

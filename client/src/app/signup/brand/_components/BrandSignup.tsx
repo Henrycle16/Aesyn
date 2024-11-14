@@ -109,7 +109,7 @@ const SignUpBox = () => {
       const brandSignUpResponse = await brandSignUp(body);
 
       if (brandSignUpResponse && !brandSignUpResponse.error) {
-        console.log("REGISTERED BRAND!");
+        // console.log("REGISTERED BRAND!");
         dispatch(userInfo({ currentStep: currentStep + 1 }));
       }
     } catch {

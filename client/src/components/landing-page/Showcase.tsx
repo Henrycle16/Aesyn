@@ -59,7 +59,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
               <div
                 className={`${
                   section === "feature-1" ? `feature-gradient` : ""
-                }`}>
+                }`}
+              >
                 <div
                   className={`${
                     section === "feature-1" ? `${sectionHighlight}` : ""
@@ -72,11 +73,13 @@ const Showcase = ({ feature }: ShowcaseProps) => {
               <div
                 className={`${
                   section === "feature-2" ? `feature-gradient` : ""
-                }`}>
+                }`}
+              >
                 <div
                   className={`${
                     section === "feature-2" ? `${sectionHighlight}` : ""
-                  } ${sectionStyle}`}>
+                  } ${sectionStyle}`}
+                >
                   <div style={{ fontWeight: 700 }}>Track Campaigns</div>
                   <div>Celebrate Your Milestones</div>
                 </div>
@@ -85,7 +88,8 @@ const Showcase = ({ feature }: ShowcaseProps) => {
               <div
                 className={`${
                   section === "feature-3" ? `feature-gradient` : ""
-                }`}>
+                }`}
+              >
                 <div
                   className={`${
                     section === "feature-3" ? `${sectionHighlight}` : ""
@@ -99,7 +103,13 @@ const Showcase = ({ feature }: ShowcaseProps) => {
 
           {/* Right Side: Image */}
           <div className="">
-            <Image src={imgSrc} alt="Showcase" width={600} height={600} />
+            <Image
+              src={imgSrc}
+              alt="Showcase"
+              width={600}
+              height={600}
+              style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            />
           </div>
         </div>
       </div>

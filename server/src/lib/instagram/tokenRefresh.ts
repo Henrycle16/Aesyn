@@ -8,7 +8,7 @@ const tokenRefresh = async () => {
 
         const users = await InstagramData.find({ tokenCreationDate: { $lt: tenDaysAgo } });
 
-        console.log(`Number of users being updated: ${users.length}`);
+        // console.log(`Number of users being updated: ${users.length}`);
 
         // eslint-disable-next-line prefer-const
         for (let user of users) {
