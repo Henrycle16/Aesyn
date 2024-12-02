@@ -57,38 +57,40 @@ const Carousel = () => {
         <section className="slider-section pt-[13rem] ">
           <div className="wheel">
             {/* 1-5 */}
+            {/* Step 1 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 1</h3>
+              <h3 className="font-bold text-xl">Business Registration</h3>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                Brand signs up, registering details like industry, target audience, and social media presence.
+              </p>
+              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+            </div>
+            {/* Step 2 */}
+            <div className="wheel__card">
+              <h3 className="font-bold text-xl">Create Campaign Opportunity</h3>
+              <p className="mt-4">
+                Brand launches a campaign with marketing goals, content needs, and specific criteria.
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 2</h3>
+              <h3 className="font-bold text-xl">Receive & Review Proposals</h3>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                Creators submit proposals with content ideas, strategies, and pricing packages.
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 3</h3>
+              <h3 className="font-bold text-xl">Secure Payment & Content Creation</h3>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                Platform holds payment securely while the creator develops the content.
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 4</h3>
+              <h3 className="font-bold text-xl">Publish Content & Make an Impact</h3>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 5</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                Brand approves completed content, which goes live to engage the target audience.
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
