@@ -31,15 +31,15 @@ const Carousel = () => {
     window.addEventListener("resize", setup);
 
     gsap.to(".wheel", {
-      rotate: () => -192,
+      rotate: () => -96, // Rotates to 9 cards -- 360/15 = 24, 24*8 = 192 // 5 cards = 24*4 = 96
       ease: "none",
       scrollTrigger: {
         start: "top top", 
-        end: "+=1800",
+        end: "+=1200",
         scrub: 0.3,
         pin: true,
         snap: {
-          snapTo: 1 / 8, 
+          snapTo: 1 / 4, 
           duration: { min: 0.2, max: 0.7 }, 
           ease: "power1.inOut", 
           inertia: false,
@@ -93,28 +93,28 @@ const Carousel = () => {
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
             {/* 6-10 */}
-            <div className="wheel__card">
+            <div className="wheel__card invisible">
               <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 6</h3>
               <p className="mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
-            <div className="wheel__card">
+            <div className="wheel__card invisible">
               <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 7</h3>
               <p className="mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
-            <div className="wheel__card">
+            <div className="wheel__card invisible">
               <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 8</h3>
               <p className="mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </p>
               <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
             </div>
-            <div className="wheel__card">
+            <div className="wheel__card invisible">
               <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 9</h3>
               <p className="mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
