@@ -1,9 +1,11 @@
 "use client";
 
+import "@/styles/landingCarousel.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "@/styles/landingCarousel.css";
+import Image from "next/image";
+import stepOne from "../../../public/carousel-1.png";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -63,7 +65,16 @@ const Carousel = () => {
               <p className="mt-4">
                 Brand signs up, registering details like industry, target audience, and social media presence.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto relative">
+                <Image
+                  src={stepOne}
+                  // width={}
+                  // height={}
+                  alt="Step 1"
+                  fill={true}
+                  style={{ objectFit: "cover"}}
+                />
+              </div>
             </div>
             {/* Step 2 */}
             <div className="wheel__card">
