@@ -74,10 +74,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-[3.75rem] py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%">
       {/* Title & Description */}
       <div className="mt-5">
-        <h1 className="font-semibold text-2xl">Get Early Access!!</h1>
+        <h1 className="font-semibold text-2xl text-center">Get Early Access!!</h1>
         <p className="text-sm mt-3.5 leading-6">
-          Be the first to experience our collaborative innovative platform and
-          get notified when we launch!
+        Join the waitlist to be the first to know when we launch. Sign up now for exclusive updates and priority access.
         </p>
       </div>
       {/* Form Fields */}
@@ -174,9 +173,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               <option value="" disabled>
                 What are you most excited about?
               </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
+              <option value="Option 1">Social analytics on the go</option>
+              <option value="Option 2">Brand campaigns</option>
+              <option value="Option 3">Making connections with other like-minded individuals</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <ArrowDropDownIcon
