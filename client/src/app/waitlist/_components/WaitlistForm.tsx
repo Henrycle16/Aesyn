@@ -36,7 +36,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      questionairre: data.questionnaire,
+      questionnaire: data.questionnaire,
     };
 
     try {
@@ -173,9 +173,9 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               <option value="" disabled>
                 What are you most excited about?
               </option>
-              <option value="Option 1">Social analytics on the go</option>
-              <option value="Option 2">Brand campaigns</option>
-              <option value="Option 3">Making connections with other like-minded individuals</option>
+              <option value="Social analytics on the go">Social analytics on the go</option>
+              <option value="Brand campaigns">Brand campaigns</option>
+              <option value="Making connections with other like-minded individuals">Making connections with other like-minded individuals</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <ArrowDropDownIcon
