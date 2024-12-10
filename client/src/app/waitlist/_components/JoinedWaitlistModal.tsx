@@ -10,7 +10,7 @@ export default function JoinedWaitlistModal() {
     >
       <h1 className="font-semibold text-2xl self-center mt-5">You&apos;re in!</h1>
       <p className="text-sm mt-8 leading-6">
-        Thank you for joining Aesyn&apos;s waitlist! Stay tuned
+        Thank you for joining Aeśyn&apos;s waitlist! Stay tuned
         for our new and exciting platform, we&apos;ll be in touch soon!
       </p>
 
