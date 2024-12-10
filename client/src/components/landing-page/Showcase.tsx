@@ -32,7 +32,7 @@ const Showcase = ({ feature }: ShowcaseProps) => {
       setImgSrc("/showcase_campaigns.png");
     } else if (feature > 15) {
       setSection("feature-3");
-      setImgSrc("/showcase_analytics.png");
+      setImgSrc("/showcase_proposals.png");
     }
   }, [feature]);
 
