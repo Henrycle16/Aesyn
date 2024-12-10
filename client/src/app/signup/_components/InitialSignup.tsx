@@ -256,7 +256,7 @@ const SignUpComponent = () => {
         <p className="mx-auto text-sm g4-text">
           Copyright ©{" "}
           <Link href={"/"} className="g4-text">
-            ShareFluence
+          Aeśyn
           </Link>{" "}
           {new Date().getFullYear()}.
         </p>
