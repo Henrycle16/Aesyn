@@ -36,7 +36,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      questionairre: data.questionnaire,
+      questionnaire: data.questionnaire,
     };
 
     try {
@@ -61,7 +61,7 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
     "bg-gradient-to-r from-[#5B58EB] via-[#BB63FF] to-[#5B58EB] rounded-3xl h-[2.8125rem] py-2 px-5 text-sm font-bold";
 
   const inputTextStyle =
-    "w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-opacity-50 focus:ring-white focus:outline-none focus:ring-1";
+    "w-full h-[2.8125rem] rounded-[0.3125rem] pl-[0.9375rem] pr-[2.2rem] border-0 bg-[#645281] text-sm placeholder-white focus:ring-opacity-50 focus:ring-white focus:outline-none focus:ring-1";
 
   const errorInputBoxStyle =
     "bg-[#7E5151] border-[#A91111] w-full h-[2.8125rem] rounded-[0.3125rem] px-[0.9375rem] text-sm placeholder-white outline-none";
@@ -74,10 +74,12 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
       className="w-[32.063rem] h-[41.813rem] flex flex-col text-white border border-[#D7D7D7] rounded-[0.9375rem] px-[3.75rem] py-7 bg-gradient-to-br from-[#ffffff4d] to-[#ffffff26] from-0% to-100%">
       {/* Title & Description */}
       <div className="mt-5">
-        <h1 className="font-semibold text-2xl">Get Early Access!!</h1>
+        <h1 className="font-semibold text-2xl text-center">
+          Get Early Access!!
+        </h1>
         <p className="text-sm mt-3.5 leading-6">
-          Be the first to experience our collaborative innovative platform and
-          get notified when we launch!
+          Join the waitlist to be the first to know when we launch. Sign up now
+          for exclusive updates and priority access.
         </p>
       </div>
       {/* Form Fields */}
@@ -174,9 +176,33 @@ export default function WaitlistForm({ setIsFormSubmitted }: Props) {
               <option value="" disabled>
                 What are you most excited about?
               </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
+              <option value="Social analytics on the go">
+                Access to advanced social media analytics
+              </option>
+              <option value="Brand campaigns">
+                Collaborate on impactful brand campaigns
+              </option>
+              <option value="Making connections with other like-minded individuals">
+                Build connections with like-minded creators
+              </option>
+              <option value="Social analytics on the go">
+                Discover exclusive brand partnership opportunities
+              </option>
+              <option value="Brand campaigns">
+                Grow my audience through marketing strategies
+              </option>
+              <option value="Making connections with other like-minded individuals">
+                Learn from insights to improve my content creation
+              </option>
+              <option value="Find the right creators">
+                Find and connect with creators who align with my brand
+              </option>
+              <option value="Boost brand visibility">
+                Boost my brand&apos;s visibility through creator partnerships
+              </option>
+              <option value="Streamline collaboration">
+                Streamline collaborations with top-tier creators
+              </option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <ArrowDropDownIcon
