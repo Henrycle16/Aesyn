@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const LandingFooter = () => {
   return (
-    // <footer className="pt-8 min-h-56 flex flex-col mx-10">
     <footer className="pt-8 min-h-20 flex flex-col mx-10">
       <span className="bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] p-[1px]"></span>
       <div className="flex flex-col sm:flex-row justify-between items-center pt-6 pb-4 flex-grow space-y-6 sm:space-y-0">
