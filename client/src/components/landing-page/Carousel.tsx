@@ -64,12 +64,17 @@ const Carousel = () => {
           <div className="wheel">
             {/* Step 1 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Register Your Brand To Collaborate</h3>
-              <div className="relative">
-                <div className="h-[10.563rem] w-full mt-auto relative top-[2rem]">
+              <h3 className="card__header">Register Your Brand</h3>
+              <p className="card__subheader">
+                Quick and easy sign up
+                process to jump start your journey.
+              </p>
+              <div className="relative self-center">
+                <div className="h-[17.063rem] w-[17.063rem] relative bottom-[1.5rem]">
                   <Image
                     src={stepOne}
                     alt="Step 1"
+                    className="rotate-[-.83deg]"
                   />
                 </div>
               </div>
@@ -77,12 +82,17 @@ const Carousel = () => {
 
             {/* Step 2 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Launch Campaign Opportunities</h3>
-              <div className="relative">
-                <div className="h-[10.563rem] w-full mt-auto relative top-[5rem]">
+              <h3 className="card__header">Launch Campaigns</h3>
+              <p className="card__subheader">
+                Create opportunities to
+                expand your reach.
+              </p>
+              <div className="relative self-center">
+                <div className="h-[15.375rem] w-[15.375rem] relative top-[0.6rem]">
                   <Image
                     src={stepTwo}
                     alt="Step 2"
+                    className="rotate-[9.54deg]"
                   />
                 </div>
               </div>
@@ -90,9 +100,14 @@ const Carousel = () => {
 
             {/* Step 3 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Review Tailored Proposals</h3>
-              <div className="relative">
-                <div className="h-[10.563rem] w-full mt-auto relative top-[2rem]">
+              <h3 className="card__header">Tailored Proposals</h3>
+              <p className="card__subheader">
+                Find the perfect creator that
+                can bring your vision to life
+                with the power of AI.
+              </p>
+              <div className="relative self-center">
+                <div className="h-[14.438rem] w-[14.438rem] relative">
                   <Image
                     src={stepThree}
                     alt="Step 3"
@@ -103,12 +118,17 @@ const Carousel = () => {
 
             {/* Step 4 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Connect With Top Creators</h3>
-              <div className="relative">
-                <div className="h-[10.563rem] w-full mt-auto relative top-[2rem]">
+              <h3 className="card__header">Connect with Creators</h3>
+              <p className="card__subheader">
+                Build relationships with top
+                creators.
+              </p>
+              <div className="relative self-center">
+                <div className="h-[14.938rem] w-[14.938rem] relative top-[1.25rem]">
                   <Image
                     src={stepFour}
                     alt="Step 4"
+                    className="rotate-[5.12deg]"
                   />
                 </div>
               </div>
@@ -116,12 +136,20 @@ const Carousel = () => {
 
             {/* Step 5 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Publish & Drive Impact</h3>
-              <div className="relative">
-                <div className="h-[10.563rem] w-full mt-auto relative top-[2.8rem]">
+              <h3 className="card__header">Drive Impact!</h3>
+              <p className="card__subheader">
+                Generate meaningful
+                engagement with published
+                content.
+              </p>
+              
+              <div className="relative self-center">
+                <div className="relative bottom-[1rem]">
                   <Image
                     src={stepFive}
                     alt="Step 5"
+                    width={153}
+                    className="rotate-[7.22deg]"
                   />
                 </div>
               </div>
