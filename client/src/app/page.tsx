@@ -136,7 +136,7 @@ export default function Home() {
           <div className="mx-auto flex flex-col justify-center items-center min-h-screen">
             <Carousel />
             <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
-              Lorem ipsum dolor sit amet, consectetu adipiscing
+              From Registration to Brand Impact
             </h1>
           </div>
         </section>
