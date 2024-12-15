@@ -1,9 +1,15 @@
 "use client";
 
+import "@/styles/landingCarousel.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "@/styles/landingCarousel.css";
+import Image from "next/image";
+import stepOne from "../../../public/carousel-1.png";
+import stepTwo from "../../../public/carousel-2.png";
+import stepThree from "../../../public/carousel-3.png";
+import stepFour from "../../../public/carousel-4.png";
+import stepFive from "../../../public/carousel-5.png";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -31,15 +37,15 @@ const Carousel = () => {
     window.addEventListener("resize", setup);
 
     gsap.to(".wheel", {
-      rotate: () => -192,
+      rotate: () => -96, // Rotates to 9 cards -- 360/15 = 24, 24*8 = 192 // 5 cards = 24*4 = 96
       ease: "none",
       scrollTrigger: {
         start: "top top", 
-        end: "+=1800",
+        end: "+=1200",
         scrub: 0.3,
         pin: true,
         snap: {
-          snapTo: 1 / 8, 
+          snapTo: 1 / 4, 
           duration: { min: 0.2, max: 0.7 }, 
           ease: "power1.inOut", 
           inertia: false,
@@ -56,119 +62,116 @@ const Carousel = () => {
       <div className="w-full h-[41.219rem] relative overflow-hidden">
         <section className="slider-section pt-[13rem] ">
           <div className="wheel">
-            {/* 1-5 */}
+            {/* Step 1 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 1</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <h3 className="card__header">Register Your Brand</h3>
+              <p className="card__subheader">
+                Quick and easy sign up
+                process to jump start your journey.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              <div className="relative self-center">
+                <div className="h-[17.063rem] w-[17.063rem] relative bottom-[1.5rem]">
+                  <Image
+                    src={stepOne}
+                    alt="Step 1"
+                    className="rotate-[-.83deg]"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Step 2 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 2</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <h3 className="card__header">Launch Campaigns</h3>
+              <p className="card__subheader">
+                Create opportunities to
+                expand your reach.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              <div className="relative self-center">
+                <div className="h-[15.375rem] w-[15.375rem] relative top-[0.6rem]">
+                  <Image
+                    src={stepTwo}
+                    alt="Step 2"
+                    className="rotate-[9.54deg]"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Step 3 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 3</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <h3 className="card__header">Tailored Proposals</h3>
+              <p className="card__subheader">
+                Find the perfect creator that
+                can bring your vision to life
+                with the power of AI.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              <div className="relative self-center">
+                <div className="h-[14.438rem] w-[14.438rem] relative">
+                  <Image
+                    src={stepThree}
+                    alt="Step 3"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Step 4 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 4</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <h3 className="card__header">Connect with Creators</h3>
+              <p className="card__subheader">
+                Build relationships with top
+                creators.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              <div className="relative self-center">
+                <div className="h-[14.938rem] w-[14.938rem] relative top-[1.25rem]">
+                  <Image
+                    src={stepFour}
+                    alt="Step 4"
+                    className="rotate-[5.12deg]"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Step 5 */}
             <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 5</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              <h3 className="card__header">Drive Impact!</h3>
+              <p className="card__subheader">
+                Generate meaningful
+                engagement with published
+                content.
               </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
+              
+              <div className="relative self-center">
+                <div className="relative bottom-[1rem]">
+                  <Image
+                    src={stepFive}
+                    alt="Step 5"
+                    width={153}
+                    className="rotate-[7.22deg]"
+                  />
+                </div>
+              </div>
             </div>
-            {/* 6-10 */}
-            <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 6</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 7</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 8</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 9</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 10</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            {/* 11-15 */}
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 11</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 12</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 13</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 14</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
-            <div className="wheel__card invisible">
-              <h3 className="font-bold text-xl">Lorem ipsum dolor sit ame 15</h3>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <div className="h-[10.563rem] w-full bg-[#D9D9D9] mt-auto"></div>
-            </div>
+
+            <EmptyCards />
+            
           </div>
         </section>
       </div>
     </>
   );
 };
+
+function EmptyCards() {
+  const cards = []
+
+  for (let i = 0; i < 10; i++) {
+    cards.push(<div key={i} className="wheel__card invisible"></div>);
+  }
+
+  return cards;
+}
 
 export default Carousel;
