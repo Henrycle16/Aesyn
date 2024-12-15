@@ -31,7 +31,7 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
       <div
         className="text-2xl font-bold cursor-pointer italic"
         onClick={() => scrollToSection("heroRef")}>
-        atrask
+        Aeśyn
       </div>
 
       <nav className="md:ml-auto flex flex-wrap gap-x-16">
@@ -40,21 +40,21 @@ const LandingHeader = ({ currentSection, refs }: LandingHeaderProps) => {
           className={`${
             isActive("showcase") ? "font-bold" : ""
           } hover:font-bold`}>
-          Showcase
+          For Creators
         </button>
         <button
           onClick={() => scrollToSection("bentoboxRef")}
           className={`${
             isActive("bentobox") ? "font-bold" : ""
           } hover:font-bold`}>
-          Key Features & Tools
+          Key Features
         </button>
         <button
           onClick={() => scrollToSection("carouselRef")}
           className={`${
             isActive("carousel") ? "font-bold" : ""
           } hover:font-bold`}>
-          Carousel
+          For Brands
         </button>
         {/* <a href="/login" className="hover:text-gray-900">
           Login

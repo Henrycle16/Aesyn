@@ -5,7 +5,7 @@ type Applicant = {
   email: string;
   firstName: string;
   lastName: string;
-  questionairre: string;
+  questionnaire: string;
 };
 
 export const addApplicant = (applicantData: Applicant) => {
