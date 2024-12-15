@@ -6,7 +6,7 @@ const LandingFooter = () => {
       <span className="bg-gradient-to-r from-[#5B58EB] to-[#BB63FF] p-[1px]"></span>
       <div className="flex flex-col sm:flex-row justify-between items-center pt-6 pb-4 flex-grow space-y-6 sm:space-y-0">
         <div className="flex items-center">
-          <h1 className="text-xl font-bold italic mr-6">atrask</h1>
+          <h1 className="text-xl font-bold italic mr-6">Aeśyn</h1>
           <div className="flex items-center gap-5">
             <a
               href="https://www.reddit.com/user/Atrask_LLC/"
@@ -67,7 +67,7 @@ const LandingFooter = () => {
           </div>
         </div>
         <div className="text-xs">
-          <p>Copy Right © 2024 All Rights Reserved by atrask LLC</p>
+          <p>Copy Right © 2024 All Rights Reserved by Aeśyn LLC</p>
         </div>
       </div>
     </footer>
