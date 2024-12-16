@@ -11,7 +11,7 @@ import ReduxProvider from "@/redux/provider";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Welcome to "Startup....."',
+  title: "AI-Driven Influencer Marketing",
   description: "App",
 };
 
