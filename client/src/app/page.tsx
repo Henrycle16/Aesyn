@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
 import FlickeringGrid from "@/components/magicui/flickering-grid";
-import { DotPattern } from "@/components/magicui/dot-pattern";
 import dynamic from "next/dynamic";
 
 const Carousel = dynamic(() => import("@/components/landing-page/Carousel"), {
@@ -96,17 +95,6 @@ export default function Home() {
             refs={{ heroRef, showcaseRef, bentoboxRef, carouselRef }}
           />
         </motion.header>
-        {/* <FlickeringGrid
-          className="z-[1] absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="#6B7280"
-          maxOpacity={0.4}
-          flickerChance={0.1}
-        /> */}
-        {/* <DotPattern 
-          className="opacity-40"
-        /> */}
 
         <section
           id="hero"
@@ -120,7 +108,6 @@ export default function Home() {
             maxOpacity={0.5}
             flickerChance={0.1}
           />
-          {/* <DotPattern className="opacity-50 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]" /> */}
           <HeroSection />
         </section>
 
