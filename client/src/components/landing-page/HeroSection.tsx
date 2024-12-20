@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-col items-center max-w-5xl mb-64">
+    <div className="flex flex-col items-center max-w-5xl mb-64 relative z-[2]">
       <h1 className="text-[60px] text-center leading-[4rem] font-semibold">
         Connecting <span className="gradient-text">brands</span> and{" "}
         <span className="gradient-text">creators</span> with the power of{" "}
