@@ -8,6 +8,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import BentoBox from "@/components/landing-page/BentoBox";
 import Showcase from "@/components/landing-page/Showcase";
+import FlickeringGrid from "@/components/magicui/flickering-grid";
 import dynamic from "next/dynamic";
 
 const Carousel = dynamic(() => import("@/components/landing-page/Carousel"), {
@@ -99,6 +100,14 @@ export default function Home() {
           id="hero"
           ref={heroRef}
           className="container mx-auto flex justify-center items-center max-lg:py-5 px-5 min-h-screen relative z-10">
+          <FlickeringGrid
+            className="z-[1] absolute inset-0 size-full [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
+            squareSize={4}
+            gridGap={6}
+            color="#6B7280"
+            maxOpacity={0.5}
+            flickerChance={0.1}
+          />
           <HeroSection />
         </section>
 
