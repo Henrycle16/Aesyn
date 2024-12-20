@@ -139,8 +139,12 @@ export default function Home() {
           <div className="mx-auto flex flex-col justify-center items-center min-h-screen">
             <Carousel />
             <h1 className="text-[2.5rem] text-center leading-[3rem] font-semibold">
-              From Registration to Brand Impact
+              From Onboarding to Impact
             </h1>
+            <p className="text-center mt-5 mb-16 text-xl max-w-3xl text-[#4A4A4A]">
+              Discover top creators, streamline campaign management, and drive
+              measurable results for your brand.
+            </p>
           </div>
         </section>
 

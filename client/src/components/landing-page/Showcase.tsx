@@ -59,43 +59,45 @@ const Showcase = ({ feature }: ShowcaseProps) => {
               <div
                 className={`${
                   section === "feature-1" ? `feature-gradient` : ""
-                }`}
-              >
+                }`}>
                 <div
                   className={`${
                     section === "feature-1" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
                   <div style={{ fontWeight: 700 }}>View Analytics</div>
-                  <div>Insights at Your Fingertips</div>
+                  <div className="text-[#4A4A4A] font-normal">
+                    Insights at Your Fingertips
+                  </div>
                 </div>
               </div>
 
               <div
                 className={`${
                   section === "feature-2" ? `feature-gradient` : ""
-                }`}
-              >
+                }`}>
                 <div
                   className={`${
                     section === "feature-2" ? `${sectionHighlight}` : ""
-                  } ${sectionStyle}`}
-                >
+                  } ${sectionStyle}`}>
                   <div style={{ fontWeight: 700 }}>Track Campaigns</div>
-                  <div>Celebrate Your Milestones</div>
+                  <div className="text-[#4A4A4A] font-normal">
+                    Celebrate Your Milestones
+                  </div>
                 </div>
               </div>
 
               <div
                 className={`${
                   section === "feature-3" ? `feature-gradient` : ""
-                }`}
-              >
+                }`}>
                 <div
                   className={`${
                     section === "feature-3" ? `${sectionHighlight}` : ""
                   } ${sectionStyle}`}>
                   <div style={{ fontWeight: 700 }}>Find Proposals</div>
-                  <div>Build Your Portfolio</div>
+                  <div className="text-[#4A4A4A] font-normal">
+                    Build Your Portfolio
+                  </div>
                 </div>
               </div>
             </div>
