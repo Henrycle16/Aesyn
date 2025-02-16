@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import DarkLogo from "../svgs/DarkLogo";
 
 /* 5 Cols / 7 rows */
 
@@ -10,7 +11,7 @@ const LargeFooter = () => {
       <div className="grid grid-cols-[1fr,1fr,1fr,1fr,1fr] flex-1">
         {/* Aeśyn */}
         <div>
-          <h1 className="text-2xl font-light">Aeśyn</h1>
+          <DarkLogo />
         </div>
         {/* Get in Touch */}
         <div className="flex flex-col gap-3">
@@ -55,7 +56,9 @@ const LargeFooter = () => {
         </div>
         {/* Join a Newsletter */}
         <div>
-          <label htmlFor="newsletter" className="font-semibold text-lg">Join a Newsletter</label>
+          <label htmlFor="newsletter" className="font-semibold text-lg">
+            Join a Newsletter
+          </label>
           <input
             type="email"
             id="newsletter"
@@ -64,15 +67,14 @@ const LargeFooter = () => {
           />
           <button
             type="button"
-            className="bg-[#3DA9FC] hover:bg-blue-600 font-semibold rounded px-8 mt-4 py-2.5"
-          >
+            className="bg-[#3DA9FC] hover:bg-blue-600 font-semibold rounded px-8 mt-4 py-2.5">
             Send
           </button>
         </div>
       </div>
       {/* Copyright */}
       <p className="text-xs font-extralight">
-        Copy Right © 2024 All Rights Reserved by Start Up LLC
+        Copy Right © 2025 All Rights Reserved by Start Up LLC
       </p>
     </footer>
   );
